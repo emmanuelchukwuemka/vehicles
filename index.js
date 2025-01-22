@@ -15,9 +15,9 @@ app.use(bodyParser.json({ limit: '2kb' }));
 
 app.use(checkPayload)
 
-app.use("/api/user", userRouter);
+app.use("/user", userRouter);
 
-app.use("/api/seller", sellerRouter);
+app.use("/seller", sellerRouter);
 
 app.listen(port, () => {
     console.log(`Listening in port ${port}`)

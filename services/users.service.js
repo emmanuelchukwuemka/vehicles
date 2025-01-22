@@ -1,5 +1,5 @@
 const { pool } = require("../connection/db");
-const { hashPassword, comparePasswords, } = require("../helpers/hasher");
+const { hashPassword, comparePasswords } = require("../helpers/hasher");
 require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
@@ -13,10 +13,10 @@ module.exports.create_user = async (req) => {
         lastName,
         phone,
         email,
-        access,
+        password,
     } = req.body;
 
-    if (!firstName || !lastName || !phone || !email || !access) {
+    if (!firstName || !lastName || !phone || !email || !password) {
 
         return {
             success: false,
@@ -25,8 +25,7 @@ module.exports.create_user = async (req) => {
     }
 
     const userEmail = email.trim().toLowerCase();
-    const hashedAccess = await hashPassword(access);
-    const hashedPin = await hashPassword('');
+    const hashedPassword = await hashPassword(password);
 
     let connection;
 
@@ -41,30 +40,32 @@ module.exports.create_user = async (req) => {
             _isVerified: 0,
             _status: 1,
             _wallet: 0,
-            _access: hashedAccess,
-            _pin: hashedPin
+            _password: hashedPassword
         };
 
         connection = await pool.getConnection();
         await connection.beginTransaction();
 
-        // Generate dynamic column names and values
         const columns = Object.keys(mergedData).join(', ');
         const placeholders = Array(Object.keys(mergedData).length).fill('?').join(', ');
         const values = Object.values(mergedData);
 
-        // Insert the new user into the database
-        const result = await connection.query(`
+        const [{ affectedRows }] = await connection.query(`
             INSERT INTO users_table (${columns}, _date)
             VALUES (${placeholders}, NOW())
         `, values);
 
-        console.log("result==>", result)
-
-        await connection.commit();
-
+        if (affectedRows > 0) {
+            await connection.commit();
+            return {
+                success: true,
+                data: "Account created successfully"
+            };
+        }
+        await connection.rollback();
         return {
-            success: true,
+            success: false,
+            error: "Unable to create account"
         };
 
     } catch (error) {
@@ -84,16 +85,16 @@ module.exports.create_user = async (req) => {
 
 module.exports.login_User = async (req) => {
 
-    const { email, access } = req.body;
+    const { email, password } = req.body;
 
     const userEmail = email.trim().toLowerCase();
 
     try {
-        const [[userData]] = await pool.query('SELECT * FROM users WHERE email = ?', [userEmail]);
+        const [[userData]] = await pool.query('SELECT * FROM users_table WHERE _email = ?', [userEmail]);
 
         if (userData && userData.id) {
 
-            const passwordMatch = await comparePasswords(access, userData.access);
+            const passwordMatch = await comparePasswords(password, userData._password);
 
             if (passwordMatch) {
 

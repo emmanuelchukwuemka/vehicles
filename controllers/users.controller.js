@@ -17,7 +17,7 @@ router.post("/login", async (req, res) => {
         } else {
 
             const errorMessage = response.error || 'Error establishing connection to the server';
-            res.status(400).json({ success: false, error: errorMessage });
+            res.status(401).json({ success: false, error: errorMessage });
         }
 
     } catch (error) {

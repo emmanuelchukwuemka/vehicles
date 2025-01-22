@@ -5,7 +5,7 @@ CREATE TABLE users_table  (
     _lastName LONGTEXT NOT NULL,
     _email LONGTEXT NOT NULL,
     _phone LONGTEXT NOT NULL,
-    _access VARCHAR(5000),
+    _password VARCHAR(5000),
     _picture LONGTEXT NOT NULL,
     _isVerified LONGTEXT NOT NULL,
     _status LONGTEXT NOT NULL,
