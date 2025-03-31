@@ -1,90 +1,151 @@
 const { pool } = require("../connection/db");
-const { hashPassword, comparePasswords } = require("../helpers/hasher");
 require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
-const { find_single_txn } = require("../helpers/executors");
+const { staticEncrypt, dynamicEncrypt, generateVariationSKU, hashPassword, generateProductSKU } = require("../helpers/hasher");
+const { staticKey, dynamicKey } = require("../helpers/keyVolt");
 
-module.exports.create_seller = async (userData) => {
+
+module.exports.create_vendor = async (req) => {
+
+    const { firstName, lastName, email, phone, country, password, picture } = req.body;
+
+    if (!firstName || !lastName || !email || !phone || !country || !password || !picture) {
+
+        return {
+            success: false,
+            error: "One or more required data is missing"
+        }
+    }
 
     let connection;
 
     try {
-        // Get a connection from the pool
+        const hashedAccess = await hashPassword(password);
         connection = await pool.getConnection();
-
-        // Begin a transaction
         await connection.beginTransaction();
 
-        try {
-            // Hash the provided access
-            const hashedAccess = await hashPassword(userData.access);
+        const mergedData = {
+            first_name: firstName.trim(),
+            last_name: lastName.trim(),
+            email: email.trim().toLowerCase(),
+            phone: JSON.stringify(dynamicEncrypt(phone, dynamicKey)),
+            nationality: country.trim().toLowerCase(),
+            password: hashedAccess,
+            picture: picture,
+            is_verified: 1,
+            status: 1
+        };
 
-            // Hash the provided pin
-            const hashedPin = await hashPassword('');
+        const columns = Object.keys(mergedData).join(', ');
+        const placeholders = Array(Object.keys(mergedData).length).fill('?').join(', ');
+        const values = Object.values(mergedData);
 
-            // Extract access property from userData to avoid it being part of dynamic columns
-            const {
-                name,
-                slogan,
-                country,
-            } = req.body;
-
-            if (!name) {
-
-                return {
-                    success: false,
-                    error: "Company name is required"
-                }
-            }
-
-            const mergedData = {
-                _name: name,
-                _slogan: slogan,
-                _country: country,
-                _abilities: "",
-                _netWorth: 65845225,
-                _logo: "image",
-                _category: category,
-                _staffCount: 156,
-                _address: address,
-                _code: uuid(),
-                _isVerified: 1,
-                _status: 1
-            };
-
-            // Generate dynamic column names and values
-            const columns = Object.keys(mergedData).join(', ');
-            const placeholders = Array(Object.keys(mergedData).length).fill('?').join(', ');
-            const values = Object.values(mergedData);
-
-            // Insert the new user into the database
-            const result = await connection.query(`
-                INSERT INTO users (${columns}, _date)
-                VALUES (${placeholders}, NOW())
+        const [{ insertId }] = await connection.query(`
+                INSERT INTO vendors_table (${columns}, created_at, updated_at)
+                VALUES (${placeholders}, NOW(), NOW())
             `, values);
 
-            console.log("result==>", result)
-
+        if (insertId) {
             await connection.commit();
-
             return {
                 success: true,
-            };
-
-        } catch (error) {
-            await connection.rollback();
-            console.error('Error registering user:', error);
-            return {
-                success: false,
-                error: "Could not create new seller, please try again"
+                data: "Vendor account created successfully"
             };
         }
-    } catch (error) {
-        console.error('Error getting connection from the pool:', error);
+
+        await connection.rollback();
         return {
             success: false,
-            error: "Unknown error has occurred, please try again"
+            error: "Unable to create vendor account"
+        };
+
+    } catch (error) {
+        await connection.rollback();
+        console.error('Error creating vendor account:', error);
+        return {
+            success: false,
+            error: "Could not create new vendor, please try again"
+        };
+    }
+    finally {
+        if (connection) {
+            connection.release();
+        }
+    }
+};
+
+module.exports.create_store = async (req) => {
+    const { vendor_id, name, slogan, country, address, logo, netWorth, staff, capabilities = [], banner = null, picture = null } = req.body;
+
+    if (!vendor_id || !name || !slogan || !country || !address || !logo || !staff) {
+        return {
+            success: false,
+            error: "One or more required data fields are missing."
+        };
+    }
+
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        // Prepare store data
+        const mergedData = {
+            vendor_id,
+            name: name.trim(),
+            slogan: slogan.trim(),
+            country: country.trim().toLowerCase(),
+            banner: banner || null,
+            picture: picture || null,
+            net_worth: netWorth,
+            logo,
+            staff_count: staff,
+            address,
+            code: uuid(), // Ensure uniqueness
+            is_verified: 1,
+            status: 1
+        };
+
+        const columns = Object.keys(mergedData).join(', ');
+        const placeholders = Object.keys(mergedData).map(() => '?').join(', ');
+        const values = Object.values(mergedData);
+
+        const [{ insertId }] = await connection.query(
+            `INSERT INTO stores_table (${columns}, created_at, updated_at) VALUES (${placeholders}, NOW(), NOW())`,
+            values
+        );
+
+        if (insertId) {
+            // Insert Capabilities efficiently
+            if (capabilities.length > 0) {
+                const capabilities_IDs = capabilities.map(capability => [insertId, capability]);
+                await connection.query(
+                    `INSERT INTO store_capabilities (store_id, capability_id) VALUES ?`,
+                    [capabilities_IDs]
+                );
+            }
+
+            await connection.commit();
+            return {
+                success: true,
+                data: "Your store has been created successfully."
+            };
+        }
+
+        await connection.rollback();
+        return {
+            success: false,
+            error: "Unable to create store."
+        };
+
+    } catch (error) {
+        await connection.rollback();
+        console.error('Error creating store:', error);
+        return {
+            success: false,
+            error: "Could not create store, please try again."
         };
     } finally {
         if (connection) {
@@ -93,87 +154,310 @@ module.exports.create_seller = async (userData) => {
     }
 };
 
-module.exports.add_product = async (req) => {
+module.exports.add_collection = async (req) => {
+    const { store_id, name } = req.body;
 
-    const { sId, sCharge, sStatus } = req.body
-
-    if (!sId) {
-
+    if (!store_id || !name) {
         return {
             success: false,
-            error: "Parameters are not complete"
-        }
+            error: "Missing required fields: store_id or name"
+        };
     }
 
     let connection;
 
     try {
-        // Get a connection from the pool
         connection = await pool.getConnection();
-
-        // Begin a transaction
         await connection.beginTransaction();
 
-        try {
+        // Check if the collection already exists
+        const [existingCollection] = await connection.query(`
+            SELECT id FROM collections_table WHERE store_id = ? AND name = ?
+        `, [store_id, name.trim()]);
 
-            const encS_Id = encryptStaticFunction(sId.trim().toLowerCase(), retrievedKeyBuffer)
-
-            // Prepare merged data with encrypted fields
-            const mergedData = {
-                _serviceId: encS_Id,
-                _charge: JSON.stringify(encryptData(sCharge, secretKey)),
-                _status: JSON.stringify(encryptData(sStatus, secretKey))
-            };
-
-            // Generate dynamic column names and values
-            const columns = Object.keys(mergedData).join(', ');
-
-            const placeholders = Array(Object.keys(mergedData).length).fill('?').join(', ');
-
-            const values = Object.values(mergedData);
-
-            // Insert the new user into the database
-            const [{ affectedRows }] = await connection.query(`
-                INSERT INTO z_charges (${columns}, _date)
-                VALUES (${placeholders}, NOW())
-            `, [...values]);
-
-            if (affectedRows > 0) {
-
-                console.log("inserted==>", affectedRows)
-
-                await connection.commit();
-                // Return the inserted user
-                return {
-                    success: true
-                }
-
-            } else {
-                // Rollback the transaction if the query was not successful
-                await connection.rollback();
-
-                // Return an indication of failure
-                return {
-                    success: false,
-                    message: 'Failed to insert data into the database',
-                };
-            }
-
-        } catch (error) {
-            // Rollback the transaction if an error occurs during the transaction
+        if (existingCollection.length > 0) {
             await connection.rollback();
-            console.error('Error adding service user:', error);
-            // Return a falsy value to indicate an error occurred
-            return null;
+            return {
+                success: false,
+                error: "Collection with this name already exists for the store"
+            };
         }
+
+        // Insert new collection
+        const [{ insertId }] = await connection.query(`
+            INSERT INTO collections_table (store_id, name, created_at, updated_at)
+            VALUES (?, ?, NOW(), NOW())
+        `, [store_id, name.trim()]);
+
+        if (insertId) {
+            await connection.commit();
+            return {
+                success: true,
+                data: "Collection created successfully"
+            };
+        }
+
+        await connection.rollback();
+        return {
+            success: false,
+            error: "Unable to create collection"
+        };
+
     } catch (error) {
-        // Handle error
-        console.error('Error getting connection from the pool:', error);
-        throw new Error('Error getting connection from the pool');
+        if (connection) await connection.rollback();
+        console.error("Error creating collection:", error);
+        return {
+            success: false,
+            error: "Database error while creating collection"
+        };
     } finally {
-        // Release the connection back to the pool
-        if (connection) {
-            connection.release();
-        }
+        if (connection) connection.release();
     }
 };
+
+
+module.exports.add_product = async (req) => {
+    const productData = req.body;
+    const { store_id, collection_id, subcategory_id, name, desc, customizable, price, discount, variations, moq, specifications } = productData;
+
+    if (!store_id || !collection_id || !subcategory_id || !name || !desc) {
+        return {
+            success: false,
+            error: "Your product details are missing some required information"
+        };
+    }
+
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        // Generate SKU for main product
+        const sku = generateProductSKU(productData);
+        const product_code = uuid();
+
+        // 🔹 Check if product with the same SKU already exists
+        const [existingProduct] = await connection.query(
+            `SELECT id FROM products_table WHERE sku = ? LIMIT 1`,
+            [sku]
+        );
+
+        if (existingProduct.length > 0) {
+            await connection.rollback();
+            return {
+                success: false,
+                error: "A product with this SKU already exists"
+            };
+        }
+
+        // Insert the main product
+        const [{ insertId: productId }] = await connection.query(
+            `INSERT INTO products_table 
+                (store_id, subcategory_id, collection_id, product_code, sku, name, description, customizable, price, discount, status, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())`,
+            [
+                store_id, subcategory_id, collection_id, product_code, sku,
+                name.trim(), desc.trim(), customizable, price, discount
+            ]
+        );
+
+        if (!productId) {
+            await connection.rollback();
+            return {
+                success: false,
+                error: "Product insertion failed"
+            };
+        }
+
+        // 🔹 Insert MOQ (if available)
+        if (Array.isArray(moq)) {
+            for (const { min_qty, ppu } of moq) {
+                await connection.query(
+                    `INSERT INTO product_moq (product_id, min_qty, ppu, created_at, updated_at) 
+                     VALUES (?, ?, ?, NOW(), NOW())`,
+                    [productId, min_qty, ppu]
+                );
+            }
+        }
+
+        // 🔹 Insert Specifications (if available)
+        if (Array.isArray(specifications)) {
+            for (const { name: specName, value: specValue } of specifications) {
+                await connection.query(
+                    `INSERT INTO product_specifications (product_id, name, value, created_at) 
+             VALUES (?, ?, ?, NOW())`,
+                    [productId, specName, specValue]
+                );
+            }
+        }
+
+        // Insert variations
+        if (Array.isArray(variations)) {
+            for (const variation of variations) {
+                const variationSku = generateVariationSKU(productData, variation);
+
+                const [{ insertId: variationId }] = await connection.query(
+                    `INSERT INTO variations_table (product_id, sku, price, stock, status, created_at, updated_at)
+                     VALUES (?, ?, ?, ?, 1, NOW(), NOW())`,
+                    [
+                        productId, variationSku,
+                        variation.price, variation.stock
+                    ]
+                );
+
+                if (!variationId) {
+                    await connection.rollback();
+                    return {
+                        success: false,
+                        error: "Variation insertion failed"
+                    };
+                } 
+
+                // Insert variation attributes
+                for (const { name: attrName, value: attrValue } of variation.attributes || []) {
+                    await connection.query(
+                        `INSERT INTO variation_attributes (variation_id, name, value, created_at) 
+                         VALUES (?, ?, ?, NOW())`,
+                        [variationId, attrName, attrValue]
+                    );
+                }
+
+                // Insert variation media
+                for (const { url, type } of variation.media || []) {
+                    await connection.query(
+                        `INSERT INTO media_table (product_id, variation_id, url, type, created_at) VALUES (?, ?, ?, ?, NOW())`,
+                        [productId, variationId, url, type]
+                    );
+                }
+            }
+        }
+
+        //await connection.rollback();
+        await connection.commit();
+        return {
+            success: true,
+            data: `Product ${sku} created successfully`
+        };
+
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Error adding product:", error);
+        return { success: false, error: "Error adding product, please try again" };
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+module.exports.fetch_store_products = async (req) => {
+    const { store_id } = req.query; // Use query params for GET requests
+
+    if (!store_id) {
+        return {
+            success: false,
+            error: "Store ID is required"
+        };
+    }
+
+    try {
+        const [products] = await pool.query(
+            "SELECT * FROM products_table WHERE store_id = ? ORDER BY created_at DESC",
+            [store_id]
+        );
+
+        if (products && products.length > 0) {
+
+            return {
+                success: true,
+                data: products
+            };
+        }
+
+        return {
+            success: false,
+            error: "Products not available"
+        };
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return {
+            success: false,
+            error: "An error occurred while fetching products"
+        };
+    }
+};
+
+module.exports.fetch_product = async (req) => {
+
+    const { product_id } = req.params;
+
+    if (isNaN(product_id)) {
+        return {
+            success: false,
+            error: "Invalid Product ID"
+        };
+    }
+
+    try {
+        // Fetch product details
+        const [productRows] = await pool.query(
+            `SELECT * FROM products_table WHERE id = ?`,
+            [product_id]
+        );
+
+        if (productRows.length === 0) {
+            return {
+                success: false,
+                error: "Product not found"
+            };
+        }
+
+        const product = productRows[0];
+
+        // Fetch variations
+        const [variations] = await pool.query(
+            `SELECT * FROM variations_table WHERE product_id = ?`,
+            [product_id]
+        );
+
+        for (const variation of variations) {
+            // Fetch attributes for each variation
+            const [attributes] = await pool.query(
+                `SELECT name, value FROM variation_attributes WHERE variation_id = ?`,
+                [variation.id]
+            );
+
+            // Fetch media for each variation
+            const [media] = await pool.query(
+                `SELECT url, type FROM media_table WHERE variation_id = ?`,
+                [variation.id]
+            );
+
+            variation.attributes = attributes;
+            variation.media = media;
+        }
+
+        // Fetch MOQ
+        const [moq] = await pool.query(
+            `SELECT min_qty, ppu FROM product_moq WHERE product_id = ?`,
+            [product_id]
+        );
+
+        return {
+            success: true,
+            data: {
+                ...product,
+                variations,
+                moq
+            }
+        };
+
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return {
+            success: false,
+            error: "An error occurred while fetching product"
+        };
+    }
+};
+

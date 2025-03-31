@@ -1,11 +1,6 @@
-const { comparePasswords, decryptUserData, decryptStaticFunction, encryptData } = require("./hasher");
+const { comparePasswords } = require("./hasher");
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
-// Access the secret key
-const secretKey = process.env.SECRET_KEY;
-
-const encryptionKey = process.env.KEY_FOR_STATIC_ENCRYPTION
-const retrievedKeyBuffer = Buffer.from(encryptionKey, 'hex');
 
 
 module.exports.reloadController = async (res, response) => {
