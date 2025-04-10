@@ -11,6 +11,22 @@ module.exports.checkPayload = (err, req, res, next) => {
     }
     next(err);
 }
+
+module.exports.requestTimer = (req, res, next) => {
+    req.setTimeout(10000, () => {
+        console.warn(`⏳ Request timed out: ${req.method} ${req.originalUrl}`);
+
+        if (!res.headersSent) {
+            res.status(408).json({
+                success: false,
+                error: "Request timed out. Please try again.",
+            });
+        }
+    });
+
+    next();
+};
+
 module.exports.jwtValidator = (req, res, next) => {
     // Typically, the token is sent in the Authorization header
     const accessToken = req.headers["x-auth-token"];

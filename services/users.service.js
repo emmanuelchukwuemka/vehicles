@@ -82,11 +82,11 @@ module.exports.login_User = async (req) => {
     const userEmail = email.trim().toLowerCase();
 
     try {
-        const [[userData]] = await pool.query('SELECT * FROM users_table WHERE _email = ?', [userEmail]);
+        const [[userData]] = await pool.query('SELECT * FROM users_table WHERE email = ?', [userEmail]);
 
         if (userData && userData.id) {
 
-            const passwordMatch = await comparePasswords(password, userData._password);
+            const passwordMatch = await comparePasswords(password, userData.password);
 
             if (passwordMatch) {
 
@@ -112,7 +112,10 @@ module.exports.login_User = async (req) => {
 
         console.log("Error==>", error)
 
-        throw new Error('Error during login', error);
+        return {
+            success: false,
+            error: "Unable to process your request"
+        }
     }
 };
 
@@ -888,6 +891,108 @@ module.exports.fetch_single_product = async (req) => {
     }
 };
 
+module.exports.fetch_product_variation = async (req) => {
+    const { product_id } = req.params;
+
+    if (isNaN(product_id)) {
+        return { success: false, error: "Invalid Product ID" };
+    }
+
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+
+        // Fetch product details
+        const [productRows] = await connection.query(`
+            SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
+            FROM products_table p
+            JOIN stores_table s ON p.store_id = s.id
+            WHERE p.id = ? AND p.status = 1
+            LIMIT 1
+        `, [product_id]);
+
+        if (productRows.length === 0) {
+            return { success: false, error: "Product not found" };
+        }
+        const product = productRows[0];
+
+        // Fetch product media
+        const [media] = await connection.query(`
+            SELECT url, type FROM media_table WHERE product_id = ? AND variation_id IS NULL
+        `, [product_id]);
+
+        // Fetch MOQ (Minimum Order Quantity)
+        const [moq] = await connection.query(`
+            SELECT min_qty, ppu FROM product_moq WHERE product_id = ?
+        `, [product_id]);
+
+        // Fetch product specifications
+        const [specifications] = await connection.query(`
+            SELECT name, value FROM product_specifications WHERE product_id = ?
+        `, [product_id]);
+
+        // Fetch product reviews (average rating & total count)
+        const [productReviews] = await connection.query(`
+            SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
+            FROM product_reviews 
+            WHERE product_id = ? AND status = 1
+        `, [product_id]);
+
+        // Fetch store reviews (average rating & total count)
+        const [storeReviews] = await connection.query(`
+            SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
+            FROM store_reviews 
+            WHERE store_id = ? AND status = 1
+        `, [product.store_id]);
+
+        // Fetch product variations
+        const [variations] = await connection.query(`
+            SELECT * FROM variations_table 
+            WHERE product_id = ? AND status = 1
+        `, [product_id]);
+
+        // Attach attributes & media to each variation
+        for (const variation of variations) {
+            const [attributes] = await connection.query(`
+                SELECT name, value FROM variation_attributes WHERE variation_id = ?
+            `, [variation.id]);
+
+            const [variationMedia] = await connection.query(`
+                SELECT url, type FROM media_table WHERE variation_id = ?
+            `, [variation.id]);
+
+            variation.attributes = attributes;
+            variation.media = variationMedia;
+        }
+
+        return {
+            success: true,
+            data: {
+                ...product,
+                media,
+                moq,
+                specifications,
+                product_reviews: {
+                    total_reviews: productReviews[0].total_reviews || 0,
+                    avg_rating: parseFloat(productReviews[0].avg_rating) || 0
+                },
+                store_reviews: {
+                    total_reviews: storeReviews[0].total_reviews || 0,
+                    avg_rating: parseFloat(storeReviews[0].avg_rating) || 0
+                },
+                variations
+            }
+        };
+
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return { success: false, error: "An error occurred while fetching product" };
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
 module.exports.get_product_reviews = async (req) => {
     const { product_id } = req.params;
 
@@ -1208,3 +1313,108 @@ module.exports.get_store_reviews = async (req) => {
         return { success: false, error: "An error occurred while fetching store reviews." };
     }
 };
+
+module.exports.get_shipping_methods = async () => {
+    const connection = await pool.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        // Fetch shipping methods with their providers
+        const [results] = await connection.query(`
+            SELECT 
+                sm.id AS method_id, sm.name AS method_name, sm.description AS method_description, sm.icon AS method_icon, sm.status AS method_status, sm.created_at AS method_created_at,
+                sp.id AS provider_id, sp.name AS provider_name, sp.duration_from, sp.duration_to, sp.price, sp.class, sp.offered_by, sp.notice, sp.is_guaranteed, sp.status AS provider_status, sp.created_at AS provider_created_at
+            FROM shipping_methods sm
+            LEFT JOIN shipping_providers sp ON sm.id = sp.method_id
+            ORDER BY sm.id, sp.id
+        `);
+
+        await connection.commit();
+        connection.release();
+
+        // Structure the response: Group providers under their respective methods
+        const shippingMethodsMap = new Map();
+
+        results.forEach(row => {
+            if (!shippingMethodsMap.has(row.method_id)) {
+                shippingMethodsMap.set(row.method_id, {
+                    method_id: row.method_id,
+                    name: row.method_name,
+                    description: row.method_description,
+                    icon: row.method_icon,
+                    status: row.method_status,
+                    created_at: row.method_created_at,
+                    providers: []
+                });
+            }
+
+            if (row.provider_id) {
+
+                const classMap = {
+                    0: "economy",
+                    1: "standard",
+                    2: "premium"
+                };
+
+                shippingMethodsMap.get(row.method_id).providers.push({
+                    id: row.provider_id,
+                    name: row.provider_name,
+                    duration_from: row.duration_from,
+                    duration_to: row.duration_to,
+                    price: parseFloat(row.price),
+                    class: classMap[parseInt(row.class)],
+                    offered_by: row.offered_by,
+                    notice: row.notice,
+                    is_guaranteed: row.is_guaranteed,
+                    status: row.provider_status,
+                    created_at: row.provider_created_at
+                });
+            }
+        });
+
+        return {
+            success: true,
+            data: Array.from(shippingMethodsMap.values())
+        };
+    } catch (error) {
+        await connection.rollback();
+        connection.release();
+        console.error("Error fetching shipping methods:", error);
+        return {
+            success: false,
+            error: "Error fetching shipping methods"
+        };
+    }
+};
+
+module.exports.get_shipping_providers = async () => {
+    try {
+        const [rows] = await pool.query(
+            "SELECT * FROM shipping_providers WHERE status = 1"
+        );
+
+        const classMap = {
+            0: "economy",
+            1: "standard",
+            2: "premium"
+        };
+
+        const providers = rows.map(provider => ({
+            ...provider,
+            class: classMap[provider.class] || "unknown"
+        }));
+
+        return {
+            success: true,
+            data: providers
+        };
+    } catch (error) {
+        console.error("Error fetching shipping providers:", error);
+        return {
+            success: false,
+            error: "Error fetching shipping providers"
+        };
+    }
+};
+

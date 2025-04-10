@@ -76,7 +76,7 @@ module.exports.create_vendor = async (req) => {
 };
 
 module.exports.create_store = async (req) => {
-    const { vendor_id, name, slogan, country, address, logo, netWorth, staff, capabilities = [], banner = null, picture = null } = req.body;
+    const { vendor_id, name, slogan, country, address, logo, netWorth, staff, floor_space, capabilities = [], banner = null, picture = null } = req.body;
 
     if (!vendor_id || !name || !slogan || !country || !address || !logo || !staff) {
         return {
@@ -103,6 +103,7 @@ module.exports.create_store = async (req) => {
             logo,
             staff_count: staff,
             address,
+            floor_space: floor_space,
             code: uuid(), // Ensure uniqueness
             is_verified: 1,
             status: 1
@@ -215,10 +216,9 @@ module.exports.add_collection = async (req) => {
     }
 };
 
-
 module.exports.add_product = async (req) => {
     const productData = req.body;
-    const { store_id, collection_id, subcategory_id, name, desc, customizable, price, discount, variations, moq, specifications } = productData;
+    const { store_id, collection_id, subcategory_id, name, desc, customizable, price, discount, weight, sample, variations, moq, specifications } = productData;
 
     if (!store_id || !collection_id || !subcategory_id || !name || !desc) {
         return {
@@ -254,11 +254,11 @@ module.exports.add_product = async (req) => {
         // Insert the main product
         const [{ insertId: productId }] = await connection.query(
             `INSERT INTO products_table 
-                (store_id, subcategory_id, collection_id, product_code, sku, name, description, customizable, price, discount, status, created_at, updated_at)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())`,
+                (store_id, subcategory_id, collection_id, product_code, sku, name, description, customizable, price, discount, weight, sample, status, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())`,
             [
                 store_id, subcategory_id, collection_id, product_code, sku,
-                name.trim(), desc.trim(), customizable, price, discount
+                name.trim(), desc.trim(), customizable, price, discount, weight, JSON.stringify(sample)
             ]
         );
 

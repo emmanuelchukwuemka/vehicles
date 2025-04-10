@@ -44,6 +44,7 @@ CREATE TABLE stores_table (
     wallet LONGTEXT NOT NULL,
     staff_count INT DEFAULT 0,
     address VARCHAR(255) NOT NULL,
+    floor_space VARCHAR(50) NOT NULL,
     code VARCHAR(50) NOT NULL UNIQUE,  -- Unique store code
     is_verified TINYINT(1) DEFAULT 0,  -- 0 = Not verified, 1 = Verified
     verified_date TIMESTAMP NULL DEFAULT NULL,
@@ -73,9 +74,10 @@ CREATE TABLE products_table (
     product_code VARCHAR(255) NOT NULL, -- Unique product identifier
     sku VARCHAR(255) NOT NULL UNIQUE, -- Unique SKU for each product variation
     name TEXT NOT NULL,
+    weight DECIMAL(10,2) NOT NULL,
     description LONGTEXT NOT NULL,
     customizable BOOLEAN NOT NULL DEFAULT 0,
-    price DECIMAL(10, 2) NOT NULL, -- Store hashed price
+    price DECIMAL(10, 2) NOT NULL,
     discount DECIMAL(10, 2) NOT NULL DEFAULT 0,
     status TINYINT(1) NOT NULL DEFAULT 1, -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -128,7 +130,7 @@ CREATE TABLE product_specifications (
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
 );
 
--- creating the product_media table
+-- creating the media_table table
 CREATE TABLE media_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL, -- Links to the main product
@@ -267,12 +269,35 @@ CREATE TABLE subcategory  (
     FOREIGN KEY (_category) REFERENCES category(id)
 );
 
-------------------------------------------------------------------------------------------
+-- Creating the cart table
+CREATE TABLE carts_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
+);
 
+
+-- Creating the cart_items table
+CREATE TABLE cart_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cart_id INT NOT NULL,
+    product_id INT NOT NULL,
+    sku VARCHAR(255),
+    color VARCHAR(100),
+    size VARCHAR(50),
+    quantity INT NOT NULL DEFAULT 1,
+    price DECIMAL(10,2),
+    FOREIGN KEY (cart_id) REFERENCES carts_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
+);
 -- Creating the shipping_methods table
 CREATE TABLE shipping_methods (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    icon VARCHAR(50) NOT NULL,
     status BOOLEAN DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -282,30 +307,17 @@ CREATE TABLE shipping_providers (
     id INT AUTO_INCREMENT PRIMARY KEY,
     method_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    duration INT NOT NULL,
-    cost DECIMAL(10,2) NOT NULL,
+    duration_from INT NOT NULL,
+    duration_to INT NOT NULL,
+    class INT NOT NULL,
+    offered_by VARCHAR(255) NOT NULL,
+    notice VARCHAR(255) NOT NULL,
+    is_guaranteed BOOLEAN DEFAULT 0,
+    price DECIMAL(10,2) NOT NULL,
     status BOOLEAN DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (method_id) REFERENCES shipping_methods(id) ON DELETE CASCADE
-);
-
-
--- Creating the cart table
-CREATE TABLE cart_table (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    product_id INT NOT NULL,
-    variation_id INT DEFAULT NULL,  -- Links to specific variation
-    store_id INT NOT NULL,  
-    quantity INT NOT NULL DEFAULT 1,
-    price DECIMAL(10,2) NOT NULL,
-    total_price DECIMAL(10,2) GENERATED ALWAYS AS (quantity * price) STORED,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
-    FOREIGN KEY (variation_id) REFERENCES product_variations(id) ON DELETE SET NULL,
-    FOREIGN KEY (store_id) REFERENCES stores(id) ON DELETE CASCADE
 );
 
 -- Creating the Orders_table

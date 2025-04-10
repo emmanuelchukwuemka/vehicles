@@ -10,22 +10,22 @@ module.exports.reloadController = async (res, response) => {
 
     const accessToken = jwt.sign({ ...response.data, exp: expiration }, process.env.JWT_SECRET);
 
-    const firstName = response.data._firstName
-    const lastName = response.data._lastName
-    const wallet = parseFloat(response.data._wallet)
-    const phone = response.data._phone
-    const email = response.data._email
-    const isVerified = parseInt(response.data._isVerified)
+    const user_id = response.data.id
+    const firstName = response.data.first_name
+    const lastName = response.data.last_name
+    const phone = response.data.phone
+    const email = response.data.email
+    const is_verified = parseInt(response.data.is_verified)
 
 
     return res.status(200).json({
         success: true,
+        user_id,
         firstName,
         lastName,
-        wallet,
         phone,
         email,
-        isVerified,
+        is_verified,
         token: accessToken
     });
 

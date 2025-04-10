@@ -173,3 +173,145 @@ module.exports.assign_filter_to_product = async (req) => {
         conn.release(); // ✅ Always release connection
     }
 };
+
+module.exports.create_shipping_method = async (req) => {
+    const { name, description, icon } = req.body;
+
+    // Validate input
+    if (!name || !description) {
+        return {
+            success: false,
+            error: "Shipping method name and description are required",
+        };
+    }
+
+    const trim_name = name.trim().toLowerCase();
+    const trim_desc = description.trim().toLowerCase();
+    const trim_icon = icon.trim().toLowerCase();
+
+    try {
+        // Check if the shipping method already exists
+        const [existingMethod] = await pool.query(
+            "SELECT id FROM shipping_methods WHERE name = ? LIMIT 1",
+            [trim_name]
+        );
+
+        if (existingMethod.length > 0) {
+            return {
+                success: false,
+                error: "This shipping method already exists",
+            };
+        }
+
+        // Insert the new shipping method
+        const [{ insertId }] = await pool.query(
+            "INSERT INTO shipping_methods (name, description, icon, status, created_at) VALUES (?, ?, ?, 1, NOW())",
+            [trim_name, trim_desc, trim_icon]
+        );
+
+        return {
+            success: true,
+            data: `Shipping method added successfully`,
+        };
+    } catch (error) {
+        console.error("Error creating shipping method:", error);
+        return {
+            success: false,
+            error: "Error creating shipping method",
+        };
+    }
+};
+
+module.exports.add_shipping_provider = async (req) => {
+    const {
+        method_id,
+        name,
+        duration_from,
+        duration_to,
+        price,
+        class: shipping_class,
+        notice,
+        is_guaranteed,
+        offered_by
+    } = req.body;
+
+    // Validate required fields
+    if (!method_id || !name || !duration_from || !duration_to || !price || !shipping_class || !offered_by) {
+        return {
+            success: false,
+            error: "Some required information are missing",
+        };
+    }
+
+    const trim_Name = name.trim().toLowerCase();
+    const trim_offeredBy = offered_by.trim();
+    const trim_notice = notice ? notice.trim() : "";
+
+    const connection = await pool.getConnection();
+
+    try {
+        await connection.beginTransaction();
+
+        // Check if the shipping method exists
+        const [methodExists] = await connection.query(
+            "SELECT id FROM shipping_methods WHERE id = ? LIMIT 1",
+            [method_id]
+        );
+
+        if (methodExists.length === 0) {
+            await connection.rollback();
+            return {
+                success: false,
+                error: "The provided shipping method does not exist",
+            };
+        }
+
+        // Check if provider already exists for the method
+        const [existingProvider] = await connection.query(
+            "SELECT id FROM shipping_providers WHERE method_id = ? AND name = ? LIMIT 1",
+            [method_id, trim_Name]
+        );
+
+        if (existingProvider.length > 0) {
+            await connection.rollback();
+            return {
+                success: false,
+                error: "This provider already exists for the selected shipping method",
+            };
+        }
+
+        // Insert new provider
+        const [{ insertId }] = await connection.query(
+            `INSERT INTO shipping_providers 
+            (method_id, name, duration_from, duration_to, price, class, offered_by, notice, is_guaranteed, status, created_at, updated_at) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 1, NOW(), NOW())`,
+            [
+                method_id,
+                trim_Name,
+                duration_from,
+                duration_to,
+                price,
+                shipping_class,
+                trim_offeredBy,
+                trim_notice,
+                is_guaranteed ? 1 : 0,
+            ]
+        );
+
+        await connection.commit();
+        connection.release();
+
+        return {
+            success: true,
+            data: `Shipping provider added successfully`,
+        };
+    } catch (error) {
+        await connection.rollback();
+        connection.release();
+        console.error("Error creating shipping provider:", error);
+        return {
+            success: false,
+            error: "Error creating shipping provider",
+        };
+    }
+};

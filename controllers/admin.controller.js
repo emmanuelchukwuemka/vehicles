@@ -133,5 +133,50 @@ router.post('/assign-filters-to-product', async (req, res) => {
     }
 });
 
+router.post('/shipping-methods', async (req, res) => {
+
+    try {
+        const result = await service.create_shipping_method(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error creating shipping method:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/shipping-provider', async (req, res) => {
+
+    try {
+        const result = await service.add_shipping_provider(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error creating shipping provider:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+
 
 module.exports = router

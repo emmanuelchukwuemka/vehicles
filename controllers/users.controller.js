@@ -346,6 +346,29 @@ router.get('/products/:product_id', async (req, res) => {
     }
 });
 
+router.get('/variations/:product_id', async (req, res) => {
+
+    try {
+        const result = await service.fetch_product_variation(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching store products:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
 router.get('/store-collections/:store_id', async (req, res) => {
 
     try {
@@ -503,6 +526,52 @@ router.post('/store-review', async (req, res) => {
         }
     } catch (error) {
         console.error('Error giving store reviews:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.get('/shipping', async (req, res) => {
+
+    try {
+        const result = await service.get_shipping_methods(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching shipping methods:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.get('/shipping/providers', async (req, res) => {
+
+    try {
+        const result = await service.get_shipping_providers(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching shipping providers:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });
