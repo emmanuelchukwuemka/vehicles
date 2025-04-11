@@ -236,6 +236,7 @@ router.post("/filter-stores-cat-cap", async (req, res) => {
                 const name = store.name
                 const logo = store.logo
                 const net_worth = parseFloat(store.net_worth)
+                const floor_space = store.floor_space
                 const staff_count = store.staff_count
                 const is_verified = store.is_verified
                 const verified_date = store.verified_date
@@ -250,6 +251,7 @@ router.post("/filter-stores-cat-cap", async (req, res) => {
                     name,
                     logo,
                     net_worth,
+                    floor_space,
                     staff_count,
                     is_verified,
                     verified_date,

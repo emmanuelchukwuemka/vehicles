@@ -636,7 +636,7 @@ module.exports.fetchStoresNew = async (req) => {
         connection = await pool.getConnection();
 
         // Base Query: Fetch all active stores
-        let query = `SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, 
+        let query = `SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space,
                             s.staff_count, s.is_verified, s.verified_date, s.status
                      FROM stores_table s
                      LEFT JOIN products_table p ON s.id = p.store_id
@@ -707,6 +707,7 @@ module.exports.fetchStoresNew = async (req) => {
             name: store.name,
             logo: store.logo,
             net_worth: store.net_worth,
+            floor_space: store.floor_space,
             staff_count: store.staff_count,
             is_verified: store.is_verified,
             verified_date: store.verified_date,
