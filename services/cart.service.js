@@ -260,11 +260,7 @@ exports.getCart = async (req) => {
         // Fetch all MOQ records for those products
         const [moqData] = await connection.query(
             `
-            SELECT product_id, min_qty, ppu 
-            FROM product_moq 
-            WHERE product_id IN (?)
-            ORDER BY min_qty DESC
-            `,
+            SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?) ORDER BY min_qty DESC `,
             [productIds]
         );
 
