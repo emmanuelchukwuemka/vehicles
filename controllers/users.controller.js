@@ -236,10 +236,10 @@ router.post("/filter-stores-cat-cap", async (req, res) => {
                 const name = store.name
                 const logo = store.logo
                 const net_worth = parseFloat(store.net_worth)
+                const created_at = store.created_at
                 const floor_space = store.floor_space
                 const staff_count = store.staff_count
                 const is_verified = store.is_verified
-                const verified_date = store.verified_date
                 const capabilities = store.capabilities
                 const products = store.products
                 const status = parseInt(store.status)
@@ -254,7 +254,7 @@ router.post("/filter-stores-cat-cap", async (req, res) => {
                     floor_space,
                     staff_count,
                     is_verified,
-                    verified_date,
+                    created_at,
                     capabilities,
                     status,
                     products
@@ -420,7 +420,7 @@ router.get('/default-filters', async (req, res) => {
 router.post('/store-follow-like', async (req, res) => {
 
     try {
-        const result = await service.follow_and_like_stores(req);
+        const result = await service.follow_and_like_store(req);
 
         if (result && result.success) {
 

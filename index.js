@@ -15,10 +15,10 @@ const app = express();
 const port = process.env.APP_PORT_NUMBER;
 
 // Middleware to parse JSON
-app.use(bodyParser.json({ limit: '200kb' }));
+app.use(bodyParser.json({ limit: '500kb' }));
 
 app.use(checkPayload)
-app.use(requestTimer)
+//app.use(requestTimer)
 
 app.use("/user", userRouter);
 

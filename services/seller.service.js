@@ -461,3 +461,94 @@ module.exports.fetch_product = async (req) => {
     }
 };
 
+module.exports.save_live = async (req) => {
+
+    const conn = await pool.getConnection();
+
+    const {
+        store_id,
+        product_id,
+        title,
+        description = '',
+        stream_url,
+        thumbnail_url = null
+    } = req.body;
+
+    try {
+        // Begin transaction
+        await conn.beginTransaction();
+
+        // Validate store
+        const [storeRows] = await conn.query(
+            `SELECT id FROM stores_table WHERE id = ? AND status = 1 LIMIT 1`,
+            [store_id]
+        );
+
+        if (storeRows.length === 0) {
+            await conn.rollback();
+            return {
+                success: false,
+                error: "Invalid or inactive store"
+            };
+        }
+
+        const store = storeRows[0]
+
+        // If product_id is provided, validate product
+
+        const [productRows] = await conn.query(
+            `SELECT id, store_id FROM products_table WHERE id = ? AND status = 1 LIMIT 1`,
+            [product_id, store_id]
+        );
+
+        if (productRows.length === 0) {
+            return {
+                success: false,
+                error: "Invalid or inactive product"
+            };
+        }
+
+        const product = productRows[0]
+
+        if (store.id !== product.store_id) {
+            return {
+                success: false,
+                error: "Product and store does not match"
+            };
+        }
+
+        console.log("prod==>", product)
+
+        // Insert live session
+        const [result] = await conn.query(
+            `INSERT INTO live_table 
+            (store_id, product_id, title, description, stream_url, is_live) 
+            VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                store_id,
+                product_id,
+                title?.trim().toLowerCase(),
+                description?.trim(),
+                stream_url?.trim(),
+                1 // is_live = true
+            ]
+        );
+
+        await conn.commit();
+        return {
+            success: true,
+            data: `Live stored with an id: ${result.insertId}`
+        }
+
+    } catch (error) {
+        await conn.rollback();
+        console.error('create_live_session error:', error);
+        return {
+            success: false,
+            error: "Failed to save live session"
+        };
+    } finally {
+        conn.release();
+    }
+
+}

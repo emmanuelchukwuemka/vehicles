@@ -637,7 +637,7 @@ module.exports.fetchStoresNew = async (req) => {
 
         // Base Query: Fetch all active stores
         let query = `SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space,
-                            s.staff_count, s.is_verified, s.verified_date, s.status
+                            s.staff_count, s.is_verified, s.created_at AS store_created_at, s.status
                      FROM stores_table s
                      LEFT JOIN products_table p ON s.id = p.store_id
                      LEFT JOIN subcategory sc ON p.subcategory_id = sc.id
@@ -710,7 +710,7 @@ module.exports.fetchStoresNew = async (req) => {
             floor_space: store.floor_space,
             staff_count: store.staff_count,
             is_verified: store.is_verified,
-            verified_date: store.verified_date,
+            created_at: store.store_created_at,
             status: store.status,
             capabilities: capabilities
                 .filter(c => c.store_id === store.id)
@@ -737,7 +737,7 @@ module.exports.fetchStoresNew = async (req) => {
     }
 };
 
-module.exports.follow_and_like_stores = async (req) => {
+module.exports.follow_and_like_store = async (req) => {
     const { user_id, store_id, action } = req.body;
 
     if (!user_id || !store_id || !["like", "follow"].includes(action)) {
@@ -748,7 +748,7 @@ module.exports.follow_and_like_stores = async (req) => {
     try {
         await conn.beginTransaction();
 
-        // ✅ Check if the user exists and is active
+        // Check if the user exists and is active
         const [userRows] = await conn.query(
             "SELECT id FROM users_table WHERE id = ? AND status = 1",
             [user_id]
@@ -758,28 +758,40 @@ module.exports.follow_and_like_stores = async (req) => {
             return { success: false, error: "User not found or inactive" };
         }
 
-        // ✅ Check if the interaction already exists
+        // Check if the store exists and is active
+        const [storeRows] = await conn.query(
+            "SELECT id FROM stores_table WHERE id = ? AND status = 1",
+            [store_id]
+        );
+        if (storeRows.length === 0) {
+            await conn.rollback();
+            return { success: false, error: "Store not found or inactive" };
+        }
+
+        const target_type = 'store';
+
+        // Check if interaction already exists
         const [existing] = await conn.query(
-            "SELECT id FROM store_interactions WHERE user_id = ? AND store_id = ? AND action = ?",
-            [user_id, store_id, action]
+            "SELECT id FROM interactions WHERE user_id = ? AND target_type = ? AND target_id = ? AND action = ?",
+            [user_id, target_type, store_id, action]
         );
 
         if (existing.length > 0) {
-            // ✅ If exists, remove interaction (unlike/unfollow)
+            // If exists, remove interaction (unlike/unfollow)
             await conn.query(
-                "DELETE FROM store_interactions WHERE user_id = ? AND store_id = ? AND action = ?",
-                [user_id, store_id, action]
+                "DELETE FROM interactions WHERE user_id = ? AND target_type = ? AND target_id = ? AND action = ?",
+                [user_id, target_type, store_id, action]
             );
             await conn.commit();
-            return { success: true, data: 0 };
+            return { success: true, data: 0 }; // 0 means removed
         } else {
-            // ✅ If not exists, add interaction (like/follow)
+            // If not exists, add interaction (like/follow)
             await conn.query(
-                "INSERT INTO store_interactions (user_id, store_id, action) VALUES (?, ?, ?)",
-                [user_id, store_id, action]
+                "INSERT INTO interactions (user_id, target_type, target_id, action) VALUES (?, ?, ?, ?)",
+                [user_id, target_type, store_id, action]
             );
             await conn.commit();
-            return { success: true, data: 1 };
+            return { success: true, data: 1 }; // 1 means added
         }
     } catch (error) {
         await conn.rollback();
@@ -789,6 +801,7 @@ module.exports.follow_and_like_stores = async (req) => {
         conn.release();
     }
 };
+
 
 module.exports.fetch_single_product = async (req) => {
     const { product_id } = req.params;

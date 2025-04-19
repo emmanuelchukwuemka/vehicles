@@ -125,6 +125,29 @@ router.get('/store-products', async (req, res) => {
     }
 });
 
+router.post('/live/save', async (req, res) => {
+
+    try {
+        const result = await service.save_live(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error saving live data:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
 router.get('/products/:product_id', async (req, res) => {
 
     try {

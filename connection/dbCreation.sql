@@ -87,6 +87,19 @@ CREATE TABLE products_table (
     FOREIGN KEY (collection_id) REFERENCES collections_table(id) ON DELETE CASCADE
 );
 
+-- Product Sample table
+CREATE TABLE product_sample (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  ppu DECIMAL(10,2) NOT NULL,
+  min_qty INT NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+   UNIQUE (product_id)
+);
+
+
 -- creating the product_moq table
 CREATE TABLE product_moq (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -319,6 +332,27 @@ CREATE TABLE shipping_providers (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (method_id) REFERENCES shipping_methods(id) ON DELETE CASCADE
 );
+
+CREATE TABLE live_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    store_id INT NOT NULL,
+    product_id INT NOT NULL,
+    title VARCHAR(255) NOT NULL,
+    description TEXT, 
+    stream_url TEXT,          -- RTMP stream or playback URL
+    recorded_video_url TEXT,  -- Archived video file URL after live ends
+    is_live BOOLEAN DEFAULT TRUE,   -- true while live, false when ended
+    started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    ended_at DATETIME DEFAULT NULL,
+    viewers_count INT DEFAULT 0,    -- optional analytics
+    likes_count INT DEFAULT 0,      -- optional engagement
+    thumbnail_url TEXT,             -- optional: preview image
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
+);
+
 
 -- Creating the Orders_table
 CREATE TABLE orders_table (
