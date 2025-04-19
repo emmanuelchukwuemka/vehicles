@@ -258,7 +258,10 @@ exports.getCart = async (req) => {
         const productIds = [...new Set(cartItems.map(item => item.product_id))];
 
         if (productIds.length === 0) {
-            return []; // or handle accordingly
+            return {
+                success: true,
+                data: []
+            }; // or handle accordingly
         }
 
         // Fetch all MOQ records for those products
