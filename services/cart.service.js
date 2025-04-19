@@ -257,6 +257,10 @@ exports.getCart = async (req) => {
         // Get all product IDs from the cart items
         const productIds = [...new Set(cartItems.map(item => item.product_id))];
 
+        if (productIds.length === 0) {
+            return []; // or handle accordingly
+        }
+
         // Fetch all MOQ records for those products
         const [moqData] = await connection.query(
             "SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?) ORDER BY min_qty DESC",
