@@ -40,3 +40,57 @@ module.exports.categorizeReview = (req) => {
     return { product_quality, supplier_service, on_time_shipment };
 };
 
+module.exports.getStoreReviews = async (store_id) => {
+    try {
+        const [rows] = await pool.query(`
+            SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
+            FROM store_reviews 
+            WHERE store_id = ? AND status = 1
+        `, [store_id]);
+
+        const total_reviews = rows[0]?.total_reviews || 0;
+        const avg = rows[0]?.avg_rating;
+
+        return {
+            total_reviews,
+            avg_rating: avg ? `${parseFloat(avg).toFixed(1)}/5` : null
+        };
+    } catch (err) {
+        console.error("Error fetching store reviews:", err);
+        return {
+            total_reviews: 0,
+            avg_rating: null
+        };
+    }
+};
+
+module.exports.getStoreCreatedAt = async (store_id) => {
+    try {
+        const [rows] = await pool.query(
+            `SELECT created_at FROM stores_table WHERE id = ? AND status = 1`,
+            [store_id]
+        );
+
+        if (rows.length === 0) {
+            return null; // store not found or inactive
+        }
+
+        return rows[0].created_at;
+    } catch (error) {
+        console.error('Error fetching store created_at:', error);
+        return null;
+    }
+};
+
+module.exports.fetchProductSample = async function (product_id) {
+    try {
+        const [sample] = await pool.query(
+            `SELECT min_qty, ppu FROM product_sample WHERE product_id = ? LIMIT 1`,
+            [product_id]
+        );
+        return sample || null;
+    } catch (error) {
+        console.error("Error fetching product sample:", error);
+        return null;
+    }
+};

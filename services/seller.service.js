@@ -349,118 +349,6 @@ module.exports.add_product = async (req) => {
     }
 };
 
-module.exports.fetch_store_products = async (req) => {
-    const { store_id } = req.query; // Use query params for GET requests
-
-    if (!store_id) {
-        return {
-            success: false,
-            error: "Store ID is required"
-        };
-    }
-
-    try {
-        const [products] = await pool.query(
-            "SELECT * FROM products_table WHERE store_id = ? ORDER BY created_at DESC",
-            [store_id]
-        );
-
-        if (products && products.length > 0) {
-
-            return {
-                success: true,
-                data: products
-            };
-        }
-
-        return {
-            success: false,
-            error: "Products not available"
-        };
-
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        return {
-            success: false,
-            error: "An error occurred while fetching products"
-        };
-    }
-};
-
-module.exports.fetch_product = async (req) => {
-
-    const { product_id } = req.params;
-
-    if (isNaN(product_id)) {
-        return {
-            success: false,
-            error: "Invalid Product ID"
-        };
-    }
-
-    try {
-        // Fetch product details
-        const [productRows] = await pool.query(
-            `SELECT * FROM products_table WHERE id = ?`,
-            [product_id]
-        );
-
-        if (productRows.length === 0) {
-            return {
-                success: false,
-                error: "Product not found"
-            };
-        }
-
-        const product = productRows[0];
-
-        // Fetch variations
-        const [variations] = await pool.query(
-            `SELECT * FROM variations_table WHERE product_id = ?`,
-            [product_id]
-        );
-
-        for (const variation of variations) {
-            // Fetch attributes for each variation
-            const [attributes] = await pool.query(
-                `SELECT name, value FROM variation_attributes WHERE variation_id = ?`,
-                [variation.id]
-            );
-
-            // Fetch media for each variation
-            const [media] = await pool.query(
-                `SELECT url, type FROM media_table WHERE variation_id = ?`,
-                [variation.id]
-            );
-
-            variation.attributes = attributes;
-            variation.media = media;
-        }
-
-        // Fetch MOQ
-        const [moq] = await pool.query(
-            `SELECT min_qty, ppu FROM product_moq WHERE product_id = ?`,
-            [product_id]
-        );
-
-        return {
-            success: true,
-            data: {
-                ...product,
-                variations,
-                moq
-            }
-        };
-
-    } catch (error) {
-        console.error("Error fetching product:", error);
-        return {
-            success: false,
-            error: "An error occurred while fetching product"
-        };
-    }
-};
-
 module.exports.save_live = async (req) => {
 
     const conn = await pool.getConnection();
@@ -552,3 +440,208 @@ module.exports.save_live = async (req) => {
     }
 
 }
+
+
+module.exports.fetch_single_store = async (req) => {
+    const { store_id } = req.body;
+
+    if (!store_id) {
+        return { success: false, error: "store_id is required." };
+    }
+
+    try {
+        // Fetch store details
+        const [stores] = await pool.query(`
+            SELECT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space,
+                   s.staff_count, s.is_verified, s.created_at AS store_created_at, s.status
+            FROM stores_table s
+            WHERE s.id = ? AND s.status = 1
+        `, [store_id]);
+
+        if (!stores.length) {
+            return { success: false, error: "Store not found or inactive." };
+        }
+
+        const store = stores[0];
+
+        // Fetch capabilities
+        const [capabilities] = await pool.query(`
+            SELECT sc.store_id, c.id AS capability_id, c.name
+            FROM store_capabilities sc
+            JOIN capabilities_table c ON sc.capability_id = c.id
+            WHERE sc.store_id = ?
+        `, [store_id]);
+
+        // Format response
+        const storeData = {
+            id: store.id,
+            code: store.code,
+            name: store.name,
+            logo: store.logo,
+            net_worth: parseFloat(store.net_worth),
+            floor_space: store.floor_space,
+            staff_count: store.staff_count,
+            is_verified: store.is_verified,
+            created_at: store.store_created_at,
+            status: parseInt(store.status),
+            capabilities: capabilities.map(c => ({
+                id: c.capability_id,
+                name: c.name
+            })),
+            //products: [] // Empty array for consistent frontend structure
+        };
+
+        return { success: true, data: [storeData] };
+
+    } catch (error) {
+        console.error("Error fetching store:", error);
+        return { success: false, error: "An error occurred while fetching the store." };
+    }
+};
+
+
+module.exports.fetch_store_products = async (req) => {
+    const { store_id } = req.query; // Use query params for GET requests
+
+    if (!store_id) {
+        return {
+            success: false,
+            error: "Store ID is required"
+        };
+    }
+
+    try {
+        const [products] = await pool.query(
+            "SELECT * FROM products_table WHERE store_id = ? ORDER BY created_at DESC",
+            [store_id]
+        );
+
+        if (products && products.length > 0) {
+
+            return {
+                success: true,
+                data: products
+            };
+        }
+
+        return {
+            success: false,
+            error: "Products not available"
+        };
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return {
+            success: false,
+            error: "An error occurred while fetching products"
+        };
+    }
+};
+
+module.exports.fetch_store_collections = async (req) => {
+    const { store_id } = req.body;
+
+    if (isNaN(store_id)) {
+        return {
+            success: false,
+            error: "Invalid Store ID"
+        };
+    }
+
+    try {
+        // Fetch unique collections associated with the store's products
+        const [collections] = await pool.query(
+            `SELECT DISTINCT c.id, c.name 
+             FROM collections_table c
+             JOIN products_table p ON c.id = p.collection_id
+             WHERE p.store_id = ? AND c.status = 1`,
+            [store_id]
+        );
+
+        return {
+            success: true,
+            data: collections
+        };
+
+    } catch (error) {
+        console.error("Error fetching collections:", error);
+        return {
+            success: false,
+            error: "An error occurred while fetching collections"
+        };
+    }
+};
+
+module.exports.fetch_product = async (req) => {
+
+    const { product_id } = req.params;
+
+    if (isNaN(product_id)) {
+        return {
+            success: false,
+            error: "Invalid Product ID"
+        };
+    }
+
+    try {
+        // Fetch product details
+        const [productRows] = await pool.query(
+            `SELECT * FROM products_table WHERE id = ?`,
+            [product_id]
+        );
+
+        if (productRows.length === 0) {
+            return {
+                success: false,
+                error: "Product not found"
+            };
+        }
+
+        const product = productRows[0];
+
+        // Fetch variations
+        const [variations] = await pool.query(
+            `SELECT * FROM variations_table WHERE product_id = ?`,
+            [product_id]
+        );
+
+        for (const variation of variations) {
+            // Fetch attributes for each variation
+            const [attributes] = await pool.query(
+                `SELECT name, value FROM variation_attributes WHERE variation_id = ?`,
+                [variation.id]
+            );
+
+            // Fetch media for each variation
+            const [media] = await pool.query(
+                `SELECT url, type FROM media_table WHERE variation_id = ?`,
+                [variation.id]
+            );
+
+            variation.attributes = attributes;
+            variation.media = media;
+        }
+
+        // Fetch MOQ
+        const [moq] = await pool.query(
+            `SELECT min_qty, ppu FROM product_moq WHERE product_id = ?`,
+            [product_id]
+        );
+
+        return {
+            success: true,
+            data: {
+                ...product,
+                variations,
+                moq
+            }
+        };
+
+    } catch (error) {
+        console.error("Error fetching product:", error);
+        return {
+            success: false,
+            error: "An error occurred while fetching product"
+        };
+    }
+};

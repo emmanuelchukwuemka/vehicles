@@ -5,8 +5,7 @@ const service = require("../services/product.service")
 const jwt = require('jsonwebtoken');
 const multer = require('multer');
 
-const upload = multer();
-
+const upload = multer({ storage: multer.memoryStorage() })
 
 router.post('/add-product', async (req, res) => {
     const data = req.body;
@@ -160,6 +159,29 @@ router.post('/barcode-search', async (req, res) => {
         }
     } catch (error) {
         console.error('Error making barcode searching:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/store-products', async (req, res) => {
+ 
+    try {
+        const result = await service.fetch_store_products(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching store products:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });

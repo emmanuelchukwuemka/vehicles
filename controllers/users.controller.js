@@ -53,6 +53,56 @@ router.post("/login", async (req, res) => {
 
 });
 
+router.post("/addresses/add", async (req, res) => {
+
+    try {
+        const response = await service.add_address(req);
+
+        if (response && response.success) {
+
+           res.status(200).json({
+                success: response.success,
+                data: response.data
+            });
+
+        } else {
+
+            const errorMessage = response.error || 'Error establishing connection to the server';
+            res.status(401).json({ success: false, error: errorMessage });
+        }
+
+    } catch (error) {
+        console.error('Error adding address:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+});
+
+router.post("/addresses/fetch", async (req, res) => {
+
+    try {
+        const response = await service.get_user_addresses(req);
+
+        if (response && response.success) {
+
+           res.status(200).json({
+                success: response.success,
+                data: response.data
+            });
+
+        } else {
+
+            const errorMessage = response.error || 'Error establishing connection to the server';
+            res.status(401).json({ success: false, error: errorMessage });
+        }
+
+    } catch (error) {
+        console.error('Error fetching address:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+});
+
 router.get("/fetch-stores", async (req, res) => {
 
     try {
@@ -302,51 +352,29 @@ router.get('/capabilities', async (req, res) => {
     }
 });
 
-router.get('/store-products/:store_id', async (req, res) => {
 
-    try {
-        const result = await service.fetch_store_products(req);
+// router.get('/products/:product_id', async (req, res) => {
 
-        if (result && result.success) {
+//     try {
+//         const result = await service.fetch_single_product(req);
 
-            res.status(200).json({
-                success: result.success,
-                data: result.data
-            });
+//         if (result && result.success) {
 
-        } else {
+//             res.status(200).json({
+//                 success: result.success,
+//                 data: result.data
+//             });
 
-            const errorMessage = result.error || 'Unknown server occurred';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-    } catch (error) {
-        console.error('Error fetching store products:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-});
+//         } else {
 
-router.get('/products/:product_id', async (req, res) => {
-
-    try {
-        const result = await service.fetch_single_product(req);
-
-        if (result && result.success) {
-
-            res.status(200).json({
-                success: result.success,
-                data: result.data
-            });
-
-        } else {
-
-            const errorMessage = result.error || 'Unknown server occurred';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-    } catch (error) {
-        console.error('Error fetching store products:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-});
+//             const errorMessage = result.error || 'Unknown server occurred';
+//             res.status(400).json({ success: false, error: errorMessage });
+//         }
+//     } catch (error) {
+//         console.error('Error fetching store products:', error);
+//         res.status(500).json({ success: false, error: 'Internal Server Error' });
+//     }
+// });
 
 router.get('/variations/:product_id', async (req, res) => {
 
@@ -371,28 +399,6 @@ router.get('/variations/:product_id', async (req, res) => {
     }
 });
 
-router.get('/store-collections/:store_id', async (req, res) => {
-
-    try {
-        const result = await service.fetch_store_collections(req);
-
-        if (result && result.success) {
-
-            res.status(200).json({
-                success: result.success,
-                data: result.data
-            });
-
-        } else {
-
-            const errorMessage = result.error || 'Unknown server occurred';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-    } catch (error) {
-        console.error('Error fetching store collection:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-});
 
 router.get('/default-filters', async (req, res) => {
 
@@ -578,7 +584,71 @@ router.get('/shipping/providers', async (req, res) => {
     }
 });
 
+router.post('/payment-gateway/fetch', async (req, res) => {
 
+    try {
+        const result = await service.getPaymentGateways(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching payment gateway:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/payment-method/fetch', async (req, res) => {
+
+    try {
+        const result = await service.getUserPaymentMethods(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching payment method:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/orders/new', async (req, res) => {
+
+    try {
+        const result = await service.placeNewOrder(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error placing order:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
 
 
 

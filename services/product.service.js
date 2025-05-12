@@ -3,6 +3,9 @@ require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
 const FormData = require('form-data');
+const { getStoreReviews, getStoreCreatedAt, fetchProductSample } = require("../helpers/executors");
+
+
 
 module.exports.add_section = async (req) => {
     const { name, image } = req.body;
@@ -306,7 +309,6 @@ module.exports.add_subCategory = async (req) => {
         };
     }
 };
-
 module.exports.fetch_subCategory = async (req) => {
     const { categoryId } = req.query;
 
@@ -335,7 +337,6 @@ module.exports.fetch_subCategory = async (req) => {
         };
     }
 };
-
 module.exports.update_subCategory = async (req) => {
     const { id, name } = req.body;
 
@@ -472,6 +473,9 @@ module.exports.fetch_single_product = async (req) => {
             return { success: false, error: "Product not found" };
         }
         const product = productRows[0];
+        
+        // Fetch sample
+        const sample = await fetchProductSample(product.id);
 
         // Fetch product media
         const [media] = await connection.query(`
@@ -526,6 +530,7 @@ module.exports.fetch_single_product = async (req) => {
             success: true,
             data: {
                 ...product,
+                sample,
                 media,
                 moq,
                 specifications,
@@ -550,6 +555,8 @@ module.exports.fetch_single_product = async (req) => {
 };
 
 module.exports.image_search = async (req) => {
+    let connection;
+
     try {
         if (!req.file) {
             return {
@@ -559,17 +566,20 @@ module.exports.image_search = async (req) => {
         }
 
         const form = new FormData();
-
         form.append('file', req.file.buffer, {
-            filename: req.file.originalname,
-            contentType: req.file.mimetype
+            filename: req.file.originalname || 'image.jpg',
+            contentType: req.file.mimetype || 'image/jpeg'
         });
 
         const response = await axios.post(
-            'http://13.60.157.229:5000/image_match',
+            'http://13.60.157.229:5000/image_match/',
             form,
             {
-                headers: form.getHeaders()
+                headers: {
+                    ...form.getHeaders()
+                },
+                maxContentLength: Infinity,
+                maxBodyLength: Infinity
             }
         );
 
@@ -581,7 +591,7 @@ module.exports.image_search = async (req) => {
         console.error('Error forwarding image to Flask server:', error.message);
         return {
             success: false,
-            error: error.response?.data
+            error: error.response?.data || error.message
         };
     }
 };
@@ -738,44 +748,51 @@ module.exports.text_search_products = async (req) => {
 };
 
 module.exports.fetch_live_products = async (req) => {
-    try {
-        const [rows] = await pool.query(
-            `SELECT 
-                lt.product_id,
-                lt.is_live,
-                p.name,
-                s.created_at AS store_created_at,
-                c.name AS collection_name,
-                GROUP_CONCAT(m.url) AS images
-            FROM live_table lt
-            JOIN products_table p ON lt.product_id = p.id AND p.status = 1
-            LEFT JOIN media_table m ON m.product_id = p.id
-            LEFT JOIN stores_table s ON p.store_id = s.id
-            LEFT JOIN collections_table c ON p.collection_id = c.id
-            WHERE lt.product_id IS NOT NULL GROUP BY lt.product_id, lt.is_live, p.name, s.created_at, c.name`
-        );
+  try {
+    const [rows] = await pool.query(
+      `SELECT 
+          lt.product_id,
+          lt.is_live,
+          p.name,
+          p.store_id,
+          c.name AS collection_name,
+          GROUP_CONCAT(m.url) AS images
+      FROM live_table lt
+      JOIN products_table p ON lt.product_id = p.id AND p.status = 1
+      LEFT JOIN media_table m ON m.product_id = p.id
+      LEFT JOIN stores_table s ON p.store_id = s.id
+      LEFT JOIN collections_table c ON p.collection_id = c.id
+      WHERE lt.product_id IS NOT NULL 
+      GROUP BY lt.product_id, lt.is_live, p.name, p.store_id, s.created_at, c.name`
+    );
 
-        const data = rows.map(row => ({
-            productId: row.product_id,
-            isLive: row.is_live,
-            name: row.name,
-            storeCreatedAt: row.store_created_at,
-            collectionName: row.collection_name,
-            images: row.images ? row.images.split(',') : []
-        }));
+    const data = await Promise.all(rows.map(async (row) => {
+      const store_reviews = await getStoreReviews(row.store_id);
+      const createdAt = await getStoreCreatedAt(row.store_id);
 
-        return {
-            success: true,
-            data
-        };
+      return {
+        productId: row.product_id,
+        isLive: row.is_live,
+        name: row.name,
+        store_reviews,
+        storeCreatedAt: createdAt,
+        collectionName: row.collection_name,
+        images: row.images ? row.images.split(',') : []
+      };
+    }));
 
-    } catch (error) {
-        console.error('Error fetching live products:', error);
-        return {
-            success: false,
-            error: "Error fetching live products"
-        };
-    }
+    return {
+      success: true,
+      data
+    };
+
+  } catch (error) {
+    console.error('Error fetching live products:', error);
+    return {
+      success: false,
+      error: "Error fetching live products"
+    };
+  }
 };
 
 
@@ -799,6 +816,7 @@ module.exports.fetch_single_live_products = async (req) => {
                 lt.recorded_video_url,
                 p.name AS product_name,
                 p.sku AS product_sku,
+                s.id AS store_id,
                 s.name AS store_name,
                 s.logo AS store_logo,
                 GROUP_CONCAT(m.url) AS images
@@ -904,13 +922,118 @@ module.exports.like_product = async (req) => {
     }
 };
 
+module.exports.fetch_store_products = async (req) => {
+    const { store_id } = req.body;
+    const { isCustomizable, activeCollection, selectedFilter } = req.query; // Filters from request query
+
+    if (isNaN(store_id)) {
+        return {
+            success: false,
+            error: "Invalid Store ID"
+        };
+    }
+
+    try {
+        // Fetch products with only required fields
+        let [products] = await pool.query(
+            `SELECT id, name, collection_id, customizable, created_at FROM products_table 
+             WHERE store_id = ? AND status = 1 ORDER BY created_at DESC`,
+            [store_id]
+        );
+
+        if (!products.length) {
+            return { success: true, data: [] };
+        }
+
+        const productIds = products.map(p => p.id);
+
+        // Fetch media
+        const [media] = await pool.query(
+            `SELECT product_id, url, type FROM media_table WHERE product_id IN (?)`,
+            [productIds]
+        );
+
+        // Fetch MOQ
+        const [moq] = await pool.query(
+            `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,
+            [productIds]
+        );
+
+        // Fetch Collection Names
+        const [collections] = await pool.query(
+            `SELECT id, name FROM collections_table WHERE id IN (?)`,
+            [products.map(p => p.collection_id)]
+        );
+
+        // Fetch Product Filters (Precomputed)
+        const [productFilters] = await pool.query(
+            `SELECT product_id, filter_id FROM product_filters WHERE product_id IN (?)`,
+            [productIds]
+        );
+
+        // **Filter Implementation**
+
+        // ✅ Convert Product Filters to a Map for Quick Lookup
+        const productFilterMap = {};
+        productFilters.forEach(({ product_id, filter_id }) => {
+            if (!productFilterMap[product_id]) productFilterMap[product_id] = [];
+            productFilterMap[product_id].push(filter_id);
+        });
+
+        // ✅ Convert Collections to a Map
+        const collectionMap = {};
+        collections.forEach(c => {
+            collectionMap[c.id] = { id: c.id, name: c.name };
+        });
+
+        // ✅ Apply Filters
+        let filteredProducts = products.map(product => ({
+            id: product.id,
+            name: product.name,
+            customizable: product.customizable,
+            created_at: product.created_at,
+            collection: collectionMap[product.collection_id] || { id: null, name: null },
+            media: media.filter(m => m.product_id === product.id),
+            moq: moq.filter(m => m.product_id === product.id),
+            filters: productFilterMap[product.id] || [] // Assign filters
+        }));
+
+        // ✅ Filter by Customizable
+        if (isCustomizable === "true") {
+            filteredProducts = filteredProducts.filter(p => p.customizable === 1);
+        }
+
+        // ✅ Filter by Collection
+        if (activeCollection) {
+            filteredProducts = filteredProducts.filter(p => p.collection.id === parseInt(activeCollection));
+        }
+
+        // ✅ Filter by Default Filters (Recommended, New, Hot, Best Selling, Low Price)
+        if (selectedFilter) {
+            const filterId = parseInt(selectedFilter);
+            filteredProducts = filteredProducts.filter(p => p.filters.includes(filterId));
+
+            // ✅ Special Case: Low Price → Sort by Price Ascending
+            if (filterId === 5) {
+                filteredProducts.sort((a, b) => (a.moq[0]?.ppu || 0) - (b.moq[0]?.ppu || 0));
+            }
+        }
+
+        return { success: true, data: filteredProducts };
+
+    } catch (error) {
+        console.error("Error fetching products:", error);
+        return { success: false, error: "An error occurred while fetching products" };
+    }
+};
+
 
 
 
 module.exports.set_product_sample = async (req) => {
-    const { product_id, ppu, min_qty } = req.body;
+    const {store_id, product_id, ppu, min_qty } = req.body;
 
-    if (!product_id || typeof ppu !== 'number' || typeof min_qty !== 'number') {
+    if (!store_id || !product_id || typeof ppu !== 'number' || typeof min_qty !== 'number') {
         return {
             success: false,
             error: "Missing or invalid parameters"
@@ -937,10 +1060,10 @@ module.exports.set_product_sample = async (req) => {
 
         // Insert or update the sample record
         await connection.query(
-            `INSERT INTO product_sample (product_id, ppu, min_qty)
-             VALUES (?, ?, ?)
+            `INSERT INTO product_sample (store_id, product_id, ppu, min_qty)
+             VALUES (?, ?, ?, ?)
              ON DUPLICATE KEY UPDATE ppu = VALUES(ppu), min_qty = VALUES(min_qty)`,
-            [product_id, ppu, min_qty]
+            [store_id, product_id, ppu, min_qty]
         );
 
         await connection.commit();
@@ -960,12 +1083,14 @@ module.exports.set_product_sample = async (req) => {
     }
 };
 
-
 module.exports.get_all_product_samples = async () => {
     try {
-        const [samples] = await pool.query(
-            `SELECT product_id, ppu, min_qty FROM product_sample`
-        );
+        const [samples] = await pool.query(`
+            SELECT ps.product_id, ps.ppu, ps.min_qty, p.store_id, p.name, s.is_verified, s.created_at
+            FROM product_sample ps
+            JOIN products_table p ON ps.product_id = p.id
+            JOIN stores_table s ON p.store_id = s.id
+        `);
 
         if (samples.length === 0) {
             return {
@@ -981,12 +1106,19 @@ module.exports.get_all_product_samples = async () => {
             );
 
             const images = mediaRows.map(row => row.url);
+            const reviews = await getStoreReviews(sample.store_id);
+            const createdAt = await getStoreCreatedAt(sample.store_id);
 
             return {
                 product_id: sample.product_id,
+                product_name: sample.name,
                 ppu: sample.ppu,
                 min_qty: sample.min_qty,
-                images
+                images,
+                store_id: sample.store_id,
+                is_verified: sample.is_verified === 1,
+                created_at: createdAt,
+                reviews
             };
         }));
 
@@ -1003,3 +1135,4 @@ module.exports.get_all_product_samples = async () => {
         };
     }
 };
+

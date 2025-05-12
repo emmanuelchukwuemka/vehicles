@@ -315,3 +315,109 @@ module.exports.add_shipping_provider = async (req) => {
         };
     }
 };
+
+
+exports.createStoreGalleryItem = async (req, res) => {
+    const { store_id, url, type, position, title, description } = req.body;
+
+    // Simple validation
+    if (!store_id || !url || !type || !position || !title || !description) {
+        return { success: false, error: 'All fields are required.' };
+    }
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // Check if the store exists and is active (status = 1)
+        const [storeRows] = await connection.query(
+            `SELECT id FROM stores_table WHERE id = ? AND status = 1`,
+            [store_id]
+        );
+
+        if (storeRows.length === 0) {
+            await connection.rollback();
+            return { success: false, error: 'Store does not exist or is not active.' };
+        }
+
+        // Insert into store_gallery
+        const [result] = await connection.query(
+            `INSERT INTO store_gallery (store_id, url, type, position, title, description) VALUES (?, ?, ?, ?, ?, ?)`,
+            [store_id, url.trim(), type.trim(), position.trim(), title.trim(), description.trim()]
+        );
+
+        await connection.commit();
+        return {
+            success: true,
+            data: 'Gallery item created successfully.'
+        };
+
+    } catch (error) {
+        await connection.rollback();
+        console.error(error);
+        return { success: false, error: 'Failed to create gallery item.' };
+    } finally {
+        connection.release();
+    }
+};
+
+
+exports.createPaymentGateway = async (req, res) => {
+    const { name, logo, provider, is_active, sandbox_mode, config } = req.body;
+
+    // Basic validation
+    if (!name || !provider) {
+        return {
+            success:false,
+            error:"Name and provider are required"
+        };
+    }
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        const [existing] = await connection.query(
+            `SELECT id FROM payment_gateways WHERE provider = ? LIMIT 1`,
+            [provider.trim()]
+        );
+
+        if (existing.length > 0) {
+            await connection.release();
+            return {
+                success:false,
+                error:"Payment gateway already exists"
+            };
+            
+        }
+
+        const [result] = await connection.query(
+            `INSERT INTO payment_gateways (name, logo, provider, is_active, sandbox_mode, config)
+             VALUES (?, ?, ?, ?, ?, ?)`,
+            [
+                name.trim(),
+                logo,
+                provider.trim(),
+                is_active ?? true,
+                sandbox_mode ?? false,
+                config ? JSON.stringify(config) : null
+            ]
+        );
+
+        await connection.commit();
+        return {
+            success:true,
+            data:"Payment gateway created successfully"
+        };
+
+    } catch (err) {
+        await connection.rollback();
+        console.error('createPaymentGateway error:', err);
+        return {
+            success:false,
+            error:"Failed to create payment gateway"
+        };
+    } finally {
+        connection.release();
+    }
+};

@@ -5,14 +5,17 @@ const axios = require('axios');
 
 exports.addToCart = async (req, res) => {
 
-    const { user_id, product_id, sku, color, size, quantity, price } = req.body;
+    const { user_id, product_id, sku, color, size, quantity, price, weight } = req.body;
 
     const conn = await pool.getConnection();
 
     try {
         // Validation
-        if (!user_id || !product_id || !sku || !size || !quantity || !price) {
-            return res.status(400).json({ success: false, message: "Missing required fields." });
+        if (!user_id || !product_id || !sku || !size || !quantity || !price || !weight) {
+            return { 
+                success: false,
+                error: "Missing required fields." 
+            };
         }
 
         await conn.beginTransaction();
@@ -48,11 +51,10 @@ exports.addToCart = async (req, res) => {
                 [quantity, price, existingItem[0].id]
             );
         } else {
-            // Add new item
+            // Add new item 
             await conn.query(
-                `INSERT INTO cart_items (cart_id, product_id, sku, color, size, quantity, price) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?)`,
-                [cart_id, product_id, sku.trim(), color?.trim() || null, size.trim(), quantity, price]
+                `INSERT INTO cart_items (cart_id, product_id, sku, color, size, quantity, price, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+                [cart_id, product_id, sku.trim(), color?.trim() || null, size.trim(), quantity, price, weight]
             );
         }
 
@@ -70,7 +72,7 @@ exports.addToCart = async (req, res) => {
             error: "Server error."
         };
     } finally {
-        conn.release();
+       await conn.release();
     }
 };
 
@@ -126,7 +128,7 @@ exports.updateCartItem = async (req) => {
         console.error('Error updating cart item:', error);
         return { success: false, error: 'Internal server error' };
     } finally {
-        connection.release();
+        await connection.release();
     }
 };
 
@@ -195,20 +197,19 @@ exports.removeCartItem = async (req) => {
         console.error("Remove cart item error:", error);
         return { success: false, error: "Something went wrong." };
     } finally {
-        connection.release();
+       await connection.release();
     }
 };
 
 exports.getCart = async (req) => {
-    const { user_id } = req.params;
+    const { user_id } = req.body;
 
     if (!user_id) {
         return { success: false, error: 'User ID is required' };
     }
 
-    const connection = await pool.getConnection();
     try {
-        const [cart] = await connection.query(
+        const [cart] = await pool.query(
             'SELECT id FROM carts_table WHERE user_id = ?',
             [user_id]
         );
@@ -220,7 +221,7 @@ exports.getCart = async (req) => {
         const cartId = cart[0].id;
 
         // Fetch cart items with product name, variation_id, and media
-        const [cartItems] = await connection.query(
+        const [cartItems] = await pool.query(
             `
             SELECT 
                 ci.id,
@@ -229,6 +230,7 @@ exports.getCart = async (req) => {
                 ci.color,
                 ci.size,
                 ci.quantity,
+                ci.weight,
                 ci.price,
                 v.id AS variation_id,
                 v.stock,
@@ -265,7 +267,7 @@ exports.getCart = async (req) => {
         }
 
         // Fetch all MOQ records for those products
-        const [moqData] = await connection.query(
+        const [moqData] = await pool.query(
             "SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?) ORDER BY min_qty DESC",
             [productIds]
         );
@@ -291,7 +293,5 @@ exports.getCart = async (req) => {
     } catch (error) {
         console.error("Error fetching cart:", error);
         return { success: false, error: 'Internal server error' };
-    } finally {
-        connection.release();
     }
 };

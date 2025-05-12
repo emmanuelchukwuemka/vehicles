@@ -76,6 +76,15 @@ module.exports.create_account = async (req) => {
 };
 
 module.exports.login_User = async (req) => {
+    
+    // pool.end((err) => {
+    //     if (err) {
+    //       console.error("Error during pool shutdown:", err);
+    //     } else {
+    //       console.log("MySQL pool closed.");
+    //     }
+    //     process.exit(err ? 1 : 0);
+    //  })
 
     const { email, password } = req.body;
 
@@ -110,12 +119,128 @@ module.exports.login_User = async (req) => {
 
     } catch (error) {
 
-        console.log("Error==>", error)
+        console.error("Error==>", error)
 
         return {
             success: false,
             error: "Unable to process your request"
         }
+    }
+};
+
+module.exports.add_address = async (req) => {
+    const {
+        user_id,
+        country,
+        state,
+        name,
+        contact,
+        postal_code,
+        address,
+        city,
+        label,
+        is_default = 0
+    } = req.body;
+
+    if (!user_id || !country || !state || !name || !contact || !postal_code || !address) {
+        return {
+            success: false,
+            error: "One or more required fields are missing"
+        };
+    }
+
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+        
+        const [existing] = await connection.query(
+            `SELECT id FROM user_addresses WHERE user_id = ? AND address = ? AND postal_code = ? AND phone = ?`,
+            [user_id, address, postal_code, contact]
+        );
+        
+        if (existing.length > 0) {
+            return {
+                success: false,
+                error: "This address already exists in your saved addresses."
+            };
+        }
+
+        // If this address should be default, reset all other addresses for this user
+        if (is_default == 1) {
+            await connection.query(
+                `UPDATE user_addresses SET is_default = 0 WHERE user_id = ?`,
+                [user_id]
+            );
+        }
+
+        const [result] = await connection.query(
+            `INSERT INTO user_addresses 
+            (user_id, label, name, phone, address, city, state, postal_code, country, is_default) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            [
+                user_id,
+                label || null,
+                name,
+                contact,
+                address,
+                city || null,
+                state,
+                postal_code,
+                country,
+                is_default
+            ]
+        );
+
+        await connection.commit();
+        
+        const addressesResult = await module.exports.get_user_addresses(req);
+
+        return {
+            success: true,
+            data: addressesResult
+        };
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Error adding address:", error);
+        return {
+            success: false,
+            error: "Unable to save address at the moment"
+        };
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+module.exports.get_user_addresses = async (req) => {
+    
+    const {user_id} = req.body
+    if (!user_id) {
+        return {
+            success: false,
+            error: "User ID is required"
+        };
+    }
+
+    try {
+        const [addresses] = await pool.query(
+            `SELECT id, name, phone, address, city, state, postal_code, country, is_default, created_at FROM user_addresses
+             WHERE user_id = ?
+             ORDER BY is_default DESC, created_at DESC`,
+            [user_id]
+        );
+
+        return {
+            success: true,
+            data: addresses
+        };
+    } catch (error) {
+        console.error("Error fetching addresses:", error);
+        return {
+            success: false,
+            error: "Unable to fetch addresses at the moment"
+        };
     }
 };
 
@@ -242,144 +367,6 @@ module.exports.fetch_stores = async (req) => {
     }
 };
 
-module.exports.fetch_store_products = async (req) => {
-    const { store_id } = req.params;
-    const { isCustomizable, activeCollection, selectedFilter } = req.query; // Filters from request query
-
-    if (isNaN(store_id)) {
-        return {
-            success: false,
-            error: "Invalid Store ID"
-        };
-    }
-
-    try {
-        // Fetch products with only required fields
-        let [products] = await pool.query(
-            `SELECT id, name, collection_id, customizable, created_at FROM products_table 
-             WHERE store_id = ? AND status = 1 ORDER BY created_at DESC`,
-            [store_id]
-        );
-
-        if (!products.length) {
-            return { success: true, data: [] };
-        }
-
-        const productIds = products.map(p => p.id);
-
-        // Fetch media
-        const [media] = await pool.query(
-            `SELECT product_id, url, type FROM media_table WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // Fetch MOQ
-        const [moq] = await pool.query(
-            `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // Fetch Collection Names
-        const [collections] = await pool.query(
-            `SELECT id, name FROM collections_table WHERE id IN (?)`,
-            [products.map(p => p.collection_id)]
-        );
-
-        // Fetch Product Filters (Precomputed)
-        const [productFilters] = await pool.query(
-            `SELECT product_id, filter_id FROM product_filters WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // **Filter Implementation**
-
-        // ✅ Convert Product Filters to a Map for Quick Lookup
-        const productFilterMap = {};
-        productFilters.forEach(({ product_id, filter_id }) => {
-            if (!productFilterMap[product_id]) productFilterMap[product_id] = [];
-            productFilterMap[product_id].push(filter_id);
-        });
-
-        // ✅ Convert Collections to a Map
-        const collectionMap = {};
-        collections.forEach(c => {
-            collectionMap[c.id] = { id: c.id, name: c.name };
-        });
-
-        // ✅ Apply Filters
-        let filteredProducts = products.map(product => ({
-            id: product.id,
-            name: product.name,
-            customizable: product.customizable,
-            created_at: product.created_at,
-            collection: collectionMap[product.collection_id] || { id: null, name: null },
-            media: media.filter(m => m.product_id === product.id),
-            moq: moq.filter(m => m.product_id === product.id),
-            filters: productFilterMap[product.id] || [] // Assign filters
-        }));
-
-        // ✅ Filter by Customizable
-        if (isCustomizable === "true") {
-            filteredProducts = filteredProducts.filter(p => p.customizable === 1);
-        }
-
-        // ✅ Filter by Collection
-        if (activeCollection) {
-            filteredProducts = filteredProducts.filter(p => p.collection.id === parseInt(activeCollection));
-        }
-
-        // ✅ Filter by Default Filters (Recommended, New, Hot, Best Selling, Low Price)
-        if (selectedFilter) {
-            const filterId = parseInt(selectedFilter);
-            filteredProducts = filteredProducts.filter(p => p.filters.includes(filterId));
-
-            // ✅ Special Case: Low Price → Sort by Price Ascending
-            if (filterId === 5) {
-                filteredProducts.sort((a, b) => (a.moq[0]?.ppu || 0) - (b.moq[0]?.ppu || 0));
-            }
-        }
-
-        return { success: true, data: filteredProducts };
-
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        return { success: false, error: "An error occurred while fetching products" };
-    }
-};
-
-module.exports.fetch_store_collections = async (req) => {
-    const { store_id } = req.params;
-
-    if (isNaN(store_id)) {
-        return {
-            success: false,
-            error: "Invalid Store ID"
-        };
-    }
-
-    try {
-        // Fetch unique collections associated with the store's products
-        const [collections] = await pool.query(
-            `SELECT DISTINCT c.id, c.name 
-             FROM collections_table c
-             JOIN products_table p ON c.id = p.collection_id
-             WHERE p.store_id = ? AND c.status = 1`,
-            [store_id]
-        );
-
-        return {
-            success: true,
-            data: collections
-        };
-
-    } catch (error) {
-        console.error("Error fetching collections:", error);
-        return {
-            success: false,
-            error: "An error occurred while fetching collections"
-        };
-    }
-};
 
 // ///////////////////////To be reviewed////////////////////////////////
 module.exports.filter_stores_by_category = async (req) => {
@@ -683,7 +670,7 @@ module.exports.fetchStoresNew = async (req) => {
         const [products] = await connection.query(`
             SELECT p.id, p.store_id, p.name, p.price, p.discount
             FROM products_table p
-            WHERE p.store_id IN (?);
+            WHERE p.store_id IN (?) LIMIT 3;
         `, [storeIds]);
 
         // Fetch MOQ
@@ -803,107 +790,107 @@ module.exports.follow_and_like_store = async (req) => {
 };
 
 
-module.exports.fetch_single_product = async (req) => {
-    const { product_id } = req.params;
+// module.exports.fetch_single_product = async (req) => {
+//     const { product_id } = req.params;
 
-    if (isNaN(product_id)) {
-        return { success: false, error: "Invalid Product ID" };
-    }
+//     if (isNaN(product_id)) {
+//         return { success: false, error: "Invalid Product ID" };
+//     }
 
-    let connection;
+//     let connection;
 
-    try {
-        connection = await pool.getConnection();
+//     try {
+//         connection = await pool.getConnection();
 
-        // Fetch product details
-        const [productRows] = await connection.query(`
-            SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
-            FROM products_table p
-            JOIN stores_table s ON p.store_id = s.id
-            WHERE p.id = ? AND p.status = 1
-            LIMIT 1
-        `, [product_id]);
+//         // Fetch product details
+//         const [productRows] = await connection.query(`
+//             SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
+//             FROM products_table p
+//             JOIN stores_table s ON p.store_id = s.id
+//             WHERE p.id = ? AND p.status = 1
+//             LIMIT 1
+//         `, [product_id]);
 
-        if (productRows.length === 0) {
-            return { success: false, error: "Product not found" };
-        }
-        const product = productRows[0];
+//         if (productRows.length === 0) {
+//             return { success: false, error: "Product not found" };
+//         }
+//         const product = productRows[0];
 
-        // Fetch product media
-        const [media] = await connection.query(`
-            SELECT url, type FROM media_table WHERE product_id = ? AND variation_id IS NULL
-        `, [product_id]);
+//         // Fetch product media
+//         const [media] = await connection.query(`
+//             SELECT url, type FROM media_table WHERE product_id = ? AND variation_id IS NULL
+//         `, [product_id]);
 
-        // Fetch MOQ (Minimum Order Quantity)
-        const [moq] = await connection.query(`
-            SELECT min_qty, ppu FROM product_moq WHERE product_id = ?
-        `, [product_id]);
+//         // Fetch MOQ (Minimum Order Quantity)
+//         const [moq] = await connection.query(`
+//             SELECT min_qty, ppu FROM product_moq WHERE product_id = ?
+//         `, [product_id]);
 
-        // Fetch product specifications
-        const [specifications] = await connection.query(`
-            SELECT name, value FROM product_specifications WHERE product_id = ?
-        `, [product_id]);
+//         // Fetch product specifications
+//         const [specifications] = await connection.query(`
+//             SELECT name, value FROM product_specifications WHERE product_id = ?
+//         `, [product_id]);
 
-        // Fetch product reviews (average rating & total count)
-        const [productReviews] = await connection.query(`
-            SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
-            FROM product_reviews 
-            WHERE product_id = ? AND status = 1
-        `, [product_id]);
+//         // Fetch product reviews (average rating & total count)
+//         const [productReviews] = await connection.query(`
+//             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
+//             FROM product_reviews 
+//             WHERE product_id = ? AND status = 1
+//         `, [product_id]);
 
-        // Fetch store reviews (average rating & total count)
-        const [storeReviews] = await connection.query(`
-            SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
-            FROM store_reviews 
-            WHERE store_id = ? AND status = 1
-        `, [product.store_id]);
+//         // Fetch store reviews (average rating & total count)
+//         const [storeReviews] = await connection.query(`
+//             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
+//             FROM store_reviews 
+//             WHERE store_id = ? AND status = 1
+//         `, [product.store_id]);
 
-        // Fetch product variations
-        const [variations] = await connection.query(`
-            SELECT * FROM variations_table 
-            WHERE product_id = ? AND status = 1
-        `, [product_id]);
+//         // Fetch product variations
+//         const [variations] = await connection.query(`
+//             SELECT * FROM variations_table 
+//             WHERE product_id = ? AND status = 1
+//         `, [product_id]);
 
-        // Attach attributes & media to each variation
-        for (const variation of variations) {
-            const [attributes] = await connection.query(`
-                SELECT name, value FROM variation_attributes WHERE variation_id = ?
-            `, [variation.id]);
+//         // Attach attributes & media to each variation
+//         for (const variation of variations) {
+//             const [attributes] = await connection.query(`
+//                 SELECT name, value FROM variation_attributes WHERE variation_id = ?
+//             `, [variation.id]);
 
-            const [variationMedia] = await connection.query(`
-                SELECT url, type FROM media_table WHERE variation_id = ?
-            `, [variation.id]);
+//             const [variationMedia] = await connection.query(`
+//                 SELECT url, type FROM media_table WHERE variation_id = ?
+//             `, [variation.id]);
 
-            variation.attributes = attributes;
-            variation.media = variationMedia;
-        }
+//             variation.attributes = attributes;
+//             variation.media = variationMedia;
+//         }
 
-        return {
-            success: true,
-            data: {
-                ...product,
-                media,
-                moq,
-                specifications,
-                product_reviews: {
-                    total_reviews: productReviews[0].total_reviews || 0,
-                    avg_rating: parseFloat(productReviews[0].avg_rating) || 0
-                },
-                store_reviews: {
-                    total_reviews: storeReviews[0].total_reviews || 0,
-                    avg_rating: parseFloat(storeReviews[0].avg_rating) || 0
-                },
-                variations
-            }
-        };
+//         return {
+//             success: true,
+//             data: {
+//                 ...product,
+//                 media,
+//                 moq,
+//                 specifications,
+//                 product_reviews: {
+//                     total_reviews: productReviews[0].total_reviews || 0,
+//                     avg_rating: parseFloat(productReviews[0].avg_rating) || 0
+//                 },
+//                 store_reviews: {
+//                     total_reviews: storeReviews[0].total_reviews || 0,
+//                     avg_rating: parseFloat(storeReviews[0].avg_rating) || 0
+//                 },
+//                 variations
+//             }
+//         };
 
-    } catch (error) {
-        console.error("Error fetching product:", error);
-        return { success: false, error: "An error occurred while fetching product" };
-    } finally {
-        if (connection) connection.release();
-    }
-};
+//     } catch (error) {
+//         console.error("Error fetching product:", error);
+//         return { success: false, error: "An error occurred while fetching product" };
+//     } finally {
+//         if (connection) connection.release();
+//     }
+// };
 
 module.exports.fetch_product_variation = async (req) => {
     const { product_id } = req.params;
@@ -1432,3 +1419,106 @@ module.exports.get_shipping_providers = async () => {
     }
 };
 
+exports.getPaymentGateways = async (req, res) => {
+    const connection = await pool.getConnection();
+    try {
+        const [gateways] = await connection.query(
+            `SELECT id, name, logo, provider FROM payment_gateways WHERE is_active = 1 ORDER BY name ASC`
+        );
+
+        // Parse config JSON (if stored as JSON string)
+        const formattedGateways = gateways.map(gw => ({
+            ...gw
+            //config: gw.config ? JSON.parse(gw.config) : null
+        }));
+        
+        return {
+            success:true,
+            data:formattedGateways
+        }
+
+    } catch (err) {
+        console.error('getPaymentGateways error:', err);
+        return {
+            success:false,
+            error:"Failed to fetch payment gateways"
+        }
+    } finally {
+        connection.release();
+    }
+};
+
+exports.getUserPaymentMethods = async (req, res) => {
+    const { user_id } = req.body;
+
+    if (!user_id) {
+        return{
+            success: false,
+            error: "Missing required fields"
+        };
+    }
+
+    try {
+        const [methods] = await pool.query(
+            `SELECT id, brand, last4, exp_month, exp_year, token, is_default
+             FROM user_payment_methods
+             WHERE user_id = ?`,
+            [user_id]
+        );
+
+        return{
+            success: true,
+            data: methods
+        };
+
+    } catch (err) {
+        console.error('getUserPaymentMethods error:', err);
+        return {
+            success: false,
+            error: "Could not fetch payment methods"
+        };
+    }
+};
+
+exports.placeNewOrder = async (req, res) => {
+    
+    console.error("BODY=>", req.body)
+    
+    const { user_id, reference, auth_value, auth_type, order, isDefaultCard} = req.body;
+
+    if (!user_id || !reference || !auth_value || !auth_type) {
+        return {
+            success: false,
+            error: "Missing required fields",
+        };
+    }
+
+    try {
+        
+        const payload = { user_id, reference, auth_value, auth_type, mode: "test", order}
+
+        const response = await axios.post(
+            "https://bloomzonapi-6idf.onrender.com/paystack/payment_pin_validation",payload
+        );
+        
+        if (response.status !== 200) {
+                console.error("Error response:", response.error);
+            return {
+                success: false,
+                error: response.error,
+            };
+        }
+        
+        return {
+            success: true,
+            data: response.data,
+        };
+
+    } catch (error) {
+        console.error("Paystack confirmPayment error:", error.response?.data || error.message);
+        return {
+            success: false,
+            error: error.response?.data?.message || "Payment confirmation failed",
+        };
+    }
+};

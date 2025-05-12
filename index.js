@@ -14,6 +14,7 @@ const { jwtValidator, checkPayload, requestTimer } = require("./mw/middlewares")
 const app = express();
 const port = process.env.APP_PORT_NUMBER;
 
+
 // Middleware to parse JSON
 app.use(bodyParser.json({ limit: '500kb' }));
 
@@ -32,6 +33,7 @@ app.use("/category", categoryRouter);
 
 app.use("/admin", adminRouter);
 
+
 app.listen(port, () => {
-    console.log(`Listening in port ${port}`)
-})
+    console.log(`Server is listening on port ${port}`);
+});

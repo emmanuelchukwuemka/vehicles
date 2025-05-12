@@ -71,7 +71,7 @@ router.post('/update', jwtValidator, async (req, res) => {
     }
 });
 
-router.get('/fetch-cart/:user_id', jwtValidator, async (req, res) => {
+router.post('/fetch-cart', jwtValidator, async (req, res) => {
 
     try {
         const result = await service.getCart(req);

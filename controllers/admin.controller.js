@@ -177,6 +177,70 @@ router.post('/shipping-provider', async (req, res) => {
     }
 });
 
+router.post('/gallery/add', async (req, res) => {
 
+    try {
+        const result = await service.createStoreGalleryItem(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error adding gallery item:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/payment-gateway/add', async (req, res) => {
+
+    try {
+        const result = await service.createPaymentGateway(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error adding payment gateway:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/payment-gateway/fetch', async (req, res) => {
+
+    try {
+        const result = await service.getPaymentGateways(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching payment gateway:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
 
 module.exports = router
