@@ -16,9 +16,9 @@ router.get('/main-category', async (req, res) => {
             const mainCategories = result.data.map(item => {
 
                 const id = item.id
-                const name = staticDecrypt(item._name, staticKey);
-                const image = dynamicDecrypt(item._image, dynamicKey);
-                const status = staticDecrypt(item._status, staticKey);
+                const name = item._name;
+                const image = item._image;
+                const status = item._status;
 
                 return {
                     id,
@@ -100,9 +100,9 @@ router.get('/category', async (req, res) => {
             const categories = result.data.map(item => {
 
                 const id = item.id
-                const main_category = item._maincategory
-                const name = staticDecrypt(item._name, staticKey);
-                const status = staticDecrypt(item._status, staticKey);
+                const main_category = item._maincategory;
+                const name = item._name;
+                const status = item._status;
 
                 return {
                     id,
@@ -208,9 +208,9 @@ router.get('/sub-category', async (req, res) => {
 
                 const id = item.id
                 const category_id = item._category
-                const name = staticDecrypt(item._name.trim(), staticKey)
-                const image = dynamicDecrypt(item._image, dynamicKey)
-                const status = staticDecrypt(item._status, staticKey)
+                const name = item._name.trim();
+                const image = item._image;
+                const status = item._status;
 
                 return {
                     id,

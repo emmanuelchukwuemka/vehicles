@@ -2,7 +2,7 @@ const { pool } = require("../connection/db");
 require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
-const { staticEncrypt, dynamicEncrypt } = require("../helpers/hasher");
+const { staticEncrypt, dynamicEncrypt, staticDecrypt, dynamicDecrypt } = require("../helpers/hasher");
 const { staticKey, dynamicKey } = require("../helpers/keyVolt");
 
 
@@ -417,6 +417,106 @@ exports.createPaymentGateway = async (req, res) => {
             success:false,
             error:"Failed to create payment gateway"
         };
+    } finally {
+        connection.release();
+    }
+};
+
+exports.decryptData = async (req, res) => {
+    const { fields, algorithm, table } = req.body;
+
+    // Validate input
+    if (!table || !Array.isArray(fields) || fields.length === 0 || !algorithm) {
+        return {
+            success: false,
+            error: "Missing required fields: table, fields[], or algorithm"
+        };
+    }
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        // Escape table and field names to prevent SQL injection
+        const escapedFields = fields.map(f => `\`${f}\``).join(', ');
+        const query = `SELECT id, ${escapedFields} FROM \`${table}\``;
+
+        const [rows] = await connection.query(query, []);
+
+        if (rows.length === 0) {
+            await connection.rollback();
+            return res.json({
+                success: false,
+                error: "No record found"
+            });
+        }
+
+        // Load encryption config
+        //const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
+        //const iv = Buffer.from(process.env.ENCRYPTION_IV, 'hex');
+
+        const decryptedRows = [];
+
+        for (const row of rows) {
+            const updates = {};
+
+            for (const field of fields) {
+                try {
+                    const value = row[field];
+                    if (!value) continue;
+
+                    let decrypted;
+                    if (algorithm === 'dynamic') {
+                        decrypted = dynamicDecrypt(value, dynamicKey);
+                    } else if (algorithm === 'static') {
+                        decrypted = staticDecrypt(value, staticKey);
+                    } else {
+                        throw new Error("Unsupported algorithm");
+                    }
+
+                    updates[field] = decrypted;
+
+                } catch (err) {
+                    console.warn(`Failed to decrypt field '${field}' for row ID ${row.id}:`, err.message);
+                }
+
+                decryptedRows.push({
+                    id: row.id,
+                    ...updates
+                });
+            }
+
+            if (Object.keys(updates).length > 0) {
+                const setClause = Object.keys(updates).map(f => `\`${f}\` = ?`).join(', ');
+                const values = Object.values(updates);
+                values.push(row.id);
+
+                await connection.query(
+                    `UPDATE \`${table}\` SET ${setClause} WHERE id = ?`,
+                    values
+                );
+            }
+        }
+
+        // await connection.rollback();
+        // return {
+        //     success: true,
+        //     data: decryptedRows
+        // };
+
+        await connection.commit();
+        return {
+            success: true,
+            data: "Decryption and update successful"
+        };
+
+    } catch (err) {
+        await connection.rollback();
+        console.error('Decryption error:', err);
+        return res.json({
+            success: false,
+            error: "Failed to decrypt and update data"
+        });
     } finally {
         connection.release();
     }

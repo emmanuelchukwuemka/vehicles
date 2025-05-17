@@ -3,7 +3,8 @@ require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
 const FormData = require('form-data');
-const { getStoreReviews, getStoreCreatedAt, fetchProductSample } = require("../helpers/executors");
+const { getStoreReviews, getStoreCreatedAt, fetchProductSample, getProductTotalOrder, getProductMOQ, getProductCollection, getProductFilters, getProductSubcategory } = require("../helpers/executors");
+const { fetchEnrichedProducts } = require("../utility/product/fetchEnrichedProducts");
 
 
 
@@ -476,6 +477,7 @@ module.exports.fetch_single_product = async (req) => {
         
         // Fetch sample
         const sample = await fetchProductSample(product.id);
+        const totalOrder = await getProductTotalOrder(product_id);
 
         // Fetch product media
         const [media] = await connection.query(`
@@ -522,6 +524,7 @@ module.exports.fetch_single_product = async (req) => {
                 SELECT url, type FROM media_table WHERE variation_id = ?
             `, [variation.id]);
 
+            variation.store_id = product.store_id;
             variation.attributes = attributes;
             variation.media = variationMedia;
         }
@@ -529,8 +532,10 @@ module.exports.fetch_single_product = async (req) => {
         return {
             success: true,
             data: {
+                store_id: product.store_id,
                 ...product,
                 sample,
+                total_order: totalOrder,
                 media,
                 moq,
                 specifications,
@@ -924,112 +929,88 @@ module.exports.like_product = async (req) => {
 
 module.exports.fetch_store_products = async (req) => {
     const { store_id } = req.body;
-    const { isCustomizable, activeCollection, selectedFilter } = req.query; // Filters from request query
-
-    if (isNaN(store_id)) {
-        return {
-            success: false,
-            error: "Invalid Store ID"
-        };
-    }
+    const { isCustomizable, activeCollection, selectedFilter, grouped = false } = req.query;
 
     try {
-        // Fetch products with only required fields
-        let [products] = await pool.query(
-            `SELECT id, name, collection_id, customizable, created_at FROM products_table 
-             WHERE store_id = ? AND status = 1 ORDER BY created_at DESC`,
-            [store_id]
-        );
+        const allProducts = await fetchEnrichedProducts(store_id);
 
-        if (!products.length) {
-            return { success: true, data: [] };
-        }
+        // Apply filters if necessary
+        let filtered = [...allProducts];
 
-        const productIds = products.map(p => p.id);
-
-        // Fetch media
-        const [media] = await pool.query(
-            `SELECT product_id, url, type FROM media_table WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // Fetch MOQ
-        const [moq] = await pool.query(
-            `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // Fetch Collection Names
-        const [collections] = await pool.query(
-            `SELECT id, name FROM collections_table WHERE id IN (?)`,
-            [products.map(p => p.collection_id)]
-        );
-
-        // Fetch Product Filters (Precomputed)
-        const [productFilters] = await pool.query(
-            `SELECT product_id, filter_id FROM product_filters WHERE product_id IN (?)`,
-            [productIds]
-        );
-
-        // **Filter Implementation**
-
-        // ✅ Convert Product Filters to a Map for Quick Lookup
-        const productFilterMap = {};
-        productFilters.forEach(({ product_id, filter_id }) => {
-            if (!productFilterMap[product_id]) productFilterMap[product_id] = [];
-            productFilterMap[product_id].push(filter_id);
-        });
-
-        // ✅ Convert Collections to a Map
-        const collectionMap = {};
-        collections.forEach(c => {
-            collectionMap[c.id] = { id: c.id, name: c.name };
-        });
-
-        // ✅ Apply Filters
-        let filteredProducts = products.map(product => ({
-            id: product.id,
-            name: product.name,
-            customizable: product.customizable,
-            created_at: product.created_at,
-            collection: collectionMap[product.collection_id] || { id: null, name: null },
-            media: media.filter(m => m.product_id === product.id),
-            moq: moq.filter(m => m.product_id === product.id),
-            filters: productFilterMap[product.id] || [] // Assign filters
-        }));
-
-        // ✅ Filter by Customizable
         if (isCustomizable === "true") {
-            filteredProducts = filteredProducts.filter(p => p.customizable === 1);
+            filtered = filtered.filter(p => p.customizable === 1);
         }
 
-        // ✅ Filter by Collection
         if (activeCollection) {
-            filteredProducts = filteredProducts.filter(p => p.collection.id === parseInt(activeCollection));
+            filtered = filtered.filter(p => p.collection.id === parseInt(activeCollection));
         }
 
-        // ✅ Filter by Default Filters (Recommended, New, Hot, Best Selling, Low Price)
         if (selectedFilter) {
             const filterId = parseInt(selectedFilter);
-            filteredProducts = filteredProducts.filter(p => p.filters.includes(filterId));
 
-            // ✅ Special Case: Low Price → Sort by Price Ascending
             if (filterId === 5) {
-                filteredProducts.sort((a, b) => (a.moq[0]?.ppu || 0) - (b.moq[0]?.ppu || 0));
+                // Best Price: Ignore p.filters, just apply price logic
+                filtered = filtered
+                    .filter(p => p.moq.length && p.moq[0].ppu <= 50)
+                    .sort((a, b) => (a.moq[0]?.ppu || 0) - (b.moq[0]?.ppu || 0));
+            } else {
+                // For other filters, match by filter ID
+                filtered = filtered.filter(p => p.filters.includes(filterId));
             }
         }
 
-        return { success: true, data: filteredProducts };
+        if (grouped === "true") {
+            const groupedProducts = {
+                new_arrivals: [],
+                best_selling: [],
+                recommended: [],
+                customizable: [],
+                by_collection: {},
+                by_subcategory: {},
+                mainCategory: []
+            };
 
-    } catch (error) {
-        console.error("Error fetching products:", error);
-        return { success: false, error: "An error occurred while fetching products" };
+            allProducts.forEach(p => {
+                if (p.filters.includes(1)) groupedProducts.new_arrivals.push(p);
+                if (p.filters.includes(4)) groupedProducts.best_selling.push(p);
+                if (p.filters.includes(3)) groupedProducts.recommended.push(p);
+                if (p.customizable === 1) groupedProducts.customizable.push(p);
+
+                const colName = p.collection?.name || 'Uncategorized';
+                if (!groupedProducts.by_collection[colName]) groupedProducts.by_collection[colName] = [];
+                groupedProducts.by_collection[colName].push(p);
+
+                const subName = p.subcategory?.name || 'Others';
+                if (!groupedProducts.by_subcategory[subName]) groupedProducts.by_subcategory[subName] = [];
+                groupedProducts.by_subcategory[subName].push(p);
+            });
+
+            // Step: Extract distinct subcategories used in the store
+            const mainCategoryMap = {};
+            allProducts.forEach(p => {
+                const sub = p.subcategory;
+                if (sub && sub.name && !mainCategoryMap[sub.name]) {
+                    mainCategoryMap[sub.name] = { name: sub.name, image: sub.image || null };
+                }
+            });
+            groupedProducts.mainCategory = Object.values(mainCategoryMap);
+
+            return { success: true, data: groupedProducts };
+        }
+
+        return { success: true, data: filtered };
+
+    } catch (err) {
+        console.error("Error in fetch_store_products:", err);
+        return { success: false, error: err.message };
     }
 };
 
 
 
 
+
+// TODO: Implement this to product creation and remove it from here
 module.exports.set_product_sample = async (req) => {
     const {store_id, product_id, ppu, min_qty } = req.body;
 

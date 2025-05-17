@@ -243,4 +243,26 @@ router.post('/payment-gateway/fetch', async (req, res) => {
     }
 });
 
+router.post('/decrypt-data', async (req, res) => {
+
+    try {
+        const result = await service.decryptData(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error decrypting data:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
 module.exports = router

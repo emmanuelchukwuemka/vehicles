@@ -261,37 +261,6 @@ CREATE TABLE store_reviews (
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
 );
 
--- creating the payment_gateways table
-CREATE TABLE payment_gateways (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,                  -- e.g., "Paystack", "Flutterwave", "Buypower", "Stripe"
-    logo VARCHAR(200) UNIQUE NOT NULL,  
-    provider VARCHAR(100) UNIQUE NOT NULL,   -- e.g., "paystack", "flutterwave", "buypower"
-    is_active BOOLEAN DEFAULT TRUE,              -- Whether this gateway is available for checkout
-    sandbox_mode BOOLEAN DEFAULT FALSE,          -- Indicates if gateway is running in test mode
-    config JSON DEFAULT NULL,                    -- Optional config like public keys, secrets, etc.
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
-
--- creating the user_payment_methods table
-CREATE TABLE user_payment_methods (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    method VARCHAR(50),      -- e.g., 'card', 'bank'
-    gateway_id VARCHAR(255),       -- e.g., Stripe or Paystack token/id
-    brand VARCHAR(50),
-    last4 VARCHAR(4),
-    exp_month INT,
-    exp_year INT,
-    token VARCHAR(255),       -- e.g., Stripe or Paystack token/id
-    is_default TINYINT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (gateway_id) REFERENCES payment_gateways(id) ON DELETE CASCADE
-);
-
 CREATE TABLE wishlist (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
@@ -301,9 +270,7 @@ CREATE TABLE wishlist (
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
 );
 
-
-
-----------------------------------------------------------------------------------------------------
+--/////////////////////////////////////////////////////////////////
 
 
 -- creating the maincategory table
@@ -339,6 +306,57 @@ CREATE TABLE subcategory  (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (_category) REFERENCES category(id)
 );
+-- ///////////////////////////////////////////////////////////////////////
+
+-- creating the payment_gateways table
+CREATE TABLE payment_gateways (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,              -- e.g., "Paystack", "Flutterwave", "Buypower", "Stripe"
+    logo VARCHAR(200) UNIQUE NOT NULL,  
+    provider VARCHAR(100) UNIQUE NOT NULL,   -- e.g., "paystack", "flutterwave", "buypower"
+    is_active BOOLEAN DEFAULT TRUE,          -- Whether this gateway is available for checkout
+    sandbox_mode BOOLEAN DEFAULT FALSE,      -- Indicates if gateway is running in test mode
+    config JSON DEFAULT NULL,                 -- Optional config like public keys, secrets, etc.
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+-- creating the user_addresses table
+CREATE TABLE user_addresses (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    label VARCHAR(100) NOT NULL, -- e.g., "Home", "Work"
+    name VARCHAR(100) NOT NULL,
+    phone VARCHAR(20) NOT NULL,
+    address TEXT NOT NULL,
+    city VARCHAR(100) NOT NULL,
+    state VARCHAR(100) NOT NULL,
+    postal_code VARCHAR(20) NOT NULL,
+    country VARCHAR(100) NOT NULL,
+    is_default TINYINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
+);
+
+-- creating the user_payment_methods table
+CREATE TABLE user_payment_methods (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    method VARCHAR(50),      -- e.g., 'card', 'bank'
+    gateway_id INT NOT NULL,       
+    brand VARCHAR(50) NOT NULL,             -- e.g., mastercard or visa 
+    last4 VARCHAR(4) NOT NULL,
+    exp_month VARCHAR(10) NOT NULL,
+    exp_year VARCHAR(10) NOT NULL,
+    token VARCHAR(255) NOT NULL,       -- e.g., paypal, Stripe or Paystack token/id
+    is_default TINYINT DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (gateway_id) REFERENCES payment_gateways(id) ON DELETE CASCADE
+);
 
 -- Creating the cart table
 CREATE TABLE carts_table (
@@ -349,12 +367,12 @@ CREATE TABLE carts_table (
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
 );
 
-
 -- Creating the cart_items table
 CREATE TABLE cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cart_id INT NOT NULL,
     product_id INT NOT NULL,
+    store_id INT NOT NULL,
     sku VARCHAR(255),
     color VARCHAR(100),
     size VARCHAR(50),
@@ -362,7 +380,8 @@ CREATE TABLE cart_items (
     price DECIMAL(10,2),
     weight DECIMAL(10,2), -- Added weight column
     FOREIGN KEY (cart_id) REFERENCES carts_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
 );
 
 -- Creating the shipping_methods table
@@ -413,63 +432,43 @@ CREATE TABLE live_table (
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
 );
 
-
 -- Creating the Orders_table
 CREATE TABLE orders_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    store_id INT NOT NULL,
-    paymentMethod_id INT NOT NULL,
+    payment_method_id INT NOT NULL,
     logistic_id INT NOT NULL,
+    delivery_address INT NOT NULL,
     order_ref VARCHAR(100) NOT NULL UNIQUE,
     tracking_id VARCHAR(100) NOT NULL UNIQUE,
     total_amount DECIMAL(10,2) NOT NULL,
     payment_status ENUM('pending', 'paid', 'failed') DEFAULT 'pending',
     delivery_status ENUM('pending', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
-    address TEXT,
-    is_sample BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (paymentMethod_id) REFERENCES user_payment_methods(id) ON DELETE CASCADE,
-    FOREIGN KEY (logistic_id) REFERENCES shipping_providers(id) ON DELETE CASCADE
+    FOREIGN KEY (payment_method_id) REFERENCES user_payment_methods(id) ON DELETE CASCADE,
+    FOREIGN KEY (logistic_id) REFERENCES shipping_providers(id) ON DELETE CASCADE,
+    FOREIGN KEY (delivery_address) REFERENCES user_addresses(id) ON DELETE CASCADE
 );
 
 -- Creating the oder_items table
 CREATE TABLE order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
+    store_id INT NOT NULL,
     product_id INT NOT NULL,
     variation_id INT NOT NULL,
     sku VARCHAR(100),
     color VARCHAR(50),
     size VARCHAR(50),
     quantity INT NOT NULL,
+    is_sample TINYINT DEFAULT 0,
     price DECIMAL(10,2) NOT NULL,
-
     FOREIGN KEY (order_id) REFERENCES orders_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
-);
-
-CREATE TABLE user_addresses (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    label VARCHAR(100), -- e.g., "Home", "Work"
-    name VARCHAR(100),
-    phone VARCHAR(20),
-    address TEXT NOT NULL,
-    city VARCHAR(100),
-    state VARCHAR(100),
-    postal_code VARCHAR(20),
-    country VARCHAR(100),
-    is_default TINYINT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
 );
 
 -- Creating the sheared_cart table

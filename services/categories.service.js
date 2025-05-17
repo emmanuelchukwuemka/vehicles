@@ -64,13 +64,11 @@ module.exports.add_mainCategory = async (req) => {
 // TODO: fix some errors and deploy to github
 module.exports.fetch_mainCategory = async (req) => {
 
-    const enc_status = staticEncrypt('1', staticKey)
-
     try {
         // Fetch all records from the section_table
         const [rows] = await pool.query(`
             SELECT * FROM maincategory WHERE _status = ?
-        `, [enc_status]);
+        `, [1]);
 
         if (rows.length > 0) {
             return {
@@ -233,13 +231,11 @@ module.exports.fetch_category = async (req) => {
         }
     }
 
-    const enc_status = staticEncrypt('1', staticKey)
-
     try {
         // Fetch all records from the section_table
         const [rows] = await pool.query(`
-            SELECT * FROM category WHERE _maincategory = ? AND _status = ?
-        `, [main_id, enc_status]);
+            SELECT * FROM category WHERE _maincategory = ? AND _status = 1
+        `, [main_id]);
 
         if (rows.length > 0) {
             return {

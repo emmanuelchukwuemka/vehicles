@@ -4,7 +4,7 @@ require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
 const { reloadService } = require("../helpers/dataReload.service");
-const { categorizeReview } = require("../helpers/executors");
+const { categorizeReview, saveCardPaymentMethod, confirmCardPayment } = require("../helpers/executors");
 
 
 module.exports.create_account = async (req) => {
@@ -1423,7 +1423,7 @@ exports.getPaymentGateways = async (req, res) => {
     const connection = await pool.getConnection();
     try {
         const [gateways] = await connection.query(
-            `SELECT id, name, logo, provider FROM payment_gateways WHERE is_active = 1 ORDER BY name ASC`
+            `SELECT id, name, logo, provider, is_active FROM payment_gateways ORDER BY name ASC`
         );
 
         // Parse config JSON (if stored as JSON string)
@@ -1448,77 +1448,208 @@ exports.getPaymentGateways = async (req, res) => {
     }
 };
 
-exports.getUserPaymentMethods = async (req, res) => {
-    const { user_id } = req.body;
-
-    if (!user_id) {
-        return{
-            success: false,
-            error: "Missing required fields"
-        };
-    }
-
-    try {
-        const [methods] = await pool.query(
-            `SELECT id, brand, last4, exp_month, exp_year, token, is_default
-             FROM user_payment_methods
-             WHERE user_id = ?`,
-            [user_id]
-        );
-
-        return{
-            success: true,
-            data: methods
-        };
-
-    } catch (err) {
-        console.error('getUserPaymentMethods error:', err);
-        return {
-            success: false,
-            error: "Could not fetch payment methods"
-        };
-    }
-};
-
 exports.placeNewOrder = async (req, res) => {
-    
-    console.error("BODY=>", req.body)
-    
-    const { user_id, reference, auth_value, auth_type, order, isDefaultCard} = req.body;
 
-    if (!user_id || !reference || !auth_value || !auth_type) {
+    const { paymentInfo, orderInfo, logisticInfo, isSample } = req.body;
+    const { user_id, reference, auth_value, auth_type, total_amount, paymentGateway_id } = paymentInfo;
+
+    const { deliverAddress_id, shippingCompany_id } = logisticInfo;
+
+    if (
+        !user_id || !reference || !auth_value || !auth_type ||
+        total_amount < 1 || !paymentGateway_id || !deliverAddress_id || !shippingCompany_id || !orderInfo
+    ) {
         return {
             success: false,
             error: "Missing required fields",
         };
     }
 
+    let connection;
     try {
-        
-        const payload = { user_id, reference, auth_value, auth_type, mode: "test", order}
+        const payload = { user_id, reference, auth_value, auth_type, mode: "test" };
 
-        const response = await axios.post(
-            "https://bloomzonapi-6idf.onrender.com/paystack/payment_pin_validation",payload
-        );
-        
-        if (response.status !== 200) {
-                console.error("Error response:", response.error);
+        const confirmation = await confirmCardPayment(payload);
+
+        if (!confirmation.success) {
             return {
                 success: false,
-                error: response.error,
+                error: confirmation.error
             };
         }
-        
+
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+
+        const saveCard = await saveCardPaymentMethod(connection, paymentInfo);
+
+        if (!saveCard.success) {
+            return {
+                success: false,
+                error: saveCard.error
+            }
+        }
+
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        const order_ref = reference;
+        const tracking_id = `TRK-${uuid()}`;
+
+        const [orderResult] = await connection.query(
+            `INSERT INTO orders_table 
+                (user_id, payment_method_id, logistic_id, order_ref, tracking_id, total_amount, payment_status, delivery_status, delivery_address)
+             VALUES (?, ?, ?, ?, ?, ?, 'paid', 'pending', ?)`,
+            [
+                user_id,
+                paymentGateway_id,
+                shippingCompany_id,
+                order_ref,
+                tracking_id,
+                total_amount,
+                deliverAddress_id
+            ]
+        );
+
+        const order_id = orderResult.insertId;
+
+        if (!order_id) throw new Error("Order insertion failed");
+
+        // Handle both single and multiple order items
+        const orderItems = Array.isArray(orderInfo) ? orderInfo : [orderInfo];
+
+        for (const item of orderItems) {
+            const {
+                store_id,
+                product_id,
+                variation_id,
+                sku,
+                color,
+                size,
+                quantity,
+                price
+            } = item;
+
+            await connection.query(
+                `INSERT INTO order_items 
+                    (order_id, store_id, product_id, variation_id, sku, color, size, quantity, is_sample, price)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [
+                    order_id,
+                    store_id,
+                    product_id,
+                    variation_id,
+                    sku,
+                    color,
+                    size,
+                    quantity,
+                    !!isSample ? 1 : 0,
+                    price
+                ]
+            );
+        }
+
+        await connection.commit();
+        connection.release();
+
         return {
             success: true,
-            data: response.data,
+            data: tracking_id
         };
 
     } catch (error) {
-        console.error("Paystack confirmPayment error:", error.response?.data || error.message);
+        if (connection) {
+            await connection.rollback();
+            connection.release();
+        }
+        console.error("placeNewOrder error:", error.response?.data || error.message);
         return {
             success: false,
-            error: error.response?.data?.message || "Payment confirmation failed",
+            error: error.response?.data?.message || "Unable to place order at this time",
+        };
+    }
+};
+
+exports.getUserCards = async (req, res) => {
+    const { user_id } = req.body;
+
+    if (!user_id) {
+        return {
+            success: false,
+            error: "User ID is required"
+        };
+    }
+
+    try {
+        const [cards] = await pool.query(
+            `SELECT
+                id,
+                method,
+                gateway_id,
+                brand,
+                last4,
+                exp_month,
+                exp_year,
+                is_default,
+                created_at,
+                updated_at
+             FROM user_payment_methods
+             WHERE user_id = ?
+             ORDER BY is_default DESC, created_at DESC`,
+            [user_id]
+        );
+
+        return {
+            success: true,
+            data: cards
+        };
+    } catch (err) {
+        console.error('Error fetching saved cards:', err);
+        return {
+            success: false,
+            error: "Failed to fetch saved cards"
+        };
+    }
+};
+
+exports.removeUserCard = async (req, res) => {
+    const { user_id, card_id } = req.body;
+
+    if (!user_id || !card_id) {
+        return {
+            success: false,
+            error: "Missing user_id or card_id"
+        };
+    }
+
+    try {
+        const [result] = await pool.query(
+            `DELETE FROM user_payment_methods WHERE id = ? AND user_id = ?`,
+            [card_id, user_id]
+        );
+
+        if (result.affectedRows === 0) {
+            return {
+                success: false,
+                error: "Card not found or already removed"
+            };
+        }
+
+        const [cards] = await pool.query(
+            `SELECT * FROM user_payment_methods WHERE user_id = ? ORDER BY is_default DESC, created_at DESC`,
+            [user_id]
+        );
+
+        return {
+            success: true,
+            data: cards
+        };
+    } catch (err) {
+        console.error("Error removing card:", err);
+        return {
+            success: false,
+            error: "Failed to remove card"
         };
     }
 };

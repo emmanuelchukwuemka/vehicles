@@ -584,7 +584,7 @@ router.get('/shipping/providers', async (req, res) => {
     }
 });
 
-router.post('/payment-gateway/fetch', async (req, res) => {
+router.get('/payment-gateways', async (req, res) => {
 
     try {
         const result = await service.getPaymentGateways(req);
@@ -602,28 +602,6 @@ router.post('/payment-gateway/fetch', async (req, res) => {
         }
     } catch (error) {
         console.error('Error fetching payment gateway:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-});
-
-router.post('/payment-method/fetch', async (req, res) => {
-
-    try {
-        const result = await service.getUserPaymentMethods(req);
-
-        if (result && result.success) {
-            res.status(200).json({
-                success: result.success,
-                data: result.data
-            });
-
-        } else {
-
-            const errorMessage = result.error || 'Unknown server error occurred';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-    } catch (error) {
-        console.error('Error fetching payment method:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });
@@ -650,6 +628,49 @@ router.post('/orders/new', async (req, res) => {
     }
 });
 
+router.post('/cards/fetch', async (req, res) => {
+
+    try {
+        const result = await service.getUserCards(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching user cards:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/cards/remove', async (req, res) => {
+
+    try {
+        const result = await service.removeUserCard(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching user cards:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
 
 
 module.exports = router

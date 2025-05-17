@@ -5,13 +5,15 @@ const axios = require('axios');
 
 exports.addToCart = async (req, res) => {
 
-    const { user_id, product_id, sku, color, size, quantity, price, weight } = req.body;
+    const { user_id, store_id, product_id, sku, color, size, quantity, price, weight } = req.body;
+
+    //console.log("Cart=>", JSON.stringify(req.body, 0, 2))
 
     const conn = await pool.getConnection();
 
     try {
         // Validation
-        if (!user_id || !product_id || !sku || !size || !quantity || !price || !weight) {
+        if (!user_id || !store_id || !product_id || !sku || !size || !quantity || !price || !weight) {
             return { 
                 success: false,
                 error: "Missing required fields." 
@@ -53,8 +55,8 @@ exports.addToCart = async (req, res) => {
         } else {
             // Add new item 
             await conn.query(
-                `INSERT INTO cart_items (cart_id, product_id, sku, color, size, quantity, price, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
-                [cart_id, product_id, sku.trim(), color?.trim() || null, size.trim(), quantity, price, weight]
+                `INSERT INTO cart_items (cart_id, store_id, product_id, sku, color, size, quantity, price, weight) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                [cart_id, store_id, product_id, sku.trim(), color?.trim() || null, size.trim(), quantity, price, weight]
             );
         }
 
@@ -226,6 +228,7 @@ exports.getCart = async (req) => {
             SELECT 
                 ci.id,
                 ci.product_id,
+                ci.store_id,
                 ci.sku,
                 ci.color,
                 ci.size,
