@@ -166,8 +166,8 @@ module.exports.add_category = async (req) => {
         };
     }
 
-    const enc_name = staticEncrypt(name.trim(), staticKey)
-    const enc_status = staticEncrypt('1', staticKey)
+    const cat_name = name.trim()
+    const cat_status = 1
 
     try {
         // Check if the section exists
@@ -186,7 +186,7 @@ module.exports.add_category = async (req) => {
         // Check if the category already exists in the section
         const [existingCategory] = await pool.query(
             `SELECT id FROM category WHERE _name = ? AND _maincategory = ?`,
-            [enc_name, main_id]
+            [cat_name, main_id]
         );
 
         if (existingCategory.length > 0) {
@@ -199,7 +199,7 @@ module.exports.add_category = async (req) => {
         // Insert the new category
         const [{ affectedRows }] = await pool.query(
             `INSERT INTO category (_name, _maincategory, _status, _date) VALUES (?, ?, ?, NOW())`,
-            [enc_name, main_id, enc_status]
+            [cat_name, main_id, cat_status]
         );
 
         if (affectedRows > 0) {

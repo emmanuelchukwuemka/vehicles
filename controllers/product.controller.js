@@ -51,6 +51,29 @@ router.get('/:product_id', async (req, res) => {
     }
 });
 
+router.post('/inquiry', async (req, res) => {
+
+    try {
+        const result = await service.productInquiry(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching store products:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
 router.post('/text-search', async (req, res) => {
 
     try {
@@ -76,6 +99,52 @@ router.post('/text-search', async (req, res) => {
         } else {
 
             const errorMessage = result.error || 'Unknown server server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/search', async (req, res) => {
+
+    try {
+        const result = await service.search_products_in_stores(req);
+
+        if (result && result.success && result.data.length > 0) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error searching products:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/search-store-products', async (req, res) => {
+
+    try {
+        const result = await service.search_store_products(req);
+
+        if (result && result.success && result.data) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
             res.status(400).json({ success: false, error: errorMessage });
         }
     } catch (error) {

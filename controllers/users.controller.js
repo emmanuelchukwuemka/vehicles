@@ -271,64 +271,6 @@ router.post("/filter-stores-caps", async (req, res) => {
 
 })
 
-router.post("/filter-stores-cat-cap", async (req, res) => {
-
-    try {
-
-        const result = await service.fetchStoresNew(req);
-
-        if (result && result.success && result.data.length) {
-
-            const stores = result.data.map(store => {
-
-                const id = store.id;
-                const code = store.code;
-                const name = store.name
-                const logo = store.logo
-                const net_worth = parseFloat(store.net_worth)
-                const created_at = store.created_at
-                const floor_space = store.floor_space
-                const staff_count = store.staff_count
-                const is_verified = store.is_verified
-                const capabilities = store.capabilities
-                const products = store.products
-                const status = parseInt(store.status)
-
-
-                return {
-                    id,
-                    code,
-                    name,
-                    logo,
-                    net_worth,
-                    floor_space,
-                    staff_count,
-                    is_verified,
-                    created_at,
-                    capabilities,
-                    status,
-                    products
-                }
-            });
-
-            res.json({
-                success: true,
-                data: stores
-            });
-
-        } else {
-
-            const errorMessage = result.error || 'Error establishing connection to the server';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-
-    } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).send('Internal Server Error');
-    }
-
-})
-
 router.get('/capabilities', async (req, res) => {
 
     try {
@@ -492,28 +434,28 @@ router.post('/product-review', async (req, res) => {
     }
 });
 
-router.get('/store-review/:store_id', async (req, res) => {
+// router.get('/store-review/:store_id', async (req, res) => {
 
-    try {
-        const result = await service.get_store_reviews(req);
+//     try {
+//         const result = await service.get_store_reviews(req);
 
-        if (result && result.success) {
+//         if (result && result.success) {
 
-            res.status(200).json({
-                success: result.success,
-                data: result.data
-            });
+//             res.status(200).json({
+//                 success: result.success,
+//                 data: result.data
+//             });
 
-        } else {
+//         } else {
 
-            const errorMessage = result.error || 'Unknown server occurred';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
-    } catch (error) {
-        console.error('Error fetching store reviews:', error);
-        res.status(500).json({ success: false, error: 'Internal Server Error' });
-    }
-});
+//             const errorMessage = result.error || 'Unknown server occurred';
+//             res.status(400).json({ success: false, error: errorMessage });
+//         }
+//     } catch (error) {
+//         console.error('Error fetching store reviews:', error);
+//         res.status(500).json({ success: false, error: 'Internal Server Error' });
+//     }
+// });
 
 router.post('/store-review', async (req, res) => {
 

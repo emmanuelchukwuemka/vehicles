@@ -243,6 +243,50 @@ router.post('/payment-gateway/fetch', async (req, res) => {
     }
 });
 
+router.post('/attributes/add', async (req, res) => {
+
+    try {
+        const result = await service.createAttribute(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error creating attributes:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/layouts/add', async (req, res) => {
+
+    try {
+        const result = await service.createLayout(req);
+
+        if (result && result.success) {
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server error occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error creating layout:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
 router.post('/decrypt-data', async (req, res) => {
 
     try {

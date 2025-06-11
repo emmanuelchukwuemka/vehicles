@@ -58,11 +58,13 @@ CREATE TABLE stores_table (
 CREATE TABLE collections_table (
     id INT PRIMARY KEY AUTO_INCREMENT,
     store_id INT NOT NULL,
+    subcategory_id INT NOT NULL,
     name VARCHAR(255) NOT NULL,
-    status TINYINT(1) NOT NULL DEFAULT 1, -- 1 = Active, 0 = Inactive
+    status TINYINT(1) NOT NULL DEFAULT 1
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE
 );
 
 -- creating the products table
@@ -72,13 +74,13 @@ CREATE TABLE products_table (
     subcategory_id INT NOT NULL,
     collection_id INT NOT NULL,
     product_code VARCHAR(255) NOT NULL, -- Unique product identifier
-    sku VARCHAR(255) NOT NULL UNIQUE, -- Unique SKU for each product variation
     name TEXT NOT NULL,
-    weight DECIMAL(10,2) NOT NULL,
     description LONGTEXT NOT NULL,
     customizable BOOLEAN NOT NULL DEFAULT 0,
-    price DECIMAL(10, 2) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
     discount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+    weight DECIMAL(10, 2) NOT NULL DEFAULT 0.00,
+    stock INT NOT NULL DEFAULT 0,
     status TINYINT(1) NOT NULL DEFAULT 1, -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -96,11 +98,14 @@ CREATE TABLE product_sample (
     min_qty INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
+    -- Foreign keys with cascading delete
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+
+    -- One sample per product
     UNIQUE (product_id)
 );
-
 
 -- creating the product_moq table
 CREATE TABLE product_moq (
@@ -118,6 +123,7 @@ CREATE TABLE variations_table (
     sku VARCHAR(255) NOT NULL UNIQUE, -- Unique SKU for each variation
     price DECIMAL(10,2) NOT NULL, -- price for security
     stock INT NOT NULL DEFAULT 0, -- Inventory count
+    weight DECIMAL(10,2) NOT NULL DEFAULT 0.00,
     status TINYINT(1) NOT NULL DEFAULT 1, -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -128,11 +134,37 @@ CREATE TABLE variations_table (
 CREATE TABLE variation_attributes (
     id INT PRIMARY KEY AUTO_INCREMENT,
     variation_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL, -- e.g., "Color", "Size"
+    attribute_id INT NOT NULL,
+    label VARCHAR(255) NOT NULL, -- e.g., "Color", "Size"
     value VARCHAR(255) NOT NULL, -- e.g., "Red", "M"
+    price DECIMAL(10,2) NOT NULL, -- price for an attr
+    stock INT NULL, -- total in stock
+    image VARCHAR(255) NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
+    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (attribute_id) REFERENCES attributes_table(id) ON DELETE CASCADE
+);
+
+-- creating the layout_table table
+CREATE TABLE layouts_table (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    priority VARCHAR(10) NOT NULL,
+    status TINYINT(1) NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- creating the attributes_table table
+CREATE TABLE attributes_table (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  layout_id INT NOT NULL, -- how this attribute is displayed (inline, vertical, etc.)
+  name VARCHAR(100) NOT NULL,
+  label VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  FOREIGN KEY (layout_id) REFERENCES layouts_table(id) ON DELETE SET NULL
 );
 
 -- creating the product_specifications table
@@ -149,13 +181,15 @@ CREATE TABLE product_specifications (
 CREATE TABLE media_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     product_id INT NOT NULL, -- Links to the main product
-    variation_id INT DEFAULT NULL, -- Can be NULL if media is for the general product
+    variation_id INT DEFAULT NULL, 
+    attribute_id INT DEFAULT NULL,
     url TEXT NOT NULL,
     type ENUM('image', 'video') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
+    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (attribute_id) REFERENCES variation_attributes(id) ON DELETE CASCADE
 );
 
 -- creating the store_gallery table
@@ -433,12 +467,13 @@ CREATE TABLE live_table (
 );
 
 -- Creating the Orders_table
-CREATE TABLE orders_table (
+CREATE TABLE IF NOT EXISTS orders_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    payment_method_id INT NOT NULL,
+    -- payment_method_id INT NULL,
     logistic_id INT NOT NULL,
     delivery_address INT NOT NULL,
+    order_status ENUM('pending', 'processing', 'completed', 'cancelled', 'refunded') NOT NULL DEFAULT 'pending',
     order_ref VARCHAR(100) NOT NULL UNIQUE,
     tracking_id VARCHAR(100) NOT NULL UNIQUE,
     total_amount DECIMAL(10,2) NOT NULL,
@@ -446,14 +481,15 @@ CREATE TABLE orders_table (
     delivery_status ENUM('pending', 'shipped', 'delivered', 'cancelled') DEFAULT 'pending',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (payment_method_id) REFERENCES user_payment_methods(id) ON DELETE CASCADE,
+    --FOREIGN KEY (payment_method_id) REFERENCES user_payment_methods(id) ON DELETE SET NULL,
     FOREIGN KEY (logistic_id) REFERENCES shipping_providers(id) ON DELETE CASCADE,
     FOREIGN KEY (delivery_address) REFERENCES user_addresses(id) ON DELETE CASCADE
 );
 
--- Creating the oder_items table
-CREATE TABLE order_items (
+-- Creating order_items table
+CREATE TABLE IF NOT EXISTS order_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT NOT NULL,
     store_id INT NOT NULL,
@@ -471,6 +507,85 @@ CREATE TABLE order_items (
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
 );
 
+-- Creating order_item_attributes table
+CREATE TABLE IF NOT EXISTS order_item_attributes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  order_item_id INT NOT NULL,
+  attribute_name VARCHAR(100) NOT NULL,
+  attribute_value VARCHAR(100) NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (order_item_id) REFERENCES order_items(id) ON DELETE CASCADE
+);
+
+-- Creating the oder_items table
+CREATE TABLE cart_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cart_id INT NOT NULL,
+    store_id INT NOT NULL,
+    product_id INT NOT NULL,
+    variation_id INT NOT NULL,
+    sku VARCHAR(100),
+    attribute_key TEXT NOT NULL,
+    quantity INT NOT NULL,
+    price DECIMAL(10,2) NOT NULL,
+    weight DECIMAL(10,2) DEFAULT 0.00,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (cart_id) REFERENCES carts_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
+);
+
+CREATE TABLE cart_item_attributes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    cart_item_id INT NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    value VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE CASCADE
+);
+
+CREATE TABLE attachment_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    attachment VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE inquiry_table (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    store_id INT NOT NULL,
+    attachment_id INT NULL,
+    message Text NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (attachment_id) REFERENCES attachment_table(id) ON DELETE CASCADE
+);
+
+-- chat_table table
+CREATE TABLE chat_table (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  
+  sender_id INT NOT NULL,
+  sender_type ENUM('user', 'store') NOT NULL,
+  
+  receiver_id INT NOT NULL,
+  receiver_type ENUM('user', 'store') NOT NULL,
+  
+  attachment_id INT NULL,
+  message TEXT,
+  
+  is_product TINYINT(1) NOT NULL DEFAULT 0,
+  status TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (attachment_id) REFERENCES attachment_table(id) ON DELETE CASCADE
+);
+
 -- Creating the sheared_cart table
 CREATE TABLE shared_carts (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -484,3 +599,28 @@ CREATE TABLE shared_carts (
     FOREIGN KEY (shared_by) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (shared_with) REFERENCES users_table(id) ON DELETE CASCADE
 );
+
+-- Customization table
+CREATE TABLE IF NOT EXISTS customizations_table (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  product_id INT NOT NULL,
+  store_id INT NOT NULL,
+  user_id INT NOT NULL,
+  variation_id INT NOT NULL,
+  sku VARCHAR(255) NOT NULL,
+  attr_key VARCHAR(255) NOT NULL,
+  customization_type ENUM('text', 'logo', 'image') NOT NULL,
+  source ENUM('order', 'cart') NOT NULL,
+  customization_id INT DEFAULT NULL,
+  value TEXT NOT NULL,
+  settings JSON NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  UNIQUE KEY unique_customization (product_id, attr_key, customization_type, source),
+
+  FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+  FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
+  FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

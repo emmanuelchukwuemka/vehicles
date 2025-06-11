@@ -1,5 +1,8 @@
 const { pool } = require("../../connection/db");
-const { getProductMOQ, getProductFilters, getProductCollection, getProductSubcategory } = require("../../helpers/executors");
+const { getProductCollection } = require("./getProductCollection");
+const { getProductFilters } = require("./getProductFilters");
+const { getProductMOQ } = require("./getProductMOQ");
+const { getProductSubcategory } = require("./getProductSubcategory");
 
 module.exports.fetchEnrichedProducts = async (store_id) => {
     // Step 1: Basic validation
@@ -25,7 +28,7 @@ module.exports.fetchEnrichedProducts = async (store_id) => {
     const collections = await getProductCollection(productIds);
     const subcategories = await getProductSubcategory(productIds);
 
-    console.log("Filter=>", filters)
+    //console.log("Filter=>", filters)
 
     // Step 4: Convert filters to map
     const filterMap = {};
@@ -39,7 +42,7 @@ module.exports.fetchEnrichedProducts = async (store_id) => {
     // Step 5: Map collections
     const collectionMap = {};
     collections.forEach(c => {
-        collectionMap[c.id] = { id: c.id, name: c.name };
+        collectionMap[c.id] = { id: c.id, name: c.name, subcategory: c.subcategory_id };
     });
 
     // Step 6: Return enriched list
@@ -51,7 +54,7 @@ module.exports.fetchEnrichedProducts = async (store_id) => {
         media: media.filter(m => m.product_id === product.id),
         moq: moq.filter(m => m.product_id === product.id),
         filters: (filters[product.id] || []).map(f => f.id),
-        collection: collectionMap[product.collection_id] || { id: null, name: null },
+        collection: collectionMap[product.collection_id] || { id: null, name: null, subcategory: null },
         subcategory: subcategories[product.id] || null
     }));
 }

@@ -4,7 +4,7 @@ require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
 const { reloadService } = require("../helpers/dataReload.service");
-const { categorizeReview, saveCardPaymentMethod, confirmCardPayment } = require("../helpers/executors");
+const { categorizeReview, saveCardPaymentMethod, confirmCardPayment, saveCustomization } = require("../helpers/executors");
 
 
 module.exports.create_account = async (req) => {
@@ -76,7 +76,9 @@ module.exports.create_account = async (req) => {
 };
 
 module.exports.login_User = async (req) => {
-    
+
+    console.log(req.body)
+
     // pool.end((err) => {
     //     if (err) {
     //       console.error("Error during pool shutdown:", err);
@@ -606,124 +608,6 @@ module.exports.fetch_default_filters = async (req) => {
     }
 };
 
-module.exports.fetchStoresNew = async (req) => {
-    const { categ_level, categ_id, caps } = req.body;
-
-    let filterColumn;
-    if (categ_level === "main_category") {
-        filterColumn = "mc.id";
-    } else if (categ_level === "category") {
-        filterColumn = "c.id";
-    } else if (categ_level === "sub_category") {
-        filterColumn = "sc.id";
-    }
-
-    let connection;
-    try {
-        connection = await pool.getConnection();
-
-        // Base Query: Fetch all active stores
-        let query = `SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space,
-                            s.staff_count, s.is_verified, s.created_at AS store_created_at, s.status
-                     FROM stores_table s
-                     LEFT JOIN products_table p ON s.id = p.store_id
-                     LEFT JOIN subcategory sc ON p.subcategory_id = sc.id
-                     LEFT JOIN category c ON sc._category = c.id
-                     LEFT JOIN maincategory mc ON c._maincategory = mc.id
-                     WHERE s.status = 1`;
-        let queryParams = [];
-
-        // Apply Category Filter
-        if (categ_level && categ_id) {
-            query += ` AND ${filterColumn} = ?`;
-            queryParams.push(categ_id);
-        }
-
-        // Apply Capability Filter
-        if (caps && caps.length > 0) {
-            query += ` AND s.id IN (
-                SELECT store_id FROM store_capabilities 
-                WHERE capability_id IN (${caps.map(() => '?').join(',')})
-                GROUP BY store_id HAVING COUNT(DISTINCT capability_id) = ?
-            )`;
-            queryParams.push(...caps, caps.length);
-        }
-
-        // Execute store query
-        const [stores] = await connection.query(query, queryParams);
-        if (!stores.length) {
-            return { success: false, error: "No stores found for this filter." };
-        }
-
-        // Get store IDs
-        const storeIds = stores.map(s => s.id);
-
-        // Fetch Capabilities
-        const [capabilities] = await connection.query(`
-            SELECT sc.store_id, c.id AS capability_id, c.name
-            FROM store_capabilities sc
-            JOIN capabilities_table c ON sc.capability_id = c.id
-            WHERE sc.store_id IN (?);
-        `, [storeIds]);
-
-        // Fetch Products
-        const [products] = await connection.query(`
-            SELECT p.id, p.store_id, p.name, p.price, p.discount
-            FROM products_table p
-            WHERE p.store_id IN (?) LIMIT 3;
-        `, [storeIds]);
-
-        // Fetch MOQ
-        const [moq] = await connection.query(`
-            SELECT product_id, min_qty, ppu
-            FROM product_moq
-            WHERE product_id IN (?);
-        `, [products.map(p => p.id)]);
-
-        // Fetch Media
-        const [media] = await connection.query(`
-            SELECT product_id, url, type
-            FROM media_table
-            WHERE product_id IN (?);
-        `, [products.map(p => p.id)]);
-
-        // Structure the response
-        let storeData = stores.map(store => ({
-            id: store.id,
-            code: store.code,
-            name: store.name,
-            logo: store.logo,
-            net_worth: store.net_worth,
-            floor_space: store.floor_space,
-            staff_count: store.staff_count,
-            is_verified: store.is_verified,
-            created_at: store.store_created_at,
-            status: store.status,
-            capabilities: capabilities
-                .filter(c => c.store_id === store.id)
-                .map(c => ({ id: c.capability_id, name: c.name })),
-            products: products
-                .filter(p => p.store_id === store.id)
-                .map(p => ({
-                    id: p.id,
-                    name: p.name,
-                    price: p.price,
-                    discount: p.discount,
-                    moq: moq.filter(m => m.product_id === p.id),
-                    media: media.filter(m => m.product_id === p.id),
-                }))
-        }));
-
-        return { success: true, data: storeData };
-
-    } catch (error) {
-        console.error("Error fetching stores:", error);
-        return { success: false, error: "An error occurred while fetching stores." };
-    } finally {
-        if (connection) connection.release();
-    }
-};
-
 module.exports.follow_and_like_store = async (req) => {
     const { user_id, store_id, action } = req.body;
 
@@ -1208,112 +1092,112 @@ module.exports.give_store_review = async (req) => {
     }
 };
 
-module.exports.get_store_reviews = async (req) => {
-    const { store_id } = req.params;
+// module.exports.get_store_reviews = async (req) => {
+//     const { store_id } = req.params;
 
-    if (isNaN(store_id)) {
-        return { success: false, error: "Invalid Store ID" };
-    }
+//     if (isNaN(store_id)) {
+//         return { success: false, error: "Invalid Store ID" };
+//     }
 
-    try {
-        // Validate if the store exists and is active
-        const [storeCheck] = await pool.query(
-            `SELECT id FROM stores_table WHERE id = ? AND status = 1 LIMIT 1`,
-            [store_id]
-        );
+//     try {
+//         // Validate if the store exists and is active
+//         const [storeCheck] = await pool.query(
+//             `SELECT id FROM stores_table WHERE id = ? AND status = 1 LIMIT 1`,
+//             [store_id]
+//         );
 
-        if (storeCheck.length === 0) {
-            return { success: false, error: "Store not found or inactive." };
-        }
+//         if (storeCheck.length === 0) {
+//             return { success: false, error: "Store not found or inactive." };
+//         }
 
-        // Fetch overall rating and total reviews
-        const [reviewStats] = await pool.query(
-            `SELECT 
-                COUNT(id) AS total_reviews, 
-                IFNULL(AVG((product_quality + supplier_service + on_time_shipment) / 3), 0) AS average_rating
-             FROM store_reviews 
-             WHERE store_id = ? AND status = 1`,
-            [store_id]
-        );
+//         // Fetch overall rating and total reviews
+//         const [reviewStats] = await pool.query(
+//             `SELECT 
+//                 COUNT(id) AS total_reviews, 
+//                 IFNULL(AVG((product_quality + supplier_service + on_time_shipment) / 3), 0) AS average_rating
+//              FROM store_reviews 
+//              WHERE store_id = ? AND status = 1`,
+//             [store_id]
+//         );
 
-        const total_reviews = reviewStats[0]?.total_reviews || 0;
-        const average_rating = parseFloat(reviewStats[0]?.average_rating) || 0;
+//         const total_reviews = reviewStats[0]?.total_reviews || 0;
+//         const average_rating = parseFloat(reviewStats[0]?.average_rating) || 0;
 
-        // Rating label classification
-        let rating_label;
-        if (average_rating >= 4.5) {
-            rating_label = "Excellent";
-        } else if (average_rating >= 4.0) {
-            rating_label = "Very Good";
-        } else if (average_rating >= 3.0) {
-            rating_label = "Good";
-        } else if (average_rating >= 2.0) {
-            rating_label = "Fair";
-        } else if (average_rating > 0) {
-            rating_label = "Poor";
-        } else {
-            rating_label = "No Ratings Yet";
-        }
+//         // Rating label classification
+//         let rating_label;
+//         if (average_rating >= 4.5) {
+//             rating_label = "Excellent";
+//         } else if (average_rating >= 4.0) {
+//             rating_label = "Very Good";
+//         } else if (average_rating >= 3.0) {
+//             rating_label = "Good";
+//         } else if (average_rating >= 2.0) {
+//             rating_label = "Fair";
+//         } else if (average_rating > 0) {
+//             rating_label = "Poor";
+//         } else {
+//             rating_label = "No Ratings Yet";
+//         }
 
-        // Fetch category-specific ratings
-        const [categoryRatings] = await pool.query(
-            `SELECT 
-                AVG(product_quality) AS avg_product_quality,
-                AVG(supplier_service) AS avg_supplier_service,
-                AVG(on_time_shipment) AS avg_on_time_shipment
-             FROM store_reviews 
-             WHERE store_id = ? AND status = 1`,
-            [store_id]
-        );
+//         // Fetch category-specific ratings
+//         const [categoryRatings] = await pool.query(
+//             `SELECT 
+//                 AVG(product_quality) AS avg_product_quality,
+//                 AVG(supplier_service) AS avg_supplier_service,
+//                 AVG(on_time_shipment) AS avg_on_time_shipment
+//              FROM store_reviews 
+//              WHERE store_id = ? AND status = 1`,
+//             [store_id]
+//         );
 
-        const categoryData = categoryRatings[0] || {};
+//         const categoryData = categoryRatings[0] || {};
 
-        // Ensure values are numbers before applying .toFixed(1)
-        const product_quality = categoryData.avg_product_quality !== null ? parseFloat(categoryData.avg_product_quality).toFixed(1) : null;
-        const supplier_service = categoryData.avg_supplier_service !== null ? parseFloat(categoryData.avg_supplier_service).toFixed(1) : null;
-        const on_time_shipment = categoryData.avg_on_time_shipment !== null ? parseFloat(categoryData.avg_on_time_shipment).toFixed(1) : null;
+//         // Ensure values are numbers before applying .toFixed(1)
+//         const product_quality = categoryData.avg_product_quality !== null ? parseFloat(categoryData.avg_product_quality).toFixed(1) : null;
+//         const supplier_service = categoryData.avg_supplier_service !== null ? parseFloat(categoryData.avg_supplier_service).toFixed(1) : null;
+//         const on_time_shipment = categoryData.avg_on_time_shipment !== null ? parseFloat(categoryData.avg_on_time_shipment).toFixed(1) : null;
 
-        // Fetch user reviews
-        const [userReviews] = await pool.query(
-            `SELECT 
-                sr.id, sr.user_id, u.first_name, sr.rating, sr.review_text, 
-                sr.product_quality, sr.supplier_service, sr.on_time_shipment, sr.created_at
-             FROM store_reviews sr
-             JOIN users_table u ON sr.user_id = u.id
-             WHERE sr.store_id = ? AND sr.status = 1
-             ORDER BY sr.created_at DESC LIMIT 4`,
-            [store_id]
-        );
+//         // Fetch user reviews
+//         const [userReviews] = await pool.query(
+//             `SELECT 
+//                 sr.id, sr.user_id, u.first_name, sr.rating, sr.review_text, 
+//                 sr.product_quality, sr.supplier_service, sr.on_time_shipment, sr.created_at
+//              FROM store_reviews sr
+//              JOIN users_table u ON sr.user_id = u.id
+//              WHERE sr.store_id = ? AND sr.status = 1
+//              ORDER BY sr.created_at DESC LIMIT 4`,
+//             [store_id]
+//         );
 
-        return {
-            success: true,
-            data: {
-                average_rating: parseFloat(average_rating.toFixed(1)), // Convert to 1 decimal place
-                total_reviews,
-                rating_label,
-                category_ratings: {
-                    product_quality,
-                    supplier_service,
-                    on_time_shipment
-                },
-                user_reviews: userReviews.map(review => ({
-                    id: review.id,
-                    user_id: review.user_id,
-                    user_name: review.first_name,
-                    rating: review.rating,
-                    review_text: review.review_text,
-                    product_quality: review.product_quality,
-                    supplier_service: review.supplier_service,
-                    on_time_shipment: review.on_time_shipment,
-                    created_at: review.created_at
-                }))
-            }
-        };
-    } catch (error) {
-        console.error("Error fetching store reviews:", error);
-        return { success: false, error: "An error occurred while fetching store reviews." };
-    }
-};
+//         return {
+//             success: true,
+//             data: {
+//                 average_rating: parseFloat(average_rating.toFixed(1)), // Convert to 1 decimal place
+//                 total_reviews,
+//                 rating_label,
+//                 category_ratings: {
+//                     product_quality,
+//                     supplier_service,
+//                     on_time_shipment
+//                 },
+//                 user_reviews: userReviews.map(review => ({
+//                     id: review.id,
+//                     user_id: review.user_id,
+//                     user_name: review.first_name,
+//                     rating: review.rating,
+//                     review_text: review.review_text,
+//                     product_quality: review.product_quality,
+//                     supplier_service: review.supplier_service,
+//                     on_time_shipment: review.on_time_shipment,
+//                     created_at: review.created_at
+//                 }))
+//             }
+//         };
+//     } catch (error) {
+//         console.error("Error fetching store reviews:", error);
+//         return { success: false, error: "An error occurred while fetching store reviews." };
+//     }
+// };
 
 module.exports.get_shipping_methods = async () => {
     const connection = await pool.getConnection();
@@ -1451,13 +1335,13 @@ exports.getPaymentGateways = async (req, res) => {
 exports.placeNewOrder = async (req, res) => {
 
     const { paymentInfo, orderInfo, logisticInfo, isSample } = req.body;
-    const { user_id, reference, auth_value, auth_type, total_amount, paymentGateway_id } = paymentInfo;
+    const { user_id, reference, auth_value, auth_type, total_amount } = paymentInfo;
 
     const { deliverAddress_id, shippingCompany_id } = logisticInfo;
 
     if (
         !user_id || !reference || !auth_value || !auth_type ||
-        total_amount < 1 || !paymentGateway_id || !deliverAddress_id || !shippingCompany_id || !orderInfo
+        total_amount < 1 || !deliverAddress_id || !shippingCompany_id || !orderInfo
     ) {
         return {
             success: false,
@@ -1481,7 +1365,6 @@ exports.placeNewOrder = async (req, res) => {
         connection = await pool.getConnection();
         await connection.beginTransaction();
 
-
         const saveCard = await saveCardPaymentMethod(connection, paymentInfo);
 
         if (!saveCard.success) {
@@ -1491,19 +1374,15 @@ exports.placeNewOrder = async (req, res) => {
             }
         }
 
-        connection = await pool.getConnection();
-        await connection.beginTransaction();
-
         const order_ref = reference;
         const tracking_id = `TRK-${uuid()}`;
 
         const [orderResult] = await connection.query(
             `INSERT INTO orders_table 
-                (user_id, payment_method_id, logistic_id, order_ref, tracking_id, total_amount, payment_status, delivery_status, delivery_address)
-             VALUES (?, ?, ?, ?, ?, ?, 'paid', 'pending', ?)`,
+                (user_id, logistic_id, order_ref, tracking_id, total_amount, payment_status, delivery_status, delivery_address)
+             VALUES (?, ?, ?, ?, ?, 'paid', 'pending', ?)`,
             [
                 user_id,
-                paymentGateway_id,
                 shippingCompany_id,
                 order_ref,
                 tracking_id,
@@ -1514,7 +1393,12 @@ exports.placeNewOrder = async (req, res) => {
 
         const order_id = orderResult.insertId;
 
-        if (!order_id) throw new Error("Order insertion failed");
+        if (!order_id) {
+            return {
+                success: false,
+                error: "Unable to place order. please try again"
+            }
+        };
 
         // Handle both single and multiple order items
         const orderItems = Array.isArray(orderInfo) ? orderInfo : [orderInfo];
@@ -1525,29 +1409,61 @@ exports.placeNewOrder = async (req, res) => {
                 product_id,
                 variation_id,
                 sku,
-                color,
-                size,
                 quantity,
                 price
             } = item;
 
-            await connection.query(
+            const [orderItemResult] = await connection.query(
                 `INSERT INTO order_items 
-                    (order_id, store_id, product_id, variation_id, sku, color, size, quantity, is_sample, price)
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+                    (order_id, store_id, product_id, variation_id, sku, quantity, is_sample, price)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
                 [
                     order_id,
                     store_id,
                     product_id,
                     variation_id,
                     sku,
-                    color,
-                    size,
                     quantity,
                     !!isSample ? 1 : 0,
                     price
                 ]
             );
+
+            const order_item_id = orderItemResult.insertId;
+
+            if (order_item_id) {
+                // Insert each attribute into order_item_attributes
+                for (const [key, value] of Object.entries(item?.selectedAttributes)) {
+                    await connection.query(
+                        `INSERT INTO order_item_attributes (order_item_id, attribute_name, attribute_value) VALUES (?, ?, ?)`,
+                        [order_item_id, key, value]
+                    );
+                }
+
+
+            }
+
+            if (item?.customizations) {
+                const saveCustomizationData = await saveCustomization(connection, {
+                    product_id: item?.product_id,
+                    user_id,
+                    store_id: item?.store_id,
+                    attr_key: item?.key,
+                    variation_id: item?.variation_id,
+                    sku: item?.sku,
+                    source: "order",
+                    customizations: item?.customizations,
+                });
+
+                if (!saveCustomizationData.success) {
+                    return {
+                        success: false,
+                        error: saveCustomizationData.error
+                    }
+                }
+            }
+
+
         }
 
         await connection.commit();
@@ -1555,13 +1471,19 @@ exports.placeNewOrder = async (req, res) => {
 
         return {
             success: true,
-            data: tracking_id
+            data: "Order placed successfully"
         };
 
     } catch (error) {
         if (connection) {
             await connection.rollback();
             connection.release();
+        }
+        if (error.code === "ER_DUP_ENTRY") {
+            return {
+                success: false,
+                error: "Possible transaction duplicate. Please restart the process",
+            };
         }
         console.error("placeNewOrder error:", error.response?.data || error.message);
         return {

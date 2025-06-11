@@ -3,8 +3,22 @@ require('dotenv').config();
 const { v4: uuid } = require("uuid")
 const axios = require('axios');
 const FormData = require('form-data');
-const { getStoreReviews, getStoreCreatedAt, fetchProductSample, getProductTotalOrder, getProductMOQ, getProductCollection, getProductFilters, getProductSubcategory } = require("../helpers/executors");
 const { fetchEnrichedProducts } = require("../utility/product/fetchEnrichedProducts");
+const { getBestSellingProductIds } = require("../utility/productRanking");
+const { getRankedProductsByStore } = require("../utility/getRankedProductsByStore");
+const { fetchStoreGallery } = require("../utility/getStoreGallery");
+const { getStoreReviews } = require("../utility/getStoreReviews");
+const { getVariationAttributes } = require("../utility/product/getProductAttributes");
+const { getProductTotalOrder } = require("../utility/product/getProductTotalOrder");
+const { getStoreCreatedAt } = require("../utility/store/getStoreCreatedAt");
+const { getProductSample } = require("../utility/product/getProductSample");
+const { productsSearch, product_search_by_collections } = require("../utility/product/productSearch");
+const { getCategoryData } = require("../utility/category/getCategoryData");
+const { getProductMOQ } = require("../utility/product/getProductMOQ");
+const { getStoresByIds } = require("../utility/product/getProductStoresByIds");
+const { getProductMedia } = require("../utility/product/getProductMedia");
+const { searchStore } = require("../utility/store/searchStore");
+
 
 
 
@@ -376,78 +390,7 @@ module.exports.update_subCategory = async (req) => {
 };
 
 // ////////////////////////////////////////////////////////////////////////////////////
-module.exports.add_product = async (req) => {
 
-    const { sId, sCharge, sStatus } = req.body
-
-    if (!sId) {
-
-        return {
-            success: false,
-            error: "Parameters are not complete"
-        }
-    }
-
-    let connection;
-
-    try {
-        // Get a connection from the pool
-        connection = await pool.getConnection();
-
-        // Begin a transaction
-        await connection.beginTransaction();
-
-        try {
-
-            const encS_Id = encryptStaticFunction(sId.trim().toLowerCase(), retrievedKeyBuffer)
-
-            const mergedData = {
-                _serviceId: encS_Id,
-                _charge: JSON.stringify(encryptData(sCharge, secretKey)),
-                _status: JSON.stringify(encryptData(sStatus, secretKey))
-            };
-
-            const columns = Object.keys(mergedData).join(', ');
-            const placeholders = Array(Object.keys(mergedData).length).fill('?').join(', ');
-            const values = Object.values(mergedData);
-
-            const [{ affectedRows }] = await connection.query(`
-                INSERT INTO products_table (${columns}, _date)
-                VALUES (${placeholders}, NOW())
-            `, [...values]);
-
-            if (affectedRows > 0) {
-                await connection.commit();
-                return {
-                    success: true
-                }
-
-            } else {
-                await connection.rollback();
-                return {
-                    success: false,
-                    message: 'Failed to insert data into the database',
-                };
-            }
-
-        } catch (error) {
-            // Rollback the transaction if an error occurs during the transaction
-            await connection.rollback();
-            console.error('Error adding service user:', error);
-            // Return a falsy value to indicate an error occurred
-            return null;
-        }
-    } catch (error) {
-        // Handle error
-        console.error('Error getting connection from the pool:', error);
-        throw new Error('Error getting connection from the pool');
-    } finally {
-        // Release the connection back to the pool
-        if (connection) {
-            connection.release();
-        }
-    }
-};
 
 module.exports.fetch_single_product = async (req) => {
     const { product_id } = req.params;
@@ -474,9 +417,9 @@ module.exports.fetch_single_product = async (req) => {
             return { success: false, error: "Product not found" };
         }
         const product = productRows[0];
-        
+
         // Fetch sample
-        const sample = await fetchProductSample(product.id);
+        const sample = await getProductSample(product.id);
         const totalOrder = await getProductTotalOrder(product_id);
 
         // Fetch product media
@@ -516,16 +459,15 @@ module.exports.fetch_single_product = async (req) => {
 
         // Attach attributes & media to each variation
         for (const variation of variations) {
-            const [attributes] = await connection.query(`
-                SELECT name, value FROM variation_attributes WHERE variation_id = ?
-            `, [variation.id]);
+
+            const v_attributes = await getVariationAttributes(variation.id);
 
             const [variationMedia] = await connection.query(`
                 SELECT url, type FROM media_table WHERE variation_id = ?
             `, [variation.id]);
 
             variation.store_id = product.store_id;
-            variation.attributes = attributes;
+            variation.attributes = v_attributes;
             variation.media = variationMedia;
         }
 
@@ -554,6 +496,99 @@ module.exports.fetch_single_product = async (req) => {
     } catch (error) {
         console.error("Error fetching product:", error);
         return { success: false, error: "An error occurred while fetching product" };
+    } finally {
+        if (connection) connection.release();
+    }
+};
+
+module.exports.productInquiry = async (req) => {
+    const { product_id, store_id, user_id, payload } = req.body;
+
+    if (!store_id || !user_id || !payload) {
+        return { success: false, error: "One or more required fields are empty, please check your inputs" };
+    }
+
+    const { msg, images = [] } = payload;
+
+    if (!msg || msg.trim() === "") {
+        return { success: false, error: "Inquiry message cannot be empty" };
+    }
+
+    let connection;
+
+    try {
+        connection = await pool.getConnection();
+        await connection.beginTransaction();
+
+        // Validate product
+        // const [productRows] = await connection.query(
+        //     "SELECT id, store_id FROM products_table WHERE id = ? AND status = 1",
+        //     [product_id]
+        // );
+        // if (productRows.length === 0) {
+        //     return { success: false, error: "Product not found or inactive" };
+        // }
+
+        // Confirm the product belongs to the store
+        // if (productRows[0].store_id !== store_id) {
+        //     return { success: false, error: "Product does not belong to the specified store" };
+        // }
+
+        // Validate store
+        const [storeRows] = await connection.query(
+            "SELECT id FROM stores_table WHERE id = ? AND status = 1",
+            [store_id]
+        );
+        if (storeRows.length === 0) {
+            return { success: false, error: "Store not found or inactive" };
+        }
+
+        // Validate user
+        const [userRows] = await connection.query(
+            "SELECT id FROM users_table WHERE id = ? AND status = 1",
+            [user_id]
+        );
+        if (userRows.length === 0) {
+            return { success: false, error: "User not found or inactive" };
+        }
+
+        // Insert attachments and collect their IDs
+        const attachmentIds = [];
+        for (const img of images) {
+            const [result] = await connection.query(
+                "INSERT INTO attachment_table (attachment) VALUES (?)",
+                [img]
+            );
+            attachmentIds.push(result.insertId);
+        }
+
+        // If there are no attachments, insert a dummy row (optional)
+        const attachmentId = attachmentIds.length > 0 ? attachmentIds[0] : null;
+        if (!attachmentId) {
+            const [result] = await connection.query(
+                "INSERT INTO attachment_table (attachment) VALUES ('')"
+            );
+            attachmentIds.push(result.insertId);
+        }
+
+        // Save the inquiry
+        await connection.query(
+            `INSERT INTO inquiry_table (user_id, store_id, attachment_id, message)
+             VALUES (?, ?, ?, ?)`,
+            [user_id, store_id, attachmentIds[0], msg]
+        );
+
+        await connection.commit();
+
+        return {
+            success: true,
+            data: "Inquiry submitted successfully"
+        };
+
+    } catch (error) {
+        if (connection) await connection.rollback();
+        console.error("Inquiry Error =>", error);
+        return { success: false, error: "Unable to send your inquiry" };
     } finally {
         if (connection) connection.release();
     }
@@ -715,6 +750,7 @@ module.exports.fetch_multiple_products = async (req) => {
     }
 };
 
+// From Bloomzon database
 module.exports.text_search_products = async (req) => {
     const { text } = req.body;
 
@@ -748,6 +784,225 @@ module.exports.text_search_products = async (req) => {
         return {
             success: false,
             error: error.response?.data
+        };
+    }
+};
+
+module.exports.search = async (req) => {
+    const { keyword } = req.body;
+
+    if (!keyword || typeof keyword !== 'string') {
+        return {
+            success: false,
+            error: "Search keyword is required"
+        };
+    }
+
+    const productFields = ['name', 'store_id']
+    const storeFields = ['name', 'floor_space', 'country', 'logo', 'net_worth', 'staff_count', 'is_verified', 'verified_date', 'created_at']
+    const mediaFields = ['url']
+
+    try {
+        const products = await productsSearch(keyword, pool, productFields);
+        if (!products.data.length) {
+            return {
+                success: false,
+                error: "No product found"
+            };
+        }
+
+        const productIds = products.data.map(p => p.id);
+        const storeIds = products.data.map(p => p.store_id);
+
+        const [moqList, storeMap, medias] = await Promise.all([
+            getProductMOQ(productIds),
+            getStoresByIds(storeIds, pool, storeFields),
+            //getProductTotalOrder(productIds),
+            getProductMedia(productIds, pool, mediaFields)
+        ]);
+
+        //Convert MOQ list to map
+        const moqMap = {};
+        for (const moq of moqList) {
+            if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+            moqMap[moq.product_id].push({
+                min_qty: moq.min_qty,
+                ppu: moq.ppu
+            });
+        }
+
+        const enrichedProducts = products.data.map(product => ({
+            ...product,
+            moq: moqMap[product.id] || [],
+            medias: medias[product.id] || [],
+            store: storeMap[product.store_id] || null
+        }));
+
+        return {
+            success: true,
+            data: enrichedProducts
+        };
+    } catch (error) {
+        console.log("Error in search:", error);
+        return {
+            success: false,
+            error: "Failed to perform search"
+        };
+    }
+};
+
+module.exports.search_products_in_stores = async (req) => {
+    const { keyword } = req.body;
+
+    if (!keyword || typeof keyword !== 'string') {
+        return {
+            success: false,
+            error: "Search keyword is required"
+        };
+    }
+
+    const productFields = ['id', 'name', 'store_id'];
+    const storeFields = ['id', 'name', 'floor_space', 'country', 'logo', 'net_worth', 'staff_count', 'is_verified', 'verified_date', 'created_at'];
+    const mediaFields = ['url'];
+
+    try {
+        const productsResult = await productsSearch(keyword, pool, productFields);
+
+        if (!productsResult.success || !productsResult.data.length) {
+            return {
+                success: false,
+                error: "No product found"
+            };
+        }
+
+        const products = productsResult.data;
+        const productIds = products.map(p => p.id);
+        const storeIds = [...new Set(products.map(p => p.store_id))];
+
+        const [moqList, storeMap, mediaMap] = await Promise.all([
+            getProductMOQ(productIds),
+            getStoresByIds(storeIds, pool, storeFields),
+            getProductMedia(productIds, pool, mediaFields)
+        ]);
+
+        // Convert MOQ list to map
+        const moqMap = {};
+        for (const moq of moqList) {
+            if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+            moqMap[moq.product_id].push({
+                min_qty: moq.min_qty,
+                ppu: moq.ppu
+            });
+        }
+
+        // Group products under their store
+        const storeGrouped = {};
+
+        for (const product of products) {
+            const storeId = product.store_id;
+            if (!storeGrouped[storeId]) {
+                storeGrouped[storeId] = {
+                    store: storeMap[storeId] || null,
+                    products: []
+                };
+            }
+
+            storeGrouped[storeId].products.push({
+                ...product,
+                moq: moqMap[product.id] || [],
+                medias: mediaMap[product.id] || []
+            });
+        }
+
+        const storeResults = Object.values(storeGrouped);
+
+        return {
+            success: true,
+            data: storeResults
+        };
+    } catch (error) {
+        console.error("Error in search_for_store:", error);
+        return {
+            success: false,
+            error: "Failed to perform search"
+        };
+    }
+};
+
+module.exports.search_store_products = async (req) => {
+    const { store_id, level, level_id, search, sort_by_moq } = req.body;
+
+    // Validate store_id
+    if (!store_id || typeof store_id !== 'number') {
+        return {
+            success: false,
+            error: "store_id is required and must be a number"
+        };
+    }
+
+    try {
+        // Search for products using helper
+        const { products, level_name } = await searchStore({ store_id, level, level_id, search }, pool, ["name"]);
+
+        if (!products.length) {
+            return {
+                success: false,
+                error: "No products found"
+            };
+        }
+
+        const productIds = products.map(p => p.id);
+
+        // Fetch MOQ and media in parallel
+        const [moqList, mediaMap] = await Promise.all([
+            getProductMOQ(productIds, pool),
+            getProductMedia(productIds, pool, ["url"])
+        ]);
+
+        // Create map for MOQ
+        const moqMap = {};
+        for (const moq of moqList) {
+            if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+            moqMap[moq.product_id].push({
+                min_qty: moq.min_qty,
+                ppu: moq.ppu
+            });
+        }
+
+        // Construct final products array
+        let finalProducts = products.map(product => ({
+            ...product,
+            moq: moqMap[product.id] || [],
+            media: mediaMap[product.id] || []
+        }));
+
+        // Optional sorting by MOQ
+        if (sort_by_moq === 'ppu') {
+            finalProducts.sort((a, b) => {
+                const aPpu = a.moq[0]?.ppu ?? Infinity;
+                const bPpu = b.moq[0]?.ppu ?? Infinity;
+                return aPpu - bPpu;
+            });
+        } else if (sort_by_moq === 'min_qty') {
+            finalProducts.sort((a, b) => {
+                const aQty = a.moq[0]?.min_qty ?? Infinity;
+                const bQty = b.moq[0]?.min_qty ?? Infinity;
+                return aQty - bQty;
+            });
+        }
+
+        return {
+            success: true,
+            data: {
+                level_name,
+                products: finalProducts
+            }
+        };
+    } catch (err) {
+        console.error('search_store_products error:', err);
+        return {
+            success: false,
+            error: 'Failed to fetch products for store'
         };
     }
 };
@@ -799,7 +1054,6 @@ module.exports.fetch_live_products = async (req) => {
     };
   }
 };
-
 
 module.exports.fetch_single_live_products = async (req) => {
     const { product_id } = req.body;
@@ -967,12 +1221,33 @@ module.exports.fetch_store_products = async (req) => {
                 customizable: [],
                 by_collection: {},
                 by_subcategory: {},
-                mainCategory: []
+                mainCategory: [],
+                ranked: [],
+                gallery: [],
+                reviews: []
             };
+
+            const bestSellingIds = await getBestSellingProductIds(store_id);
+            const rankedIds = await getRankedProductsByStore(store_id);
+            groupedProducts.ranked = allProducts
+                .filter(p => rankedIds.includes(p.id))
+                .sort((a, b) => rankedIds.indexOf(a.id) - rankedIds.indexOf(b.id));
+
+            const galleryRes = await fetchStoreGallery(store_id);
+            if (galleryRes.success) {
+                groupedProducts.gallery = galleryRes.data;
+            }
+
+            const storeReviews = await getStoreReviews(store_id)
+            if (storeReviews.success) {
+                groupedProducts.reviews = storeReviews.data;
+            }
+
+            const collectionMapBySub = {};
 
             allProducts.forEach(p => {
                 if (p.filters.includes(1)) groupedProducts.new_arrivals.push(p);
-                if (p.filters.includes(4)) groupedProducts.best_selling.push(p);
+                if (bestSellingIds.includes(p.id)) groupedProducts.best_selling.push(p);
                 if (p.filters.includes(3)) groupedProducts.recommended.push(p);
                 if (p.customizable === 1) groupedProducts.customizable.push(p);
 
@@ -980,9 +1255,39 @@ module.exports.fetch_store_products = async (req) => {
                 if (!groupedProducts.by_collection[colName]) groupedProducts.by_collection[colName] = [];
                 groupedProducts.by_collection[colName].push(p);
 
+                const subId = p.subcategory?.id || 0;
                 const subName = p.subcategory?.name || 'Others';
-                if (!groupedProducts.by_subcategory[subName]) groupedProducts.by_subcategory[subName] = [];
-                groupedProducts.by_subcategory[subName].push(p);
+
+                if (!groupedProducts.by_subcategory[subName]) {
+                    groupedProducts.by_subcategory[subName] = {
+                        id: subId,
+                        products: [],
+                        collection: []
+                    };
+                }
+                groupedProducts.by_subcategory[subName].products.push(p);
+
+                // Track collection counts by subcategory
+                const collection = p.collection;
+                if (collection && collection.id) {
+                    if (!collectionMapBySub[subName]) collectionMapBySub[subName] = {};
+                    if (!collectionMapBySub[subName][collection.id]) {
+                        collectionMapBySub[subName][collection.id] = {
+                            id: collection.id,
+                            name: collection.name,
+                            total: 0
+                        };
+                    }
+                    collectionMapBySub[subName][collection.id].total += 1;
+                }
+            });
+
+            // Attach collection counts to each subcategory
+            Object.keys(collectionMapBySub).forEach(subName => {
+                const collectionList = Object.values(collectionMapBySub[subName]);
+                if (groupedProducts.by_subcategory[subName]) {
+                    groupedProducts.by_subcategory[subName].collection = collectionList;
+                }
             });
 
             // Step: Extract distinct subcategories used in the store

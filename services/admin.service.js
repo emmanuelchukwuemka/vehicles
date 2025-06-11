@@ -317,7 +317,7 @@ module.exports.add_shipping_provider = async (req) => {
 };
 
 
-exports.createStoreGalleryItem = async (req, res) => {
+module.exports.createStoreGalleryItem = async (req, res) => {
     const { store_id, url, type, position, title, description } = req.body;
 
     // Simple validation
@@ -362,7 +362,7 @@ exports.createStoreGalleryItem = async (req, res) => {
 };
 
 
-exports.createPaymentGateway = async (req, res) => {
+module.exports.createPaymentGateway = async (req, res) => {
     const { name, logo, provider, is_active, sandbox_mode, config } = req.body;
 
     // Basic validation
@@ -417,6 +417,87 @@ exports.createPaymentGateway = async (req, res) => {
             success:false,
             error:"Failed to create payment gateway"
         };
+    } finally {
+        connection.release();
+    }
+};
+
+module.exports.createLayout = async (req) => {
+
+    const { name, description, priority } = req.body
+
+    if (!name || !description || !priority) {
+        return { success: false, error: 'All fields (name, description, priority) are required' };
+    }
+
+    const trim_name = name?.trim();
+    const trim_description = description?.trim();
+
+    const query = `
+    INSERT INTO layouts_table (name, description, priority)
+    VALUES (?, ?, ?)
+  `;
+
+    try {
+        const [result] = await pool.query(query,
+            [
+                trim_name,
+                trim_description,
+                priority
+            ]
+        );
+        return {
+            success: true,
+            data: "Layout created successfully"
+        };
+    } catch (error) {
+        return {
+            success: false,
+            error: error.message || 'Database error'
+        };
+    }
+}
+
+module.exports.createAttribute = async (req) => {
+
+    const { name, label = null, layout_id = null } = req.body
+
+    const connection = await pool.getConnection();
+    try {
+        await connection.beginTransaction();
+
+        const [existing] = await connection.query(
+            'SELECT id FROM attributes_table WHERE name = ?',
+            [name.trim()]
+        );
+
+        if (existing.length > 0) {
+            connection.release();
+            return {
+                success: false,
+                data: "Attribute already exists"
+            };
+        }
+
+        const [result] = await connection.query(
+            `INSERT INTO attributes_table (name, label, layout_id) VALUES (?, ?, ?)`,
+            [name.trim(), label, layout_id]
+        );
+
+        await connection.commit();
+        return {
+            success: true,
+            data: "Attribute created successfully"
+        };
+
+    } catch (error) {
+        console.log("Err=>", error)
+        await connection.rollback();
+        return {
+            success: false,
+            data: "Failed to create attribute"
+        };
+
     } finally {
         connection.release();
     }
