@@ -1270,6 +1270,9 @@ module.exports.fetch_store_products = async (req) => {
                 // Track collection counts by subcategory
                 const collection = p.collection;
                 if (collection && collection.id) {
+
+                    console.log(collection)
+
                     if (!collectionMapBySub[subName]) collectionMapBySub[subName] = {};
                     if (!collectionMapBySub[subName][collection.id]) {
                         collectionMapBySub[subName][collection.id] = {
