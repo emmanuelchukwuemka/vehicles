@@ -92,7 +92,7 @@ module.exports.saveCardPaymentMethod = async (connection, cardInfo) => {
         await connection.query(
             `INSERT INTO user_payment_methods 
                 (user_id, method, gateway_id, brand, last4, exp_month, exp_year, token, is_default)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
             [
                 user_id,
                 method,
