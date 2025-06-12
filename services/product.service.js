@@ -399,13 +399,11 @@ module.exports.fetch_single_product = async (req) => {
         return { success: false, error: "Invalid Product ID" };
     }
 
-    let connection;
-
     try {
-        connection = await pool.getConnection();
+        //connection = await pool.getConnection();
 
         // Fetch product details
-        const [productRows] = await connection.query(`
+        const [productRows] = await pool.query(`
             SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
             FROM products_table p
             JOIN stores_table s ON p.store_id = s.id
@@ -423,36 +421,36 @@ module.exports.fetch_single_product = async (req) => {
         const totalOrder = await getProductTotalOrder(product_id);
 
         // Fetch product media
-        const [media] = await connection.query(`
+        const [media] = await pool.query(`
             SELECT url, type FROM media_table WHERE product_id = ? AND variation_id IS NULL
         `, [product_id]);
 
         // Fetch MOQ (Minimum Order Quantity)
-        const [moq] = await connection.query(`
+        const [moq] = await pool.query(`
             SELECT min_qty, ppu FROM product_moq WHERE product_id = ?
         `, [product_id]);
 
         // Fetch product specifications
-        const [specifications] = await connection.query(`
+        const [specifications] = await pool.query(`
             SELECT name, value FROM product_specifications WHERE product_id = ?
         `, [product_id]);
 
         // Fetch product reviews (average rating & total count)
-        const [productReviews] = await connection.query(`
+        const [productReviews] = await pool.query(`
             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
             FROM product_reviews 
             WHERE product_id = ? AND status = 1
         `, [product_id]);
 
         // Fetch store reviews (average rating & total count)
-        const [storeReviews] = await connection.query(`
+        const [storeReviews] = await pool.query(`
             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
             FROM store_reviews 
             WHERE store_id = ? AND status = 1
         `, [product.store_id]);
 
         // Fetch product variations
-        const [variations] = await connection.query(`
+        const [variations] = await pool.query(`
             SELECT * FROM variations_table 
             WHERE product_id = ? AND status = 1
         `, [product_id]);
@@ -462,7 +460,7 @@ module.exports.fetch_single_product = async (req) => {
 
             const v_attributes = await getVariationAttributes(variation.id);
 
-            const [variationMedia] = await connection.query(`
+            const [variationMedia] = await pool.query(`
                 SELECT url, type FROM media_table WHERE variation_id = ?
             `, [variation.id]);
 
@@ -496,8 +494,6 @@ module.exports.fetch_single_product = async (req) => {
     } catch (error) {
         console.error("Error fetching product:", error);
         return { success: false, error: "An error occurred while fetching product" };
-    } finally {
-        if (connection) connection.release();
     }
 };
 

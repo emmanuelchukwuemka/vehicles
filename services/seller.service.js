@@ -416,9 +416,7 @@ module.exports.fetchStores = async (req) => {
         filterColumn = "sc.id";
     }
 
-    let connection;
     try {
-        connection = await pool.getConnection();
 
         // Base Query: Fetch all active stores
         let query = `SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space, s.staff_count, s.is_verified, s.created_at, s.status FROM stores_table s
@@ -446,7 +444,7 @@ module.exports.fetchStores = async (req) => {
         }
 
         // Execute store query
-        const [stores] = await connection.query(query, queryParams);
+        const [stores] = await pool.query(query, queryParams);
         if (!stores.length) {
             return { success: false, error: "No stores found for this filter." };
         }
@@ -458,7 +456,7 @@ module.exports.fetchStores = async (req) => {
         const capabilities = await getStoreCapabilities(storeIds, pool, ['id', 'name']);
 
         // Fetch Products
-        const [products] = await connection.query(`
+        const [products] = await pool.query(`
             SELECT p.id, p.store_id, p.name, p.price, p.discount
             FROM (
                 SELECT 
@@ -504,8 +502,6 @@ module.exports.fetchStores = async (req) => {
     } catch (error) {
         console.error("Error fetching stores:", error);
         return { success: false, error: "An error occurred while fetching stores." };
-    } finally {
-        if (connection) connection.release();
     }
 };
 

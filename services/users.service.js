@@ -783,13 +783,9 @@ module.exports.fetch_product_variation = async (req) => {
         return { success: false, error: "Invalid Product ID" };
     }
 
-    let connection;
-
     try {
-        connection = await pool.getConnection();
-
         // Fetch product details
-        const [productRows] = await connection.query(`
+        const [productRows] = await pool.query(`
             SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
             FROM products_table p
             JOIN stores_table s ON p.store_id = s.id
@@ -803,47 +799,47 @@ module.exports.fetch_product_variation = async (req) => {
         const product = productRows[0];
 
         // Fetch product media
-        const [media] = await connection.query(`
+        const [media] = await pool.query(`
             SELECT url, type FROM media_table WHERE product_id = ? AND variation_id IS NULL
         `, [product_id]);
 
         // Fetch MOQ (Minimum Order Quantity)
-        const [moq] = await connection.query(`
+        const [moq] = await pool.query(`
             SELECT min_qty, ppu FROM product_moq WHERE product_id = ?
         `, [product_id]);
 
         // Fetch product specifications
-        const [specifications] = await connection.query(`
+        const [specifications] = await pool.query(`
             SELECT name, value FROM product_specifications WHERE product_id = ?
         `, [product_id]);
 
         // Fetch product reviews (average rating & total count)
-        const [productReviews] = await connection.query(`
+        const [productReviews] = await pool.query(`
             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
             FROM product_reviews 
             WHERE product_id = ? AND status = 1
         `, [product_id]);
 
         // Fetch store reviews (average rating & total count)
-        const [storeReviews] = await connection.query(`
+        const [storeReviews] = await pool.query(`
             SELECT COUNT(*) AS total_reviews, AVG(rating) AS avg_rating 
             FROM store_reviews 
             WHERE store_id = ? AND status = 1
         `, [product.store_id]);
 
         // Fetch product variations
-        const [variations] = await connection.query(`
+        const [variations] = await pool.query(`
             SELECT * FROM variations_table 
             WHERE product_id = ? AND status = 1
         `, [product_id]);
 
         // Attach attributes & media to each variation
         for (const variation of variations) {
-            const [attributes] = await connection.query(`
+            const [attributes] = await pool.query(`
                 SELECT name, value FROM variation_attributes WHERE variation_id = ?
             `, [variation.id]);
 
-            const [variationMedia] = await connection.query(`
+            const [variationMedia] = await pool.query(`
                 SELECT url, type FROM media_table WHERE variation_id = ?
             `, [variation.id]);
 
@@ -873,8 +869,6 @@ module.exports.fetch_product_variation = async (req) => {
     } catch (error) {
         console.error("Error fetching product:", error);
         return { success: false, error: "An error occurred while fetching product" };
-    } finally {
-        if (connection) connection.release();
     }
 };
 
@@ -1200,13 +1194,11 @@ module.exports.give_store_review = async (req) => {
 // };
 
 module.exports.get_shipping_methods = async () => {
-    const connection = await pool.getConnection();
 
     try {
-        await connection.beginTransaction();
 
         // Fetch shipping methods with their providers
-        const [results] = await connection.query(`
+        const [results] = await pool.query(`
             SELECT 
                 sm.id AS method_id, sm.name AS method_name, sm.description AS method_description, sm.icon AS method_icon, sm.status AS method_status, sm.created_at AS method_created_at,
                 sp.id AS provider_id, sp.name AS provider_name, sp.duration_from, sp.duration_to, sp.price, sp.class, sp.offered_by, sp.notice, sp.is_guaranteed, sp.status AS provider_status, sp.created_at AS provider_created_at
@@ -1215,10 +1207,6 @@ module.exports.get_shipping_methods = async () => {
             ORDER BY sm.id, sp.id
         `);
 
-        await connection.commit();
-        connection.release();
-
-        // Structure the response: Group providers under their respective methods
         const shippingMethodsMap = new Map();
 
         results.forEach(row => {
@@ -1263,8 +1251,6 @@ module.exports.get_shipping_methods = async () => {
             data: Array.from(shippingMethodsMap.values())
         };
     } catch (error) {
-        await connection.rollback();
-        connection.release();
         console.error("Error fetching shipping methods:", error);
         return {
             success: false,
@@ -1304,9 +1290,8 @@ module.exports.get_shipping_providers = async () => {
 };
 
 exports.getPaymentGateways = async (req, res) => {
-    const connection = await pool.getConnection();
     try {
-        const [gateways] = await connection.query(
+        const [gateways] = await pool.query(
             `SELECT id, name, logo, provider, is_active FROM payment_gateways ORDER BY name ASC`
         );
 
@@ -1327,8 +1312,6 @@ exports.getPaymentGateways = async (req, res) => {
             success:false,
             error:"Failed to fetch payment gateways"
         }
-    } finally {
-        connection.release();
     }
 };
 
@@ -1467,18 +1450,13 @@ exports.placeNewOrder = async (req, res) => {
         }
 
         await connection.commit();
-        connection.release();
-
         return {
             success: true,
             data: "Order placed successfully"
         };
 
     } catch (error) {
-        if (connection) {
-            await connection.rollback();
-            connection.release();
-        }
+        await connection.rollback();
         if (error.code === "ER_DUP_ENTRY") {
             return {
                 success: false,
@@ -1490,6 +1468,10 @@ exports.placeNewOrder = async (req, res) => {
             success: false,
             error: error.response?.data?.message || "Unable to place order at this time",
         };
+    } finally {
+        if (connection) {
+            connection.release();
+        }
     }
 };
 
