@@ -400,8 +400,6 @@ module.exports.fetch_single_product = async (req) => {
     }
 
     try {
-        //connection = await pool.getConnection();
-
         // Fetch product details
         const [productRows] = await pool.query(`
             SELECT p.*, s.name AS store_name, s.logo AS store_logo, s.is_verified AS store_verified
