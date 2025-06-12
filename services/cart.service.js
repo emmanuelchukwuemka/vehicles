@@ -114,7 +114,7 @@ exports.addToCart = async (req, res) => {
             error: "Server error."
         };
     } finally {
-        conn.release();
+        if (conn) conn.release();
     }
 };
 
@@ -172,7 +172,7 @@ exports.updateCartItem = async (req) => {
         console.error('Error updating cart item:', error);
         return { success: false, error: 'Internal server error' };
     } finally {
-        await connection.release();
+        if (connection) connection.release();
     }
 };
 
@@ -240,7 +240,7 @@ exports.removeCartItem = async (req) => {
         console.error("Remove cart item error:", error);
         return { success: false, error: "Something went wrong." };
     } finally {
-        connection.release();
+        if (connection) connection.release();
     }
 };
 

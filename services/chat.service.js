@@ -15,18 +15,15 @@ module.exports.sendMessage = async (req, res) => {
         };
     }
 
-    const connection = await pool.getConnection();
-
     try {
-        await connection.beginTransaction();
 
-        const [storeRows] = await connection.query(
+        const [storeRows] = await pool.query(
             "SELECT id FROM stores_table WHERE id = ? AND status = 1 LIMIT 1",
             [store_id]
         );
 
         if (storeRows.length === 0) {
-            await connection.rollback();
+            await pool.rollback();
             return {
                 success: false,
                 error: "Store not found or inactive."
@@ -40,27 +37,22 @@ module.exports.sendMessage = async (req, res) => {
         // Stringify message if it's a product
         const formattedMessage = is_product ? JSON.stringify(message) : message;
 
-        await connection.query(
+        await pool.query(
             `INSERT INTO chat_table (sender_id, receiver_id, message, is_product)
        VALUES (?, ?, ?, ?)`,
             [user_id, receiver_id, formattedMessage, is_product ? 1 : 0]
         );
 
-        await connection.commit();
-
-        const lastMessage = {} //await getLatestChat(connection, user_id, store_id);
+        const lastMessage = {} //await getLatestChat(pool, user_id, store_id);
 
         return lastMessage
 
     } catch (error) {
-        await connection.rollback();
         console.error("Chat Err:", error);
         return {
             success: false,
             error: "Unable to send message."
         };
-    } finally {
-        if (connection) connection.release();
     }
 };
 

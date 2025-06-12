@@ -23,7 +23,7 @@ module.exports.create_account = async (req) => {
 
         const trimmedEmail = email.trim().toLowerCase();
 
-        // ✅ Check if the email or phone already exists
+        // Check if the email or phone already exists
         const [existingUser] = await connection.query(
             `SELECT id FROM users_table WHERE email = ? OR phone = ? LIMIT 1`,
             [trimmedEmail, phone]
@@ -34,7 +34,7 @@ module.exports.create_account = async (req) => {
             return { success: false, error: "Email or phone number already in use" };
         }
 
-        // ✅ Prepare vendor data for insertion
+        // Prepare vendor data for insertion
         const vendorData = {
             first_name: firstName.trim(),
             last_name: lastName.trim(),
@@ -51,7 +51,7 @@ module.exports.create_account = async (req) => {
         const placeholders = Object.keys(vendorData).map(() => "?").join(", ");
         const values = Object.values(vendorData);
 
-        // ✅ Insert new vendor
+        // Insert new vendor
         const [{ insertId }] = await connection.query(
             `INSERT INTO users_table (${columns}, created_at, updated_at)
              VALUES (${placeholders}, NOW(), NOW())`,
@@ -67,7 +67,7 @@ module.exports.create_account = async (req) => {
         return { success: true, data: "Account created successfully" };
 
     } catch (error) {
-        if (connection) await connection.rollback();
+        await connection.rollback();
         console.error("Error creating account:", error);
         return { success: false, error: "Could not create account, please try again" };
     } finally {
@@ -204,7 +204,7 @@ module.exports.add_address = async (req) => {
             data: addressesResult
         };
     } catch (error) {
-        if (connection) await connection.rollback();
+        await connection.rollback();
         console.error("Error adding address:", error);
         return {
             success: false,
@@ -669,7 +669,7 @@ module.exports.follow_and_like_store = async (req) => {
         console.error("Error in store interaction:", error);
         return { success: false, error: "Internal server error" };
     } finally {
-        conn.release();
+        if (conn) conn.release();
     }
 };
 
@@ -1469,9 +1469,7 @@ exports.placeNewOrder = async (req, res) => {
             error: error.response?.data?.message || "Unable to place order at this time",
         };
     } finally {
-        if (connection) {
-            connection.release();
-        }
+        if (connection) connection.release();
     }
 };
 

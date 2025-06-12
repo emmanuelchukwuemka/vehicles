@@ -199,7 +199,7 @@ module.exports.add_category = async (req) => {
 };
 module.exports.fetch_category = async (req) => {
     const { sectionId } = req.query;
-    console.log("section==>", sectionId)
+
     try {
         // Fetch all records from the section_table
         const [rows] = await pool.query(`
@@ -416,7 +416,7 @@ module.exports.fetch_single_product = async (req) => {
 
         // Fetch sample
         const sample = await getProductSample(product.id);
-        const totalOrder = await getProductTotalOrder(product_id);
+        const { data: total_order } = await getProductTotalOrder(product_id);
 
         // Fetch product media
         const [media] = await pool.query(`
@@ -473,7 +473,7 @@ module.exports.fetch_single_product = async (req) => {
                 store_id: product.store_id,
                 ...product,
                 sample,
-                total_order: totalOrder,
+                total_order,
                 media,
                 moq,
                 specifications,
@@ -580,7 +580,7 @@ module.exports.productInquiry = async (req) => {
         };
 
     } catch (error) {
-        if (connection) await connection.rollback();
+        await connection.rollback();
         console.error("Inquiry Error =>", error);
         return { success: false, error: "Unable to send your inquiry" };
     } finally {
@@ -1068,7 +1068,6 @@ module.exports.fetch_single_live_products = async (req) => {
                 lt.stream_url,
                 lt.recorded_video_url,
                 p.name AS product_name,
-                p.sku AS product_sku,
                 s.id AS store_id,
                 s.name AS store_name,
                 s.logo AS store_logo,
@@ -1265,7 +1264,7 @@ module.exports.fetch_store_products = async (req) => {
                 const collection = p.collection;
                 if (collection && collection.id) {
 
-                    console.log(collection)
+                    console.log("collection=>", collection)
 
                     if (!collectionMapBySub[subName]) collectionMapBySub[subName] = {};
                     if (!collectionMapBySub[subName][collection.id]) {
@@ -1362,7 +1361,7 @@ module.exports.set_product_sample = async (req) => {
             error: "Failed to set product sample"
         };
     } finally {
-        connection.release();
+        if (connection) connection.release();
     }
 };
 

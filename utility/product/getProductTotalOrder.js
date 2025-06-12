@@ -20,7 +20,7 @@ module.exports.getProductTotalOrder = async (product_id) => {
 
         return {
             success: true,
-            data: { total_quantity }
+            data: total_quantity
         };
     } catch (error) {
         console.error("Error fetching total ordered quantity:", error);

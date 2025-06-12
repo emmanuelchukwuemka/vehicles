@@ -301,7 +301,7 @@ module.exports.createBaseProduct = async (req) => {
             data: { product_id: productId, product_code }
         };
     } catch (error) {
-        if (connection) await connection.rollback();
+        await connection.rollback();
         console.error("Error creating base product:", error);
         return { success: false, error: "Error creating product, please try again" };
     } finally {
@@ -381,7 +381,7 @@ module.exports.createProductVariation = async (req) => {
             }
         }
 
-        // 🔹 Insert gallery files (if available)
+        // Insert gallery files (if available)
         for (const { url, type } of variation.media || []) {
             await connection.query(
                 `INSERT INTO media_table (product_id, variation_id, url, type, created_at) VALUES (?, ?, ?, ?, NOW())`,
@@ -389,14 +389,13 @@ module.exports.createProductVariation = async (req) => {
             );
         }
 
-
         await connection.commit();
         return {
             success: true,
             data: variationSku
         };
     } catch (error) {
-        if (connection) await connection.rollback();
+        await connection.rollback();
         console.error("Error creating product variation:", error);
         return { success: false, error: "Error creating variation, please try again" };
     } finally {
@@ -592,7 +591,7 @@ module.exports.save_live = async (req) => {
             error: "Failed to save live session"
         };
     } finally {
-        conn.release();
+        if (conn) conn.release();
     }
 
 }
