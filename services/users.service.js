@@ -269,105 +269,105 @@ module.exports.fetch_capabilities = async (req) => {
     }
 };
 
-module.exports.fetch_stores = async (req) => {
-    try {
-        // ✅ Step 1: Fetch Active Stores with Capabilities
-        const [stores] = await pool.query(`
-            SELECT 
-                s.id, s.code, s.name, s.logo, s.net_worth, s.staff_count, 
-                s.is_verified, s.verified_date, s.status
-            FROM stores_table s
-            WHERE s.status = 1
-        `);
+// module.exports.fetch_stores = async (req) => {
+//     try {
+//         // ✅ Step 1: Fetch Active Stores with Capabilities
+//         const [stores] = await pool.query(`
+//             SELECT 
+//                 s.id, s.code, s.name, s.logo, s.net_worth, s.staff_count, 
+//                 s.is_verified, s.verified_date, s.status
+//             FROM stores_table s
+//             WHERE s.status = 1
+//         `);
 
-        if (!stores.length) {
-            return { success: true, data: [] };
-        }
+//         if (!stores.length) {
+//             return { success: true, data: [] };
+//         }
 
-        const storeIds = stores.map(store => store.id);
+//         const storeIds = stores.map(store => store.id);
 
-        // ✅ Step 2: Fetch Capabilities (Returning as Objects)
-        const [capabilities] = await pool.query(`
-            SELECT sc.store_id, c.id AS capability_id, c.name AS capability_name
-            FROM store_capabilities sc
-            JOIN capabilities_table c ON sc.capability_id = c.id
-            WHERE sc.store_id IN (?)
-        `, [storeIds]);
+//         // ✅ Step 2: Fetch Capabilities (Returning as Objects)
+//         const [capabilities] = await pool.query(`
+//             SELECT sc.store_id, c.id AS capability_id, c.name AS capability_name
+//             FROM store_capabilities sc
+//             JOIN capabilities_table c ON sc.capability_id = c.id
+//             WHERE sc.store_id IN (?)
+//         `, [storeIds]);
 
-        // ✅ Step 3: Fetch Products (Limit 6 per Store)
-        const [products] = await pool.query(`
-            SELECT p.id, p.store_id, p.name, p.price, p.discount
-            FROM (
-                SELECT id, store_id, name, price, discount, 
-                       ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY created_at DESC) AS row_num
-                FROM products_table
-                WHERE store_id IN (?)
-            ) p
-            WHERE p.row_num <= 6
-        `, [storeIds]);
+//         // ✅ Step 3: Fetch Products (Limit 6 per Store)
+//         const [products] = await pool.query(`
+//             SELECT p.id, p.store_id, p.name, p.price, p.discount
+//             FROM (
+//                 SELECT id, store_id, name, price, discount, 
+//                        ROW_NUMBER() OVER (PARTITION BY store_id ORDER BY created_at DESC) AS row_num
+//                 FROM products_table
+//                 WHERE store_id IN (?)
+//             ) p
+//             WHERE p.row_num <= 6
+//         `, [storeIds]);
 
-        if (!products.length) {
-            return {
-                success: true,
-                data: stores.map(store => ({
-                    ...store,
-                    capabilities: capabilities
-                        .filter(c => c.store_id === store.id)
-                        .map(c => ({ id: c.capability_id, name: c.capability_name })),
-                    products: []
-                }))
-            };
-        }
+//         if (!products.length) {
+//             return {
+//                 success: true,
+//                 data: stores.map(store => ({
+//                     ...store,
+//                     capabilities: capabilities
+//                         .filter(c => c.store_id === store.id)
+//                         .map(c => ({ id: c.capability_id, name: c.capability_name })),
+//                     products: []
+//                 }))
+//             };
+//         }
 
-        // ✅ Step 4: Fetch MOQ & Media
-        const productIds = products.map(p => p.id);
-        const [moq] = productIds.length
-            ? await pool.query(
-                `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,
-                [productIds]
-            )
-            : [[]];
+//         // ✅ Step 4: Fetch MOQ & Media
+//         const productIds = products.map(p => p.id);
+//         const [moq] = productIds.length
+//             ? await pool.query(
+//                 `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,
+//                 [productIds]
+//             )
+//             : [[]];
 
-        const [media] = productIds.length
-            ? await pool.query(
-                `SELECT product_id, url, type FROM media_table WHERE product_id IN (?)`,
-                [productIds]
-            )
-            : [[]];
+//         const [media] = productIds.length
+//             ? await pool.query(
+//                 `SELECT product_id, url, type FROM media_table WHERE product_id IN (?)`,
+//                 [productIds]
+//             )
+//             : [[]];
 
-        // ✅ Step 5: Structure Response
-        const storeData = stores.map(store => ({
-            id: store.id,
-            code: store.code,
-            name: store.name,
-            logo: store.logo,
-            net_worth: store.net_worth,
-            staff_count: store.staff_count,
-            is_verified: store.is_verified,
-            verified_date: store.verified_date,
-            status: store.status,
-            capabilities: capabilities
-                .filter(c => c.store_id === store.id)
-                .map(c => ({ id: c.capability_id, name: c.capability_name })), // ✅ Now an array of objects
-            products: products
-                .filter(p => p.store_id === store.id)
-                .map(p => ({
-                    id: p.id,
-                    name: p.name,
-                    price: p.price,
-                    discount: p.discount,
-                    moq: moq.filter(m => m.product_id === p.id),
-                    media: media.filter(m => m.product_id === p.id),
-                }))
-        }));
+//         // ✅ Step 5: Structure Response
+//         const storeData = stores.map(store => ({
+//             id: store.id,
+//             code: store.code,
+//             name: store.name,
+//             logo: store.logo,
+//             net_worth: store.net_worth,
+//             staff_count: store.staff_count,
+//             is_verified: store.is_verified,
+//             verified_date: store.verified_date,
+//             status: store.status,
+//             capabilities: capabilities
+//                 .filter(c => c.store_id === store.id)
+//                 .map(c => ({ id: c.capability_id, name: c.capability_name })), // ✅ Now an array of objects
+//             products: products
+//                 .filter(p => p.store_id === store.id)
+//                 .map(p => ({
+//                     id: p.id,
+//                     name: p.name,
+//                     price: p.price,
+//                     discount: p.discount,
+//                     moq: moq.filter(m => m.product_id === p.id),
+//                     media: media.filter(m => m.product_id === p.id),
+//                 }))
+//         }));
 
-        return { success: true, data: storeData };
+//         return { success: true, data: storeData };
 
-    } catch (error) {
-        console.error("Error fetching stores:", error);
-        return { success: false, error: "Error fetching stores" };
-    }
-};
+//     } catch (error) {
+//         console.error("Error fetching stores:", error);
+//         return { success: false, error: "Error fetching stores" };
+//     }
+// };
 
 
 // ///////////////////////To be reviewed////////////////////////////////

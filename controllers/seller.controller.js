@@ -209,6 +209,32 @@ router.post("/fetch-stores", async (req, res) => {
 
 })
 
+router.post("/fetch-stores-test", async (req, res) => {
+
+    try {
+
+        const result = await service.fetchStoresTest(req);
+
+        if (result && result.success && result.data.length) {
+
+            res.json({
+                success: true,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Error establishing connection to the server';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+
+    } catch (error) {
+        console.error('Error fetching stores:', error);
+        res.status(500).send('Internal Server Error');
+    }
+
+})
+
 router.post('/store-collections', async (req, res) => {
 
     try {
@@ -343,6 +369,29 @@ router.post('/gallery/fetch', async (req, res) => {
         }
     } catch (error) {
         console.error('Error fetching products:', error);
+        res.status(500).json({ success: false, error: 'Internal Server Error' });
+    }
+});
+
+router.post('/load-app', async (req, res) => {
+
+    try {
+        const result = await service.loadApp(req);
+
+        if (result && result.success) {
+
+            res.status(200).json({
+                success: result.success,
+                data: result.data
+            });
+
+        } else {
+
+            const errorMessage = result.error || 'Unknown server occurred';
+            res.status(400).json({ success: false, error: errorMessage });
+        }
+    } catch (error) {
+        console.error('Error fetching resources:', error);
         res.status(500).json({ success: false, error: 'Internal Server Error' });
     }
 });

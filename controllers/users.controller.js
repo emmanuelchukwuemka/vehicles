@@ -103,61 +103,61 @@ router.post("/addresses/fetch", async (req, res) => {
 
 });
 
-router.get("/fetch-stores", async (req, res) => {
+// router.get("/fetch-stores", async (req, res) => {
 
-    try {
+//     try {
 
-        const result = await service.fetch_stores(req);
+//         const result = await service.fetch_stores(req);
 
-        if (result && result.success && result.data.length) {
+//         if (result && result.success && result.data.length) {
 
-            const stores = result.data.map(store => {
+//             const stores = result.data.map(store => {
 
-                const id = store.id;
-                const code = store.code;
-                const name = store.name
-                const logo = store.logo
-                const net_worth = parseFloat(store.net_worth)
-                const staff_count = store.staff_count
-                const is_verified = store.is_verified
-                const verified_date = store.verified_date
-                const capabilities = store.capabilities
-                const products = store.products
-                const status = parseInt(store.status)
+//                 const id = store.id;
+//                 const code = store.code;
+//                 const name = store.name
+//                 const logo = store.logo
+//                 const net_worth = parseFloat(store.net_worth)
+//                 const staff_count = store.staff_count
+//                 const is_verified = store.is_verified
+//                 const verified_date = store.verified_date
+//                 const capabilities = store.capabilities
+//                 const products = store.products
+//                 const status = parseInt(store.status)
 
 
-                return {
-                    id,
-                    code,
-                    name,
-                    logo,
-                    net_worth,
-                    staff_count,
-                    is_verified,
-                    verified_date,
-                    capabilities,
-                    status,
-                    products
-                }
-            });
+//                 return {
+//                     id,
+//                     code,
+//                     name,
+//                     logo,
+//                     net_worth,
+//                     staff_count,
+//                     is_verified,
+//                     verified_date,
+//                     capabilities,
+//                     status,
+//                     products
+//                 }
+//             });
 
-            res.json({
-                success: true,
-                data: stores
-            });
+//             res.json({
+//                 success: true,
+//                 data: stores
+//             });
 
-        } else {
+//         } else {
 
-            const errorMessage = result.error || 'Error establishing connection to the server';
-            res.status(400).json({ success: false, error: errorMessage });
-        }
+//             const errorMessage = result.error || 'Error establishing connection to the server';
+//             res.status(400).json({ success: false, error: errorMessage });
+//         }
 
-    } catch (error) {
-        console.error('Error during registration:', error);
-        res.status(500).send('Internal Server Error');
-    }
+//     } catch (error) {
+//         console.error('Error during registration:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
 
-})
+// })
 
 router.get("/filter-stores-cat/:filter_type/:filter_id", async (req, res) => {
 

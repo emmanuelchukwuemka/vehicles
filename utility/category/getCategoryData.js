@@ -15,13 +15,6 @@ module.exports.getCategoryData = async ({ level, level_id, pool, fields = ['*'] 
         };
     }
 
-    if (!level_id || typeof level_id !== 'number') {
-        return {
-            success: false,
-            error: "level_id must be a valid number"
-        };
-    }
-
     try {
         // Format fields
         let selectedFields;
@@ -32,26 +25,44 @@ module.exports.getCategoryData = async ({ level, level_id, pool, fields = ['*'] 
             selectedFields = uniqueFields.map(f => `\`${f}\``).join(', ');
         }
 
-        const query = `
-            SELECT ${selectedFields}
-            FROM \`${table}\`
-            WHERE id = ? AND _status = 1
-            LIMIT 1
-        `;
+        // Build query based on presence of level_id
+        let query;
+        let queryParams = [];
 
-        const [rows] = await pool.query(query, [level_id]);
-
-        if (!rows.length) {
-            return {
-                success: false,
-                error: `No ${level} found for the given ID`
-            };
+        if (level_id !== undefined && typeof level_id === 'number') {
+            query = `
+                SELECT ${selectedFields}
+                FROM \`${table}\`
+                WHERE id = ? AND status = 1
+                LIMIT 1
+            `;
+            queryParams = [level_id];
+        } else {
+            query = `
+                SELECT ${selectedFields}
+                FROM \`${table}\`
+                WHERE status = 1
+            `;
         }
 
-        return {
-            success: true,
-            data: rows[0]
-        };
+        const [rows] = await pool.query(query, queryParams);
+
+        if (level_id !== undefined) {
+        // Single record expected when level_id is provided
+            if (!rows.length) {
+                return {
+                    success: false,
+                    error: `No ${level} found for the given ID`
+                };
+            }
+            return {
+                success: true,
+                data: rows[0]
+            };
+        } else {
+            // Return all records when no level_id is provided
+            return rows
+        }
     } catch (error) {
         console.error(`Error in getCollectionData for ${level}:`, error);
         return {

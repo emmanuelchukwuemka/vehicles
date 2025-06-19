@@ -9,6 +9,15 @@ const { getStoreReviews } = require("../utility/getStoreReviews");
 const { getStoreCapabilities } = require("../utility/store/getStoreCapabilities");
 const { getProductMOQ } = require("../utility/product/getProductMOQ");
 const { getProductMedia } = require("../utility/product/getProductMedia");
+const { getCategoryData } = require("../utility/category/getCategoryData");
+const { getBasicProductSamples } = require("../moduler/products/samples/productSampleQueries");
+const { getProductsByIds } = require("../moduler/products/productQueries");
+const { getProductMedias } = require("../moduler/medias/mediaQueries");
+const { fetchCapabilities } = require("../moduler/capability/capabilityQuery");
+const { getStoresWithFilters } = require("../moduler/stores/storeWithCategoryAndCapabilityFilters");
+const { getStoreProducts } = require("../moduler/products/getStoreProducts");
+const { getProductsMOQByIds } = require("../moduler/moq/getProductsMOQByIds");
+const { getStoresByCategories } = require("../moduler/stores/getStoresByCategories");
 
 
 module.exports.create_vendor = async (req) => {
@@ -161,7 +170,7 @@ module.exports.create_store = async (req) => {
 };
 
 module.exports.add_collection = async (req) => {
-    const { store_id, name } = req.body;
+    const { store_id, name, subcategory_id } = req.body;
 
     if (!store_id || !name) {
         return {
@@ -191,9 +200,9 @@ module.exports.add_collection = async (req) => {
 
         // Insert new collection
         const [{ insertId }] = await connection.query(`
-            INSERT INTO collections_table (store_id, name, created_at, updated_at)
-            VALUES (?, ?, NOW(), NOW())
-        `, [store_id, name.trim()]);
+            INSERT INTO collections_table (store_id, name, subcategory_id, created_at, updated_at)
+            VALUES (?, ?, ?, NOW(), NOW())
+        `, [store_id, name.trim(), subcategory_id]);
 
         if (insertId) {
             await connection.commit();
@@ -504,6 +513,40 @@ module.exports.fetchStores = async (req) => {
     }
 };
 
+module.exports.fetchStoresTest = async (req) => {
+    const testData = req.body;
+
+    const products = ["clothe", "laptops", "phones"]
+
+    try {
+
+        let matches = []
+        Object.entries(testData).forEach(([key, value]) => {
+
+
+            if (products.includes(key)) {
+                console.log({ [key]: value })
+                matches.push({ [key]: value })
+            }
+
+            return {
+                success: true,
+                data: matches
+            };
+
+        });
+
+        return {
+            success: false,
+            error: matches
+        };
+
+    } catch (error) {
+        console.error("Error fetching stores:", error);
+        return { success: false, error: "An error occurred while fetching stores." };
+    }
+};
+
 module.exports.save_live = async (req) => {
 
     const conn = await pool.getConnection();
@@ -559,8 +602,6 @@ module.exports.save_live = async (req) => {
                 error: "Product and store does not match"
             };
         }
-
-        console.log("prod==>", product)
 
         // Insert live session
         const [result] = await conn.query(
@@ -828,5 +869,49 @@ module.exports.fetchStoreGallery = async (req) => {
 
     const galleryRes = await fetchStoreGallery(store_id);
     return galleryRes
+
+};
+
+module.exports.loadApp = async (req) => {
+
+    const params = {
+        level: 'maincategory',
+        pool,
+    }
+
+    // 1. Get basic sample data
+    const samples = await getBasicProductSamples(pool, ['*'], 5);
+    if (samples.length === 0) return [];
+
+    // Get only names and IDs
+    const capabilities = await fetchCapabilities(pool, ['id', 'name']);
+
+    // 2. Get related product data
+    //const productIds = samples.map(s => s.product_id);
+
+    //const productsMap = await getProductsByIds(pool, productIds);
+
+    // 3. Get related store data
+    //const storeIds = Object.values(productsMap).map(p => p.store_id);
+    //const storesMap = await getStoresByIds(pool, storeIds);
+
+    const categories = await getCategoryData(params)
+
+    const sampleWithMedia = await Promise.all(
+        samples.map(async sample => {
+            const media = await getProductMedias(pool, sample.product_id);
+            return { ...sample, images: media };
+        })
+    );
+
+    const reachData = {
+        samples: sampleWithMedia,
+        categories,
+        capabilities
+    }
+    return {
+        success: true,
+        data: reachData
+    }
 
 };

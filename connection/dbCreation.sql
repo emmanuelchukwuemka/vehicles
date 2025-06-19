@@ -310,9 +310,9 @@ CREATE TABLE wishlist (
 -- creating the maincategory table
 CREATE TABLE maincategory  (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    _name LONGTEXT NOT NULL,
-    _image LONGTEXT NOT NULL,
-    _status LONGTEXT NOT NULL,
+    name LONGTEXT NOT NULL,
+    image LONGTEXT NOT NULL,
+    status LONGTEXT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

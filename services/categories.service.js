@@ -67,7 +67,7 @@ module.exports.fetch_mainCategory = async (req) => {
     try {
         // Fetch all records from the section_table
         const [rows] = await pool.query(`
-            SELECT * FROM maincategory WHERE _status = ?
+            SELECT * FROM maincategory WHERE status = ?
         `, [1]);
 
         if (rows.length > 0) {
@@ -104,17 +104,17 @@ module.exports.update_mainCategory = async (req) => {
     let values = [];
 
     if (name) {
-        updates.push("_name = ?");
+        updates.push("name = ?");
         values.push(staticEncrypt(name.trim(), staticKey));
     }
 
     if (image) {
-        updates.push("_image = ?");
+        updates.push("image = ?");
         values.push(JSON.stringify(dynamicEncrypt(image.trim(), dynamicKey)));
     }
 
     if (status) {
-        updates.push("_status = ?");
+        updates.push("status = ?");
         values.push(staticEncrypt(status.toString(), staticKey));
     }
 

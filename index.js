@@ -60,7 +60,7 @@ io.on("connection", (socket) => {
     });
 
     socket.on("send_message", async (data) => {
-        const { user_id, store_id, is_product, message } = data;
+        const { sender_id, receiver_id, is_product, message } = data;
 
         try {
             // Save message to DB
@@ -69,7 +69,7 @@ io.on("connection", (socket) => {
             const [result] = await pool.query(`
         INSERT INTO chat_table (sender_id, receiver_id, message, is_product, status)
         VALUES (?, ?, ?, ?, 1)
-      `, [user_id, store_id, chatMsg, is_product ? 1 : 0]);
+      `, [sender_id, receiver_id, chatMsg, is_product ? 1 : 0]);
 
             const insertedId = result.insertId;
 
@@ -84,11 +84,11 @@ io.on("connection", (socket) => {
             messageData.message = messageData.is_product ? JSON.parse(messageData.message) : messageData.message;
 
             // Emit to both users
-            const senderSocketId = connectedUsers.get(user_id);
-            const receiverSocketId = connectedUsers.get(store_id);
+            const senderSocketId = connectedUsers.get(sender_id);
+            const receiverSocketId = connectedUsers.get(receiver_id); //receiver_id
 
             if (receiverSocketId) {
-                //io.to(receiverSocketId).emit("receive_message", messageData);
+                io.to(receiverSocketId).emit("receive_message", messageData);
             }
 
             if (senderSocketId) {
@@ -102,16 +102,16 @@ io.on("connection", (socket) => {
 
     });
 
-    socket.on('message_seen', async ({ user_id, sender_id }) => {
+    socket.on('message_seen', async ({ receiver_id, sender_id }) => {
 
-        console.log("user=>", user_id)
+        console.log("user=>", receiver_id)
         console.log("sender_id=>", sender_id)
 
         try {
 
             await pool.query(
                 `UPDATE chat_table SET status = 2 WHERE receiver_id = ? AND sender_id = ? AND status < 2`,
-                [user_id, sender_id]
+                [receiver_id, sender_id]
             );
 
             // Emit only to the sender
@@ -121,14 +121,14 @@ io.on("connection", (socket) => {
                 io.to(senderSocketId).emit('message_seen_ack', {
                     sender_id,
                     status: 2,
-                    user_id  // include this
+                    receiver_id  // include this
                 });
             }
 
         } catch (err) {
             console.error('Error updating message status:', err);
         }
-    });
+    }); 
 
     socket.on("disconnect", () => {
         for (let [userId, socketId] of connectedUsers.entries()) {

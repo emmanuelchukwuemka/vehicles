@@ -13,24 +13,9 @@ router.get('/main-category', async (req, res) => {
 
         if (result && result.success && result.data.length > 0) {
 
-            const mainCategories = result.data.map(item => {
-
-                const id = item.id
-                const name = item._name;
-                const image = item._image;
-                const status = item._status;
-
-                return {
-                    id,
-                    name,
-                    image,
-                    status: parseInt(status)
-                }
-            });
-
             res.status(200).json({
                 success: result.success,
-                data: mainCategories
+                data: result.data
             });
 
         } else {
