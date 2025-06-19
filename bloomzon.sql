@@ -1,0 +1,2782 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.0
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Generation Time: Apr 19, 2025 at 09:15 AM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `bloomzon`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `capabilities_table`
+--
+
+CREATE TABLE `capabilities_table` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `capabilities_table`
+--
+
+INSERT INTO `capabilities_table` (`id`, `name`, `description`, `created_at`, `updated_at`) VALUES
+(1, 'r&d capabilities', 'the ability to conduct research and development (r&d)\n to innovate, improve products, and develop new solutions.\n\nthis includes investment in technology, prototyping, testing,\n and continuous improvement to stay competitive in the market.', '2025-03-21 11:26:34', '2025-03-21 11:26:34'),
+(2, 'full customization', 'the ability to provide fully customized products tailored to client specifications.\nthis includes modifying design, materials, features, branding, packaging,\nand other elements to meet unique customer requirements.\n\nwith full customization, businesses can offer exclusive, made-to-order products,\nensuring differentiation in the market and enhanced customer satisfaction.', '2025-03-21 12:06:13', '2025-03-21 12:06:13'),
+(3, 'quality assurance', 'the ability to ensure that products meet established quality standards\nthrough rigorous testing, inspection, and compliance measures.\n\nthis includes implementing quality control processes, certifications,\nand continuous monitoring to maintain consistency, reliability,\nand customer satisfaction.', '2025-03-21 12:28:34', '2025-03-21 12:28:34'),
+(4, 'finished production inspection', 'the ability to inspect and verify finished products before shipment\n to ensure they meet required specifications and quality standards.\n\nthis includes conducting thorough inspections, functional testing,\nand adherence to industry regulations to prevent defects and\nensure customer satisfaction.', '2025-03-21 12:31:26', '2025-03-21 12:31:26'),
+(5, 'agile supply chain', 'the ability to rapidly adapt to market changes and customer demands\nthrough flexible production, efficient logistics, and real-time data insights.\n\nthis includes optimizing inventory management, reducing lead times,\nand enhancing collaboration with suppliers to ensure seamless operations\nand timely delivery of products.', '2025-03-21 13:09:34', '2025-03-21 13:09:34'),
+(6, 'oem for well-known brands', 'the capability to manufacture products for established brands under\noriginal equipment manufacturer (oem) agreements.\n\nthis includes adhering to strict quality standards, meeting brand specifications,\nand leveraging advanced manufacturing processes to produce high-quality goods\nthat align with the reputation and expectations of renowned brands.', '2025-03-21 13:13:05', '2025-03-21 13:13:05'),
+(7, 'end-to-end manufacturing', 'the ability to manage the entire production process from raw materials\nprocurement to final product assembly and packaging.\n\nthis includes efficient resource utilization, process optimization,\nand quality control measures to ensure seamless production and\ndelivery of high-quality products.', '2025-03-21 13:18:41', '2025-03-21 13:18:41'),
+(8, 'private label production', 'the ability to manufacture and brand products exclusively for retailers\nor businesses under their own private labels.\n\nthis includes offering customized formulations, packaging solutions,\nand quality assurance to help businesses establish unique, market-ready products.', '2025-03-21 13:18:54', '2025-03-21 13:18:54'),
+(9, 'eco-friendly manufacturing', 'the capability to produce goods using sustainable materials,\nenergy-efficient processes, and environmentally responsible practices.\n\nthis includes reducing carbon footprints, minimizing waste,\nand ensuring compliance with environmental regulations\nto promote a greener future.', '2025-03-21 13:19:11', '2025-03-21 13:19:11'),
+(10, 'just-in-time (jit) production', 'the ability to optimize production efficiency by manufacturing\nproducts based on demand rather than stockpiling inventory.\n\nthis includes reducing waste, improving cost-effectiveness,\nand enhancing supply chain responsiveness to market needs.', '2025-03-21 13:19:21', '2025-03-21 13:19:21'),
+(11, 'advanced prototyping & 3d printing', 'the capability to rapidly design, prototype, and iterate products\nusing cutting-edge technologies such as 3d printing.\n\nthis includes reducing development time, enhancing customization,\nand enabling cost-effective product innovation.', '2025-03-21 13:19:37', '2025-03-21 13:19:37'),
+(12, 'custom packaging solutions', 'the ability to design and produce tailored packaging solutions\nthat enhance product appeal, protection, and branding.\n\nthis includes using sustainable materials, innovative designs,\nand efficient packaging processes to meet diverse market requirements.', '2025-03-21 13:19:52', '2025-03-21 13:19:52'),
+(13, 'multi-channel distribution', 'the capability to efficiently distribute products through multiple\nsales channels, including retail, e-commerce, and wholesale.\n\nthis includes logistics optimization, inventory management,\nand seamless integration with various platforms for maximum market reach.', '2025-03-21 13:20:03', '2025-03-21 13:20:03'),
+(14, 'regulatory compliance & certification', 'the ability to ensure that products and manufacturing processes comply\nwith industry regulations, safety standards, and certification requirements.\n\nthis includes rigorous testing, documentation, and adherence to\nglobal and local compliance measures.', '2025-03-21 13:20:12', '2025-03-21 13:20:12'),
+(15, 'high-volume production', 'the capability to scale production efficiently to meet large orders\nwithout compromising on quality or delivery timelines.\n\nthis includes optimizing supply chain logistics, utilizing\nadvanced automation, and maintaining cost-effective production methods.', '2025-03-21 13:20:23', '2025-03-21 13:20:23'),
+(16, 'smart manufacturing & automation', 'the ability to leverage iot, ai, and robotics to enhance\nmanufacturing efficiency, precision, and scalability.\n\nthis includes implementing data-driven production,\nreal-time monitoring, and automated quality control for optimal performance.', '2025-03-21 13:20:33', '2025-03-21 13:20:33');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `carts_table`
+--
+
+CREATE TABLE `carts_table` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `carts_table`
+--
+
+INSERT INTO `carts_table` (`id`, `user_id`, `created_at`, `updated_at`) VALUES
+(8, 3, '2025-04-10 12:38:43', '2025-04-10 12:38:43');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cart_items`
+--
+
+CREATE TABLE `cart_items` (
+  `id` int(11) NOT NULL,
+  `cart_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `sku` varchar(255) DEFAULT NULL,
+  `color` varchar(100) DEFAULT NULL,
+  `size` varchar(50) DEFAULT NULL,
+  `quantity` int(11) NOT NULL DEFAULT 1,
+  `price` decimal(10,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `cart_items`
+--
+
+INSERT INTO `cart_items` (`id`, `cart_id`, `product_id`, `sku`, `color`, `size`, `quantity`, `price`) VALUES
+(74, 8, 13, '619-MENSG-WHI-L-7117', 'White', 'L', 1, '10.99'),
+(75, 8, 10, '620-MENSO-GRE-L-6929', 'Green', 'L', 1, '13.50'),
+(76, 8, 10, '620-MENSO-GRA-XL-9582', 'Gray', 'XL', 2, '14.00'),
+(77, 8, 9, '592-MENSA-BLA-M-3314', 'Black', 'M', 2, '8.99');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `category`
+--
+
+CREATE TABLE `category` (
+  `id` int(11) NOT NULL,
+  `_name` longtext NOT NULL,
+  `_maincategory` int(11) DEFAULT NULL,
+  `_image` longtext NOT NULL,
+  `_status` longtext NOT NULL,
+  `_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `category`
+--
+
+INSERT INTO `category` (`id`, `_name`, `_maincategory`, `_image`, `_status`, `_date`) VALUES
+(1, '89232bdea10cc58567229a1877879c1d', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 14:53:53'),
+(2, 'db3c95460d13ffb458ff60abbe6eb17457fe30e1fac319c05df8a1b3951089bd', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:00:08'),
+(3, 'e6145f81f9665b310cbea91dd4a63930e3de10b9969ccaad633b11caba8cd04d', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:00:27'),
+(4, '0f1029f9a65c54c9eda0d59ad759a9b7', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:00:40'),
+(5, '49b7324b5e375039b24ac1fd300e6896efb6fde17f877532f3f4f8d2a7fe2c2f', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:06:41'),
+(6, 'bab6516b07454bc28b814c7b1102f4178aa66a589e384f959aef7164820598be', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:06:59'),
+(7, '2ba2cb577d67e284a28e565cab2017482e20c4b7b171c24e14b441d5dc007e3e', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:07:15'),
+(8, 'dc587c152e0be68910d935345d129551', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:07:39'),
+(9, '65784735cfe790139020a9bde24a13c3', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:08:02'),
+(10, '527a64220090835c8b261e7b664d24bcbdf2ebc0c2af323f38624b940fab88aa', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:08:09'),
+(11, '86b9235b2da866c50329d14f29ecbcfe', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:08:24'),
+(12, '8d70828e85cf875b6607e2151a315347', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:08:39'),
+(13, '8b468cbb04b1f4d68fadf7b675475770', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:08:51'),
+(14, 'bcf03475312bf8bfcad680ef8b76041fb63e7999cf5a768743e30d497ad0792e', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:09:02'),
+(15, 'b4c9824e28d0e63fdacdea3ab19fda6a', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:09:18'),
+(16, 'd3aa0ab8c7972836ddc2be4757090365', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:09:34'),
+(17, 'b5f79c2e76d2ea495f490bdfc449469fed53f5baada7d72801ba5fad90b9fc2e', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:09:44'),
+(18, '1f55bd878668675b83bf2ed8a6497505', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:10:06'),
+(19, '73fa0ebc171641a2b7afd91eb823dee1', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:10:17'),
+(20, '3606d3cfc5e3288218c186f7e827e7b753afbd9425a5efc676c68d334a2cabc3', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:10:26'),
+(21, 'a7a502d7812af5c7d90947491066e82296b0b8991f51aba2ae0b1be573b6aab3', 1, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:10:36'),
+(22, '65316f96b89b143ee23be88fa82654a4', 2, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:19:06'),
+(23, '85d028ce27bf635dbe7884e067cc929e', 2, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:19:16'),
+(24, 'ee07cb619d304b3b52bd592bee4ea7b6569c9165c8fa7ab1fb5c7f9ca672a737', 2, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:19:27'),
+(25, '12e75aa2ccdff0ebf32552d022b96843', 3, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:20:27'),
+(26, '6ec93580031666b2f754c9e2e15651cf', 3, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:20:51'),
+(27, 'f14c28f137c7b9b51a2d0abc9fe69a4fb292030d89e930d74ed176626640f227', 3, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:21:02'),
+(28, '7fa53c4ad3458ac74c2dc70185344d39', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:29:46'),
+(29, '9b89a9c30b33e1f625755606885490f3', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:29:54'),
+(30, 'b1caae893ff4b6bb510d3dbf12c4fcff14b8fc16edee80a73313ac4870b077ec', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:30:10'),
+(31, 'd3346cc18d033e28e6ac596fcf87fcc73deef9002817278d4457738568bc6129', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:30:19'),
+(32, '2f1808a6933edd1a0aadc3845a9e10e9ad6204f41de7dbeee3ba2e1d7ee60a99', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:30:43'),
+(33, 'f26a46b370e0311ca76934da7f33364b', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:35:19'),
+(34, '97d0729e6eb630b09270ffb82dccb82cd9a512e3c980ac1b1e2d4b012ecd88d5', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:35:29'),
+(35, 'cb6d904225904bc87780f887c9c7f09195a7aaef3de71803c600fdc62c1c5b0d', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:35:40'),
+(36, '9d499aa66dcd354383c75e85cf84bfa95ba718a4d4fe5ac89b8db39cbe380bbc', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:35:59'),
+(37, 'c8dc92d1528bd3407e23bc62b3022ced1eb592b8914717c2d56944c14936a273', 4, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:36:28'),
+(38, '94c3eeaf8f787c95b524cdf89eda9d95', 6, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:38:37'),
+(39, 'c1127f49e8a46771d3b49269117e2a5cd4473bb9160c21aeace26fe9b639d352', 6, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:38:54'),
+(40, '5a84de9fac506c3c6991884c3bc8474b5eebc172bb212bf0924674a227eb2193', 6, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:39:08'),
+(41, '6187fe711dbd9b6582128d61e89ec22c', 6, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:39:21'),
+(42, '44bdbd43995677befd1c26133d62f4b2', 6, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:39:31'),
+(43, '71f491195d4ea1a3c4418e4fa0af675a', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:40:50'),
+(44, 'fd4120aa9443f8a998dd4a91d833e74a', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:40:58'),
+(45, '43b5b102e9f22d2e09b9176999d109d9', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:41:07'),
+(46, 'a904768b2e11ef8d035d2fe7b498ade5', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:41:15'),
+(47, '7d6ff980fdda62e4f42b39dd49e9d48ce48c4fa7464d2be7044d8d52a3cd8da7', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:41:25'),
+(48, '99b89e6ad176399d7c5c464d0cd9dcf2b8d72bbc2e5b8888d19ee4cb9b8db5fc', 8, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:41:38'),
+(49, '8ec567de3bbd297c16549c9374b5e88f', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:43:52'),
+(50, '06dcf417e31faa8b0379cb5dc6118986e6333a8694fcdaecbcba59f21a3f90d0', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:44:09'),
+(51, '3341613f41c933821aff35ee0ea03ba22016ace0d634d2bdfacd7b81c0444d0d', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:44:26'),
+(52, '8c9c90e323ff46e5884a9a09f6f643645fca130757eb4595db7834619d0b76cd252eeefb2868cc60692b7834c458cf0c', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:44:37'),
+(53, 'fc88aa2f9f0b9d103b94cb86995cc3aafdab87a11aa8980c83aa9a90c17c46f8', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:45:00'),
+(54, '270a840545734c07dbc629d74af67069c9f86b4570b6a498ab2ea9511cb9567c', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:45:12'),
+(55, 'ae5e886a35f23f033e947bdc96e03d8cdd17d9dffdb1d943df81956ae54af638', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:45:48'),
+(56, '75163573fdba7a2ac45f1f0c8dfee40dac7b2772a43ad08787fba8012b288b3a', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:45:58'),
+(57, '6d3c563177772c3982ceb84e81abd6a941ca9c7262345e3f7c4b05a7e9ae57b4', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:46:08'),
+(58, '409a9edb9ddcb4a3697e0e7a95efdb17e4225c84f2620babe2a52a3a193ab772', 9, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:46:17'),
+(59, '8ec567de3bbd297c16549c9374b5e88f', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:48:00'),
+(60, '30466910401c23951551b9bb85c28d378708af5ba32e376ce3f579d649ac4260', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:48:16'),
+(61, '9f8aa727bf7a1fc1b1add84fd3e664bc82d386434ed5f5d43ed19a2e0a02c96a', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:48:28'),
+(62, '6a13f5bd21229c3708ec400ed10c3376', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:48:44'),
+(63, '79cae1dcede9abbdbf9fa6a469a6b7129fc5f6feb271d31b0becfc4ba46f64e8', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:48:52'),
+(64, '337b8ca3ae17db9fc1cfb701e74dea065ea023634f7a7e20ddf183cb6829049b', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:49:00'),
+(65, '6ad7a8c5a7cecea1c148ee118047283ec679e0c39e07a28deb8e6e934c1f23aa', 10, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:49:09'),
+(66, '051cc23cded01a6d40ad58b960eff51274b6d3c5a328770f10ca42758f92e6f2', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:51:01'),
+(67, '94758d3341b730734878670d3b491f98ce52b3069f4a8faa2a856983441d1b60', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:51:34'),
+(68, '634e3b14c9f0937b8f07d8f1b3730884a1501cee310eea5cf0a218b7c3099ed9', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:51:51'),
+(69, 'cf4a4101f94d38c4b436d386af45e93b', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:52:05'),
+(70, '929202cbd41c10708852ecf2b937e981281900ea439329bdb0e2b3ae84238f02', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:53:10'),
+(71, '9b218bc53709c3b91d56719e43e856d1f5fec5a18229f54c52c9af1910c96367', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:53:28'),
+(72, '8a5712aa2243879a7f8029cff7898b1772c5222691710b235f817d9f26f7b959', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:53:50'),
+(73, 'd2c924dee6aeec6e3d49face7379b86f', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:54:05'),
+(74, 'a96022686752568b664494b3341fc149', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:54:29'),
+(75, '79c54e7c449d9a9903236c91e06c377bbb044d4868875e3d71725ef629c8d449', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:54:42'),
+(76, '4c6239fe71ee23ac547be9c3fcaf3d48d06650cb447289ff89e4001373c22170', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:54:56'),
+(77, 'f96d26869e1744990385bb48ab096c07', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:57:02'),
+(78, '3010fa3daf15e7b7ee3561b110bd9a585d8a0a66243c8eeb6f6c2053d7bed8ea', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:57:29'),
+(79, '32417b15373555c8caa2e1aa2f594f3bbc85fad5a20c7c2daadabdd054ffdf99691a0637a9aa1a233a8c3006921b3941', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:57:42'),
+(80, '84b8c86f146b1bbad099d489188ae0fe', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:57:56'),
+(81, '1881694f34caefbb074f97f299341dad2353eeace9f1886ce2ff1aae586c5024', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:58:12'),
+(82, 'c73d3b408d3da970610d173e601412f7aa16078a394098bed8b1030bbec99e80', 11, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 15:58:41'),
+(83, '3f8f988daca3d9955ca457c89587d54d', 12, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:26:10'),
+(84, '3c4a9dbdb3a73c98e6af89f8a7d60020', 12, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:28:23'),
+(85, 'fc32381b417a78d257b3db579bd1058f4fbd67465091a675e4dab64addfbac3e', 12, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:28:48'),
+(86, '77dca3ab99cb0e8c4eeb40900426ace8d6987306def22d07d201154187826e9b', 12, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:29:08'),
+(87, 'c9e3ffe7cebc64ccdf60ae531a0a246e', 14, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:32:10'),
+(88, 'fbc71eb5758cf4921baa18801893cba3', 14, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:32:32'),
+(89, '69130b66c62ce52201aa49ab070cfd68', 14, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:32:52'),
+(90, 'fa3eba982fe70d6ff85950d06a9d0fcd', 14, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:33:07'),
+(91, 'ae0b5fa92f63b1aa377e00a5ed9c3890', 14, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:33:22'),
+(92, '768ce48e56c7ce6968f937735ca247eb8baeabbc85f329a6be864cb23d1de069', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:41:12'),
+(93, 'e87771ca2ad5f33e507abd80d5ac803615486124856d71de09402f39fef131b5', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:41:52'),
+(94, '8ca900f83e767e042982daaa1b8e348498b465dfe42b39bc07caef7fc297c315', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:42:04'),
+(95, '409a9edb9ddcb4a3697e0e7a95efdb17e4225c84f2620babe2a52a3a193ab772', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:42:23'),
+(96, 'd4e6f5519214e5144d1327406fe87301f1b72b8dcf930c8ed23e30071ddebe42', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:42:35'),
+(97, 'f5118e4f1cb08bdb982cd35e1b0a93d65c2517353a0974f31acc6cd2c880429a', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:42:47'),
+(98, 'b170568f4a91f256d7c9d79639873ef3c58e82acb959db79ebd91f83dd4602ea', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:43:44'),
+(99, 'cd24caac4ea51e85aaa75f9fa9734d07d90af96a4469090c7e4e0e591b347f34', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:43:55'),
+(100, '341e576755e7817b4797a5edbdb874b4a24b569c0a888c4177c77b4b16053d3f', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:44:31'),
+(101, '27149fb86044e627955ffa854b771754f107352fd5d84f0c3bbb9f240472a6cc73211cf6f2186c06c0164a1ae808074a', 15, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:44:47'),
+(102, 'ddf6127a805964fc487986f5a332db89', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:49:09'),
+(103, 'e1332d943493d69704915e1f3921aa78', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:49:28'),
+(104, '12f448d2433be3f35eca3e63aa29aee2', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:49:37'),
+(105, 'a08d46e61aac1d9468874f937c589bcc', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:49:48'),
+(106, '86ef4e5fcecec900055895e46a70a83a', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:50:01'),
+(107, '721b4bf9e20dc0863dfe899bd452d706', 16, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:50:12'),
+(108, 'a0590684539def845574f9c3054cc7b6', 17, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:55:36'),
+(109, 'a00f1687e1874f7fc5a5dc7cedf8073d6ca0b29098ffe7f1a29343a2182dcfa1', 17, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:55:48'),
+(110, '7002807861a40a8003ef88f38e357f39f1ec4f66dea1525aa03aa404674a698b', 17, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:56:12'),
+(111, '552ea265199735290230966d2eeb376440715b0dff6de1cf19d35d3f07af875d', 17, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:56:26'),
+(112, '06d24ce75dc871c1a508988bd3a48c059993f6c4a5a92573001166605731fa05', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:57:27'),
+(113, '06d24ce75dc871c1a508988bd3a48c05ad06aa395237a63088469102e7bb7660', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:57:36'),
+(114, '2ff8d34320f49425d6c2abb9f4a250d0f218b9f692125c0008d0f4b8532071a9', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:57:45'),
+(115, 'f726a0980b18281d9541f4bf0896fd7cea51d1323ad2e607becb487d87f81991', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:57:55'),
+(116, '656233c1e47ac6be35b13d197fa48f34', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:58:05'),
+(117, '5a66082cf04063f88cf3530f882948f8b9f97dabd8fd3500e9793e1b77d943ac', 18, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:58:14'),
+(118, '5557d1a699e54cab6c2e3fbd4683fc04', 19, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:59:31'),
+(119, 'baa73f5733ddf2f7e1338e056df75a3b0df3587e62410177cc0a61ecb30b8e6b', 19, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 16:59:58'),
+(120, '7acf1c0c6d52f7747eae59bdbb610a3e', 20, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:01:09'),
+(121, 'db759f063ffce9f9ada571121decd239', 20, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:01:37'),
+(122, '3503e4ccfae252524144c13142578328', 20, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:01:47'),
+(123, '3275bda957c09912bd7e616106dc6db58055af5479f588f91fb28ccd6743d741', 21, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:02:48'),
+(124, 'cac6207349dbfae98ebc9b1029ab0d45477727b8ac95bf5aafb3fb97737fe6d1', 21, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:03:00'),
+(125, '9d62fde271928d8ccf2cc7ab882bf3359a2ce84ff05043828d0e87669f0b2ccf', 21, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:03:15'),
+(126, 'a56bd39ad5de0ca6f7bd422629c3e71e2cc8bde3635e0cbb13806c18d9353d24', 22, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:04:45'),
+(127, '13251fa32643a0a403352014fd57f98e9ae73a7e7ebb567b02593af41bf797ed', 22, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:04:54'),
+(128, 'a3f4e72200691695827263dcab55fbb8b2905d1131f207d9c03f74929818af64', 22, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:05:06'),
+(129, '8407872ade5820eea108382fb265d844', 22, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:05:18'),
+(130, '351b8adc86fb9976cb562219fd945ce4e377776b3e7d6054323105eb86b9fb9c', 22, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:05:29'),
+(131, '1b9c4e8520cf4d3cf7ca65e1c4a8fa0c', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:06:24'),
+(132, 'd086f7b3fbb0973296de0a0bf9c8530f', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:06:32'),
+(133, '039bb22728221fe9476bb6a402da003801a3854a2e58324f6a14651196ccf338', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:06:43'),
+(134, '09b9162b1f71966d74aff37f544f5a24', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:06:53'),
+(135, '9a195447de4d70f3514ca5cbe93161e4d0c3e963f21cc80013d978492d978a05', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:07:14'),
+(136, '65784735cfe790139020a9bde24a13c3', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:07:25'),
+(137, '518e437aca046680acdcea36485ef7a504fc0164ecd2849172244780a6fe30f0', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:07:36'),
+(138, '914ebeafb916931fdbe7d7ebb6f55ac55ff7792b6777fce3aae77e9634ad3f95', 23, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:07:46'),
+(139, '7ce3460484bed078af14122248212c88', 24, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:09:25'),
+(140, '7d8ae608fbdfb84cc358d65cc41d0d95', 24, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:09:44'),
+(141, 'f59706a361747dd9161c5cdcce032d6d', 24, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:10:04'),
+(142, 'a6ffb37ab8994ef60e4cb04ac6d7f802ca4eb69becb5c34d2b9cccff40db1fd9', 24, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:10:23'),
+(143, '9b95656231ac7c25c724aaf1516df2ac', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:12:14'),
+(144, '49b2b27b329126c582e36c920821324a2aaf5dec69326c6ec0f401096a85ebca', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:12:35'),
+(145, '17796c445cf2ad52e42210072f80f2fdacb4620fdd27cf165e039b044ec7a044', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:12:45'),
+(146, '0e8a4f3d3494a0f018c6e8ac4ad099b41e4c05f5b6967463322ad33e75fb2070', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:13:04'),
+(147, 'e3e0f9cd61a55d5aa52fe874a5643ab9', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:13:13'),
+(148, '98e8991e051f8ed9bdd3466e5f1f1222', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:14:08'),
+(149, 'db090848f35b634b49ce9998f1be3e3a', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:14:29'),
+(150, '9f95bdb3fd4301f1c1f6e3d46d6aa047', 25, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:14:39'),
+(151, '54954625e130865f964100b8fa761ebe84b5e90718270482328eaeba194af76b', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:15:32'),
+(152, '73c7f609a5d34668cf914864f6a381e1', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:15:45'),
+(153, '2178ef7dd498a9db8afd118b5aa3bd37', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:15:57'),
+(154, 'e679977071f06eaa165048203e8420f77373d7706c9f00b41870ab02d9dce6cb', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:16:51'),
+(155, '8202aef2cf47fa4740a4262d1dc78692', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:17:00'),
+(156, 'fba96dd770bc2fe8ff8c67346cc182f2', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:17:26'),
+(157, '376c22a3cb6266bf97a09d17cea99a899ff36c200b2f226d290d64a860f38dffefe66a7cdbd35611879186f763d1d990', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:17:38'),
+(158, 'd38406840803346a9e1644090f61dc39', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:17:56'),
+(159, '5d5f83336e68fae8025c01f2d5141094', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:18:08'),
+(160, '593f04fd6db3ee168529b2dae83d23e829dec22cb8a6a1d30baaa3a298f48c30', 26, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 17:18:19'),
+(161, '56c9861fb29b52a962babf374255eb38', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:56:59'),
+(162, '9c353092418284b997b3971fecdb73b3', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:57:20'),
+(163, 'eec6eee5b120d19a0fb353fa9a760744', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:57:33'),
+(164, '342e5db7418f32e1894a0edb6680f339', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:57:43'),
+(165, '27c7f47e6938c768563bbfa4062b9e7c', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:57:52'),
+(166, '646d4b1b34481571512a40abd09d89c3', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:58:00'),
+(167, '29986e9c9e1194fd6e535971e5f4ddc6759b9186980b95fab8363fbcdec7d5c7', 27, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:58:13'),
+(168, '87c58acdac25eb2daeecb727a3bf1e63113f0d22341dc1cef143266c23a7d253', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:59:38'),
+(169, '908b29b33c97036f60c8b2064e4d7bebb1ed1c4af3c05d4863ac1ba858281815', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:59:47'),
+(170, 'f3ee5e30e47bc29690bd38e73f47c347cd495c5c24069c234b25bcdef2ae4793', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 03:59:57'),
+(171, 'dfafcb7b480e274dbd2a5a967581ba5ba5aaec796c7c96a0256827487f4322e1', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:00:16'),
+(172, 'e9b83a0833d53589a1dea509d6d323109f8719cf37a72d86c99547fa66051c72', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:00:28'),
+(173, '3606d3cfc5e3288218c186f7e827e7b753afbd9425a5efc676c68d334a2cabc3', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:00:39'),
+(174, 'f5733c84ae7a0b43c8162cd623d8d20aafe68caa4ec63d223b013e2485a83c96', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:00:48'),
+(175, '9bcdf70c8ff3ce1c6af43a597545cd7486d6a1ab99bbc559495e6f0ce7dad58e', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:00:58'),
+(176, '97927f55ec6f4a762132227e67a98371ff942b936795be0d8bafc6bbf77590d0', 29, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:01:22'),
+(177, 'a20e3907b122f7aecc63df5a8eb8844d', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:03:25'),
+(178, '73fedc732f0c7d0e43b1305c6c43d686', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:03:45'),
+(179, '78ac96412eb0f506b9c55b5ee12fc451da31ef348574793d793f082d39fe610c', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:03:56'),
+(180, 'fd597132707d27da53ac31fd2bc307121d378ede31ad399311e8aabb4f29f25e', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:04:07'),
+(181, '31d7e4259dd343c7fa3858c3ee87018049af7b37b3d34ffc125ee137f650df98', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:04:20'),
+(182, 'ec120ff88f3bfece60b704b4f40b469b96d4a6bb4d7fa250274836b7e37972b8', 30, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:04:49'),
+(183, '912e92adf25ec07bbd91463a024e8ca3', 31, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:12:28'),
+(184, '184f259e1e8310ce2b4962c06989a24b', 31, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:12:40'),
+(185, '970bf4a99e8a1b0ad27ce639b9efd80d314d200af598c80e32de84a3c253689f', 31, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:12:51'),
+(186, '4dc83f3bec37fd22fc17b09ca3ef8f4b', 32, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:14:19'),
+(187, 'ebae3504c3b9fdaeb811d6ed09f58549', 32, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:14:27'),
+(188, 'e7c028bef786fb75d1d1562a0f5ffed5', 32, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:14:35'),
+(189, 'bb63c28394b7503159058af323ee4477afbb11dca36ad8a4fbea9777063705a3', 32, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:14:43'),
+(190, 'f69214145fdd7037c856678ab4f0be217cd5482a7440c9cf6f5f2ef7525b2266', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:08'),
+(191, '3145e835ec232bcfadc4312bbfc5f809', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:18'),
+(192, 'bcfa67905969678abe91d3552706eea7', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:28'),
+(193, '004be5d48ef81c2e2be27682eff4b806cff00689451fddd7f0e7df64a6e1b01e', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:40'),
+(194, 'f84afde94bd3a4dfd8cccf562ac352f7e3e9d996beca1117b25cce1e21f431a7', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:46'),
+(195, 'a884955262c1a0e635a8ee14af75577d32a2463bf7d34b50b31455aabe3ffaef', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:16:55'),
+(196, 'a208206a5f3de8a87b9dadfcfa9d8f4aa0e6bb6392b69481d517a4f5f578b8b5', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:17:05'),
+(197, '1097a7f28239b0a73f7d60d554e9d8ba20002496b9484176cc68d29c214c1676', 33, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:17:14'),
+(198, '250ee6339faf7c36f3c77a605eb1d254', 34, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:18:47'),
+(199, '906c6706d9e247419a05a3e1a56ab4cf', 34, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:19:03'),
+(200, '6c9619407473786b401339351377d3c3396255c8c9950990eae0676a495ba241', 34, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:19:17'),
+(201, '2bd992cb55ee51760e182f582b17aa26fe46e88e4087d72cc24c650a314b1824', 35, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:20:06'),
+(202, 'e146d61687166e39cace2f09793117e28a272c09ececf6396061703bd74ab8a7', 35, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:20:19'),
+(203, '92b44e46856e77e2eae32350fadf32b655af17906674099081971b89fadeb7af', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:21:56'),
+(204, '85c03ab79aa010802f3f12350f3cfe18f29c70390a8cfffa920de91f838ef0cf', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:22:12'),
+(205, 'e2cc9ae3b1feff5b292aa84816aa83341bf5c93eb2a3961e6fe2be7658e5c617', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:22:28'),
+(206, '46c119fcdd02334d41e61d5ca53ca261', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:22:37'),
+(207, 'a98947268d06ed348b2e0862855d3946', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:22:57'),
+(208, '15c3ec858fbaef3e988631614c88e6a58603082d1105aec57919b26f2572b285', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:23:11'),
+(209, '5e84a58038f58fecc9edc8a4e094bf1be9eaf952a255b2958561a3a9ff65e7af', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:23:33'),
+(210, '34d44fb7204ddf2c1d263df33867d61b5232d24a54ca954fb7d581fd2ddfc5fe', 37, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:23:47'),
+(211, 'e9c699a16870f77e21c53fd676b235e885ebfd4c3ba771057f486a7f712565ae', 38, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:25:40'),
+(212, '5e84a58038f58fecc9edc8a4e094bf1be9eaf952a255b2958561a3a9ff65e7af', 38, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:25:47'),
+(213, '34d44fb7204ddf2c1d263df33867d61b5232d24a54ca954fb7d581fd2ddfc5fe', 38, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:25:55'),
+(214, 'c8d780288a3754fa06df7e83de12b3f8fd3cff1c93a8238f0b23cf77ace74f22', 38, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:26:10'),
+(215, '8178a271a4629c2cf7b79c572d06b588f6efc03d73ec118e33e1cdecf9cc8758', 38, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:26:19'),
+(216, 'ab2b1cab65870a4d87e1c3dff75c46bf', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:27:50'),
+(217, '63fca5f409cd7d78461b411cc4f698de93dab6f9b9798df9e42577d3aa3318415981798d321112956eb7cd1cb7926c9e', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:00'),
+(218, '4283d8415cc118729d7adefade092701242fa871a13236e4b0540813c702d7bf', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:11'),
+(219, 'fab665f436af027324e261624273321f', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:18'),
+(220, '5b7b7bfc5d64216c102b310302621b84', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:26'),
+(221, '4806bb2f2fac4e27508b3c373644d0500d2a9a433a6fb3c9705b3345b73ca120', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:33'),
+(222, '3b9bc667b9cef3a2763d89bc9b750ede', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:28:53'),
+(223, '5ed5b44371e93e06cd327006208388be', 39, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:29:00'),
+(224, '2420fa2b709223cc8f4856e3391963ed', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:30:42'),
+(225, 'af76449d9ff85f70e803b027a5431805f890174924c6b3863c1149b0dff5ceaa', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:30:51'),
+(226, '9fec32518072161dce87b38e88d6cc8085460c8cf54b1eb7aa912b430956983e', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:30:58'),
+(227, '366d6ef6b7afcce1e1d012975d724c7a', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:31:20'),
+(228, 'e3c4c15da39fea89535b499cf9721e4b', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:31:28'),
+(229, '8a392311c234ff995e8d5afa6666e26b06d6b2cf5a17c54fda5ad377918e17a5', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:31:43'),
+(230, 'c8895b89601a54130eed2753c1c947675645b936b77065fe7728d1a352fafd6e', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:32:27'),
+(231, '960301900edd078750e1b5b11382ade78bbf7c941ee0205c617aed103c88cf40', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:32:51'),
+(232, '5cc71a8215e23dcba79c0c88c7463f2d', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:33:00'),
+(233, '173e86ccd4267600c4609347be05ea3f283c418aa8a75b3c3cfb3478e69d5a4c', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:33:14'),
+(234, '028e0b987fa59622bdad3aa21148d86b', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:33:27'),
+(235, '60033799e6a46b1bcc2ea8ccacf9491857f3cd6f50c0be4090c503b33f8e2cf3', 40, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:33:35'),
+(236, 'dadc0ad7b3abe78d9b71c987602b1aa3', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:34:38'),
+(237, '556c6c5fd54975aacf5b70c07fc31e07', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:35:09'),
+(238, '4913e991274404d7b4d1fdc8c376abda', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:35:20'),
+(239, 'f9ea833365bebd906806a769f6ae6a23', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:35:31'),
+(240, '6bc639c31c8dfbf8f8f54b81fd5c859e', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:35:49'),
+(241, 'fa218c46ec93ccaf0dda95049d98619fc3723638ba5b34f6fded0ed436892a50', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:35:57'),
+(242, '7dc9137b5a253d0e6aefa4bcbbeedc75', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:36:20'),
+(243, '9ab78391ebc884e341f673493390ec5401af4078b842c7fb3f33e60e2f4966f3', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:36:29'),
+(244, 'cf49f70e4895088a61206163f0d7b190', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:36:41'),
+(245, '9b9a9ca36f35418e7cda44c170d78b0f', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:36:49'),
+(246, 'eca684ca794746904cb33d61b3b39313', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:37:00'),
+(247, '0fdbdb0775611409da35f0bbebc057a7', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:37:10'),
+(248, '426722ac519c75563d46102cdd42d6fc9f162caf0f9a78b808f594419a49c5a7', 41, '', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 04:37:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `collections_table`
+--
+
+CREATE TABLE `collections_table` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `collections_table`
+--
+
+INSERT INTO `collections_table` (`id`, `store_id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(2, 2, 'Polos', 1, '2025-03-21 12:36:45', '2025-03-22 02:00:14'),
+(3, 2, 'Men set/Tracksuit', 1, '2025-03-22 03:59:49', '2025-03-22 03:59:49'),
+(4, 2, 'Men Shorts', 1, '2025-03-22 03:59:59', '2025-03-22 03:59:59'),
+(5, 2, 'Men Pants/Trouser', 1, '2025-03-22 04:00:18', '2025-03-22 04:00:18'),
+(6, 2, 'Hoodies', 1, '2025-03-22 04:02:29', '2025-03-22 04:02:29'),
+(8, 2, 'Men Pants/Trousers', 1, '2025-03-22 04:42:42', '2025-03-22 04:42:42'),
+(9, 2, 'Men Tops/Long sleeve', 1, '2025-03-22 10:58:28', '2025-03-22 10:58:28');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `filters_table`
+--
+
+CREATE TABLE `filters_table` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `filters_table`
+--
+
+INSERT INTO `filters_table` (`id`, `name`, `description`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'new arrivals', 'product was added within the last 30 days', 1, '2025-03-23 21:47:23', '2025-03-23 21:47:23'),
+(2, 'hot', 'product has high engagement', 1, '2025-03-23 21:48:47', '2025-03-23 21:48:47'),
+(3, 'recommended', 'based on high user ratings', 1, '2025-03-23 21:49:36', '2025-03-23 21:49:36'),
+(4, 'best selling', 'product has the highest sales in a last 7 days', 1, '2025-03-23 21:50:48', '2025-03-24 06:08:08'),
+(5, 'low price', 'products are sorted by price', 1, '2025-03-23 21:51:17', '2025-03-23 21:51:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `interactions`
+--
+
+CREATE TABLE `interactions` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `target_type` enum('store','product') NOT NULL,
+  `target_id` int(11) NOT NULL,
+  `action` enum('like','follow') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `live_table`
+--
+
+CREATE TABLE `live_table` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `description` text DEFAULT NULL,
+  `stream_url` text DEFAULT NULL,
+  `recorded_video_url` text DEFAULT NULL,
+  `is_live` tinyint(1) DEFAULT 1,
+  `started_at` datetime DEFAULT current_timestamp(),
+  `ended_at` datetime DEFAULT NULL,
+  `viewers_count` int(11) DEFAULT 0,
+  `likes_count` int(11) DEFAULT 0,
+  `thumbnail_url` text DEFAULT NULL,
+  `created_at` datetime DEFAULT current_timestamp(),
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `live_table`
+--
+
+INSERT INTO `live_table` (`id`, `store_id`, `product_id`, `title`, `description`, `stream_url`, `recorded_video_url`, `is_live`, `started_at`, `ended_at`, `viewers_count`, `likes_count`, `thumbnail_url`, `created_at`, `updated_at`) VALUES
+(3, 2, 8, 'quality short sleeve for men.. drops live!', 'Exploring the new men\'s polo collection 🔥', 'https://play.video.alibaba.com/global/play/6000282226885.mp4', NULL, 1, '2025-04-13 11:05:19', NULL, 0, 0, NULL, '2025-04-13 11:05:19', '2025-04-13 11:05:19'),
+(4, 2, 13, 'graphic print short sleeve t-shirt & shorts set', 'It\'s hot 🔥🔥 Print Short Sleeve T-Shirt & Shorts Set 🔥', 'https://cloud.video.alibaba.com/play/u/2153292369/p/1/e/6/t/10300/453654483387.mp4', NULL, 0, '2025-04-14 13:03:16', NULL, 0, 0, NULL, '2025-04-14 13:03:16', '2025-04-14 13:14:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `maincategory`
+--
+
+CREATE TABLE `maincategory` (
+  `id` int(11) NOT NULL,
+  `_name` longtext NOT NULL,
+  `_image` longtext NOT NULL,
+  `_status` longtext NOT NULL,
+  `_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `maincategory`
+--
+
+INSERT INTO `maincategory` (`id`, `_name`, `_image`, `_status`, `_date`) VALUES
+(1, '708552de9472c7942dbaf3bb3ba040d5f9f6cfae8a937cc898b3c856232621c6', '{\"_s\":\"8ff1957f424b0507b2ed0b4f183cd3dc\",\"_d\":\"4516e705e0ac45f6c8a68ac899702ca36937505495ea3e9248962db1408772e9e01d0fae988a51d557063700919195126190bc7808db54e3955597aedb43c1859d5d342c036ca10ee3f7037fbc4e718714710357144ac4538c2beff32c58c6cb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:04:41'),
+(2, '10aca0a8ab0a3947e69a000d0ec34f2672b9a2f0dcbe417381570d0978685639', '{\"_s\":\"ca45f57cbecddcf691d45233b3429a8f\",\"_d\":\"1093b7b32afee9b5cec8855b6fb4ed344c55677f27c5ca7ce70ba86d185027c7368069fdaa959f950cb631a0fadd1786a491aa651e182ffca20d1ebda25c0c6df8cbd2382e9342d115a328e7c7155811c4a3bad4ea6defc6467857440a2e531f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:05:24'),
+(3, '6f33662d71455496915f8e2a9647e7ad89ee7662285fceb91bb30ac883a8c04ab0d8eb6c66e7a2008d09a38e46ea8ce5', '{\"_s\":\"575046614b0225e5b6d71bb9d5caef0d\",\"_d\":\"b65bbbbee7859adaecab8a062f41bfc7d0b40e7d2321f239270a76fab68b8f4d612be353400fa0cdf599984d1a667f4713bbc0948ab92216680c0218e4793396cf3ca0d6db77fd24c0284a8fd6781d0a5c97d4a848414dd828548ae8046a8d43\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:06:45'),
+(4, '2a95c00c5d73caa0db9c18bae5707eac8b7f1329664cd65643811c4106d7259d', '{\"_s\":\"99283f8417f4c0f7d5a7e6d89fefeb14\",\"_d\":\"fecb3b5e0f31724ecf589edfd1f38cc90ee7b1a8c064aecd036f65edb6bc1b60613df55f8142e03b2f21d69a7d8422d39f7cda81ccd94568d5017025a20c1a1d7c3a65b583a615228df1e7bc533aad3babe85c21588442dd68b64273bc07a2ee\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:07:22'),
+(5, '3431fa0a800eb5d3e2fb5f0cd1b04aa5473fea19445dd5cce9292fd4f3775cb3', '{\"_s\":\"1ec377403da14be0eb46a0512cfde3be\",\"_d\":\"14c90f55f9200ed5b97841f2d2bded1fb50085751f7bee85c04dd88b8d39a3453bf71b712674eaed6efa7db87741fbd6db490c702fe0fcec9ffd89fcf28182253408db1bb83c327b5b46d1a2e0431e3c1c19bcf7f9b677f05be8e303448f2993\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:07:55'),
+(6, 'ab6975c68937ac7f27516e7bcb654923762420a27ce60b3c47956f4767a393be', '{\"_s\":\"1ae6a5d8d606faf3df775aa2b8689717\",\"_d\":\"f3e2114bbb624dbd884fba27926d325a8b55872f385143a412caf978526f4596afead8a25010b59b543f946a22e8b4164ee2c71a575e8fb19e1608149cb4da0c83992998a5ddab6896801d59878f8e2874534f94852d52f21ff2143c84037717\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:08:16'),
+(7, '104da58f5a6f35d6e60d83983e2c66d1fd25cc5a1682bc3eb926a0007ce5ceed', '{\"_s\":\"a3f8179c50f9b433d6c8f1df36ef50ff\",\"_d\":\"0c0fa0261e51907b4c501eaf1d17485c8cd25be81f391dcef3e27841dde3f395b291098fd6544c79f2e7afcba313491e9308eba613105c0d88fbc991795d956d3d19021709375a77bb77c99242a7c6cd59ce9178e26206c71ae2f589d6f52a9e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:08:39'),
+(8, 'fa2f5b68d1f458b91acdfefc1cb75557910d3a4e62559e56a9bd728f979c01d6', '{\"_s\":\"ed6170c2ca5e028cd4a5fa996462c3ee\",\"_d\":\"ad7562be6be6d4bdcc34f6faa82c5818f96a6b77fa3b4f8f1e326c2e30e6e2fc12098338b131d883e327fe694d2d3b2dadbb32a795218697d089e8fbddb2b009d53c374b42ff8cf5995e382e06aa388da1ed6e10a9e590091d7f5bdc09b01a64\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:09:07'),
+(9, '195107aa42998954848d4a15c4abc84aa13604edaf5b17188ecb666167de36d4', '{\"_s\":\"6aa2cf3c6ac29bb063f54976029db828\",\"_d\":\"d72ad9e75ad044c6eae0e8981f1ac657a7951dfadf9b27cd4114657d948f686a8d5d3b7763ceb04ebeaa112c994ce7cf5caf309df94253072881ff74affed4e92d747cfde33638b82bc811efa9b40bf582425af0e2ac0b500d66a6e554162d6f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:10:44'),
+(10, 'f2e4dfccd41d84c34ea68ea10bdf93e16eb468aca95aff6ac0d377ccd9d475dd', '{\"_s\":\"0ac9783dc4631fe67407c139bad93857\",\"_d\":\"fe1983bb51e1b583a880e1217b5c849260fdc16f1e4e57aa50672ae4a37265ca914db92d54c6667d9f70712b860e8e82dd26b2cf3e1b96d3ec135a0b84c0d686983f551727b5a9ba34cae5e497e5dd77e29e3f128f384c63fd87be6b22b2dcfc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:11:19'),
+(11, '4624c1d31c19141c155aa69b15bfa9efec30a606b02e8827701169c52784f109', '{\"_s\":\"06fe7005e7ef70d8cf7a331621013921\",\"_d\":\"83ca1fe76c01634bcd150f24fd86e31ef4f221063244b27bdffe5d231f2a50907297f9bd4cd59cddd0011fde442bfd5be93bd100370fd6d908c58ae09f216b18170dd27c7e03eb671b42745a423d5a14ffb09dc1cfb0d0119f76726d43a2e7d4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:11:51'),
+(12, '3f03c02b25ec342b3ab1c3ea970e7037', '{\"_s\":\"a320b55ea9d99b5ba0c5f94167907393\",\"_d\":\"6e5c01645c01862a584bc10c1a19352865036ed006387d2b57d11996ebf570c9bf446139db17a7d68b0bfbfe6d30412d5e4af17360a307d20ce6cb5455d388013b6a5725b9776860035ec9e82f4c78867abf1964a210882def27eea7750cd0a5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:12:45'),
+(13, '562309b31bdcc55efc1d64d76a0ed0f5244ecc4dd379fc4ddd6532c7d572753b', '{\"_s\":\"fb4ed3c75141ffdb99ee53c53c156b4d\",\"_d\":\"a220b9fd1cc238ede42c4b6edd9594f0931d1657f385c2a7a0808e6005622a8e26804f525b3158a85a169f338fa963c7894269d10d253f49f3b29f464a3d4252c89279430b808c109e0685ea78241bbdd90eb34d2c2020870a8c3fbb52aa54f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:13:07'),
+(14, 'e5b2cad2a10d769bcffe124ac703179027cd8c5a8ee6d597564899328338b169', '{\"_s\":\"a174d60ca2ba71ad31337435a42c9613\",\"_d\":\"51400ee6d25290470812665e1f3f49b1c1e07a11322a3925bfde449fb65be936b6bfd7cd4d187954e33a7720b4d533f1118ece80b7aad43ed2712fab913559505019e2c4b4313baa2c4c6f946f14c4263af984619d1c00710b5fc814bbbf746a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:13:32'),
+(15, '83269b68573a2adba4bb6590adeaf8a802a4803555c9e25dbf2fede7cb7d63fd', '{\"_s\":\"f040944fbeeb9bf1c102be2a5566b372\",\"_d\":\"40179bfa846be1cd54f8ae59e8ffa5e710ab9b8635be0f725de8f527602691a26f5b8e7ada95f41a7c970a7916c785a1147ebc0ccf76cec5d4161eadec28edc88aaf2aaa58387d5c65e8fce8993ccdcca9f1e4764d4c742017448ac0913a0afb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:13:56'),
+(16, '41ffc6913f72776d0277543ba0848a04e4a0fdae652cdb89f9f1ae9c4c81f607', '{\"_s\":\"5a5818b48fccf5749923691a8a171ee3\",\"_d\":\"31e9759cd76ad6dff03789ac7588b47d3986291c4a0c9a7a06ba0414f528381ab9a0c17c03a401bc70080c4fad9d53ef20684009ae7b72f2c8969426ab6352e1ad540d8494d56fb36329712fbdb465820087df8c63e137ca6dc6dc13be992533\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:14:29'),
+(17, 'c20e2646c17f7156b09ad8f8ae37443079204fd00967fd0168d12a57147ff542', '{\"_s\":\"1afd869dab9cd355b4d7bb0c8197dbba\",\"_d\":\"fa22f882fa2958015ad8dae24c3c8a6a2cf778cc7e1935b4521846282fbc1d4368dfb164531f576eaa6d3e620e438b137cbdeb899ba0270149713d9d63422dbd60375cf7cdc04f2d2ee4fb503ade1237efe8ba089038d342ccbc1d17ae34685f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:15:35'),
+(18, 'c3f2274d7643718a80c078d59f52e720', '{\"_s\":\"362f4e86d7f4ee3d393cc8f0d886ccee\",\"_d\":\"956e2e43e34c860106bd6e9f101698e72777d65bdd5ab16c60fa1d92c971e4549afa96c05f09b75871893d0f8ce5edc1a58142121d4856a979ac5523efd3f8b271e17427c9e6b94cbfb963a8075e32803b9f83da8d7046a60e6fb73e5db76e98\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:15:57'),
+(19, '124e8e55a9d78cfbbd1ab14d88ba9f16b9ce149bf2692dfaf89956c4e154cdd6', '{\"_s\":\"90fe2092851f6bcdc90551e6f5781eaa\",\"_d\":\"339dbe4391fa82683dbca925c034e25e8bf85c37e2f4017e324b4a5d35c48728b14fb779a51f167fd0c5c2b828fc959d807da8781d1a87534d7f03d2c18902e5f5e6c628aef6edb66a9f96d3187e6099a3d3caa4713b8de2fe5a398dc648b6c5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:16:24'),
+(20, '81a5910dafc2e0567320a7c75e4a4083eaebc0b2f122583e6c1485af1af2ed9d', '{\"_s\":\"69c3dc35ee793190e3da7a2762cb342f\",\"_d\":\"98a5be65d12ce57f9bde15609eb18ad92cb9ac09dfa36373e34346d0d4e11f7bbc0059e9d79ab101bf567b1bbc773e7d254b76fbf9ea17233234de67695b5098bcee8491023717ee826bc9a2911163249c9a65eab4f4c42c2170e270db906ace\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:16:49'),
+(21, 'b33b9d21175ed7a4c1fed8580372c168', '{\"_s\":\"f9c5190745a35d5a98123c7e5e12d2be\",\"_d\":\"5a617446b280a5642ca0dd7dceff7e5f299f493b161daad34de1674e80b8deb83957ac986e02696d92e5f88f44ceef4ebece56a02808bd15c19e833d1ff10e257fb4bbd7c38086876d903c83209f0155a04cffddb6b0ccfc7f563f5e0fcc18bf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:18:16'),
+(22, '77e09a24d5bd1610e10e6777e20389fe', '{\"_s\":\"4895a3d1de4decbbe82cc434e686fdda\",\"_d\":\"33ed072432cfb407f29b5fe2c499f6e143101fbddd8f999597e86852f8bb16db81bb614d90d5cd5002400568021f290a4504e60a3d64e4f7095ce4e8394e87813022a5218b35b0a15bb365b62d7f9eca7f8b6db741e618fb9edae445aeb5d4c9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:19:07'),
+(23, '34c36f9cdf0fdaf7abe607d2f35a8c19c7f13de8c6952a1dce9b19b79177ebde', '{\"_s\":\"9b9075e9f62bd01dee43ed28973588cb\",\"_d\":\"24534a638e23b6c35680969661f0c334dbddbe2db14e56dbbd1ecfe569b21bd26cebae1d8baaf20e93d35a3da9151a8c639bff41d2645d7a8bcdf3e574cf3eccf32a662a42ddccafc2e4d4e97b2db761b625ccd87a193821345eabc2b524ed5e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:19:33'),
+(24, '011bc19ac93424f45a1a46235c81569b3dfb0d3b9871ba4ca8024475da5fb41a', '{\"_s\":\"8be3a561d401c67bd653a52cbfa58edc\",\"_d\":\"cc53b1dd17a91b66e593f843d64a804b68273d6b631df210084d1936a0635d9b3fab7406e5eddf2996e5024d9f7d640cca0f4f512c74339147b8309f95f96058fccc2342d093a025b1a677eb989d145bcc37808a187fc6b1aee587fc48ec879b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:20:00'),
+(25, '411ab90b403ee8831652a38d826d9a52', '{\"_s\":\"0440524a2a07bdde9364e028c193c133\",\"_d\":\"30caab9d1f2f040abdde2dc3bd349bd57a480910c51cf56b4100e19f28a79ed07c2f602ecd256fc925a5f9b3539a6bdc1edf938604787571feeed1470c1b3fcc768e5a6f304d139963183c82761e7c92b975d5b8eb070375e90348f620cae638\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:20:47'),
+(26, '34b1048fe76d9d45466c8c56cb9beebb', '{\"_s\":\"de67eac7d4af2f2755905b1bb50e96f5\",\"_d\":\"e4ff45e7a98e543e54218f25cdd80ff5670e8539d0bb4b216be57997f51a799a89f1e3231da4f58abe0eceb4e4006429d1a735cbc1963723ccb5914ab4af45d273a6411cba0ac09d60697264e3933de3d9e880cd13c750476f49a44332314444\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:50:40'),
+(27, '33aa14642e19fdadbc9a232c15cf850e5aa8b38733939b0bd3f03528ab262fab', '{\"_s\":\"5a07b0dc63fdeb3dc96011017a370135\",\"_d\":\"11cbd44cf6cddf2397d03fe6364cfeb2e9578d860edae5f025cdc9a031730522cb86bc60b0332b53cd8442959a779004839bcb9b06fc2572477306444d5ebbc26ea96896ba2cfedf09535fc8eaa222a6011ce7f96523bf0989f4da7f9d3390fe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:51:01'),
+(28, 'db7a345c0d9a38264b432f4d9753b3ac', '{\"_s\":\"81ce7b44dca5fffead04f6441192051f\",\"_d\":\"a271b3063cfdcbc7f99bd4b19ab1719f05f4845bd7c14a67a975c16d534392dd002d5d7e932da70564bbd699005af857fe53d08497471c9c3a4c81dbbad2b7b52622bec88fce55ee9dd91cf9479f3c041e5e128154520fac6ffa30762366af71\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:51:22'),
+(29, '1eb69ec6c7461f2532b1c0e0fd780843', '{\"_s\":\"946b3367a50ce26320f32f751d9d20f1\",\"_d\":\"96b6eda958bac9b0a057472a62954eb8852b7436d0f8b1fa6483fc7e5b6adb2c60f5880581d555763c3e00925cd66b49293c3d7af4a455e6abb7b4cb7f61c49a28b209649311a1487df30dbf94989ae4d38693728297bfee646731973e9a3f64\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:51:53'),
+(30, '7a655c1920e360bf3e5d6311e88350d1', '{\"_s\":\"04bcc209c4acef52f659d06c60ee5126\",\"_d\":\"eb561dd10dbd5007a9964acc9b52b76ae43a911fb79033ddfd2c15f9d5ad5466d61893bd271638b7158d77b296e1f19be1990630b4c4b4f3c08ccf5f764e1693f7d92f752597b9cd7feb619587edd6634ef03e8f5659dd906c74ac274451da36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:52:18'),
+(31, '59d43f55a4f0533924f0d6cfea0e0cc6', '{\"_s\":\"70cedc0dea86f412989af1b17a9640d9\",\"_d\":\"cacc6e4c7e63431ae5e5ef892eb79aa343b69cc4399139fe4617057fc56636de027b061634a1e42835c555bf1391df7315292e5b2d899d66bb6cd6342c5c35a6f2d52375d3a69cf9726e67f8fb68e70663d409167517e5bfe751f645b23cd557\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:52:45'),
+(32, '36910f4460e76abae568bbb318b6472eefd757b90b7189647f0123feecaccc47', '{\"_s\":\"d3434ba6914cbbac2e6362c8c8c45b46\",\"_d\":\"346e5cca1d58aa207f935be22a8e912e7fd557967dc389df6dbb82ec6e04b1b4e8b4781619030922a5499866a022a7acdfed6f02d13f3668d5763e8b51f4c50d49d6e50ec3fa8729ffe2980830df617a1aacf747b5413ef270e22a704269e1ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:53:03'),
+(33, 'eaf72d24a985ee5ec296507a456e642a8f8d821b7950fff12892c6d40a6aa10f', '{\"_s\":\"2f58eae48cb9793f1309e3afa1377433\",\"_d\":\"c44744f91c8a11be125d55e0f9bdcec8afceebca7baca8e97a6080917e023cd6e34668d1005963c36e710c1b982cb816b2795a917cbe5b3f209727aa9a5784cde09c434501f66ddcc9aa03e4d2e38f210dae91addbccbeb455c52026c2f8ee2a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:53:27'),
+(34, 'bed4ff68e226dfe4b30427521254008a5034074b00dc42a107f730dd358d9ee0', '{\"_s\":\"68086b973e0db1be01683a00dc8cc0f5\",\"_d\":\"16fe99a23b6c2ce64ae89f1e5997767b1e28f48f8394d8ed458a3c320164c3430f2028467e74a8639bd9dbef431f6039569d6301a7f11604d9ce11acc15143401280e13225bdb2970b83ab8aedd5c1f9835a2e422cf6556749d4e2629faa5cfb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:54:27'),
+(35, 'c9b923d7140e4f4814227834a16d3fa4387c9dbddc655be05da8fd15d4147095', '{\"_s\":\"932e2b80a1ba60d4495e9f99f1c8acd2\",\"_d\":\"960a02625ef3fff8ca8085b3bc5a95eabd8e83853f6527b6d43a12bf18866ddc3bd43f455fd465166d4b045d86c2c02d6144e903860ccde13b16731ca16e9b9ed95aaa1daee03ceb77c01f2fe056c92a823313d9f6a3b8b11a436801bfa73a2f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:54:45'),
+(36, '774e1ce031fcc9cc1c86fdda0f7d5b67', '{\"_s\":\"d7616aafe370e63354aca2a39862dd4a\",\"_d\":\"cfc6901a9698799b38541f661388ba6ad82df74d73af3be9a58ce63a7c0acd84a80da3ffcd40c21a5cbcd3fcc06b3dcf8d77a0a3676f2adbe8de164ed5aabc46251021e9a909901703663747e08484cb80f2e02629048f0d146bc1dd02537386\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:55:02'),
+(37, '250acd410b1302714981557a5bad39b30deab7cbc64576c6bf56867e3ef4a5c3', '{\"_s\":\"f1b44bbffb203b270c24f1eb2a76e356\",\"_d\":\"5aa43a05d3cc265407881a31126684242e988b960986442fc3d13cd64d3a23203178915536637e66ec1b040f3756a6bbefe48acc43fd5a23d27a06c6a045e3c195ddf31440977c93d33ee58188d44934fc32a35706ca792102e986c0c744378f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 06:56:32'),
+(38, 'b586e85ffadf1dbd01588bfe8b67b6463d791f07020e6755ace7fb6f3561b507', '{\"_s\":\"8a50b0a530ec5b02b6c4de65dbda328b\",\"_d\":\"a79320e38f345b23e0db61d02e68120b980ff083c220a8d2cc8b4c28171d20d601d7c90bdc014e9f922c022068531cdded8fa0a5459e4c0c8ce02f4ceb8d452d0058188a71404423616de90372a32edb22284ddf6dd5c9a24cfcfef25266b1db\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 07:03:05'),
+(39, 'bef3e2c254e758275ae0661231337f77875d5dd730e1292f9b94b4ab63b0d97b', '{\"_s\":\"44e7e0ac1872fc69349d490e20901693\",\"_d\":\"78ba0b41c304f6950cdb209e53f00b19f3dc5c3f8931b585651bed22c28dac8600f7b14109e946bda15c314c2106afd4a029efb64a77cd66544446ea1df5036a93a10839f52f60ef6c7d0065186d7a19fadcf8c3b6ff1bd525554636af7d1be7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 07:03:26'),
+(40, '0aeb917c918c2d1c3df201f53c4fd60b4b0be9b45a957530a3fa83cc7ed553746e6466d15939fb2ab7f3892b951e677c', '{\"_s\":\"56c97e362390ab9e5db57680f9bcde3a\",\"_d\":\"9da03d1bd3f1e47ea6cbe57289af844691c53fbfd26f06610154d66b50fccaf084098f0b767e95c21f6ffaa2b4a0b778a4945cb9fd77e8791918681a8398e18f460bae9e8464da6c43f9ca5dd873289a1315745c33bef69bf34e79f5bbd4e5d9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 07:03:46'),
+(41, '4a8c13f067ac95267e304812848ca99e', '{\"_s\":\"b6248a9874373026ca27f782d841f011\",\"_d\":\"9c5d03c853db7690ed9f95fa47412228f1fa05a731c71ee0868c30e7dbcc8b652ea6866f543b1f9e9fd0dae13efb6f6aa3d889cc93e4a3d6908e6b41be731f4f3d08a17948d4fa428082808927900585b6b99e9e00ba33c4761495ce397f05af\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 07:04:17'),
+(42, '690d901650cbfadac68c6d2df6f025af', '{\"_s\":\"e62da2bfd0946e44cfc4d1c614af89a8\",\"_d\":\"96fc2122610045fe83110fe523cbd7a5312052609206e5850edebc7b2c9fb61be79681b47bff650e53dcef28782e0bf015821c4a323dd6b89866cf8f28c3482e373217c88eabc7ce5b96f6d3b6a586ed485edaac9744024d94afba4f40047d05\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-08 07:04:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `media_table`
+--
+
+CREATE TABLE `media_table` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `variation_id` int(11) DEFAULT NULL,
+  `url` text NOT NULL,
+  `type` enum('image','video') NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `media_table`
+--
+
+INSERT INTO `media_table` (`id`, `product_id`, `variation_id`, `url`, `type`, `created_at`, `updated_at`) VALUES
+(27, 8, 5, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1741275563/products/clothe_grey_arpyij.png', 'image', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(28, 8, 6, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1741275563/products/clothe_grey_arpyij.png', 'image', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(29, 9, 7, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617231/products/slv1_x9cide.jpg', 'image', '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(30, 9, 8, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617231/products/slv_uwzrnm.jpg', 'image', '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(31, 9, 9, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617231/products/slv2_yalsde.jpg', 'image', '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(32, 10, 10, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617673/products/ts3_cl0lhj.jpg', 'image', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(33, 10, 11, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617673/products/ts_zylmhl.jpg', 'image', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(34, 10, 12, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742617672/products/ts1_bpubvl.jpg', 'image', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(35, 11, 13, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742618174/products/tsr3_nwrs7i.jpg', 'image', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(36, 11, 14, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742618173/products/tsr2_vigrjv.jpg', 'image', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(37, 11, 15, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742618173/products/tsr1_hk7e5b.jpg', 'image', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(38, 12, 16, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742641564/products/lsv1_cfhnn1.png', 'image', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(39, 12, 17, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742641564/products/lsv2_ogxwwh.png', 'image', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(40, 12, 18, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742641563/products/lsv3_y6jzcv.png', 'image', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(41, 12, 19, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742641565/products/lsv_znrgfx.png', 'image', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(42, 13, 20, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742642535/products/short_bzqyh3.jpg', 'image', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(43, 13, 21, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742642535/products/short_bzqyh3.jpg', 'image', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(44, 13, 22, 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1742642535/products/short_bzqyh3.jpg', 'image', '2025-03-22 11:26:03', '2025-03-22 11:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `products_table`
+--
+
+CREATE TABLE `products_table` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `subcategory_id` int(11) NOT NULL,
+  `collection_id` int(11) NOT NULL,
+  `product_code` varchar(255) NOT NULL,
+  `sku` varchar(255) NOT NULL,
+  `name` text NOT NULL,
+  `description` longtext NOT NULL,
+  `customizable` tinyint(1) NOT NULL DEFAULT 0,
+  `price` decimal(10,2) NOT NULL,
+  `discount` decimal(10,2) NOT NULL DEFAULT 0.00,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `weight` decimal(10,2) DEFAULT 0.00
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `products_table`
+--
+
+INSERT INTO `products_table` (`id`, `store_id`, `subcategory_id`, `collection_id`, `product_code`, `sku`, `name`, `description`, `customizable`, `price`, `discount`, `status`, `created_at`, `updated_at`, `weight`) VALUES
+(8, 2, 2, 2, 'c3626564-171d-4a86-b55f-3b069e53503c', '2-MENSQ-5103', 'Men\'s quality short sleeve polo', 'Introducing our premium Men\'s Quality Polo—a versatile wardrobe staple that combines timeless style with unparalleled comfort.\n\nCrafted from meticulously selected, high-grade cotton, this polo is designed to elevate your everyday look while keeping you cool and comfortable all day long.\n\nThe fabric’s natural breathability and moisture-wicking properties make it an excellent choice for active lifestyles and casual settings alike, ensuring you stay fresh even during the most demanding days.', 1, '0.00', '20.00', 1, '2025-03-21 12:37:19', '2025-04-05 11:08:15', '3.10'),
+(9, 2, 592, 3, '31c7c3a9-9214-4f0b-b5df-db8b4aa400d9', '592-MENSA-5173', 'Men\'s Athletic Performance Sleevless T-Shirt', 'Experience ultimate comfort and performance with our Men\'s Athletic Performance T-Shirt. Designed for active individuals, this t-shirt features moisture-wicking technology to keep you dry and comfortable during workouts.\n\nCrafted from high-quality polyester and spandex blend, it offers flexibility, breathability, and a soft feel. Whether you\'re at the gym or outdoors, this t-shirt provides a stylish and functional fit.', 0, '0.00', '15.00', 1, '2025-03-22 04:22:55', '2025-04-05 11:08:28', '5.00'),
+(10, 2, 620, 2, '248888d1-aca4-4dca-914a-ae31aea6f8fa', '620-MENSO-5228', 'Men\'s Original Up & Down Sweatshirt (Long Sleeve)', 'Stay cozy and stylish with our Men\'s Up & Down Sweatshirt. Designed for comfort, this long-sleeve sweatshirt set is perfect for casual outings, lounging, or light workouts.\n\nCrafted from a premium cotton-polyester blend, it provides warmth while maintaining breathability. The soft inner lining enhances comfort, and the elastic cuffs ensure a snug fit. Available in multiple colors to match your style.', 1, '0.00', '10.00', 1, '2025-03-22 04:35:13', '2025-04-05 11:08:43', '2.70'),
+(11, 2, 623, 8, '9ca0bfca-4233-4d57-992a-3f9d000df548', '623-MENSS-4394', 'Men\'s Stylish Pants / Trousers', 'Upgrade your wardrobe with our Men\'s Stylish Pants—designed for both casual and semi-formal occasions. These trousers combine premium materials with a tailored fit to give you a sharp and comfortable look.\n\nCrafted from high-quality cotton and spandex blend, they provide breathability, stretchability, and all-day comfort. Featuring an adjustable waistband and multiple pockets, these pants are the perfect addition to your everyday style.', 0, '0.00', '15.00', 1, '2025-03-22 04:43:39', '2025-04-05 11:08:55', '0.80'),
+(12, 2, 596, 9, 'd2a06443-5859-4e80-8490-956e6e0248bd', '596-MENSL-2750', 'Men\'s Long-Sleeve Button-Up Shirt', 'Upgrade your wardrobe with our stylish Men\'s Long-Sleeve Button-Up Shirt. Designed for both casual and formal occasions, this shirt offers a perfect balance of comfort, quality, and sophistication. Made from high-quality breathable fabric, it ensures all-day comfort while keeping you sharp and stylish.', 0, '0.00', '15.00', 1, '2025-03-22 11:12:06', '2025-04-05 11:09:06', '2.66'),
+(13, 2, 619, 2, '06285254-185b-4d38-a5f1-9707baf37712', '619-MENSG-2348', 'Men\'s Graphic Print Short Sleeve T-Shirt & Shorts Set', 'Upgrade your casual style with this premium men\'s short-sleeve T-shirt and shorts set. Designed for comfort and versatility, this set features a stylish graphic print with a relaxed fit, perfect for lounging or casual outings.', 0, '0.00', '15.00', 1, '2025-03-22 11:26:03', '2025-04-05 11:09:26', '3.40');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_filters`
+--
+
+CREATE TABLE `product_filters` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `filter_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_filters`
+--
+
+INSERT INTO `product_filters` (`id`, `product_id`, `filter_id`, `created_at`) VALUES
+(1, 8, 4, '2025-03-24 07:22:15'),
+(2, 8, 1, '2025-03-24 07:22:15'),
+(3, 8, 3, '2025-03-24 07:22:15');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_moq`
+--
+
+CREATE TABLE `product_moq` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `min_qty` int(11) NOT NULL,
+  `ppu` decimal(10,2) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_moq`
+--
+
+INSERT INTO `product_moq` (`id`, `product_id`, `min_qty`, `ppu`, `created_at`, `updated_at`) VALUES
+(16, 8, 16, '1.71', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(17, 8, 8, '5.20', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(18, 8, 4, '10.00', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(19, 9, 20, '2.50', '2025-03-22 04:22:55', '2025-03-22 04:22:55'),
+(20, 9, 10, '4.00', '2025-03-22 04:22:55', '2025-03-22 04:22:55'),
+(21, 9, 5, '7.50', '2025-03-22 04:22:55', '2025-03-22 04:22:55'),
+(22, 10, 15, '3.50', '2025-03-22 04:35:13', '2025-03-22 04:35:13'),
+(23, 10, 8, '6.00', '2025-03-22 04:35:13', '2025-03-22 04:35:13'),
+(24, 10, 4, '9.50', '2025-03-22 04:35:13', '2025-03-22 04:35:13'),
+(25, 11, 12, '4.00', '2025-03-22 04:43:39', '2025-03-22 04:43:39'),
+(26, 11, 6, '7.50', '2025-03-22 04:43:39', '2025-03-22 04:43:39'),
+(27, 11, 3, '11.00', '2025-03-22 04:43:39', '2025-03-22 04:43:39'),
+(28, 12, 10, '12.50', '2025-03-22 11:12:06', '2025-03-22 11:12:06'),
+(29, 12, 5, '15.00', '2025-03-22 11:12:06', '2025-03-22 11:12:06'),
+(30, 12, 2, '18.00', '2025-03-22 11:12:06', '2025-03-22 11:12:06'),
+(31, 13, 5, '10.99', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(32, 13, 10, '8.99', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(33, 13, 20, '7.99', '2025-03-22 11:26:03', '2025-03-22 11:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_reviews`
+--
+
+CREATE TABLE `product_reviews` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` decimal(2,1) NOT NULL CHECK (`rating` between 1.0 and 5.0),
+  `review_text` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `user_ip` varchar(45) DEFAULT NULL,
+  `modified_by_admin` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_reviews`
+--
+
+INSERT INTO `product_reviews` (`id`, `product_id`, `user_id`, `rating`, `review_text`, `status`, `user_ip`, `modified_by_admin`, `created_at`, `updated_at`) VALUES
+(1, 10, 2, '3.8', 'Great product! Highly recommended.', 1, '::1', 0, '2025-03-25 21:22:08', '2025-03-25 21:22:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_sample`
+--
+
+CREATE TABLE `product_sample` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `ppu` decimal(10,2) NOT NULL,
+  `min_qty` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_sample`
+--
+
+INSERT INTO `product_sample` (`id`, `product_id`, `ppu`, `min_qty`, `created_at`, `updated_at`) VALUES
+(1, 8, '35.11', 1, '2025-04-18 17:56:20', '2025-04-18 17:56:20'),
+(3, 9, '41.26', 1, '2025-04-18 18:14:50', '2025-04-18 18:14:50'),
+(4, 10, '33.70', 1, '2025-04-18 18:15:07', '2025-04-18 18:15:07'),
+(5, 11, '39.40', 1, '2025-04-18 18:15:32', '2025-04-18 18:15:32'),
+(7, 12, '50.00', 1, '2025-04-18 18:16:02', '2025-04-18 18:16:02'),
+(8, 13, '47.10', 1, '2025-04-18 18:16:27', '2025-04-18 18:16:27');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `product_specifications`
+--
+
+CREATE TABLE `product_specifications` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product_specifications`
+--
+
+INSERT INTO `product_specifications` (`id`, `product_id`, `name`, `value`, `created_at`) VALUES
+(28, 8, 'Material', '100% Cotton', '2025-03-21 12:37:19'),
+(29, 8, 'Fit', 'Regular Fit', '2025-03-21 12:37:19'),
+(30, 8, 'Sleeve Length', 'Short Sleeve', '2025-03-21 12:37:19'),
+(31, 8, 'Collar Type', 'Polo Collar', '2025-03-21 12:37:19'),
+(32, 8, 'Pattern', 'Solid', '2025-03-21 12:37:19'),
+(33, 8, 'Closure Type', 'Button Placket', '2025-03-21 12:37:19'),
+(34, 8, 'Fabric Care', 'Machine Washable', '2025-03-21 12:37:19'),
+(35, 8, 'Available Sizes', 'S, M, L, XL, XXL', '2025-03-21 12:37:19'),
+(36, 8, 'Available Colors', 'Black, Red, Blue, Grey', '2025-03-21 12:37:19'),
+(37, 9, 'Material', 'Polyester & Spandex', '2025-03-22 04:22:56'),
+(38, 9, 'Fit', 'Athletic Fit', '2025-03-22 04:22:56'),
+(39, 9, 'Sleeve Length', 'Short Sleeve', '2025-03-22 04:22:56'),
+(40, 9, 'Neck Type', 'Crew Neck', '2025-03-22 04:22:56'),
+(41, 9, 'Fabric Care', 'Machine Washable', '2025-03-22 04:22:56'),
+(42, 9, 'Technology', 'Moisture-Wicking, Breathable', '2025-03-22 04:22:56'),
+(43, 9, 'Available Sizes', 'S, M, L, XL, XXL', '2025-03-22 04:22:56'),
+(44, 9, 'Available Colors', 'Black, Blue, Grey, White', '2025-03-22 04:22:56'),
+(45, 10, 'Material', 'Cotton & Polyester Blend', '2025-03-22 04:35:13'),
+(46, 10, 'Fit', 'Relaxed Fit', '2025-03-22 04:35:13'),
+(47, 10, 'Sleeve Length', 'Long Sleeve', '2025-03-22 04:35:13'),
+(48, 10, 'Set Includes', 'Sweatshirt & Joggers', '2025-03-22 04:35:13'),
+(49, 10, 'Fabric Care', 'Machine Washable', '2025-03-22 04:35:13'),
+(50, 10, 'Available Sizes', 'M, L, XL, XXL', '2025-03-22 04:35:14'),
+(51, 10, 'Available Colors', 'Blue, Green, Gray', '2025-03-22 04:35:14'),
+(52, 11, 'Material', 'Cotton & Spandex Blend', '2025-03-22 04:43:39'),
+(53, 11, 'Fit', 'Slim Fit', '2025-03-22 04:43:39'),
+(54, 11, 'Closure Type', 'Zipper Fly with Button', '2025-03-22 04:43:39'),
+(55, 11, 'Waist Type', 'Mid Rise', '2025-03-22 04:43:39'),
+(56, 11, 'Fabric Care', 'Machine Washable', '2025-03-22 04:43:39'),
+(57, 11, 'Available Sizes', 'M, L, XL, XXL', '2025-03-22 04:43:40'),
+(58, 11, 'Available Colors', 'Sky Blue, Gray, Green', '2025-03-22 04:43:40'),
+(59, 12, 'Material', 'Cotton Blend', '2025-03-22 11:12:06'),
+(60, 12, 'Fit', 'Slim Fit', '2025-03-22 11:12:06'),
+(61, 12, 'Sleeve Length', 'Long Sleeve', '2025-03-22 11:12:06'),
+(62, 12, 'Collar Type', 'Spread Collar', '2025-03-22 11:12:06'),
+(63, 12, 'Pattern', 'Polka Dots', '2025-03-22 11:12:06'),
+(64, 12, 'Closure Type', 'Button Closure', '2025-03-22 11:12:06'),
+(65, 12, 'Fabric Care', 'Machine Washable', '2025-03-22 11:12:07'),
+(66, 12, 'Available Sizes', 'S, M, L, XL, XXL', '2025-03-22 11:12:07'),
+(67, 13, 'Material', 'Polyester & Cotton Blend', '2025-03-22 11:26:03'),
+(68, 13, 'Fit', 'Regular Fit', '2025-03-22 11:26:03'),
+(69, 13, 'Sleeve Length', 'Short Sleeve', '2025-03-22 11:26:03'),
+(70, 13, 'Collar Type', 'Round Neck', '2025-03-22 11:26:03'),
+(71, 13, 'Pattern', 'Graphic Print', '2025-03-22 11:26:03'),
+(72, 13, 'Closure Type', 'Elastic Waistband with Drawstring', '2025-03-22 11:26:03'),
+(73, 13, 'Fabric Care', 'Machine Washable', '2025-03-22 11:26:03'),
+(74, 13, 'Available Sizes', 'M, L, XL', '2025-03-22 11:26:03'),
+(75, 13, 'Available Colors', 'White', '2025-03-22 11:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_methods`
+--
+
+CREATE TABLE `shipping_methods` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `description` varchar(255) NOT NULL,
+  `icon` varchar(50) NOT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shipping_methods`
+--
+
+INSERT INTO `shipping_methods` (`id`, `name`, `description`, `icon`, `status`, `created_at`) VALUES
+(1, 'ocean', 'shipping products through the sea route', 'ship', 1, '2025-03-31 12:31:58'),
+(2, 'express', 'shipping products using motorable routes', 'shipping-fast', 1, '2025-03-31 12:32:21'),
+(3, 'air freight', 'shipping products using motorable routes', 'plane', 1, '2025-03-31 12:32:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `shipping_providers`
+--
+
+CREATE TABLE `shipping_providers` (
+  `id` int(11) NOT NULL,
+  `method_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `duration_from` int(11) NOT NULL,
+  `duration_to` int(11) NOT NULL,
+  `class` int(11) NOT NULL,
+  `offered_by` varchar(255) NOT NULL,
+  `notice` varchar(255) NOT NULL,
+  `is_guaranteed` tinyint(1) DEFAULT 0,
+  `price` decimal(10,2) NOT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `shipping_providers`
+--
+
+INSERT INTO `shipping_providers` (`id`, `method_id`, `name`, `duration_from`, `duration_to`, `class`, `offered_by`, `notice`, `is_guaranteed`, `price`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 'mashal sea ltd', 60, 90, 0, 'mashal sea ltd', '', 0, '18.00', 1, '2025-03-31 11:26:10', '2025-03-31 11:26:10'),
+(2, 2, 'royal zeal limited', 10, 25, 1, 'bloomzon.com', '', 1, '15.30', 1, '2025-03-31 11:39:22', '2025-03-31 11:39:22'),
+(3, 2, 'solid space', 5, 12, 0, 'bloomzon.com', '', 0, '12.10', 1, '2025-03-31 11:55:50', '2025-03-31 11:55:50'),
+(4, 3, 'air man', 1, 6, 2, 'bloomzon.com', '', 1, '30.70', 1, '2025-03-31 11:59:38', '2025-03-31 11:59:38'),
+(5, 3, 'lite flight groups', 3, 10, 2, 'lite flight groups', '', 1, '27.95', 1, '2025-03-31 12:02:13', '2025-03-31 12:02:13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `stores_table`
+--
+
+CREATE TABLE `stores_table` (
+  `id` int(11) NOT NULL,
+  `vendor_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `slogan` varchar(255) DEFAULT NULL,
+  `country` varchar(100) NOT NULL,
+  `banner` text DEFAULT NULL,
+  `picture` text DEFAULT NULL,
+  `net_worth` longtext NOT NULL,
+  `logo` text DEFAULT NULL,
+  `wallet` longtext NOT NULL,
+  `staff_count` int(11) DEFAULT 0,
+  `address` varchar(255) NOT NULL,
+  `floor_space` int(100) NOT NULL,
+  `code` varchar(50) NOT NULL,
+  `is_verified` tinyint(1) DEFAULT 0,
+  `verified_date` timestamp NULL DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `stores_table`
+--
+
+INSERT INTO `stores_table` (`id`, `vendor_id`, `name`, `slogan`, `country`, `banner`, `picture`, `net_worth`, `logo`, `wallet`, `staff_count`, `address`, `floor_space`, `code`, `is_verified`, `verified_date`, `status`, `created_at`, `updated_at`) VALUES
+(2, 1, 'Fashion Allien global LTD', 'Fashion with store steez', 'ng', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1679748366/samples/imagecon-group.jpg', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1679748383/cld-sample-5.jpg', '544721', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1737541386/logos/Blue_And_Orange_Modern_Company_design_Logo_slenmg.png', '', 133, 'No 344B fashion line, lekki, lagos', 1400, '9aa07eab-ec48-4fcc-9fc7-f6208bb71236', 1, '2023-12-03 14:40:10', 1, '2025-03-21 12:18:46', '2025-03-31 16:12:28'),
+(3, 1, 'Matt Zhang Cusmetics', 'Looking good for yourself', 'ng', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1679748361/samples/bike.jpg', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1679748358/samples/people/kitchen-bar.jpg', '4771459', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1737541018/logos/2_tqjfvc.png', '', 300, 'No 222 shenzhen avenu, Abuja', 2200, '4fd6e889-1bd5-4285-a4ff-b9934cd0c210', 1, '2025-10-22 13:29:37', 1, '2025-03-22 13:24:28', '2025-03-31 16:14:11');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `store_capabilities`
+--
+
+CREATE TABLE `store_capabilities` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `capability_id` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `store_capabilities`
+--
+
+INSERT INTO `store_capabilities` (`id`, `store_id`, `capability_id`, `created_at`, `updated_at`) VALUES
+(1, 2, 1, '2025-03-21 12:18:46', '2025-03-21 12:18:46'),
+(2, 2, 2, '2025-03-21 12:18:46', '2025-03-21 12:18:46'),
+(3, 3, 3, '2025-03-22 13:24:29', '2025-03-22 13:24:29'),
+(4, 3, 5, '2025-03-22 13:24:29', '2025-03-22 13:24:29'),
+(5, 3, 6, '2025-03-22 13:24:29', '2025-03-22 13:24:29');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `store_reviews`
+--
+
+CREATE TABLE `store_reviews` (
+  `id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `rating` decimal(2,1) NOT NULL CHECK (`rating` between 1.0 and 5.0),
+  `product_quality` tinyint(1) DEFAULT NULL,
+  `supplier_service` tinyint(1) DEFAULT NULL,
+  `on_time_shipment` tinyint(1) DEFAULT NULL,
+  `review_text` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 1,
+  `user_ip` varchar(45) DEFAULT NULL,
+  `modified_by_admin` tinyint(1) DEFAULT 0,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `store_reviews`
+--
+
+INSERT INTO `store_reviews` (`id`, `store_id`, `user_id`, `rating`, `product_quality`, `supplier_service`, `on_time_shipment`, `review_text`, `status`, `user_ip`, `modified_by_admin`, `created_at`, `updated_at`) VALUES
+(1, 2, 2, '4.5', 5, 5, 5, 'Great quality products and fast shipping. Customer service was helpful.', 1, '::1', 0, '2025-03-30 12:03:19', '2025-03-30 12:03:19'),
+(2, 2, 3, '2.6', 3, 3, 2, 'Seller doent\'t deliver on time.', 1, '::1', 0, '2025-03-30 12:08:18', '2025-03-30 12:08:18');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subcategory`
+--
+
+CREATE TABLE `subcategory` (
+  `id` int(11) NOT NULL,
+  `_category` int(11) DEFAULT NULL,
+  `_name` longtext NOT NULL,
+  `_image` longtext NOT NULL,
+  `_status` longtext NOT NULL,
+  `_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `subcategory`
+--
+
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(1, 1, '4991668d10419c72e95ad442f4848d12a815a272cbc3c0f286095c60481c91c1', '{\"_s\":\"56d721e4436b0ede0d7a172c9d4ed3e3\",\"_d\":\"df26632bd8d7dea9313217b46f9fc6ed605de7e19bcbe1ba29a6bb4fd9989ff281743ccd828a0e4d1741391643872f6e0f6a85a9bd5178bb77ff6261cf843553898faba9d14fb39da0d36cc910d76ad4ed0e0a1f419d7637ca848a3c52aeff0e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 05:37:54'),
+(2, 1, '5cccbcccf921296bec542c1c789c4547', '{\"_s\":\"2cb7a248555a3f0218a02d3e63b31d1b\",\"_d\":\"ba04eb7b4e4a99e40ad8ebe45d42966404bd8a390d504978f96747d960caa7cfe146ffb94260155b6bd08d1b6260cb6d97656fcfd365c448ce5f2ba5761cfa9474d43b61ad0321554d98d834f549320aaf71c987072256c0dd04d45081d78548\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 05:40:26'),
+(3, 1, 'f2b22836398c39a494068cba565aad52', '{\"_s\":\"6f6b54bd8660fedbff02a63a299ade4d\",\"_d\":\"2d24f84f03fd0e113426146a06d6c3406b213974140dd5ae6473a5136d20a8d187ed45f3c3ab937e787efae8e456774d64d10bbd48ddc883ab37fed9c7f8c5b996cb71df67d2302032aa2954e32e63d9d75c3562be6c01c73f404fcb3e0ad080\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 05:40:48'),
+(4, 1, 'f7e99d9511bfe99841d0bcbd0c9970ebe3a164cd1e91c5766ef66350673e7727', '{\"_s\":\"8b23734d96100be109c8ee7b32007d4c\",\"_d\":\"1273c896fcafbbe19f0c3512cb2daccecf090d44d483fbaaa006a721d3d516399d09a68f1db421d4d6344afedb9f1f0275830de2d83a4ea12bbf638ed54d7cf4d45921e6afa49fb573ba7ca6197260cd1c64d3ce134dfcc6c5002b5733f24864\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 05:41:05'),
+(5, 1, '05e2ec3ac6eaa445c1543c73796abddf', '{\"_s\":\"41ba02dc442159b252d222822c240caf\",\"_d\":\"537f55a1cdffe3567d86f60b0ce57d0922ccd2a0a1010431d4ba05e38576ab43181b9f6240d0d9cbdcfe39083e565a89533d371f55ab4d65725a1f0f48b8cc738b94313cb5382cafcf10b9843be8bc151f180954a3951136a1c22f613ec58049\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 05:41:22'),
+(6, 2, '65d2700dc0c71636d7119e802b3e5fd57c2f9b8770d7bcdfcae909bb1dd749aa', '{\"_s\":\"2063c3294241e4f7a49e1b5a2097f373\",\"_d\":\"1d726ea4c7434275a0728fa391b0c88c66783a01267bcc22de319827dc1ac8e79a09c6602790fcba260318da6fc2a2b5090de7fc54be3f523fd5a9f02109c32fe34c8a9ae26cd27aa3265d8ff342aae80b4ec57bd17244ace3463a85fa6c61bb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:13:55'),
+(7, 2, '0dff5fc7fe65a41a8afa9de63146851c423b0900ff5d7e6754fbc274496ebe73', '{\"_s\":\"f615564dc7548f10726b8ef0db572d5f\",\"_d\":\"2daf436c06c93b8de9775d2890221f6e8ef8eb8ee486a24ea9bcd339811a81a08d0197538a0a0db9f04ab3f4bc19c80d25e2db845759f13bbecf9ad0b8cb901eb89c4f4554e9a5a4ebf816536d4d42431fd11c73863591fc69defc020835ad37\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:14:16'),
+(8, 2, '30c4e7fce82930cfb077b127af2c4d22', '{\"_s\":\"999b676d4c4e35ed895e9a2f68a3073f\",\"_d\":\"20ba3ebf74dc714639576f4c56b60ac467bd5c1f1718e5c937ba269bed13c5a01a8c58195dbb49b3117a9f790b38b2f8c0b2ea5d314bbeb8505e7d394cbd1dc6d491ee5970a083e63dc3247afa128622b5a03b9f28c4bec81f7f98bb2764c202\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:14:36'),
+(9, 3, 'df04ca18c99b052c58fabc227bdf9499', '{\"_s\":\"7c8c8751ac1e89102c6ac1729315a5c5\",\"_d\":\"d809021fc9ec7136d20404172fa41d77b33b46f902535daf8f933c3cc7442232ebd5d27ed8c486ef45892fc5cca6e102ab24e1be9ed878cadb2fe68eb5e60f1149244ab59c63af5a30d33e619da45af6b78cce4f099c48c208c90de2b1383f46\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:19:03'),
+(10, 3, 'dbae83dcd1d6ddc3d03224f0638cb879', '{\"_s\":\"f21244f6424e0d4deda986473dc3eb86\",\"_d\":\"b65fb6317d0398ab840e69d57f6629c3e964f77d16d91f4b9564914ca29cbc6148cdb51a44e461eea8cfc96a3e0d91eb61c1bf1801bee4bfcb5ff30d0e2d8db368d277070b206bada53d924b012d4ea5fc0b20b4d1f047fdc3009103af3122d4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:24:54'),
+(11, 3, '6596765e6bcf44be9692cadd101fc4b47e4a6bc21765badf9b55090ea5ea2911', '{\"_s\":\"f6625465685b802e1e27a7891bd2d85d\",\"_d\":\"d6768467d0305fd300ddfa10ada2f71b182b0cb2ba883d448c082fe43acc14d12c6801a510f95494f4d88b1978d926dd3a1371e75d84a8aef81f482d33bf1e6bb8828db2b65d93275bfc8fb3f4a4e40c775f6771c22cf06d561c1d1ad24d1e34\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:25:22'),
+(12, 3, '8d14b58424d72832c0d2b613383bde7f', '{\"_s\":\"433b7d1c6d5e1b4c5c3d5ace8ec586c6\",\"_d\":\"0286a4d0c4f96c83201ed8429f477c9649adb1b0a05d9b1c3baaee2e9f6257d9908b950acd5a2ec84038d9c2678bc263ff97ba95dc6b02a88d54098ad1a2bc0fe26a4c05dad1929381569ac60af0e77ebcfc7871f7180af102d3efca7dc14114\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:25:44'),
+(13, 4, 'b7d2434712fb83e52e297a3b768f20f627b520a5969fe0777f1428fbdcb5b6a8', '{\"_s\":\"da5cfd6da3f06200fe4ccd0523c4abee\",\"_d\":\"a223391c8b976a0b0d2920169ea3ad6bd620fa8913e8057f035a437949fd6d9fde741e90eaf6a4bb737c7386049f3d290bdc329e3c805677d7448bdf1cf375fb4fb6dca587369b09448fcdf63fe7bba279877869bcd1c886f197d9cfb4d8966f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:30:38'),
+(14, 4, '0e40032279a153834deee347948baa31daaa5902bd1c3c3e4e1b823f6e3b1641', '{\"_s\":\"e83297031152a7c9440abc77d71029b8\",\"_d\":\"cc912cd2874d50d3b9023db4a7aafa754a47c93c7741611113f590d28c744682ba444d39df6843b91bfd2f77a877de8ae6a2f7599906657f025441e1a54d7373879e3372506a5a48b6b84453177b3f06f65fc56467a00174a1c54e8db5ba1a30\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:41:44'),
+(15, 4, '1e7c433616db1c19bfba3b951f54d4b2', '{\"_s\":\"9d378c0cd96bc96f0e3d70102d098b18\",\"_d\":\"cdd5b56291695a157701ef703887523bcc4b6fbb2b9ff8e1669c4895d9abdab595840705d7dc4e6811f37549cc4b53903ea7e65ed635e216c7dda6aac81c7e0cb22a496e575fe152fb330769cbf27fa89c24db7920cec895eb6984353db9615a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:46:19'),
+(16, 4, 'b9b475813b68e60d28afa15fb75ecdae3453fabb49a408808a55456a73cb0c3d', '{\"_s\":\"0247718aa3126f4747296a6a229d8dc0\",\"_d\":\"250ad16400c6688f7acca52113de4ecceae777dc8fed8f72f3b8b33362afc28e9cafe8c3e2a25cd201201a8e5903badc928abd29388d3554610cad64f4c7bf124e2970b23021e67c1ba265f1efa83f54d84c1748e4e9624b86ec70a21e641efa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:46:41'),
+(17, 5, '9e5465d8d7be552eec7a17a6a4bac5b0ace6314e90e5089f425c851745363a6a', '{\"_s\":\"e5b76d8b440c63d13bd3cbf926152dd1\",\"_d\":\"15ffb84e940286f5215ea2510eecab1a6e0ee0467b2564087739bb52b00fa4b907817662fa970b57f0db809e47ba15927fbb9edb01863a6cbd21d8752cc2ed58d910bcac2d3328e80e73d3a0cc0ba394fa8c775457163948250ccb189b75d6c4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:48:32'),
+(18, 5, '900df56c9fccaf9f4dfca185ad982f82eda6b2a35ca7833ad3f8b76992ce2363', '{\"_s\":\"4efbefcbb7602b14da9ae8f31941db91\",\"_d\":\"5e67ce5f8be50043d829a0a1d9138a678de3b6cc87a553f40d7713c88e18ca838c085ac26f1265530fae5fd0bd1f1787aa3711f1f1dfd9d8c35e8e8a7f451870c27697f9bbfb26535b4ef1fb1f26145eb38d99b4d4c252d4a586bf3f61d1d310\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:49:29'),
+(19, 5, '31ed87d6221fd819c035b462e60ca1b9c19d4d1e03c4d36af20b61c65b7efc86', '{\"_s\":\"c9eb1594b7d56a16f0b2039ca2897f62\",\"_d\":\"5f97a175a1b662077509a9b7e4ffa5065b46ad5cd81066f7a235667432da05c41249f3e0675490f0f56c198d799e1a06946d9ed731948fc3b1740bc007c197044058b5ba58088ba51c262bcccbe9a72ff0112d3226e74b797923c7d93ef13bd0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:49:53'),
+(20, 5, '89ef275d4410b467eeb8b93840b779b65c5bb63261da28ecce564b010f2fca95', '{\"_s\":\"03d2ce11e16db79af233624dc47624c5\",\"_d\":\"1be5f5d75517b831516f6807200d35b63f9122fcb5babb9d08255d223b6afbf60da302287baff94e2b9dcc8889448af0aac7e7d5565c9a89c65f63bfdb718ffba7bd26567afad6ef35912037a48827d8bca07b5775ff34f9ae72162f2be85aca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:50:14'),
+(21, 6, '3318e8392bb37966f324dae128a8a7b7770822e09f8ecdf605ae6f92ed325d54', '{\"_s\":\"09fdf3c3a7b47a47b81027af79ce1dc0\",\"_d\":\"4dd6379e0b218c6c652d8307dba735d161d2e9a3ba3a51c2600405624e33ff11f8f64de9e2c3e1cd06ff72034e84fb8cc863697cbbb84301f562b755dc0df3fc8090aeb53677087002f35106eb1858f887cace46a1eec4f344f992a12f1c654a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:54:02'),
+(22, 6, 'c53029ecac36d2501d6360637a6381d0', '{\"_s\":\"688b271353a0ec4ea5cbf429669bd988\",\"_d\":\"715d787fab7cf5365177c2a722fa7664d0d168f38278f197971d7a62dd317f2294bc78bf5f2c1af57a807490445076c7c88b1e2680ed546da3034748e4360665fab314e604b2add9460f3d6400e59de06f72d642ccb86da33de1e5e5edfe8c60\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:54:21'),
+(23, 6, '554b5975dfcbf024abbcc0a53f25655c3c4252c7d7d95237ff572225b9b429ab', '{\"_s\":\"50f87c5f69c17c4bfb0ae59d49fd85a6\",\"_d\":\"352e22bd97edc01c366cbebbc3d287ed8fc99aeed5d00e3f2b0f9b145b989ac8f062f7eb4eb36651fb46141ad302859d877b8c6e530476bd10631e2106e1fdadc8013568a226a154eb50ffdac9e485ca85c1581120528696d9590dd982c4af33\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:54:38'),
+(24, 6, 'b486e7c99ae3d64761a1c1df9dbd7ca59c16aab079a11edf820bfda6785d2b4f', '{\"_s\":\"d3e234fc8675309258831d50ae63c60b\",\"_d\":\"84a14c88f9d38f32d22ea9d2b47be07bde89e472de495f6e135a03fea5de15b2dcee1903d3cf665a8c669394d148ad133f8aab27664559760b323ed10e6c2f4419754ac6070b56a0f41116bbb6154947ae423912cc05faed4331ed9d2c013ccd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 06:54:58'),
+(25, 7, '893af427595329672d103df37f490d21', '{\"_s\":\"21e1b9e5004ca6fd0dd7df16f2e2ffdd\",\"_d\":\"56cdfc12dc84ab3a2007bff4b6b7e51bce70d4d70ec9d603bbe81c5baa79bda8c8f5699e58ad175cc090d75b5568768c048b37b84a53517e9493194e0fc3700d2f69eb44ca26f691c3992095d2e28f3d2ab327eb52379c932ed4d261d51c8679\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:01:05'),
+(26, 7, '3fa74680229a1de0c13b3a07a4b6c880', '{\"_s\":\"aa6782ba6b3512fdc7730093020f3d31\",\"_d\":\"a8450711282e0aeaac4b7bdb4a082cd7bb6b12a4068920d44515c840dde31bc20ee4a48e708b2278d4ca16075d192de052834337bafa70d774efefe3908ac3d9173e8b09e54f77af942b341553a2a272c5ec472a805a92c48223d1b5c522826a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:02:34'),
+(27, 7, '93788f59bd03643560f4303ca355c6ca', '{\"_s\":\"11700fbe35f2a032250ffdb4128e5526\",\"_d\":\"db708b7582a86ae21e3788a692f09d59afc8de1802f18ba9b6dd46263047159405aa8f094b2567101becfbe540589ec9bd5c1343ea505978a52ec870b18d760d69638af8fa74b5b46b6b5bd4fc8866273a70b0807cf3e2bfae8782c25022ebb6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:03:03'),
+(28, 7, '62999ed2c36c7cdc985b25bf49039dfc', '{\"_s\":\"e293b5c9bd32cc20d73aca4371562c43\",\"_d\":\"430b987101c7291f713384de445d97a510d561417cd798ebd328cb929668fd3f8300642d7b021ed53cc50b21ca26a032bc5a554b0775f2697602e8142dea0153545bad482d9a2e4ca8e2e893f2a761abebbb3afd06c2d884ee7786b565c95cee\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:03:22'),
+(29, 7, '1f0e1c0452af72587370241daf8441a5', '{\"_s\":\"d2defd1d9380e59e1f8876c483b8cfe0\",\"_d\":\"4a568a89576ecde8940ba07b73738b07afed1eb41a78fa0c45d1ffb21bd77ca52340815628cf2f489915a399208f55ab8462b871c1e6f7d975b265e8b5a239d70630916631ded40b5bfb83bdc0894dc6c2b92bdcc84298320d5c5e68938f7d0f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:03:40'),
+(30, 8, 'b433d02a9951c28f22baa19d0071131acf249d2d974a9d5a4835f7bc5fba74f7', '{\"_s\":\"4efcadafdd637e5e93b253fbcd5cae0e\",\"_d\":\"84b52e00423032d42ab0f9bb8900ce811389192ee60e8bf9bb9f0a56f804f69b1686572c7d4e4810d837e4bb91e4559d95488670581ecfdf6196d636bd0e27071c87f5952436d66f1def702e59f1a62b676bed106c69b541f1f8980b219c2c7f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:04:44'),
+(31, 8, 'f2fb2a36603202c4819199a1bca5b6bfffc7615d7b61b7d6c93786de5a2a2181', '{\"_s\":\"16aac62da3059f11097c75be328f3ef8\",\"_d\":\"9917ea1a68d6ac09d4db4e7ba1383534cb630015e348536e5cfd7b5eec4f8ab567c0b42efbf8b0fddca6ec5e26f248d177dbbe54e0a30c31bfe30e889a950a466fb8825ef92c020bd87e2962c9ff671bc58ce662884254b124fdb6974000030f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:14:18'),
+(32, 8, '6af0f3ce079d82813ae15c0ef352a1ef942a76f4ead50cbfcf4f0680a487cc3e', '{\"_s\":\"6928512b8e579c60fdadfe905b23975e\",\"_d\":\"48ca120f6cffb44cb13840fe6525360c8bbf61f4b94449853e08f8177c1b77a36de6d6a750b7eee667a5ee6e080af78556e198f8dcbbb2b46c15373328c5df45638f8bc20f7aa0a08323bdf402942f69e926da659531ece1d9576c47c4ca30d0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:14:35'),
+(33, 8, '279b33d0e4b03b024f774f2cec5982061d2133be8ccb91dfc83da61ddcb4e135', '{\"_s\":\"1c4af612581eb77317ba829ee59bd644\",\"_d\":\"483c61395ebe25c2279ca2c16762a41ae0adf294de9c68aaf9d3fa7e195130eef03a223e39837c055e6d66af9e2a5dfc5c62043b9e6dfb4b1e064a7a865bb5e458667907153ffd12f6a565813994f1f280f13e500550f62313d9553b347d7d53\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 07:15:00'),
+(34, 9, '370753c9e809705e47f0a57f7c9900ac', '{\"_s\":\"ea5937f486610c546878eabf4c7b9ea9\",\"_d\":\"c94b7e2bfd692b61380d35db5994eea57b191a1931b5748e51924c0f5d0b1b3b0a1c5eca54aad3eceb6c731f06b936c327ba0c628602b519a2f606e17a25aa8f2fb643de86b25a708f263955336667dbb64b3afe05cad6fa7ca08e37fb1b2c80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:46:17'),
+(35, 9, 'e952861f9dfdc15a43aa5153dd76ab20', '{\"_s\":\"fa48e42ca9d5c2cf673eb68a05d74779\",\"_d\":\"963548ccf4cc734740c0768747892ae10945aaac2ed4c6c3527298f44f9fbf9db10a7f072d32132b1077a9d8eb358c05a1e8cd9851b373ee36ee871525f613920f950fc43a0359a79bb540e86575e930b8e94bc375a4ab756c90cb87db20e682\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:46:17'),
+(36, 9, 'f8b5d1abf6eea1142163a1318322696a', '{\"_s\":\"5442b8d68a4d0732425bf409882e1fb2\",\"_d\":\"2ee72d34117921ae2f5b6a1ccd69cd0d6a15ddb35daa7051afd127e745511c629607e4a7376fca3c1c6284bf3e3ad3f89698cd5b7ce68392e66e9facda910b046662d76deb3bcdb40b7177f66be695bebf73b9a0fcd44be918abb52545e87ef1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:46:17'),
+(37, 9, 'b9e5b583e06a060b25d7bf566ab1fe5c', '{\"_s\":\"d61c1469c806f95aa949a636360ae475\",\"_d\":\"69f72eb5a49215ce9a735df1be6c64972747f6f6cd08ddc45a3ea52f03a77ed51a9555db4acab6dc5a99111c4bcd6b4ce37044d8db3ce6628312591a0600684c7bb8e9b2248f8ac11c4fb28afe571de50fac175f7097cd56171c90d3f759449f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:46:17'),
+(38, 10, 'a02a74c58c063b7a8994bf29fb346e0ee2c4dead904daa6230b8d1382befd77b', '{\"_s\":\"037c7de51df229c867be9cdf0c49a50c\",\"_d\":\"0d829349980876d2efa208b9e14dcf8f8e4d46701038463ae44739a32fc2637b6dad95163468fbd8ea99225fc3acaf1cddde79ba9f3a45924e6561fc4833ef53664b1a90734a8c64506bd14dfb353ecaa607d25ca219ccc9261dfc4d82fe0cb3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:48:52'),
+(39, 10, 'a210d59a16fc656759d8262b765736d24e0725a4807b5fd50c98dcc507d53e36', '{\"_s\":\"c17b814f71f6fb6fcb14f129befeb36b\",\"_d\":\"194231239431ee7e3d58876bf0b7ba88bc61ad8ef9b9f179d79a71631cdd52fe102d1501d5f4fed9c7f43e41b1166acdb16ffd7ac85c75689db0d7f960533882fe6e0df1d93b422a6599b0edb1ca383ceabc96f53bad76e0144806fe143542c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:48:52'),
+(40, 10, '9f4080aa3fab595d252719b6a5654e4a', '{\"_s\":\"05c5addfce938dc7191974c2f4a08c42\",\"_d\":\"565edbbd1fc0aa4e0ab06ff43c80bede1218c6ef0f2e3f147773d6f447ffa1dbf3d99b0670ea762aefd6e3fe273c7109c5a8db4d2b86aeff744cc8627fa880cb6994ea24aee59e1d3868406bcb5de1953d7a413dc8696d15f1665531bb3af4f9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:48:52'),
+(41, 11, '65e6695fec48236d4c3a9b6ee10fd7a2', '{\"_s\":\"5a69e0bbd7b9406621034152bb0fc4b0\",\"_d\":\"e12d0948e27cafd5ba2ec3d42d639bbb57268a547e91542d41c50ea2ef662981f84d9dd7b36cdab25b74d63ef834338e39c05897eb11dbe4908374b06e87883b47f37ab476eaeabbdb8ac22a943c99b745869694f8d90c58364ddbb237d8140f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:52:50'),
+(42, 11, 'f12422254e0e56c15554d2f53bceee6ab30241f763b49ea030a833c1e43e2233', '{\"_s\":\"eddc5a7f37e03836d25b41eb56c99edf\",\"_d\":\"fc44553b61f423a0bc6f98304fe0d17e1eba1f67edc90397f4f3e0beb75d7da354fbc07daf97a26d639b7108287525a221a4f9fdc9ed50d6baa0a34f77e7bdd2375227e77d9b96bf822ec0ebf8d3c002324b8f6ae5d1515d047c0b8fe52e7a12\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:52:50'),
+(43, 11, 'd30cefca7abfe0c4ae550bc74c685c82', '{\"_s\":\"ddd240edd3a43dd212f1bdba5e4366e6\",\"_d\":\"c41f310a74c9fe74d4621fe8cd91b0423aa77655640ac8a8af5d191ae11a166ef9eaaf85239f4021bc369ca5d71e1bac1b8bc8285e1237f1e77e25d2c128ca92077db2a0264d2ca31e612feb3bee9d420355af7ac2f96e4c985582bb1dc7d6c9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:52:50'),
+(44, 11, '4a90730f19b6a0362576d29df679d494a34c8be2d6dcd5768b0d8b4439bee24c', '{\"_s\":\"085924eef788b6898bf2d7fd4a3c145f\",\"_d\":\"5c77b31af7399b0dab0028b20bc755ac752792cd96495465942faeadee001ad2691621280ddaffee6b7b13a671c5e57fa0eb9f39c3b2049cdbf4a620ee10832c731f37def2e3cb1e903a116e35a3871a4255b1062b5a48549f403b7d65064438\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:52:50'),
+(45, 12, '517d43e569bb606535f9d1733a8f2d037f09a3cfb32f4648239787e04f6c128b', '{\"_s\":\"ff850c1fc43c9c690dcaf17e5a25531d\",\"_d\":\"ca234174dabf6eaa8cdbf7a1dcbca4d2d30ba8269f1a0400cc000c6e6c4f012cee39a7dca47c29f4fd25d199db5b65eb9ccaa2e955c15e7c5837394f236a04fd92b8ed6686c62a84a8c033cb5a06d603bdeffe4a5d48f1e58d48cc74fa6b6ced\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:56:11'),
+(46, 12, '58a4ae3494e6d271ade48a1e42fbf351', '{\"_s\":\"e6db93f2b4dc75b3205eca8c1b7ff574\",\"_d\":\"7ab6d7a13dfb6ac5f7ebe5d574bdbf68406a3f427392535972ac50fb3206523533058eaf296fe3c4d8b54bc1c5429ebca217b3c786423f7adc9ee812467a63a8ec3c4f42ea30c8d139f8bce68d3ae4d050dac2ac99958051a9726e8054e26050\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:56:12'),
+(47, 12, 'b0c8ec64f43eaf0ac40dbfaf98329a9c', '{\"_s\":\"a6ac8b137ea3ac62dd0d998da2cab82a\",\"_d\":\"903de8bd796a274730adbebb743524a544d5c811ecb93b90aa0c23acac43bd81ff503c98ac0fe2cb1ed62ae28116315205f5ef13535904566f89f4707f83480a127d162702d38e19af4e6eb87cf158dd00f2d5c0ea8208c42d02206e791e1519\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:56:12'),
+(48, 12, '38c64f399d16e67f70be93a5e3fb5d7e', '{\"_s\":\"2a8a30004c316f78ad1190dffadfc01a\",\"_d\":\"f87dec55c5f0053e37da3ae45815952b1b7049bc964d5679283f9e043bf9fa804786dd59ddb8c225953ed2af0bcf84e7458121bfa28bb64d30152d916aa4112f61e8b6bcdeb13d1bf5f0b4c10eb4268ca866bd7e48b1c7ca471eaffa1f4940dc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:56:12'),
+(49, 13, '1f7c79754be76fbcb4444e46fa5fdb1f', '{\"_s\":\"018c4b64afa812775533118e931fafe2\",\"_d\":\"90d57f8842f8746c155659dccb46e4e2bc09255a66f03134d3dd197d512acd5b300f3ad1686bf7cc004c9b397fc9acf97202f4a77fc6e22bbfe5b006c9e620e7ff083e6e68753dc96ff3b5fceec270ae99c90b552e738b157ba6d0f9dc6a9b73\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:57:21'),
+(50, 13, '9df2ec33e6b1c88abffd5d51248745d05eea11ab5ea87a72fd0983ed4d8dd893', '{\"_s\":\"b6b66c25580939f134aaa1e0c9611d7e\",\"_d\":\"655730f7643a1859257dd9fd92b4da5411b61b630940a19dfcc08a825c156ab68ce32da683a16c3cc260a185c3d292e5c7c122348460ac8278089d59ae50317bee4d24e8ade4f44ce6cdd1014dd68fe31d6acbad78fbda73b6ff2d710daf22b1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:57:21'),
+(51, 13, 'ead1e4b7c3abfbbd19b345e53dd60127', '{\"_s\":\"ba7013f1cd614188f5ca4790c8c7da3d\",\"_d\":\"cd92e61b8dd24ca4b6c0b6f22d8d023aa99bf5fefa80cac4c81a20ad96d749c3bc4d0884a337b0b1fdd34941373c945c3bd54346106d47502a7cda3b47e8d36a5416037809ad084967c41a1796eb60a15e3d5ba2ffeece0d75de78d2d9227716\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 10:57:21'),
+(52, 14, '4a90730f19b6a0362576d29df679d494a34c8be2d6dcd5768b0d8b4439bee24c', '{\"_s\":\"59e8b0d9fe64317923e6bf2eb1e71342\",\"_d\":\"fca29cfc3d47b38471e7a88255b4b59b97abfdf7560fdd6929129fadaba0609af558b9f6216ddd09f155f2b88de49ba2afd95afce70d88a4242c39ac8f77d4e5753fccc1ea52707dda42ceae4c2e189b4b5e76ba03ce478ac725bc508d5e5468\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:06:26'),
+(53, 14, 'cfdfd6d775138fafefeb83284febc9b0', '{\"_s\":\"b3991b5994543e3c76da6f2a9e4706a1\",\"_d\":\"6a1af834e6a2e8df0f27b7c7fc3b8d093076ebb9a1a9ed19afd8b07a0aeae20b73f51ccd5ff80d97767651364f072ccd39ef774a6289cd50f6e2c8015495781e1e44aa5493106a5c9d68405b09ffc223476dc2177f46db533f57d7e64f5723ee\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:06:26'),
+(54, 14, '5656d49fbbe5579b3b80a4b98fda9e3c', '{\"_s\":\"92bbddaf79cddadfab0fa9548d7f9e9a\",\"_d\":\"8fe84ddd171c2ebdef8312984a0f775963d404ee4c10aeb60abb34be9b0c85e7ca8a33914f49f31271cbda303492d9631abfef3707088c40e1768edeb24683f15de37b78f1853dec5de28bbe6c26ff9c4d5eaea84d93d7a94e2bc7f4764bd759\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:06:27'),
+(55, 14, 'c92ca179f5a4404bb03bc6c65f5aa312093a8f95aa3aaabb1f7450009c24ca61', '{\"_s\":\"62ada31df64b3d35338e2e23018c242c\",\"_d\":\"b0f65dbedb4ad9b7d463410f1eb4fa5ac65b222d44116b3d52174a116ff59abad078ecb894183fbbee7f5f47ad2f21dfd5d30171399b2a1da0744b59b44864f3643fb54477960ea096b8394047ffad5e37a24bd6a864e9fe8b160155de92f14d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:06:27'),
+(56, 14, 'e1f349c9be80905182966ccacb8a374f8a98b69af17a3d98a658338681fec740', '{\"_s\":\"e8f2df6fd84fa18a853a205a4d0a7cf7\",\"_d\":\"46c302a9c921aca7607efbb1f65e14ce61f9ec1c96af38e18bb3af5cce184231b1602ec582de4359d8644cc3cb54c6432c70803dd5a5d6745e0d8bb819cdbc6eea02ca041fb8c82c2d28e1386977576d5c95a7aa8cf318da41f1a59b2669b26f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:06:27'),
+(57, 15, '01d527aa5f95d90c30c44bc53f8eef6b', '{\"_s\":\"5fac52dc0f7421502f274eee0de1841b\",\"_d\":\"e4efb55be1ef6cae27544ea1e648d6f21462381eb405de67bf068e18bfeed8f935af0a18ed2bb0f111e493612178d9bcf512720429ed267d2b61cb15b68231bb844e987a541f8cd69153580c58a0217659c73747d292ce90d671652e1109f659\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:08:16'),
+(58, 15, '9bbb6869dc1e4d14f2031daee0109fb5', '{\"_s\":\"5f9e1a2b0ddc7cf6de91af4436fe2aa2\",\"_d\":\"39d5b225175e29b67f626ffefd5e0ea0780df2135d562404a249f17d2ce6903a4abcb4d6c13b3ba138d10a9e989285635d5c63ac3eda4d3381d1ae3033cf9b1c442827f7d379f12cf12e78b69a1f015c675784d934e6e0222c1df45f05d9286e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:08:16'),
+(59, 15, '3265e3101e405f4b2c8824b4bdaff159', '{\"_s\":\"543031d1a45d2a16c035a6bb7037d313\",\"_d\":\"306826071ee6589df9cea755ab30aa0b0b530f7e10351d44e519f60b031ea075731d738f8ec75d473317c368d0d07a83d9b3c11c3c5610e14421023b7e1cc6dcc6988257119aa30903ed190adec7b3e1ad216579adc02c55bfe6cdc77e0b12f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:08:16'),
+(60, 15, '555cd38602148877e1af39ad4fe36b99040de560777729020f35e213d7c5b276', '{\"_s\":\"2d3c0c791af4d1e22fb4868db7e994a8\",\"_d\":\"0660a55d8a031fffd1a9e75ca363ff7181dd39920bf4ef8fa7f612feec642e6eb713edb4d033687b93b289d04c65403fe477c50593dc433a912dc2bde3493eae9eac19770bf5ff7826df71a6a5f14b863671d28b7c6e751668fb8a989aa8568f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:08:16'),
+(61, 16, '1a8f98eaf0f4e38e453b360f6e4a77fc', '{\"_s\":\"641365cd73de465fc1d526d2e5f32784\",\"_d\":\"5e96ebb15026786d72cbc12176e3aad3690cfcfe2531f6fd2846a7b87fb26f8a4886e4df1acc2b334bb6c148016d87fa7dd77fa9e225886516d20f0d4c44bd2383aee2c0e9fb7d02cffe2ceac742514666626fe5b071b43676e758d86cda3269\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:09:37'),
+(62, 16, 'e2b9468465af307842b95bcaa37b9f59', '{\"_s\":\"c5e2f184ebf3d6d6128070d9c2e5f198\",\"_d\":\"b9a57724848611608f6e99f31140b16ea2ec1fae3281b088a3d996b229d8ccb4b65ebab1fde61fd312b78d90183e9add5e99f6db8c673c069f244e20d7be62b9fd856ab0777e01acd0147ef5862db66758f5a38b5cc7453457af7fbed311856f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:09:37'),
+(63, 16, 'a1320e1f19798c15de74767a845eada884fa999c1099e621797e93fd4cad4eac', '{\"_s\":\"512624e1c5c2c35ab78f0bc770302909\",\"_d\":\"458ce21dd3d4879de42ade784cf956ab899cf4cf3e03d879004aae9e4b54d0c4381a2ad60497b5d2ff3b5f66d6683e9b98dd46c2799ff229ef9ba46f968dfce0213415242441ecb592fe1b68c765b94847b84720dad0091cd928e0bad0f6910a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:09:37'),
+(64, 17, '552181ee3aeafe755dffbf543b0428a7a3df49579c3f0bad8c2a48a089e56268', '{\"_s\":\"61b498385b7de7090a9723701a7c30e2\",\"_d\":\"2986cef2db6f8330f8739bfd849033fe9176cd6dea69a4c26f3dc4e70396c7d8457741979008dfcda66a712d93dfcaa7d21f5b9b1d12d797f3849da779b5a36012ec147a1db3229381f0021b191a3d5c5480eed0b29b7411096f4b12bfb2c91e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:12:27'),
+(65, 17, '9e6cf8d4e57b9b60d1625e9dac1ffa7403754e889dd7c27937e219e2ae32939c', '{\"_s\":\"7b291bbb2ebdb719dd87837a8de88207\",\"_d\":\"d775761f9b8ccb50ec54a819201df0cb05e5935d7d5a35f1fb20e4781280bf2019bbfb3977c923aa0cb248deaa2327842274d7dc3e929c7257e1b3904a98a488356e0757b68e44b238646728b39f0163cd68f26c184fb5621f51d5dba06ddf6a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:12:27'),
+(66, 17, '300a1b44f1a50bef176b044ed0f119fd', '{\"_s\":\"575a7df3efd68238cd8cf3c442c70758\",\"_d\":\"211b4e9abd52823e172cd2d26ab23254ffa7ebfed37257007f2090eecab71ec53260166b14c20666051d29fd4ca8da1b9b0faa0c02b27c90aa95a150948513285dbb8666e7903138e4104cd0c6b2c4ec16ef0691981e75bbacd6cb5491fe8917\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:12:27'),
+(67, 17, 'cc26a150a9c34169cdb5023c1e6eded2925806df43725807e89a402c7c5b9f0f', '{\"_s\":\"c8d01002f32239c8e8ab2054d894e129\",\"_d\":\"49eed85b98237fb5e822caa0f2636d419c6a301956aeb0aecca51f746a7c18b335d93ebf1be1e2667cb254c032bc14889d8d1e54bcf8a8a3ff669c51be843cfb274839d5033034a3bd3cb21e34b86469b3315c874fe6e2e0f4fde612562df077\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:12:27'),
+(68, 17, '1f55bd878668675b83bf2ed8a6497505', '{\"_s\":\"a420368a46942232bcbc0ad64f7f8c1a\",\"_d\":\"4d7b38108014535a0fa0af64ab9c5dd6a84cc941b78a3ead73b0c372acb61e5adfdb723215d3de2d3534360907d3523557939010c44b15f8b9f952a360d416aba16ec911d9454d279d72eca0ab2651b73afa8c973b1aeb83e68946f7236a2e08\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:12:27'),
+(69, 18, '6653da31077ed5254e1330bae1e40762', '{\"_s\":\"a823af2b76099e57c3a19bc2a5e126db\",\"_d\":\"d60628e36cda735011ec8538330ecc4e1c8dacb879edd0b432b7281d68d198c625fdd1aa97da95b28a2f449a80b85383579eb0363dabdcf45a1124ffa998aafc19f1cd50b835c1ee6726a8175441246eeca6adbcec1af26f8dea271d1cb5179c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:14:00'),
+(70, 18, '158b8e1699bff93a177c850df73cc14a', '{\"_s\":\"249bf4a73e84ee09493e403beaeab7bd\",\"_d\":\"e42486d59dda92690a2c060175bce519bebdf17067ad68165e68d891b5edaa91e3077183c1acc3ffa29478ecb02d2f981e18b6087aa442a87b379e3a65c1df2d530aa7420ead56d32de77738d11697efa3f1e46c0ac3da907050934877160b12\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:14:00'),
+(71, 18, 'c2cb387e7747c4ab7eb8a520b8515f5bc20c97fa837ea549e9ef9c414cf57712', '{\"_s\":\"41b5118ace6ab072c480a3751fe1b464\",\"_d\":\"1c7bb0de3b605ee53833461d43889d181fdd4afdc0a388773680d63836b0a2ad128b7a4734e51466c6bd0e38ead93df7f56ca48a61c576fee9b61278a02718277e2c0d2f9aab030d1c30d3d55a3a25725154b92dd4ecd3f3b8391bd4a04a6780\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:14:01'),
+(72, 19, '47f61c618ef7cc840c93375130ea96078eabd079f6fbd12e81bc049d3d5c4adf', '{\"_s\":\"4ae07eb688ab8bc60af210cfba7fedce\",\"_d\":\"2c65fe68ad22e9af59e57bf91b1a4f0e088e2cf78423e35c2db71b5f79d37984fec6bc2a404b7fb1c4765187d00366cd9c2f19451f5ed4f16d561ca3cfe9e50a45433b857378382ac4aea676a6541c9a21def6d979780c8fc4e0526078ccb1f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:15:31'),
+(73, 19, '876a32d379d52269bd1f79e12fcf9901', '{\"_s\":\"962925716057f73d865d871ae388f19a\",\"_d\":\"6cb5c918a74c4114f41d9a4c01c59d18349c154a53a6f5e2a443180c1642b299f30f6bd60a54af5411a3d6ec4dae36ca220a1e3a706ea5d8c7de683cd915c1f15f1ff4e56ab27167a1b09ab7fd4dbdc70730e64df7b3af2f3ed1ca1d73666575\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:15:31'),
+(74, 19, 'd77d0e264c60275e072850d9df26cb2edbc984cd7e9bfdd511a4d25fb098817c', '{\"_s\":\"5aa2fa5ae40e8be08d5e6971480c20bc\",\"_d\":\"e5518484d0411e4f73e50f65651807a8b7e3cb32626de5edf1cef2ddced401d346611517f3b0aff35f6087de49116c8dffb48b0efbd42ca8adee439f12b01d46007bbde148290f89a350d9ac6ad3c4a18a3689a7bf330ee0cc722b3a31dc3078\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:15:32'),
+(75, 19, 'b616018ec9e48f2729825e7187cd94426cb871ab0573cd2e1f9605cc027d4cf9', '{\"_s\":\"941b133206a320f97843e531cebce5e0\",\"_d\":\"7f84f78df63649ea4981e04eff062c6ee65ddaed7cdb74506bdeca125ce36d0956a22c2e953fa0f1a57d5625902edcf3c9ab87b5d2b75e12c4ee30c0196020e4052befd6caef3e078b188e6c41939ef478c405c7af62f24e925614ef16b8b2ab\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:15:32'),
+(76, 19, '688aa08fb757555b213fe2a4dc43581d9da0fdce5d98f8edcea136063129f760', '{\"_s\":\"20cab0f18f8abb2a1f37e11edec6e2de\",\"_d\":\"ffa67840932d8cd6fa345e94cad2779cde4e7d3c290e5bfb79368710ab25a5ce405392810a8dd8becb2d7816a27b0e66a764e99ca7533f30a0e484afac82309db18c8fe59af251e069b23bcecf2c38f9291662e9765cf9111a625202bf5df912\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-10 11:15:32'),
+(77, 20, '44ce0a39ec463bfd0701323aba7ff021e3604722b4aeb59aa011375074e02e24', '{\"_s\":\"c5494ac37203add8a4840f552fd5eb99\",\"_d\":\"e81743a70907fd014735362bd0b23a652c987c34b0339a6e5019bd204e6acac889050ea459c620d44a12eab95d3124c748d26b90133ef06fa7e0ad5342846056e16df10cdae47f3140335245b65f80a0da57ff81e438edb8701f98eb3f9810e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:02:31'),
+(78, 20, '0f85e65950871c8183a7c62291d11604', '{\"_s\":\"ceb5d1fd0753dc6101f1f88ab30924d8\",\"_d\":\"869fefaba0da7432c6ed5128a43a3557f76daaadd41c8a1a7eab82961e64e9df4fcd1edb4abf7b1c468873bbddb26c50a8867786f5ba640be30ad4b2e9953284d7336e9ec814e6ef29355e7907aa6355e4526f8c618a8a8ccd4411e745f57885\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:02:32'),
+(79, 20, 'a5f20912ef394f8cb2ca0e550fa6373aef65e174bbe3ba69af4f89aa9a3bd36c', '{\"_s\":\"7cae4f072fa2ab608fc6d2cc7be86f42\",\"_d\":\"d2dd290b5cd87d0bd729e0046acf153b56fe0766c04e35e2aef0c085530ea35ec9211a24ef3b5193faf2e9c705c6e5826e73188262783b70558126ba17a17c769040a19dfd908c003e13a28e73b20f65fcdafbab23606dc08f61cc87902a7453\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:02:32'),
+(80, 20, 'a8f7a3529c36dfc22f92a56cceef9534281cb1349aef7fe46da9bb9e3c03838f', '{\"_s\":\"4b2306a79b0e0a41ce21f033852898eb\",\"_d\":\"b8b6e2c5bd9f37986d3168a7268f62105efbc8f0b27d6a5506fada978a1d6b2ce8dce87ea5e4aa14b5b889f83e3a7a6f7f15bfc26326a85e30d86131e515e0ab17d1b66f30dd6a8db69719d7ae2f731975768232fc51f4bde05ec74998d1524f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:02:32'),
+(81, 21, 'cfdb1e9ccb8a37289e5d2c1bc29eca6a', '{\"_s\":\"cc29cb17145ec5f32f21065af743791c\",\"_d\":\"9cd0c42cc98bc1be8c05eb12b312d019a076198709f41aabd2f3664cdad8788dc90c2c64592b56c27dbcba0908a48613c07d916cfcba008461938b74d49b9c5879b554e8cb0c2136225e4f54d9f6cbbc644134c032092b923256b01904dba8eb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:07:33'),
+(82, 21, '8a13464c034494bb8edaa15b6bc1c6d9', '{\"_s\":\"84d6895e66a17cc45138848bcd574de9\",\"_d\":\"ab50decb08a26ac20c8a31cc2546e7b40bca0d5976c2151412097952ebd53c74549c780b26dee6e9d0a04717e05c15513551b48f12a5d126166084e661c9a08553e103b2795d1c3d8c070e66af2f676f984f14c7d21ef2f23e9c43e0d8f78d70\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:07:33'),
+(83, 21, '723223bf92539427ca66cd37bc6fb3e8', '{\"_s\":\"26cf3d2abae5b17796139b5c74a8852b\",\"_d\":\"7157315807e1061056989dc412240c43f4c80913f3a01607bac253761fc66378f58c22ea6da688482d10075c84d22873a2cc2693e7e2700dfcc4e783cf62c56f876e40af4525e0322b4f0f62b61a1fa2684cd61d147be8dd8790b5f8cd4d7b3e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:07:33'),
+(84, 21, '8de259650cf29a0ba164fce4ad32a15215857d2f15a7a89eccb2257ad7a727c7', '{\"_s\":\"667d49cd0a563c060e524d2d903186db\",\"_d\":\"5e020ee7ff1684a52ddb2a4ff0c881493ea54e471b4eb73dbd436016f86fb54fa2ef8e776ff8733f23b0f14203ccef84522ea48e38f1ba837078c9880786f6bc402e8cdc07a6e8a79dfe7b7e16372a90d6c111bd3acee1e87627f00da2ecb68a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:07:34'),
+(85, 22, 'f0b710bfa6607019c78a0ec130bde573', '{\"_s\":\"f2a8081ed3975e4fe72bd58b003ef651\",\"_d\":\"d4e93d48b52fd2c239ed415f7a69a019bb61b49def3cc5454900f80912dd32d0de659636fb78fbad50bf574e3b7a5dc48764072a3846046fe1838c65c7122f4299ad8242ebea9b3630017e3cf72d0a1b94470ea732c54994884b0390d8af2471\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:32'),
+(86, 22, '3573603e742ccfbec71f596c1870587a', '{\"_s\":\"19a2231cdba9ed162d0d770429ce8dd5\",\"_d\":\"b5bd556fdad3daf0409837506c185b464cc3cc9fcca29c0620e631605d88dec65c0891d3d83c075527e9063eb040e324c13babf06fefa204665cdcdc4e388998eada99415593f108deb7ca7eebe35c2feb55e77ec0bbfd15dc783538bff0255d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:32'),
+(87, 22, 'f24458704f267109aaaf50fab45cdf2a', '{\"_s\":\"ba096ccc301d2d888527d5d0fbf258c7\",\"_d\":\"59bc285677116e5072a8d8fead99ccb9a0ab42e5b94b746bc3cb7c0c860ea529334b2a972f50fb51b6b86cb2c03ed3fb9fd29da36d661ff5e32074dc0714b46b46675d8738ac941faf79f3e740c2eb065047d92be37641d897d376059ac87302\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:32'),
+(88, 22, '51574e2099502e73c71090e26a579ffd', '{\"_s\":\"c94e6cc9cf4ed4d0d70af3f6b52e9c48\",\"_d\":\"acbd8d283cb57d99801bc86d2f425d1980c618321975977328f95aee776f0aba7f543907c0fca4b81fae7f76369d9dde824ca6ddbbf55d4abc24d72bf0b2937b2a15f08b73345fb9560901393ec2ac0985996cf17a647c3752375a4458987cff\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:33'),
+(89, 22, 'c29af40f9b02c23da684b45e14542020', '{\"_s\":\"3651fce791b7185c3b432817995a648a\",\"_d\":\"0c1970f2255614a187f0c6e74ea8ca9872eb4cb32bd1b6ac74d081f487ea8e5f9c7dbe7d031346638564e1163e2ee601c4c0f5445784d71512e047dca98b5539b56e0ea75ea9d88673250488526b6c66d485fe615ef2b76e08f135621a755359\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:33'),
+(90, 22, '26126ae84cc5d4e1f3df6f61479b8d16', '{\"_s\":\"759954d7446eea0c16b4fb1996f24511\",\"_d\":\"2e602511fd5220f9c3368f8ca2f3152fbb7aa62f01e0146922f78f14d28e69375d99bb2a2d519d423db3007716e3c64495f0bafb3cf8bdc79de90ef013abc4199b23330b266d7caa4c9be79b8791bec1bc2993cb92bc5d7a1ca48f8f12c450f8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:11:33'),
+(91, 23, 'e894039e6e0f57fe0cd162707386f394', '{\"_s\":\"1b9e525def16294c48c06e43f5b81001\",\"_d\":\"efd74519b668a0488ed41f71d97c97ba697609dfde4c85c17783d079f042ac9b81b56710304d1df93e179eb1ddffaafe3d4a77e435945cbc7b13200f61b618c5168378b23de8a79128953dac62cf9e1d7212d84742002610757bf0fefd026b3e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:27'),
+(92, 23, 'b11d4a6e2cdd6589c3746ffac6f4a773', '{\"_s\":\"c7061f04d6add9fa83332e9eb100ab3a\",\"_d\":\"203786cf9494ac4fb083aea8eabc56073958bd6dd26048778ba8d057486add57e82664261fc8699c1668faddc2c142d6526eee9de38a77534e306d228206f13db5da6987e0f1c4f39840532d30df0937d8f32ab3e955ad45ee26ab7cedcc61f3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:27'),
+(93, 23, 'a90198387efd0dfcb726e032b36d7d00', '{\"_s\":\"bad9ecca02cda25df590b0410cdf6efa\",\"_d\":\"c8e090853ad3391364f8989ac73883ddd109f63a492fda1cc1799d552638bf630ea0e6fdc1754840179491bfa75e6781bc9013aae367be5d47c0c931a535b6f7ab94eabd1c5fb88524752c24148cce054a0c625a2bd8ef9d91cb8686b97df446\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:27'),
+(94, 23, '428bd3d8a8abc46256c9b07648ddd776', '{\"_s\":\"948184a58d54171d1ea58b8ca9359b06\",\"_d\":\"f88152f5dbb2e824310509e7871a3a0463923bd51b65d714d7b4efb3c4290fa4f67b8c3cbbb3b6d0b416bcd6338d0af1f6ae77112a31e7e7edac1046a10572ba6d3cb065054a48d56d133c1fdb2a50641c5e127b394face56dafe95f9751d7fe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:28'),
+(95, 23, 'dc43fe17372f1731295f97ef3be13fe5', '{\"_s\":\"f62c6703143cd4d78221fd7a444fb593\",\"_d\":\"439a3bf97b00a2e448115a831daa4d73758a7e7574d1c2d7bbe189b38a5560112236343c6209b08b2a4cc2ad0a7dd6aec5aa07e1d4cb8ba3c3b9f3922b1cfe59000ce8537b2b505b62f32c72e283ed88ed369daff43614f7ed28b9a99193137e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:28'),
+(96, 23, 'baee30aaed59c9275b952ecdcd72f29b', '{\"_s\":\"980bd4a11220435e001f7dba66d463c9\",\"_d\":\"f4dc020ecc7d2ad1633edde43f9c020f2233b7b29ac891c147429809d0c649851f377480acd157f72e463da0d0a49bc70d539983d4ec584c6200dfc9b22ba5fe4bba3448b5ee9d15f47c05dccc3ac12588d8cb1f7340374275b30438dde80cbe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:14:28'),
+(97, 24, '7d06da0a77a3c62b30bdef9729c1ada121be4a6c80db896a86755c040883a462', '{\"_s\":\"9f9660cfa371cccac46b2de07e2166d5\",\"_d\":\"70981c8aeb9eeeee3e1cf20bc9ec9d0abf5c57605012a133868d33826d10e187a07d5961f9433be47a86ebe6349345dd0ddacd0355ae9085c7839cac26ce6ed64b6d9f22a87bc5a48a45de73b7aecc8eec9e71212fdcd0d41bae5f81fa02e86e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:16:49'),
+(98, 24, '0fc82dc08ab1ec4c98f963e63ea43d53b0d9151a7882b1d3164cd82cb3abed9b', '{\"_s\":\"b10a9ffc45532fcfaf3cad79710680d3\",\"_d\":\"e750f6c4e25565d5d9b2b835f4795189a0f0ccf626e9ba38cb1073adcf423f79287923fe96e4737de44838b6d90b66055f5637f80478c24a572fbd3963d0ec83fb57aecb1bf964ca8454eaeb022927436fc0d85a8378e8b9e7fce1542e5e6572\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:16:49'),
+(99, 24, 'bc7b1b830b84664750b52303b72a0a4e12596f08a10ef2d040f7d9732ebb6ced', '{\"_s\":\"69591a64ff1ed043f7197d6a83c3e389\",\"_d\":\"131410a9689919ee14fe8ec5ccdaae5900f43a575cfc73ba29e0206f8fcb0fbb7bc2dd4519ff2455cf6d8f34ae8c2d468e3acd2a8c02d7ca3159cad465e378ba376f46b05495ea2148e0fd65aaf6e703396493561fef3d60e413e2c2a9621ab5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:16:50'),
+(100, 25, 'dbd6f54d940abe04d950f5c0df793ef3', '{\"_s\":\"21e5b3e13dae2fc8f56781f05a3a291a\",\"_d\":\"61013c388af212bfa3f353a36e1ef587f837e8d0c8c2fe30b1617be9576d20ef7ef20fedcc0bc8a52f3531fa13274a14aa16e75cfc9b6535de5087066f28c836f72b538d438b785794c2662d67477279bfc9bde032128dbcbe5e15244f157c94\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(101, 25, 'fa9d3b33f822ba948e437f0c50055322', '{\"_s\":\"6ac5e8f3d6baddb4a2d36bbe654fb94b\",\"_d\":\"671c30bfcb4bb25ce48df35c71b5f78642a2d4a1b09bd4abeb10f125a39f63d19739fabb0ed6bbaf6efbcd64546ff61998eb45fe32f171b3aef3537b5a2fe26166f07f7d3cdfc8d524645b12520029f28fdc9959ee833370d7d395a91a008051\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(102, 25, 'e82e2f0f84ffcf5892de886faacb274cd986af81dcb861b63eb71a1d63e5dd42', '{\"_s\":\"a22b03389cc290aa8e37a8485fdf8915\",\"_d\":\"466260e44db4879d64093e0231775eca9c2bbfc2f7171491de0672e943c9e0c9f5f1042c79b47242688ee1a3aa424d0d0a13aa94831069a39461afe3434eae2694ac804a963ef709ba9ab7b3a7ebc841f2d89880e119c3ee15b9ed1f6645521e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(103, 25, '0c74583cbc978ade501f0c04c208bf0f4aca5c4e81def56bcd19149a84a246bc', '{\"_s\":\"df26ab525e460c9aa6eccf4cb0e98279\",\"_d\":\"6e7be9ad1e7aac113216a07eb85e13d5a24b9543918c1fc6bbbc19ff3bbf22363c52af7cc0c6a84f6875f887df0c1ca6954c3165c26acef36fafdd9a09280e1164d7623c09de801616404d171fe476e803c48924d1262e1a8dbc7285424118df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(104, 25, '2178ef7dd498a9db8afd118b5aa3bd37', '{\"_s\":\"fad78538d8401b1672d94ca40e6179c6\",\"_d\":\"564636a578ba25f730f60f29ab40560daa42f0482f64fc85e37e5cd33f6f1cf4947ca4e416177a3fbabbfa9e77ebd82881482d55851c688a3d8ef05ec8d58ba4059a1252cc116fc606a316d481aaad5860e9adbcdc6dab5ea0c41c4bf1fc9140\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(105, 25, '0e52cea202243903fb2da08c4d99094e6f415f6c75a6a40cce2cf859cc209324', '{\"_s\":\"324821154534d90249fa1154f84d7538\",\"_d\":\"ebf22a422ff5d71508c75b26c6900d4020eefc61c4379080feb2729711745e2e5f6f85a731d2a101efae77f53d13df6cac7b420bca06df9a445b47bc88ea49b0dea95a503796b0eb72f0d14b072fcfe7ff0fc6a3a78746a30def8ffa1ef089b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(106, 25, 'e1f9994f9f9a25fdbff5066b7f67c6e9', '{\"_s\":\"0cd2d5a835f1754d15b979e7b3291312\",\"_d\":\"09c5b3eeb2adfcc930ee1e5d70630b26789b25cc0a60cbe999bef6825872f2d4bd348cfccf71c3aa76ebcd8520861e86f8bd4797a37dc7acb2e061ef4f952f47b0087dc3ca86c787bf9bb781e8286063c0f7a6fb5fa4965853560c90aea08c4b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:28'),
+(107, 25, '50e039ac2989b74b4a83f428b31a0f68', '{\"_s\":\"621f2ae540fecc8d8e68e5aa49f86de9\",\"_d\":\"f719fa4f23f73a6500283d8334e2c15540492885691e473339a6d6dda92581835ccbe3b0059a1b633ac1288f103a6b8e107c62af3cbe75ddd313955265d133de1a571b3744d0d14a42bf3ec5a36a30fafd15992bb1cb5b36452d90cb7f695337\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(108, 25, '659a8c516873c72911a5331fe301116b', '{\"_s\":\"89efd1a65c4a61da31678182a00a93b1\",\"_d\":\"90101396ba035ba501fda44aa4355c767744984d792a0658adcad33621e76fdc7aed3374791680a712d8f51520aa4be84005ec3ca3595847c1a842143665f07882560acca0a21f5cc96051e95225aee82e8de1678f961a4ec9d8f0109c414dd2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(109, 25, '8a9199c8c434b1c534b012ef14eb76fc', '{\"_s\":\"8e2939403e4678fdcda6e35a836b2b06\",\"_d\":\"862835d74ac663aaa7bd95a5b15d9d8528ea4d52254a3e11a9d6cd50c5acfd60966133ca81a82219c8fcda766977037795d04970910982872b5419ddde8f496aba5ab55f3fbef1a229050137fa0bdafa5d3b08e7c69c4916cb6de968a417ca48\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(110, 25, 'bbde74953eb884eabd5ca9a6adc089ad', '{\"_s\":\"84c5e9b5ec262b07f95021554666e938\",\"_d\":\"5d1f19113cd64597d54e88e6bb2f57af3358295fc6ae1ed9bd6f5d99b4572dd5bfae68f0805420076ee2dd0c7fb2385c56740f4264bc88f120223da6e2c508ac64dadcdf458209e740837860798a6bb279b78f6b6c99948cdf7ff9edf275debf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(111, 25, '103fd9e375bf9dc35a5515eeb1c3a433', '{\"_s\":\"55b3d83bc991f3dc030fff730785782b\",\"_d\":\"24127771f775334f66625156653732789859903946f9738f15bd12c5b9d0c7186c555f4a7536047b1dd0def963a8e99d448069aeab828ad6a5acc9743c2ce6ec7bbec0c62a14616da5bc4d9ccd1f799fc0920b45883d30a77c3b073e32543fe7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(112, 25, '524441261245a86178b29c5a496f0858a6ed222cf3efff9d12c2002a5338479b', '{\"_s\":\"ad2f6e5909dc4861ff08ed09cf361198\",\"_d\":\"b8928d999841da7a27fcbda685eec829ea514dd251419bc1834f8558f11f1493e12ffb2afbdf17f2d40a64ab1f8486e8d0393087d2298d17006ea95aaef54343163e7235ba0c010e0bc79c70572ceba180836dcd179e077d9ab8316a6052c9c5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(113, 25, '17521ff718f7e59f9c50ef5b98780f9f896b7442f5045cae14c36d4e2c1fe9da', '{\"_s\":\"07573d2a055c9dd75aa35d296c3617f8\",\"_d\":\"20227de8772a0645d2a6afcdd06e05415a484274932504d4dc0244924047784124e12d7910f5e94f827cd21fdf5a7d4e4019d479710e22013f6bc92f9ea7f2e86153faf49e0d3ef020c237903d57c5bfd76093cf8291f4e3cef0ccd0aff7af34\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 01:31:29'),
+(114, 26, 'd2dc7e8f3355e05a0bfd589be0095dcd', '{\"_s\":\"8d56251b82094cf9f4dfa68bcd23d3c0\",\"_d\":\"3cb39f27a35d38618999cac2d9f049dc4efaa68797fdaade642d5c126d05f6d9a68311d3fb810750f7789c36e4f4f56276bc1986a74148fb6e8741f9f1abc84ecfd9ad3d0b2d67c88118aa3b4bc60ce417d3d3c0394ad80cf041f6e1672829fc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(115, 26, '103fd9e375bf9dc35a5515eeb1c3a433', '{\"_s\":\"e6048b56ea7daeb416ceb9db51415640\",\"_d\":\"3d788aa92b306185e3445657bd3098e062d88050c88f0f20901c58cb36ed214d6c7139c0d14088437a2c9e294f97c69d18b35688db97df6018cbb399a866649dab8394e3a517fac118ccc5a69eb58cd2ff2df2e33fb62c8dc5219baf7cc2e6ab\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(116, 26, 'f1bdedeb53aa1cb2a01e09055bebc327', '{\"_s\":\"c9287f836dc0085f6c202635e2e162e8\",\"_d\":\"54f4a1a8750ebc832b2261ac811f7daef440939303da47c9cf7e5b8eb5a19662478c6fdf5b0fa05d289fe56b86a2076e50a534824797bc2f87008866f20c44aa8409be0b88f447d07c1c6c8364f8ae195d20804c940be05468e5330748d9982c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(117, 26, '98e8991e051f8ed9bdd3466e5f1f1222', '{\"_s\":\"a03f2c80e380f61d4f27143eac47d7c9\",\"_d\":\"3e1513a374ca9b7ecc914227c3174d6d73ade27096897f6b33cdf7f05c56059cd5d2d99d8836e0fb8fae31c64488f976f5a3b23a730e0c37b766408bd8ace025e78d8bf2050e303f71c58bdfbaa2a4447fdc752e8e7b127e81c36661314dfbe0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(118, 26, '684508266d37d25e7d1a5ba2a272dab7', '{\"_s\":\"301196d859589fa1ee2905ca1132f3f5\",\"_d\":\"05a118f37d5039ee34550cceefefcf7b1fd525f598ab13e06ed8de029ee9a732efa2690cb8d9d65ae455943dd4ba228978666b1306116bd9a143fd9888aecc9a6a7a96ef8a157b75197e605d3717ba6cd3e473fdf07bc9ec14fa3b2f352354b4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(119, 26, 'd66286863a2a3e392f3ad22d75f1bfab815324a0ca93d91863a57fb8e505f5ea', '{\"_s\":\"b37a26d48a9ba1d2d6a6a3e455962791\",\"_d\":\"11649f69d86a940c56f9274d2e1acfe2672f714be52814f60a22bdf28de2a650297e31dd292f6c60653f22d7ef0681137b36e077397274fa8c723d9fc1cc043e5b2493b134eab0b2ddde13d36ce5fdf58b643e2617e35e09fe42fa7385fb7a9e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:25'),
+(120, 26, '111b5d3c79bf6adae93d2e09bdac1858', '{\"_s\":\"9ee16c4e024ad3e536230005f2bbec41\",\"_d\":\"ab0b39b27b6738d9700d02c65142486ae80f4bc525d9680ed10d78acb965a9e9ae2e0d02c26cfe3fdb646d9104e91704b25915e59cf8e8aea5e47deccaeefad4003f58fa8705a751b4fc8759a46c7fda3b38d90b56bdce396529bc83047ed5d0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:26'),
+(121, 26, 'e638d6b0597ff9226f932fb8a7536caa2bb4a6a3be10e20d4b3adf601f8cbc0e', '{\"_s\":\"d80db53c3282b177c4bc440054f95c54\",\"_d\":\"60bcbb148c077807ef74145fd29fcf34d6f4c9c1f16b877fc56902f0fa6f9cf00bd46b9b162e2cc1afb9a6324b5a3035ab2e73c7a1f83e73b9b6d1afdac9e10efb34da446b91f2adf38d8bed32882f1e02c4bd14110365e5679feae495bf38de\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:26'),
+(122, 26, '7268adc23f233fe641dd85871ac2fae03c7ac1e394b5e8e4eb0db0b78a7cfddb', '{\"_s\":\"dd56e86dfb274bb0e048021d2d485063\",\"_d\":\"dc4880f983854264e07a7829eeaaefd51100bf4e8e34ad3cffdef8a68ef8e669b25084c27d988e2b7798c26dfb45acc751db6891ebcb2686608636460c3583b22a6ce8e986b45a1c1ea3b899237efcff69695eacd2f3a2c570d9da45327c1c94\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:26'),
+(123, 26, 'e3d6f424fafda319b5faccb9a933d8df', '{\"_s\":\"27a9ba9fdd10a2125bb1146f37d31e42\",\"_d\":\"44fc4891833ffa5fcc82d0574a106b71aea23090576cc69e1ffacd2228ec64dc87e790737912dbb764a74e8f0560b52311688130228f89b5024f0d00bee9b83b0a11fe9a607c66116075022cf28cacff3e7d608c17893c8fe1c5889bbd1c1008\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:26'),
+(124, 26, '0dd48e82ac9969ceb314c82734e03ed1', '{\"_s\":\"5ae6bc6c00a1975480a2d17e3c9d7c97\",\"_d\":\"abfb6e13ae47bfa92e96c6b721266e09442fc820fea2f7a736b77a208a138f50d4dc495adb5319351feb8dcfd5e1302bdc7820fb93f6ec5591edc0939b2b9133ee57bfec07cc6b26635d78a6085a3b453c7d02508687f8642484d2cb05530c90\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:33:26'),
+(125, 27, '7acf1c0c6d52f7747eae59bdbb610a3e', '{\"_s\":\"57cff70b2c366f9d2afcb6e3dd362a79\",\"_d\":\"e80395ba8b55e1015399e53ac7a3effeddcf2b77ffd9d7234566ca7c9c9ee29ec8af5920087f63f07791bfa62a2870a2e984ff51e2060a315ca90bd839bfcf85348ba4306c14d8d84c06839405542dcf8f8d63589e05b29567cbc4d5ee3c05e7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:41'),
+(126, 27, 'be8b8a97b9b48b89b01d8a085e752762', '{\"_s\":\"dc2acdfacb10f79a517c1bbc18983d0a\",\"_d\":\"73de2523f3ff5156094b25f19e3ba2fa10a766a088b7f14bc6f169cdf570f66b8535c296677cf298ed36a93ed5332789f5511f95006c0aad9bd58022e940e0044a1c93f18dd3107dad030c666adec13cbe88f70f9f243718d3a1472511f601c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(127, 27, 'b6b52df20aecc7b0c4a5b2d0b2e4613e', '{\"_s\":\"c783df52efc115e635174d037eb31025\",\"_d\":\"b22efccdc5328578d1a2a7d104ad59cc02da2ac6615d11d9f2d1d0b4b0aedb5ad8371cd506e8fc4dcf2132b1a5d28a583b60092dfe1efbaa5eef631bb533601416fdf37ff1aa8ea00ad7e7ccbc7fa1f7752015a6d3b24bd369dda3ed86848bd7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(128, 27, 'd1c631df8c6c219a4d303eb73578a978', '{\"_s\":\"370a0010041a6af63e8be29255b2f30e\",\"_d\":\"15a0343a9ffa28dbd83ec4909bf58b0a64daba86d741b01ab61e18aa1779074b74d2e6cdb07d7a6bae17513a9f34894c577a3a3662fb6566a108a23eb0ef1378ffe775bf6d8b7c285e03b8f3c27a7c52cefcb8c0ff97445f3d75ab58449c64a7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(129, 27, 'a5aca36a6b470820fe831afa774bf313d37b391fe512f02f5c1cc9d6c8f80814', '{\"_s\":\"d4863fcb98549b2689cd5c1899e03861\",\"_d\":\"75f5a07b5fd5b3222c33e548d4cae1c7684eef5596bcec0b1683c751cbae56313c8eda2fb5ff20079ea8dbeabb6d8091d418e6d17a0356022c2a072cb1a0b6a2c76172fead1bfb074147d05886013fb0a408554d4ff59ca590c6834c58d2decc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(130, 27, 'a1a10309656e6151df910f3c4067caf4c7a296e0033dd3abe2945a787bae9cdf', '{\"_s\":\"3553bc7d689b0efcb371169f1e99262f\",\"_d\":\"f7008ca4823b6fb93eeef9f845f5cbdce0b031e188887fc8ff9106f13888a2e53ffe43339408706da43ef825f1877db26554a9b22be172d112dfd22462241152aae2af52ce47c9bccdcb6e1bf8bc43bd336b9092b25ea51635cd0521fa1b36f2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(131, 27, '7f05a4260dc4a29d7ce35945f30ddadf13c7806b62c53f1c1e649604dadd9f68', '{\"_s\":\"aa78da629a629be96eb5fd331b950adf\",\"_d\":\"3626444fecde83d08cbe422216b85b459d2da23a2b40f3b3ca310fb42980714758bb9c4a1f9bb60a45397e0ecdd5288f2bd6f13fba8ca3760b7216e70093715c489fd5b04a4d5ea8625f1952669f934dfa9c6e07785f54dccd29b5ef308b59f2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(132, 27, '592711f63d00d684a403d18385bf440a408461f20b32ba4e8abb5236cbcef3fb', '{\"_s\":\"a8a8c71de39505112ad8603ffdb79109\",\"_d\":\"eeb1e44444fab46f65abf11a6362ff1952bd3bdefdf3cfd5b9cf5a22598dcc5e2ad9d30a9962542ce47c145ce4ca16f5ebca7df785a161bac0885d7a875c7baa55506035354611ff9e39f5dde7a3b2b3f99ff849dfb2196b2df296b000117c2c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 02:35:42'),
+(133, 38, 'afe50a9399a44ea1ccff73b257dd890b', '{\"_s\":\"e1a36e0f40d14d64282c56b650f5d47a\",\"_d\":\"dcbad0e2a59531d49fccb79534f2b59d975bf52d3887d3a648f5a348d86d4a5183a174b064946cd4892b373480749c0cbad0650a00683c3d5a3425492e335e5678855c9271ff634fbbaaf91c8efb55776ac751830ea4180e71238ec85e94c221\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:17:46'),
+(134, 38, 'ca5ad2a1bdada75a7a5da96f7e91f4575a6b2638012e1d14c7c005841cb8590f', '{\"_s\":\"5394fc28ac8e2ea027f1d45471be32ca\",\"_d\":\"f461a24d05f99001e99dcb130d27673d985fd6036205897cee62bcb0d7a419f9926a605ec83c3da48574ad1e58305b830562bbc64d72564c76eee4c2b7d40d81d9474453e2bd1a62fbc83310f4591ae993f4545143f9d1ad96dc7e759ffe31cb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:17:46'),
+(135, 38, 'fd5437f05d5da5f62819d61056eda6de', '{\"_s\":\"f32eb2942f6a9873576d13390141d991\",\"_d\":\"810db94142023a27efaff1e8c75af153e0f74ed7288c7ae2547a84ce552aff7d890c579a8c070ad643c7f0ede0ecc582bc2afb56fcdd4d6dbaeb21521539f7a6d0b287d5c1de62b9df461c88a90789bd0b7c03122c7b7cd536ed3b29cdb0a3c5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:17:46');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(136, 38, '53e9f48d5c96c1de31e86ea8cc2795dd', '{\"_s\":\"446c4d3ad0febad73b77ba6cac3691c0\",\"_d\":\"561944f83b52db4245f2d84293fd7696baa43c24b4aa32c5ebde1d95e25cfd6eec6b22264ca8aa28d2bd165d8463abea26c368ca75801bf4b8a2cbe70c8860a75975b3a8cd0c39c0d367938f8e40214a5078564292826bb58d03ad66bbc421bf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:17:46'),
+(137, 38, '095dfb35a460295db418116dc082fb498279e81adf94b2e65e0fa9fe9956b29d', '{\"_s\":\"78242a10260a97ada3545d42374c1976\",\"_d\":\"caab147e27e46220960f2cdbfe74a22ed544b1c4e4024725eb392f3b656e5e48c4cfe3f16d5e51c79c4ffb6b530e1c5b4b66cafccec6b6e93ce191a3fd881f62bd1aedf09cce561f4433c1a071c843eb0fb65042f5b2ff2669e13a87d18d91bb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:17:46'),
+(138, 39, '2889246e034068e2181a8afbc28a6549', '{\"_s\":\"6f656805e84d8b472d036a81370a2891\",\"_d\":\"bf9a706c3b89fad6dc4d920324eedb213065464dd254c8ef835d987de56bb2a009e1dc9165a948509754a0003580d7410effcf04cc83aecc3cf43d29e5b1735701d8cfea34a9f866f13b9b92141e28e433ef998c95c1e82738f336f2e27fa4f8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:20:25'),
+(139, 39, 'e5e60a55335f04277244e86a32b3ad1a', '{\"_s\":\"abb3e22e1d5558ce4ecbdb9272cd8b85\",\"_d\":\"8536b133e629ec7a0cc22983f0c7dd2f483f2a8426d310ce22ac2fe0e65933c8c3914f68de6c99b1b1dd7f6477eb63260b8d141f8012ec1f39a77114f50fd1118963821388c858cc072ba4d7540331cd1e1639cb67c1d476eeab48544d0f2c9f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:20:25'),
+(140, 39, '3dc341076fabbd8b6ed0b881c60115f6', '{\"_s\":\"768574083c1f56bd7d8b71d55dcaa484\",\"_d\":\"7e132c4c2289c84911dcfb09fb601e7799193348427719df3056cfafee0897a8d52def549a11759213d154a48be529acf18369360b869b12a9b50e89dcb7a13a1d56200acdaa419d03c78375d6821800a722be23bb6bda49e6d384dc0b22fa1e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:20:25'),
+(141, 40, 'b4819ad97181a75096072c2524afd94c', '{\"_s\":\"77ec206c183450913261464fe9e11ccf\",\"_d\":\"3b7929d2e2d728d2b4d9e0e069f66543a889e73a4966858bcc8d59e6a0b1b1022d9a1f39c19c0961e8d7ac7122620d68cd000b482b943ac07a137cc055e8812315d35de311e1bcd98ac4f4d9e8206820e437795bdfab0d52054e56f9eb67fb2a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:22:40'),
+(142, 40, 'a0b793df86e5af5b229d8a0486007900', '{\"_s\":\"ad7556be2fd28009b2366afcd6bd46b5\",\"_d\":\"943b1e0df3c874e4ea2ffe984a032f5b0d695a6291af40812d8ce279fefe464a1e3cc6ec7ebdd9e9c0286c99d29c48432d6c7530335ab21b03a6e1e237f0555b77c6c16d2313a1ae4e724655b337efbc96a5a3a20a0eac04a89928a39e9840c9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:22:40'),
+(143, 40, 'b843453c613433ce0cdd2e81e268304c', '{\"_s\":\"571a4a92ce1288f3e8a9c4fdde497e85\",\"_d\":\"16cb63e0d12bdc0d911c51f76c0c4acb100b954fcdfa81010930da21734db42c462ec9edd416cd2dc208d2d1de9069fe90f6b8e995c7fcc5225f19df851b605d16deb6f2b4e9d93cab094f2b800e35b575b8f44bb4027fd01df2b0fad9e22be1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:22:40'),
+(144, 41, '8c5eedfe963b542607a41fe591b979da', '{\"_s\":\"7190172b001f371e8f90b83a64c4aacc\",\"_d\":\"30689feadbcaab6f7fd4b8c4074c48b2fd64d04b9947b7e0cb1487a107fe075a4edb2b65827d629ce1e40bce8118cb8ab34384f2d7d250b24489c280971d3d8f790340758920d462f8cd9687d2c22de91a9e5f139ee01221326f88d09559d8a5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:28'),
+(145, 41, '3433a7f627de886fdad44aa6ee830c50', '{\"_s\":\"8f92b97174b8c19cc1f91a24f55e9610\",\"_d\":\"71c97d3f057cb51f94e3caf20b99feac8b0971ba08b91c7be3afdff883864c12cfb7005ce08ca3063556267b69a1a3ee74e043adb0179b3d3dda00cd6e59016fb773cf00603a700916a514dc1abd5cd0995d561d8a354d0c5e9f0c53520ff910\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:28'),
+(146, 41, 'e33564ad1ee82c5f79c1a861736ee91e', '{\"_s\":\"7495215183a2f22dff7cbbea80ab021e\",\"_d\":\"41ab0db4e6d77c429271997f60114a283c308cc40be5db3e794f823ec3979e8ff64b30414ff09bc65beb0fb93dc73155838936284d4cf7aa50474e5ce90a586fbce9167780028ffe1fb82009ccc3de94fbc79aecb9c6de01aaf0c6f232f25f48\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:28'),
+(147, 41, '89d23ee354de5595240ff53f5b1412cb', '{\"_s\":\"0aca945dbcfb26fa316bdd86d0acf7eb\",\"_d\":\"939bf8e69afdf86228aadc546710395f87c743af27ffed7343aa9a35f6469dc81c63f9102c42b7eea77b3e9d7c55af11c7937bd0224bb1c715757a4e74826702f41159cb39d029554a6f69e22e7cfcf45ab0978d9cc37079020875f988fb75f2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:28'),
+(148, 41, 'b6b5778f2c243b04757cb39e0b3a496e', '{\"_s\":\"799736c522da4444bc3ab3cf35642e45\",\"_d\":\"0a64015c529693555bcea9402e642d1a77e57b46f9ec5a56f7a80fc7a77834103804035672a30a31527c92207c998a35336fe37f52ae0010fd08b5e191c2f444750d03a147797bfe856315de27fa7dd278c6a80ed7b6da30e2a47ba3615863b3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:29'),
+(149, 41, 'd56af65206fd6118ee012aa9e764a5ddd4ddc6fc08efa6bbfe736bd1fc1c4432', '{\"_s\":\"e7373097f48816be255b9d813b6dba79\",\"_d\":\"8c5bba180743f1610c12862817a2bc88993ddb04d3eb93f3418706f3ed1f113ed89b5ca64cb9040f73575bf0c9992dd6fc6a7a01e11dd8df3f2dbd9e936fc5066f17232fe9156f1240f64c89a8d14032f815f6e5d2c21fab9cb9933ea1e47914\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:29'),
+(150, 41, 'eacbb512ff7ffcc2ff5b380b71120a3b', '{\"_s\":\"f7de4d1877cb3da37c7d37a194bcec46\",\"_d\":\"1e05c23770153560aa5ae39d81a8ca25ba158cffb53d114a50bf4506c2dc52903406d3608594f8e8b39f6e148f15eff541910c717a6a529347afe443c3604d0d4cd8e61ea5d3186f897378e012f6dda0e0e62e642b006e60fa96310b4beec5cd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:29'),
+(151, 41, 'e78a71a5bbdddc69b7253876fc3f9184', '{\"_s\":\"8a1897aff558313a559242355c1f5093\",\"_d\":\"5d9079eae94e9c130361a9dd94b1787fa327c322919e16a33858be7fb9e2d9143667c5136c729cf43185ef7390a4ad81e625c929ea43e6df7f1d74766bd5b442af23b9aea650f3c2600dcce90e5ad5ec01ac047c43d024a82123d85a4e8db9f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:25:29'),
+(152, 42, 'f14e68e76ece4c58a4d4d01ada2f9298', '{\"_s\":\"b4f448953da08c7551ba7fc45949c868\",\"_d\":\"b1e6d89ce6897da3e2087daba58972b03c6b6171b4e6664c06bd338a8c516da37c5620dadf5a3daff779e1a2dbcadcbc5a13c389c62f3c60abf9c39e99eb5e635e46acc6c744a1768170f8847914dece6620d03ce622498213af39af3db4bcbe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:54:08'),
+(153, 42, '645479c9eb485aa4e6027036c170d2e2', '{\"_s\":\"f996e537d906d50082149c29aa159cee\",\"_d\":\"99dcf27e5a0827f0ae16498db815e832491c25705f5b73c158d47f67e4f052bb76a6f216483ebb7556efcdd0296cbe17caf68a06246235a0a1d93f72eafaa8864139cdc6b658a3a7f9241f4085f2ed8d48830d9602d61785f6e0edb2a42a3142\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 09:54:08'),
+(160, 43, 'cd4ea9118023a24ab6b334dc7b1ffa26013fd9e986604735a772c0e563b27495', '{\"_s\":\"e7fa20fc847afc4d037361e06feb9318\",\"_d\":\"3cfc88d83eed68414aba456bacfad4dbbed96ea6f332d145c1664608697436cd57df8fc5880c98df2c744e68f8cf29e46a51254889f4fcd05fd79c2f7595ecdd2c69ee83580d7bff5bf3884030fa6dc79011f8ab3eb8976980af32aa373ae417\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:16:50'),
+(161, 43, 'aa1ccbb07346b4143c96e3d106764884ac0f4d1b8f5a9c4770cc8e3443eb4074', '{\"_s\":\"1d2054b6c57a094af6712f080f9c72ba\",\"_d\":\"e132a795afd9ff2fb6cb2d69b77475bbbf331c44f708589e5d00dacffefb97d7f1dc8702a5e576134d0dc5c73a5da342c4f3d2fee1780cb0cb80d86a5aa87a5611ec9e06436bba0c0a2bc4bd4d675693603f6972e12055ca8de6ce3f300741de\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:16:50'),
+(162, 43, 'a93776e178051a000b0e254e97170e32d389ee2f0f8dc506461dea8b33f39589', '{\"_s\":\"89f5d5e2d83deb79dd2db8fb8f1bc92f\",\"_d\":\"7b8e58b4d2c2c645f5564b1fecb9e9826a6354be16521d5213ee21d2c15043936ea80ef9bd9fb6937a219a9b9cf8bce8d3252216e6265fc940cc908464bcf3cdff640f8f05d537b8d57a0f5f67090c5b4d0434558e60f936ae5dfb5df06f9005\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:16:51'),
+(163, 43, '665164162d772166413673c8b4f03efff15040a77cf054546265cdc875d074e0', '{\"_s\":\"165adb8fa971e73d2a673bb002bfe3bc\",\"_d\":\"fceafb8c2ff05d8b331bb1b14bf1fff057b5fd93dc96bd66848c389e56f366d538e4532f0b835a0ceade2eda357f9c448364836bcf650e06820cba3e0224b99b7d26b41fb7d0379b288257285e59949eccc7d5f219ea564e4cbd5d8a84c114f5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:16:51'),
+(164, 43, '80c178af64e8c27b4a29120356eabb62', '{\"_s\":\"656d2c6a82049fbee6bb0b93776ff9f9\",\"_d\":\"161ac8d66fdbc99b93a95857232f9c8f9e94bd198fb5175c71ca63106a906dc644a6118bcac11a76cbc69a6fd422eac702cbd79c91dd2f7d8165fb650d0255e6891598d61c0e72b82164a8196ede22117a23d380dc07f5605a75d097f6c96c38\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:16:51'),
+(165, 44, 'a0bff6bc8eff83925b4ec0b4788970ff', '{\"_s\":\"02a7086ab01e8967fc7121620795922e\",\"_d\":\"f9e8fd319f2077652212d5b4f170f39f5e835213fb31104065722d06d4d4297c08b2e405ec797db6bb92d8a62f67f337fbb2a498070762d860cecc860d4190c56a7026f2a508f2a4a24082b78564525120fd516211736b22b14d6f9965be6262\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:19:18'),
+(166, 44, '8771be01bd4ef1a244b5ae8fb355cec6', '{\"_s\":\"bbb005529f0d0306c79286e8615ca864\",\"_d\":\"dd3a645ac3a9c077297c2be49a89fe6a44d90fba17d16747c0647f7dbf835e75a75afd7f098ce40291493453c56e5e600a172113742a265ca96e7ab8c907684f7b1e46260d677d316682b39273fd54b918db1f6f6db5eb555b0312d1dea044f3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:19:18'),
+(167, 44, 'e47a262a7ccc72371671e18d09b5d000', '{\"_s\":\"5aeb0f1e197cf4138d9fdae15f5f50f1\",\"_d\":\"e75deee3444535a51003cbad2c99d747744682bbedb15e25a60f7dd5df52fc8dadcd2907c8f7403aa59732d6ffe39d001bae8b05745a1c985ddee919edf606aea082dd1f270c2ccf8cf79fa70bac2c27d32db11483bd76858dfab2d669aa8c2a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:19:18'),
+(168, 44, '99ec6e967bb6d86604d6685c5474dbb0c2ed78567f5fad3693015c12f763c5c3', '{\"_s\":\"454b5f704d69cd1509e102ce9fb135ec\",\"_d\":\"94142348e4ba72c0375798e2317fdfc2e09b2e2f68e7812828afee9b7510c71b990654453aad4fc4749fc883dd8206885a8bda8acd9db49c28a9ef3321888a81beba90ace400279620b9d1000fbcf847649a93c513672b901dae5b98fc5ad4e7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:19:18'),
+(169, 45, '3b5c2ef206481e4a6ab063f94ee727ce', '{\"_s\":\"9597a60fd9b725db90b5fc07f8ff7087\",\"_d\":\"6856e95f4c6b3b7b62b83d2b0de0388fb42ea01c176814b07f97fbce541d0f312c275f8d0e8f1950fd06f618044f9ae18d061658fc76d2602113886af3b4d387d6669cdebff3ed23ac0a42439bc3993ca7570f317cc5d9f36770d93ad94972f8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:20:51'),
+(170, 45, '430817edd714425dda426f7495ad2d5a', '{\"_s\":\"ed9f2986d329f29c58a14d60324f2fc7\",\"_d\":\"4d4cc7a430b5ebace32c5b84613c726fd32d38d8c04b741af874ccc74215620997acbcefeafbdf9411b7ad7ed67b2dbbb969a0167197f360ba2d54aefdbd9084fece7f4747e94c931e1c8e113eaaa19a17f4fb44e8327a09a977535ef000cb96\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:20:51'),
+(171, 45, '500fe5d58f80f60d7b4f7c243c24b0a0', '{\"_s\":\"0df11cb723519dca090f1ac08761792a\",\"_d\":\"4ad8b706f5f8fe625db61cd1ef8af8e71bb5216eb71a93d6ba23ac9085238759a71bded4076f2b8a8740c02106b739e7538b44420c261c07d5a0c64dad4a2d4ec7a2838fa465e9dbfe0e3fb7182c8dd7227e04099999a4187682ac9c0adf0d88\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:20:51'),
+(172, 45, 'e05f2ed2d3810eba57b0216ab76915e02e6260615fe4d201389bb73e9d5fe9a2', '{\"_s\":\"075fad594325247e818a149510235e4c\",\"_d\":\"9176185d88b949282e27d41299faf8142ebcca24385fff3d5e4eebc0489d70cc21b79f3a058a95d3bcb22ffdb5192384a8687e41e49bd470b974ee824b64efd43848aaa7b0ec7c3fc66e2e91430fc04490b8263c55ca3a6087ea289c791f0db6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:20:52'),
+(173, 45, '68afcf0c5e7a11f8dd564eb662fe5b7a', '{\"_s\":\"df9b1b347dcefc2ecbb87ede9be5ffcd\",\"_d\":\"706514dd0ad7729ea7d3fbfa6fa9b89a94d9cf62e38fb0be108e9f2142dc41713447586ffb43e455964f2547b8360c34df241203060af088ee7c26b2ca7839b5546f868d8a74c2954b5d7736cef27d3338d1ffea4e3a17281a717a3d7cfe5325\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:20:52'),
+(174, 46, '60c12fcabbcb936f60bf12cd654a96e6', '{\"_s\":\"bc0374a853c3e2494153252425a598db\",\"_d\":\"d9b678564c9bde615660ae27540150756231713f9cca2fa52be3a52db304fc2c984cefe35dfd4879946267c8e734989e2b575572aee83336dad56d8dc951a27658f2669b5bfb1af347d7cc372125b27c2dd64cbeb6fd724d1e781f9b397953e4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:22:04'),
+(175, 46, 'a5829eec452434aae00c15729a8b0440', '{\"_s\":\"9f216f2ba77a5c323136f953bce4c0d3\",\"_d\":\"f3ba02a922626e175a50ff45c51cd79ff66132b5c45535961957f994d54a2f6f490f2d500bac1434452f259a95a9aec7c17868d70ea25fbff74d684bf142e2ba2ad4db065d84506dd562abfa3f109cb1a0d7af1d8364791ad84216ec2cad6ef9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:22:04'),
+(176, 46, 'f330be5af5fdb90621ff13aee04b308d6f6e2d092c0ab7efde1fcfaf0263085e', '{\"_s\":\"008f25985de23d5136f44b085a0fc155\",\"_d\":\"ce10456d8430be6568bd4beb6f21e18962c2d9774bba032536f7b2ae21188a34433b5355116c93b4658c68b5d99ad903b54feff96b9d19f579d4d15bcdcf82ddc8b4285fa507b59da0d0453a17e9f0d8d5ab3e1725e410f467d64c20d695cad3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:22:04'),
+(177, 46, '0374cea286ca5a3232ff05a7cc3951b01160484f827133372cbff926104d25c4', '{\"_s\":\"d925fb6aa24e3a6bde177b5f990c5db2\",\"_d\":\"8339598adbb468ce0b11629dcb0c50537a5b5e4326f94ae97e768f57eb97bef965adf70fbd5f13b4836f9dba77ffc50368c70675a00d53a3f18a5becf5e01f1838fdf025450d049b448a51a11b9d2a0a44a2c4bc5ac18cd22ee931ec2b42bf97\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:22:04'),
+(178, 46, '96fbc19a698ac37c59753ed91c7d9f7a', '{\"_s\":\"331ea933b4e773170407bf2382743a54\",\"_d\":\"4d69d64fb5253f22ae33c52b6d03a06aaddae8ddc6ee3bd4373049387062d8e8f32433c78e91ffc1b795c17a449008625fdf76a73e1ae211466095629b6ecb491776d03fd9c6aad04e25a1061058bffb0b8fe9361fbfea854b26334e98341c65\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:22:04'),
+(179, 47, 'dc1c04d764603ac5e05a501b9287becda4fa3e578b450bfa4a51060afe703ee7', '{\"_s\":\"1203a1038a9964eea56d3ad81c486a2f\",\"_d\":\"1c2f180611ab5d9b8075e3b68d0c2e19b0b3645f78db3300fb0ce05f96cc30199f177a44cf04172de10eb2f850f0ce37e79d552173d108aa592a02a26db99af4b0040167d7df5ac9981f2297638c47731883ad764537b0c22fa8b6685456e00d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:45'),
+(180, 47, '6de63948bfad817f620ea65ddbb4f6de', '{\"_s\":\"a26b2070c16e88a93e09079485a2ee60\",\"_d\":\"b80ee61e8e3af53d07a5e344dc7692bfd760ba349c5f59756eb742418e947a34276d03b8a934cbdd2fb86a0db0d58f7e6f9384653ff45ab8d891d30c399e02f19f30f8c2f56e2c9d2329b1ecca89d806c3259ef0d8d64c68a067c257c184081f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:46'),
+(181, 47, '14b3aef13402f2b977baa6c144f4f210', '{\"_s\":\"95f6d1d5cd732569a35673279ed41400\",\"_d\":\"3eeab24093197775c9084e6726d52d976cfda59aedf154a59e9480f6253ff522fcde641aaaa52b35d9df94a8d0440e86a4db78374de7b0ece107dc842afe7987ca84befccf5159ad92609dbf0248cbfd70cf7885f25e3f342925bb216667c721\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:46'),
+(182, 47, '88a0619f6ba71374f85cc006d9a96364e97cd51732c224e1f83ec039b915ef68', '{\"_s\":\"410780034927f45957fa56d256275ddd\",\"_d\":\"9bbaa0a8730c056ea389c672e35b38493a2515958a5dbc6b0847ed844d1c45c089fe92ae9ba15d77b8dab91af1802aee46503ab8b3342f2a4745d562d43b2e96dc1804297a9878d70ba377fe6d0aa809521540ba51501bfe19cf856dedcc64a1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:46'),
+(183, 47, '6886916cd59d78098d7cf1e63e7292ba', '{\"_s\":\"e67b5a45e0d40d3cff66095e1881601d\",\"_d\":\"3b461cd1e2d2146236d93352d492b529065a0e2b863ea3aa77b07c87580daf8b856b9cdc9c1a89066dcce4776de1518c4352fed2f112bd0a8f4483a5a37cf5c321ca31dbe4a0d38e57d316742db998d95815d4ff0d84a5b6651623981530f11c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:46'),
+(184, 47, '16bf06882f5fe0de33af8d164dcd4add', '{\"_s\":\"b03af5017203d6f6ae3ea7a09ed9778e\",\"_d\":\"64a55af2f88b9a3254b1e7593c5f2afe266c834a3e9cd91e1d65a9567d75aaa8ea7b33d6bf0147650912cc810ae8b17f1f11518a303824d7ae7c1251e2d206bd15a178e49cb72436ab43c91541717f1a40d7a6daf57fb27b67bde40ee4c47be4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:24:46'),
+(185, 48, 'c836c4cf6fa214963c5a5210515a256ca4a066f1110c1faa2f3f99d02d0955be', '{\"_s\":\"d8e0ddcfe025cacdca6c95205dded7c6\",\"_d\":\"4ee76624480754b08397a7da5d072877be0776ec39310a68c42d3af8ba52d8a1fffc973923140612f40305179e9346b3db23f1e426134e68fada279f03a398c2c9845016fa066001ace55db7ac10e9052c01848ba34ca4d4b730d435058ca155\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:26:13'),
+(186, 48, '7f0b2288ec89c1b5472963a0c54fa5c9e8184d4d94551b3105a706a06ded7b0d', '{\"_s\":\"9e471da775a7bc30e4a5d35f64a53f50\",\"_d\":\"6de0b2ba5f1c2e5673d116edb7ec84c6c85449ef631cef9cf6ae889b03a782b26d31647630459cff10f610a3f5de512945bf2049ad59e393062034a6247d70ae719d65f4fa04e1bf1fce969cd55ab6d0c4003e08ea2c4979a3023ebc0cfff4a7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:26:13'),
+(187, 48, '2c857a05626a1c2187c1ad278d2dbb2ea394b2d9e592f66f15feb3dfcf8f6355', '{\"_s\":\"5f30a8487e4947c98457949beb3182c2\",\"_d\":\"4490397cccd5ea240ba928002c07596d0f8465c34aadad5a6779689f8dfc1050d62341e9c97a94a2aa1f9037de0e45e3ba0364aa38d9f22db1ce6648c67cd1573b7956995c932105db55496581751120e343f9d56e72a725156e5397ea406679\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:26:13'),
+(188, 49, 'e52f1f993e1076cecd6db3bda663fdd5390393675abb5b3f79ae9ccca774ba73', '{\"_s\":\"de5a58eb1ddff022882b6f3f4e3b6045\",\"_d\":\"c681f0e23a3520706e3a2a52ff5c3f19a7e4600981c05446e16acf4daf66d70b3146f2546ba65feb5db49fdfedfc71d57e44901bf977660675beb396a6ea8c408017d9d0b73ffcae6f593a5da3a5d12ad77d3c1bf14f885fd529698422c93a20\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:28:08'),
+(189, 49, '97bae5078c1d5e7112c51f6e3edb5a424e0a925e37e9202be555a733dda3a383', '{\"_s\":\"461eed919f6fa9ff412c55debbdb5f1f\",\"_d\":\"b25311bea93c789431ee51d7c39092d2341575ba1f4c69e41f703ba86c89fbcf73d9dafa9fe8a7990c99c8a50ac871c40ac72e03fb0f0d3178b68bb8656423c6420157ec2642ce0985d7efb87786236e1abd4505d7acea316bddfe7155e9cabd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:28:08'),
+(190, 49, '7bfec1311b3aa94201d73a2b86300a7f6c1a9a9d3afe4576468076b7239252ae', '{\"_s\":\"f0c5b3b3017932c582da51306381ef05\",\"_d\":\"010be9bfd5c8c0754d1c2be3c6cbd4e54db3263edc4431c2a056d1316f0d78b9e237b58837ee89306eb015d5c1de69ec17d200f111549e098b6cfc1ed8f26c410542bfe5eff045a51d097537281fba7e97a38821925848a1bffbe3df0b18ae3d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:28:08'),
+(191, 49, '9c46c27514e9dd630206d265353e6ead', '{\"_s\":\"921f12c3bd61a0cb6f3c946639b44001\",\"_d\":\"6b6b55d204e82b999d619769475ee447466fe73de8ace7582fe811f912d53e9a15efeac9110efb386b5b55a501b759e95881c3591085c68bbe717099e850aaaf13fd5bb151d2f7597fa669b1fe7f1bf0e56dc698b0c0ef850f3b27ab4239eb87\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:28:08'),
+(192, 50, 'e13b762e5814bf19ed545f156360ce16', '{\"_s\":\"8b668e7e9babb1c80adf5507f335524d\",\"_d\":\"eb23e20a33352e81adcc59105d976edc6d555b6aaff383bc8a1085b977ae2adf2780e1b7c082b33b690b2bc4eb1e8ac13842593bc80327a1efd021ce4f0f22e538e348b1c35c1e997a3fa6e13dbc36520b0eb34230375d04e12a8b4c5f5c4503\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:29:39'),
+(193, 50, 'd547a421aa6d8a48740fb54db4126c12', '{\"_s\":\"d7e99e4d1d864267e4aa68c9af2567cf\",\"_d\":\"7cd931bdd0ff6e65f8e9ddb016a839b415388de3127960b352af42c9ee25a57eef98ce95f10cae54c4ea8075e986aa2614d88daa54e9f96db8ade8297f5eaa53e7b7f38bd2a08f7fcc231cb7a0434fc374f74035a3d11b55d7682efad9f57735\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:29:39'),
+(194, 50, 'd6e4673c0c15a025a6d88cd9a368da7c', '{\"_s\":\"76294157482042a9a6e2a394d7199f7d\",\"_d\":\"7c06e4fec78d414a04555b44b5b9fc24fdfec752dc99eab65b7088a9d28dfb836ee5a36929bae4965c0f9573f9fc4cbc3362fcabfbb6cf15aafd788d0a2666ec277443ce4ac8b8424c95679d9f9c32a6832f0fc4aa9c38ad146c2b67f11dc61a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:29:39'),
+(195, 50, 'e6fcfd8f9923a1b9776962628372fc83', '{\"_s\":\"b798773b283a316caf7beb5937b15dc4\",\"_d\":\"f4af5b8804549fff37e980cadbbcb8696f257477bc419cf9b15ee85ab70e1253120888c460e52eb0b95aa51e2e2578b0ca2001d576c6b406da5ae7a4bf91b8c98716a4a80544925372b910edbea12acff8faa99649156164335ce78de08611b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:29:40'),
+(196, 51, 'dc66636ca3279da86d0800cfe8f4ea35335438bbb99bfa46593c01322a5a1d57', '{\"_s\":\"ce79d2003718a0e6a8e4e3dfde89c29b\",\"_d\":\"55746d55d801d388458c07e50fe3ffe49668f6454c3e267362812d6454f007b315fff08aa2795d4766ed51a47dab3b7a4a2731e241c27b0fd24c09337ace5f9d63eafd8604426f8e019d6809e09c5b4a7f21f05d9944bdae4ce3267514a4a9a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:31:01'),
+(197, 51, 'e229c02a1e4b5901852d0790f5f72db65bb9ce1c65e69cb4c2d00ba31196e4ab', '{\"_s\":\"a4329bddd1c9d7f3df9e2c6068d26b26\",\"_d\":\"1ee5ab21a6e2af34a19e7d757a57c66023be0c0ba18fcc3fdda2ae503a51ba9f3efbbacf72bbb9d3880c95ee71e06e23ee92dced886f17672324c9bc2eb154d132b10f256034a48f41fa943288c4bc837622ab2d16c0e69c2c338f04ba64091b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:31:01'),
+(198, 51, '5e0115f56d768ab178d9e37ad75d24fa36d0566ada936252f60c33e6c1191578', '{\"_s\":\"9b4e97bb7d5f1f7a320b8acd872316c2\",\"_d\":\"de2e8fd6e0f5c85d6c580aaee2dfa2bf57012f7aee518ddab3eaf9e32a0f0feed27bc40a589fe61e9ab5baa94bddd0815f58a57ac49d2dad9d09c8f883d0e2833abf3c8bac1f51eaf80954967b929c7322a9880ffc2b367f99e1563f9ea6e5b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:31:01'),
+(199, 51, '4816fb51102fbe83045dbbdd93941a89', '{\"_s\":\"093cadde390f31dc0e2a8886e2a63dc5\",\"_d\":\"b94bce276953011d65fac076768afcc82135e201f2e5b0304445629bf3f49449e54c806d37ff3208abf88eb9ddc18ce42755dcbb7bf49ef6b6bcdad2a01b8028cc4a6bd9745688992e8c7c936a416f9c05c99c2325f06031c4be7d86100f4e38\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:31:01'),
+(200, 52, '08af263f90c044beb4e80c5ecf7ba04c6d24fcbc48a2a7d53d4d252212212ae0', '{\"_s\":\"50a407eddfea80d290e7fb26aa1ce627\",\"_d\":\"1a566dfc0d29c5cb0c61cba81567569afc94a668c49f04c923f4bd8fe848c0ee2ad925afb6e3f370a71aa88633aabb78c141fe3882f7c0be7cf40b8dd11ebe70962a843a3fe8e5d044454a61f2cbbab0f2c25dc4c6696f7667b7da97843c12d5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:32:22'),
+(201, 52, 'cd6749068ef69a2d24443ca69faee75d', '{\"_s\":\"9bf08fcba27a49c28a0639e52da49831\",\"_d\":\"838b215692d2480e134c2b34c17881c0e10e089ba3c9c8125c18dc83bace9ad0a86be63217dabfed4419d2993d88a646f6340077c9d81caceed01e22e317cb2d9c519a8927f80d4b52df768a181d4aff4dbd40bbd69abe6152d9ff2fb239da62\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:32:22'),
+(202, 52, '27462954434e9f383646a0abc65494d480a38e7a7e1fc5bbfda2360ad7c0bf76', '{\"_s\":\"249b7cafc16c7e89a0f67d46c18dca15\",\"_d\":\"64e04b5a80a93adeb9ab0df028e385273cf1eaeec1c21167b868b742348f4988cd2b43790c304109daf17af8d3bacdea402798f6b961b159bada3061e6a72cf9fd62e40cd3658e494849c23bb5a9ad6850359c156c07dee06bdcc3ec81f1b240\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:32:23'),
+(203, 52, '69359ffddee1a17c9436a4e8bbf9f15f3cc071696625a6ae2f1e699f516bcd53', '{\"_s\":\"fc33f22ee66d8e8944c3bef44eba4d2e\",\"_d\":\"069141006701e0d850a3e668586fb747fdce12dc16b892b6a38871721d55e23e0bec6d37dc4badbd0d4aaf24ebfc9b68c1d37b165a1d1a7989fc11f34fb5b3d775ffdd821f6288c1c6fcc5202345ac164fd550a26906533c94f6080e4be847c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:32:23'),
+(204, 53, '30afca8e650805ecab8f79d7b3538cd30bfd98e5ccdff07010d86cb53f7dde7e', '{\"_s\":\"b22962e2dd06fc50b0c2d42d26051f56\",\"_d\":\"6c5abc9e36889d52e83bac6114b5c8731e94b1a06ce2b719a8df728c32295265b066c7c9c44d8a49b167ac9c0518d7d134fe768ea1ba5ebf8cae2b1afe2c165596964ea85b9f916b52f63697e0dd44169094082f635cd40b52b0d2afba257a9a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:35:56'),
+(205, 53, 'ff5c0995621d4d27ca07dac93482877b', '{\"_s\":\"b8f8a90b16ab960b1c6677714b2ee9a7\",\"_d\":\"80dd4c76a31b065fb041d9d533a74cb08459b97fd9d42e7726fbc699869f27311bcf48282ce5136e8036d56b5f316e9d87960d4d7bfd53d1998ee9323697063c309b55288a59cdb10b621e27f779e54cd159213fb17565dff265e403eb310564\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:35:56'),
+(206, 53, '3a1eaaeecb87f77e716c809616194f0d', '{\"_s\":\"b75ee886cace6111f6366d376c1f7233\",\"_d\":\"b5221951f4a4dfa0379b665fd6572e1b25eb99e2a5363ec63803e28ba411d6f4266c0ece196a50973fce247e26634933ca77811f949210a5c6bed5ce94596cf2f964fc3fc2f7cf63a398b0460149f2f4c716be7c82fd7f174512a0cd9f164270\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:35:56'),
+(207, 53, 'e6730160156a71413a617e4d9e3d08a5', '{\"_s\":\"655e1ae1b952b15cfe24806422427037\",\"_d\":\"a17be9b3cb458b849805ce9520ca96e8858c840394aa5e221eb14b02a11bb27db769eccb529fea7935dc7cdef7b7421beabb24fde36b20db95c04909a5f365c8b115f73cddb703ada9913b2ae8fc390c20addc734de58e46cb54c3c3db4d51d3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:35:57'),
+(208, 54, '86186ce6e37079ab791ebbc01ed0b166e559f719030b3ba86e853e923eb37fbf', '{\"_s\":\"4f55a05a1f718860122af92427844726\",\"_d\":\"87818cb5a44be0a71aa4eb97edc68ce212dedcf4954365070e7b16cfbb28c63fca5bf3168bca8cb0bda49f1ace46790aebbd11d61cca1bc82dc2e4ff9a2e2acf24b82f5fcd2eec25b61f5ba1cd09eb290122c2ccf0ccf34e92cdda2bb684cfa4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:36:55'),
+(209, 54, '2a010b9da128d30e10a56972a207600f', '{\"_s\":\"b19d568424cdf1c5cdc687d59b779774\",\"_d\":\"c37b7345f09001d8693eeb01c0f51918a839c395e702d6bf81cefd402bbb24471f9ba21fbc31e556ddb40c0a56de9ef931a26fbe741b5beab28b9f5f6dbcd31827412fe3cb55ba90038cfe436165b7ab13d03fdb78e32aee95f17ae6fdc6032a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:36:55'),
+(210, 54, '946ee6e9138f653a845bace72e36e344', '{\"_s\":\"2980043dbee3deedb4c57f753896023a\",\"_d\":\"5f3f0a73a0a28de456772da83e476b0af51ff3cc59a188537df0c19fd0b344f4694776e694e4241cef435aed73782a0a4e42064541340b59c43a8c0926f0886d601adf80f32dd15c05aecf9736c58b8c159f5db993ae7a7444e49093e468d29f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:36:55'),
+(211, 54, '85cc3c6df54d80a34c40554b17132d7e', '{\"_s\":\"1f9209ff21aec5cc9e9de95c8cbfffd8\",\"_d\":\"d193efc52f20130719d37106f5d0a5487034a1afeebd3c66f9bc322b81785033ea3e01c7d45e05e60bf3dc8aeb99c2a7daad1c72335acea85e71fc1d1b9ecea6a5c45cd1f3deb77536e95d1769c3586e8adc5f62960d55c9b0ef61fed1711699\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:36:55'),
+(212, 55, '90869829ab7050365051393e52292676fbb2624c88681e8273da9714cc72a9d8', '{\"_s\":\"05b2562709658503a0176d798dc53a89\",\"_d\":\"dc3913c0ed24afe97f9552209b6fd20020b67b267823a9bfe81955765936ca2117e183a91f8c9755a40802de7437c4d22b1d2d1a61b8572b0f0a38f8f0532359bda4d824f7aa53cd509517bc2956d3c25ee9ee5d73ad3d64cd54b963d544ce40\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:38:14'),
+(213, 55, 'bc60b5266010c5a875b2c2350e44df7b0f07272578db8f3eecbdf30c4a1f4204', '{\"_s\":\"02df463a08a06a8aa5941e15a19ecba8\",\"_d\":\"0926977aa15cb036bb858ffee84028131e770e49e559ac0dec245d4a4435b1aecac82cce8f98b3ca64ffd6d950fe147be01f013b27952c9d0d89e5c530a80ed0f8084db723d274c52afb653f80e65fb23ff32d518be8d854dad4525c6ead1034\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:38:14'),
+(214, 55, 'ad162b660aadf23b3e368f74f305d7eb', '{\"_s\":\"23f726bc24f53ba3fbb3793327c730fa\",\"_d\":\"b1216bcb6ebaa53548e3bfa7db63f263192c997b915e8da1110970b171f787df175afaa6b95fc88935ced75048e28580573729bd365baed93ec28d5652961f4496fae1b8c0336526268a0f29e5183118d4a677efd52532503d3a285fdf3b395c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:38:14'),
+(215, 55, '8c3cb91012483568b8b5bcde00ca96642a8182a910b835f2bb4322c97e7a3e04', '{\"_s\":\"63efeb006290fbe662088dfa6719f947\",\"_d\":\"04e50fc54fb9e5aadb3e7e98b6f9198d5e39c85444a911dade18695cc79109433ae57092843837d99cab54d714a4df3409b4e8b34b744b39c56b2ef9e4cf882de0f56895a2c1cb589ac5da8bfc32a8982d46d483abe77544b35e032cebf0175d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:38:15'),
+(216, 56, 'bbde592ac627c60ddd7cedaf78eaa36ef54a9e09c0f0c3edbfc5be5dae2e1608', '{\"_s\":\"3d6aeba3d3e2c20cb958997eced34566\",\"_d\":\"221eb8ef886983dee00fec8f145721e77df3880694e90a456190c9e90133a83a80213cace621f05628e62018f651722ffbe3b9436c1cc7ea0c5570e2d7d3885734fcd98faf24b637bb6161bda5ed256c3b083d34ed91eb4928ae1b5258fe3a29\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:39:58'),
+(217, 56, 'c458d9a01c18b92d8f953f74ee7919f8', '{\"_s\":\"f48c37145a5e1e6753bd372446d51048\",\"_d\":\"a70bdda631068dccd6466809a25ca828d8292cc0b0e98b787256f50fa62c139fad04b2c64be7eb165dfdd736a04e3a14132a5ff1ca617026d82a11fe2d84d84d402bd08bf3f66822c66b9eba32ce4368a972629f3446b632d6315f5ffad41fc1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:39:58'),
+(218, 56, 'ce19c5e7ec90bbd24a46b0986dda23f3', '{\"_s\":\"b206cec874ab35cf513397d59535e5f3\",\"_d\":\"95be1a8964d6101ade600e593ef7c7b3dbb3a99b8d45e67871789b8895cb3f043bfce1fba3cbbc04a77532a5ef0776b3f630c718b16ae0b9de22c161af31b15f78bf1d24a3cddcaa2d684910978eb20509721429fe2f03a1b7da36749e6aaaa4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:39:58'),
+(219, 56, '20b535dda9a91737597642a6c0a68f91e0efd6ddb3aa70ec1f0f030a24617574', '{\"_s\":\"5c2b67ca0469b86585f07bb7c5398450\",\"_d\":\"307e1ae7ecea7e8afe6f321711fa55e0a71c94302cbaaac3a7901abfeafceccb7fddf86a2fb4a17ccf956b535d404e3b65d44a4167c3ca06f1964d66a0cee8c51c2dc40b0484811b38eeb65a0e056e4b58c9ff2cb583d057c0c878dccee2e09d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:39:58'),
+(220, 57, 'f0815662ccc35b72642af5b44fcb8d75', '{\"_s\":\"02d910d7ce69c1372401933bde80d512\",\"_d\":\"4cd92335b6ac7331a8c8060e962533361733324f4380d7d9f38ffd3527e217b60c25f25acdc95db19b6bc185d872c2130c3e55f66c2855a0b93053d5f3b51ea7a316a8378062781c76b27519eecf304150fe94f40fadba5a0704071b54729568\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:41:15'),
+(221, 57, 'aa7d31e74aa07caa6e16bc113b76ba67', '{\"_s\":\"cb6f8ef8801534ac409a973bb1f06dd0\",\"_d\":\"4c95a4f31cc68bf5ac1af7903592460a0ef0866931ba0d7f03907c28cb3baf8e4dbe4f42e64c41c17f63f5c83483e2ab13ef8a6a508563049ff71eed88f262c8deb7dab96ed94e7db9365f3da60940f3ab736a49d82ec2a86d6eee8681c36900\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:41:15'),
+(222, 57, '60d135713656bba63a6e291628bd8364', '{\"_s\":\"33ae9bc95cfb127ca363895d7f4f84c7\",\"_d\":\"55fd0b578c5ed98ec6f3ad1d682f635bac02b1b4fc6446a958071ccd7a5ee38bb635cfdb1c36fb43715722e6d0193c71e675a9afb79295c4e4c383bfdb8c8b5e24ee43e18ea3e69282eddf6f1dd9cc6bfa0c8fda45bd3d08baf28782ae6e5e6b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:41:15'),
+(223, 57, '35d8c3e40f62e8406f89eab41c39b76e', '{\"_s\":\"90cc6c2b2476cf45af2327118ee06124\",\"_d\":\"ce129294be7a41e2bfffe47f422aed1d1004c878fc396095212ec98223c7e154a60b96e84a9b5dcabf77a6739ddd13f8b52f74071aa3381432cd2b0386c612b114d29066c22b2e55112da19197fe2592b113b87c040dd4544661d40adf005fd3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:41:15'),
+(224, 58, 'cb4781fce3269d333aea5a145d1c073a71ebb1fdacb3d99e20453be62c6d8007', '{\"_s\":\"c4ffdd03a9f1902e0e0d795a43f9eda0\",\"_d\":\"d52afee4b56779dea73a426ad7253a3775d6ff6029cc93f39507cbc586b02cdac929ad95ae2004d679e08a6a1e9ddce85e1bf0e5b797139276cce84af57286230dda3ff4dae33c012c5dbdb259f2fd424ba9cb3da54c26d57e47f199561d9cf2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:42:38'),
+(225, 58, 'd08afeeee7032655f925b794fe3e86dc', '{\"_s\":\"d2cf6bcd2dcf42eaf5e033656c5fc309\",\"_d\":\"b0a6095c0f40dcae4b5159b45272046dc44503ae2999c12ca4dd591890aa6f8c110aeb8a3868f48b76e73d2ff5eff69fa2e59eed3f096edba60df477e0f6125b5154b79b83be72e35fb3995492a41c03e95683e09dc18e2d0ec18372088c953d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:42:38'),
+(226, 58, '7c4a5bd7e053c1a16d41b6b8a08581a4', '{\"_s\":\"dd15587a59ae04dbfe38dfe2c2a55aba\",\"_d\":\"af01b602590ea28fbc7d1a0775206a445c187066eef7309cb4d9415f48ef0b7ea241d21eaa74387cba3276577f01ed70cb8ff4e7f87375c049f5628ff0734029b31e0df26679615d9ef4eb94fff64711e2ed24aa8bf360abd89977626ebd237b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:42:38'),
+(227, 58, 'aa699668c914b040f013794b1807a5204508063451b20d06b138c08848028c6c', '{\"_s\":\"7303d8b79f386596c767be14467bf6c6\",\"_d\":\"de5ba80b69a3c9261ffd4df99dacb6919ab5f42ee78286219fc499cfd6eab8a2e69445e4eed011aa51fabacaf9899f9eaf1d9262349353520cd02b2f566867d921e590fa6636e903578f458d7b0b3027e6ad567fa9c031f9ea73fd6dd75e3446\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:42:38'),
+(228, 59, 'f7686a2b372e5f7535bb12ef1ab759d963173543352d7c530c7eebec38d9f8ed', '{\"_s\":\"5d04ce8edf6526a1a88ccf32b92167e9\",\"_d\":\"78268871f45226d2c34ae12f1f629ecd2a084acc9b96f5dc21747a2919aab36899962cf2f1e562e0658ed8bf6fd519463eda754a901a489334414f09731b3a0ae68df689883f2ee5a3958a8d7fe7e1dee03935691c5009252fec25fe15634ac7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:46:37'),
+(229, 59, '19421e36c3de901ea40d0a216dc7add822e157570a7dcb5085af1afab19238f4', '{\"_s\":\"6c96c30bcbafe8d4481f9468e734e033\",\"_d\":\"1ff1ff7ffe2adb1c54081fd9fac335a87a451fc36249778a8b130f26983393e6a3c19f2d85145203822c0ebd3b853e37c4f0b835d8564827dfb916b286daa833c236c706ce72ecf6a134fa1e8a2c882fb94a76f9930e146a57133a89db4a6dbb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:46:37'),
+(230, 59, '0637d5ead15e77ca5fb112eff1a49dde4d9d1697452287574ff5586f2700cf62', '{\"_s\":\"307746f6d03b9249713932e02fa5b541\",\"_d\":\"317ddbdfe9a7ae455045ff86f68ff3e81665d945fed9a4119e6d44edd76d7764b510a2ca011a5710442d481f23313eab8f91c0594c7d1016027b5c1d2b6ab1bff320848c6cb905b7830dc9dd7f7c18896c070b708066f3a5b5f04270d88fbdce\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:46:37'),
+(231, 59, 'a8663182b244af580c7d6304df6fbe0f9a3ce8caad75acbd7b9ce8d43246d67b', '{\"_s\":\"e55a5afdb179a3d73b56be30be63e2a2\",\"_d\":\"1bb97be0ea533d5bd02d27796460c6cd1a7a55075b16320775ddaa2a50accd53c54a3f4fc75be9f847f0cb1fb69afb54ba6f53815011957f15b50d0fbef6a6cbdad1a918d239762f46c331669b6544cfa9fc092b5563a4371fa885bf0906b375\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:46:37'),
+(232, 60, '82a2855471f8ea5684957cd450486a167e15f076e185a7e72733b02d9e835652', '{\"_s\":\"29bc93282ecd6053794f91c1186b22ea\",\"_d\":\"681bd5ee9960bb0e1ba61143f669923239d5f99860ee3eff638d10a78d3edd011b2999c42aaa7a35258d4c650abe02c3b53642b7dbfc23c7239b53fc45a0352797035d0a169ab559ac054093ec72a47a78b8c94dcd33d5edb257a234127aedc7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:33'),
+(233, 60, '1e8103973abba0b02cf5fa83f1f46de765e5035eab807ccd21baf29380a50cd8', '{\"_s\":\"500c458e3c49dd64a31b25e015451981\",\"_d\":\"8de97e5bae48969200706d503b5c404df2fe2ea2c88cac362aae5194b8aa7725f2c8ca06330db4875615720b78dddca726d9b4cabda0c99ff9e1150d5344ce078395aa76ffab0ee9170e93ef31d63ac4ac8f2466d2990e5b84dc0f0c5799035b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:33'),
+(234, 60, '3d8b7f4b46e87927ef4a8bc2fd6b9d50352f67e118fc3e0ec37849100d1cf994deec02a50707a8ef43e63f298ea26532', '{\"_s\":\"b7af5da7d6b1b80f67dc61f82e6afbcc\",\"_d\":\"3edf2b2f25000729997269024205a5858d2f353beed41cce30cff26f63ef13e091d569ec0ea230b9720fdfe135cd50cb6361a473fdb6bcac4ac236b458cd3e924d56d32cbfb0aeccfd4ddc2c0aa40a605fbfa486a633af0ef64966890d6b6c4b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:33'),
+(235, 60, '4fb5d0612363e2848fd3266402dfdbe1f0266e8747f152724df29210b872475b', '{\"_s\":\"c1242bf013aaf3eba1cecfba69b802df\",\"_d\":\"f8e24601df54e10162b3350d83ff7056997498f68773024a24a93f2537acca5f541807869e6f69d405bb6a6554b88a8e1497660d1c91f18f0897f3e1388ca02aedd57eb20ddf7602d8392db47679e63ae9cb493e4a144aa27491c7292468a015\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:33'),
+(236, 60, '7deef493ebb9d5770b04b5eca5647985ac0f510b768f3a8968a4f89fdfeb500b', '{\"_s\":\"f86df34a51a5305bc1f44ed5a8fc7102\",\"_d\":\"fef9928fc63f06aa296710554af4afa4ce29fae3090b0e65204ed094e9e46421662366a5e3fda929d29f8ee5d5854f369734df6b6392d656dc8592934e3a64acd02d0021feeba243f21cae8c9f3dc2b613dc7970baa1201fd01b178152eff39e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:34'),
+(237, 60, '3ee1cd90dbf6c47407a80871ed71996cc8d6c336b532371cbe7522b1c9b3cc57', '{\"_s\":\"e164aada7619b82dd4654ccde5eaab13\",\"_d\":\"96b96ac3e5018beb7cfd87961c60d1e72b65828161c30d5e8ecc2b7d8b9be9276e91805a4905c79e1651ab76c5bc586f9c1f05abfb7622d088350a348acd09901c03dfc86b11624c3840ce25a7a7fd88f4479637bca5c0a0741e7d45f26b88a5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:47:34'),
+(238, 61, 'c5894fbef3dadd9630226db6af985300', '{\"_s\":\"3b4b8b00bfa5b54fb8cecc9af6eabd26\",\"_d\":\"f2c7e549bfc43f23159b90f59c8a8a41c4463aee732a1d15f536057b131fac3330551d1a9975121ec40359265b8b475a348eb1cc9932520d4db59c95b14edb8f2c065c8ee53992dd74314bbdbc397e117e8aa85e4981db1ea301dc7b15b8fdf3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:48:41'),
+(239, 61, 'fcd5288fb3eb77c9224fb6df7198dacc', '{\"_s\":\"32a3f0c568be79f847efb5230731e1b8\",\"_d\":\"c21682b9c18a83c9be057681c0187f5fb9ecd7d5e4134b655f4925be319253400e130fe1586f141d952a27b4e62ae03be20bff8ed85af416c31f98cc80302d184791a12a0db04121a205e4207755698f1dfc442c7414978127912d56b9107b4a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:48:42'),
+(240, 61, '560b6e183a0064d2806b48ebaef3f4c4', '{\"_s\":\"0971d93e5743953742201ca79e2630a9\",\"_d\":\"e8373502049d935aab25bba6a3e8de752fe36da180a2a130fb17ba57909fa4b617a6aedc4835d9e19a787b23146ed9e562fe11f596b1df7f1902d8cd43fdcf91ffc34753a2b1b3327651de05222092d9ae457e915564f6c071bb4d79872ea63b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:48:42'),
+(241, 61, '49711c8a30903ac09d13befe6b7d6cb3', '{\"_s\":\"d1ccb625dd272949b8fa041fa4a2c177\",\"_d\":\"a56446b66c8ebc0acb203b00868804d18f34f1e4e2fd24f4cfb879b8c56f9616c7564a762ae46acac9ccbaad4513f17f443bdfd22b2e30fce8c5a2890b40bba773c5e009c0b9917b5a395587c89f8785a73614faee192c532562befb7fe193e2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:48:42'),
+(242, 61, '43470c8c5d28dba75c56554c6ab0e486', '{\"_s\":\"39dabd39fa96aba1d745d97459a6d72e\",\"_d\":\"a475059002f6f6d084614e5c3d30df0683beb5828198f194e9c93a95f76cc0099f6c3d5a81f5592009862b8f9d1df47e76af770b12506dceaff5391d9868531dd735e370efb2ebc332f47f75e9670feb47f815ba0162c213f98f10302539aa51\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:48:42'),
+(243, 62, '5c02d434cc098a6cce5f3375dcf64a61a0983b2b659e20a088d198f7c412af1e', '{\"_s\":\"c59c89daf165df9b63289729cfa3af8a\",\"_d\":\"5eda13508bc50a37cec2a592d70d2522e457dd56533853cfb329e3a173c5585a553ab2545a9ac3f92c55192d5240ee89637f056634280b9ca92fcad180136733ff8f26efe031287cc41aed1fdc1f20f0a9b51adf22345d5f77cd7a5274fa591f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:49:54'),
+(244, 62, '3260f13ee137ecf374615f8a9cd6d4ef3770f264bd88a4afc98e5866cb6181ce', '{\"_s\":\"7e0c9f9129b52e176f40717c5e512b90\",\"_d\":\"b41f0dc7f11006648e892550aa22cd1a56d630c546fb4938dd7235404f5a17763281a2a2ffcf838761c9d046577abc4784f4aaff77b3f0fd4c867494f3fc952f4d399083a4be677405ace17bf593db21122511fcd482fe966a770051e265333a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:49:54'),
+(245, 62, 'f8cd26da5d5f9f70a844e5525985ea44d283058e6270e8c31c61824e7fe6ab07', '{\"_s\":\"6647fdf5f6bb463619a38287c1d28604\",\"_d\":\"a6417405aafe75b5547a3d35a18fb9020537bc0ed471e359c7f95c10449cf7d42e76b39b0420de51689c79fc05f8c517f56f6c2641cd6d0abec99bc8aa7b30173c10f477d99fee4a0aeaf41552630f2e229c537a3d1636ac8ca031362b4d6f73\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:49:54'),
+(246, 62, 'd7d75d0532a77d4eefc73bfb76ce1a0d8ead80e70b56a8684528e2172e672ea7', '{\"_s\":\"f5398b05998338134d161d6ccc87fffc\",\"_d\":\"3218f3e678c6d2b377805b2e4c4f092dd81633a30ced5b502a64061e7df6e81c19c095bc43d9467be5b716c5d6be384fea1115b176d19f6ec138c3dfab00940254aa4218a62795f08ebd8bb98bdac18d99032c5a95da2bf9b0c942a662593e8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:49:54'),
+(247, 62, '79bfe46f893bf899d3c1810fe21a2fa136abfdf8ba60358b44ef585fd6aa9cc3', '{\"_s\":\"0c50f1300b3e29c4b98dfc0b1510a5d0\",\"_d\":\"b85ab5e44ee55061d00fb853306d4c96f8944d2f0cba538037b8ec6624299c836d4941f57a35c0971b93b955468f89ae887e00139b93f04cae20f95a3ff1b551134ece5971eadc0ad4945f3bf2cdab193d553dc29e4e2ad6cddb45557e1c75c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:49:54'),
+(248, 63, 'ae42b118a38e1137b0d76178d5ccf955', '{\"_s\":\"718ffe92442b5d33a9edb42cc1f932d2\",\"_d\":\"8accc79fb92c67294fbc8bde1e5820281e263a29b65afc11401487124f1a27653eea151b8661f168969f3e3f2462e5b4984b26e6c6c7eb0bbbab9a33ef0b8b1f8d5f87ac8f6b8eb609edc711c77031b31698a22ee89403871d6fb5dcea3402be\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(249, 63, 'd1fe4f75953e0bc5c1510fc28a774ecbdff8f11035cb759b1997febdff760683', '{\"_s\":\"c21e5c42b247a0c3afdce9e143c5ae7b\",\"_d\":\"542d176da262e072f96b49f9cf50a028e4edf3c8f374e1431fd62ed3fbea23351e4d748fe504d2e90915aca6b714571371f4accc75794c3b626357a76694d68f9c5c81d5d6a219eb5017f38a270b0fb25f3ac2a6e4b05dc5240b87a3ef04d3f5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(250, 63, '00e00a15249b2b87e65cc25c1960d336', '{\"_s\":\"1c9ca4a743920aa2cd3d7fda88b67308\",\"_d\":\"efbe986c12a438dc2afe2475739ae562e459b00c08ebd1949bb33fafa0f1bb808571d01afd3a880aa84c2393eea650567850113c8b50149220b1816229c786ac297b1e2946e6427e02e9141b23cfb10d44d8eadff23d2baceb7125f0e4a0987e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(251, 63, '47af175e213c2e227476b1918acba12e', '{\"_s\":\"069be420003bc9330ce98ec8f4914068\",\"_d\":\"091b63d014cb65dea0bcd3ded7bb19523cbc10aa7c6608853b198da0203ac8112b3d5fce44a1693331e8fd6e83fe137296dbf5c5c027c6685d57e5a13a1ea596aee7013bc1340dcc0bfd98d92f2b81350f3f29d0608f805b36d89d6ce1524275\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(252, 63, 'bb7dfbcc158b8de1ca5de0a4b1e00345', '{\"_s\":\"4a9e704172c03e9ffcfaaf740d468b48\",\"_d\":\"e339d14c760cdaf02ce40649daf576b05c175ba77a9cfbf6a6f01d12c5c7f173fcd1997f8ceb8c2802c3342c0c48d97482857029967839c24a0aea99c7c9769777203bcfc02714cdc71996581aa0dc4cb4b3fa228f0a75c3a46d5d436e7e182f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(253, 63, '39244c7a688bf07db4b5815d671f5b31', '{\"_s\":\"13d634bc93a698372e1d9dc9751a8db2\",\"_d\":\"23f83ab616719c1e57242aa0ec2cb2beb758754d7bd3baa9ef52db680623bf598bcea1b61b87a095863af903caeb200a129457f4ddc4978e77fc9609bbd61a4f66817c1631c3d4394e2256854e13cb0be0f9e3f5f4f019ecf368bddc07386248\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:50:57'),
+(254, 64, 'd5aab8134ac17479539e41cd8dd6c3cf03aea1bc52d1d4b31f1b4bb831d2b52d', '{\"_s\":\"ee2770cef21f4d882163b4a12e9e5a61\",\"_d\":\"c9731ef2a02fc0538edc5fac923af6f26ae520f47b7f1b30f20a40e5102bf5af14dab13491e18ddfcac668ab4038d7dd9fc52c011406a05e25ebe618d2aaf64ad9a8675fe83ffef20343c972fac5bbd73d6d8510e4fe5b800354a9928a0923e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(255, 64, '92e397df0a9434e23ba03fa87672ef228f30c944df367e5d2a7d5b36dee7adff', '{\"_s\":\"1bc188d05c95aa55a8153e17d27fdde3\",\"_d\":\"842ba648837f788023bff8b1b9431c9eb889b06d806f2369d515e7bc157a397461df004e8b40a4f9b6da7e1e1f124fdfeb5845a7325202ad7cfd30d8753e74e2fe3568f9fab2bc2a39e5416140817d2983213afb9b34f54b7db02be104eead4d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(256, 64, 'e3a45e0975cc5f1b968615e42f405087fbf1fea0093066a7ab86be6165a6417079455db7567b405853e910de685d2102', '{\"_s\":\"b3fe0f4104f8b5afcf0e98880509ad62\",\"_d\":\"aa341a7aa7c47d05589369eb60ed28db1880191bba61b780592d780c3b0684f2799c1a48a7a0ee73cab92eb8484804c1f1b0b54471299b7eec4aac8645dceb5cbf044287331314dd9e6c7bed4ebb87d9b49a813e6f9cf2603b0e4717a7723c7a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(257, 64, '645930868f5bf40ef0b5f0b45ca3355c', '{\"_s\":\"906ee9f3b57f8a868953d85245337925\",\"_d\":\"865c2d8094ecfcf6dd4168b8e5c68947e41caac0c94a8b44e018f1dab91ffe778bb1308bd918048cff315dd7cf820aeadfd6e62f4b65a5dc19fd7b0cfe98f2ac396b4b341850b1e349461af87272fa29d21d3d89922c3184698452f7be6803b4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(258, 64, '971cb7b18193be0292fc111759fe9c0bb9e09caec9326da73a0b473d226dba75', '{\"_s\":\"e0578183d18006380456da9cef66e656\",\"_d\":\"d51f20297aacbb5f82d6debe793ea570ed7d8751ea637f958255ffc4153dd81d89ea675986b412081ad27e4f62e23bb18573a44d2f281ff448094629e86171773ce921b6e6cdfdfb950b8cdbde700329985d5cf351ff01e2dbd0bcfaf09fea08\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(259, 64, '5d2bc942a436f8a2493d430c30d3fec4', '{\"_s\":\"0f67eb83b833639909237e0a337611c0\",\"_d\":\"40b8dc265f329d70d3ae69e7adfb98cfdb49c42022206625eb18d59f2ea632de9c198305ee0fa7eb4df25872d1f28aff05035b4684da7650e35f9f88abd7cbde37ca5913415ed4b521c75486073e217d178fd8b6263680441c28e6fdcb37a2f9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:01'),
+(260, 65, '3a622488728439eaabd3ec6b1ca63b03', '{\"_s\":\"6d5f7ff8c0b05194a06573e9e289442c\",\"_d\":\"d26bb40eed956a45e1b2d86d42c9f3e957627c7e84b0fc217c47f1e40db1b5cc93f7195026b236586d583907558745e1c15c618d5cd84dbb6dfa616fb4a92b386081764af8aa8debda41ae970b4d664308848269de2d495bff29d22e750f8baa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:52:50'),
+(261, 66, '66f973e8356977f559a09bb069602f79', '{\"_s\":\"7ab514784ebd8b2f9b03b9196d9b292c\",\"_d\":\"e5d42a33a8ea3fa4fdae354d3eba57b19a3f50dfedfd7ced7a799e44017650ee3ce30168787dc13cb148483cc4c0441dc0e6ec1a883ec87d3f2ae4772871964b68b41b4e45605c041a8530020192323ab2cc77d54d40f8f95326e0024476f558\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:56:36'),
+(262, 66, '9a23b4f92dbe488e5d5cf35480bef35ece67eb35275abe2f1e18cfcb42fa7169', '{\"_s\":\"837dc5123196452bf8f0213bb9f51160\",\"_d\":\"fbc4e7fe957f6ef74e20c975057fc90841394b3871d43d164051f5ad0232c2747daf05dc851a70b7d9f68fbfd9674ce267e5f2e50ffe20154948fcd8cbd4800d2ab27132938948c667b12592c8ded78d3f6d4236b8a700b6d7f4cc5370b79540\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:56:37'),
+(263, 66, '3c6953fe932a24c8b3cc3bd65080953e', '{\"_s\":\"f69eabd9d6d3365ad607d5791ada78ac\",\"_d\":\"0d959fd558fe0dc35c26eecc3493cf4b4bf68fbd52a7647ad31d1f813f8ef6f2d31efac1e6249b048d0d54b43e0493ba0ff6f810f743b51253e7e5d999abdd0c32b3a08618ff7b5c65511b572674556b531956bd3cb536e86988020fb5a06410\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:56:37'),
+(264, 66, '1e2d836067699d2a662845a22cb988558febb12dd470f3d7a9ed4ad80ee664f8', '{\"_s\":\"89cf18e669aef2730ec730f656653f9f\",\"_d\":\"fe411b110c089d6e055719ed8b59e2cd4713b0c8e4dac3000750a2d38dd85fc54373e0202e25e958c60dfcf0860ce141eafa85b55344a9f907e4b4d177ee350d2749a896f1aea67d9747dbcd193009bb18eba9cbfacd0b6546b79e3ea882d9e0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:56:37'),
+(265, 67, '73d945d859fe28586093d95663f66620', '{\"_s\":\"fb6eff2c492b51852b3238192559ee75\",\"_d\":\"cc7cfd7fb7f3bcb3fd6205cc7305b67d48626d1854b1c64bc98c98e8f3a9250f3e051d6b91ee9df970439c2c1ff25a95c303f4191fd77dbabab84a71185c1a0e5c514b8085543ab7fe9c8585e3447677dd5ea46a2f94834462d0f6f317958d6e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:59:16'),
+(266, 67, 'd8e0dc3aa159f342609fd916c041b8793e20cee4fad41ba7e4b883293015f772', '{\"_s\":\"ffdeb530c41aa239a365e3e5763b7739\",\"_d\":\"302e34fc1dbfabbb575ad44a88733fea905642443df8bedddd5e0fdb0fd16c4d7637488cd94e89885e2cd470ebacf87c9a38eb4ce013461a09c6fb03c9e748cded9bb3a500da7181d10df8a27af04c1f414107cb08948eca40f0b9ba83489de9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:59:16'),
+(267, 67, '8b6e828a528175a0c3b55be4f0c33271', '{\"_s\":\"663d27faeeed45ae019d047c7bfea5d6\",\"_d\":\"a3724a0a4d160255139a7fbacbac1b7828617852b054767ca969f1ee7564947bbfe4273d2c79ec52ae4bc82a5ca4901636840a991479c7f250b666bf98174b8556d6edc9a4d010ecc520c5f2bcb22c9d896b8d6ba5c2e30211a65e66464c931e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 10:59:16'),
+(268, 68, '6197d3fe6048c36e8ec5d99a8ff21346', '{\"_s\":\"aa6ce132db1a6d63d01f7cff0f5598ea\",\"_d\":\"4e26e2003f943b8dacbdf59e42dc988a63ca33c59d1e70b12650f47d06eea637962af7ce7917eca66b9ae5ccb6c057124fd366fdd603610c6541b64ad20f2dde4c3e22fdb710b4b62b5f3bca26069292e183f93802042f647340df33805c98f3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:03:16'),
+(269, 68, '4d87ab7b21a308d6a1d0bd586f6e14fc', '{\"_s\":\"8232ac614dfe2f86671b23585d21d89d\",\"_d\":\"6c4b0f867c5e2aac260a9d48fda22ec85f6c661049ea4e22b8e62aeb6f2cc72fe4e247fa1747c5d2b5afd4ec8edecc707e4308da2bee918a5115bfa14c1d384f09c1f2e1cca0bd8657da877f19c8b7d4032c6f917b66551ce1e3ad92e4336f20\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:03:17'),
+(270, 68, 'ee6480fa2bd454f7915d4caead8d06fc', '{\"_s\":\"5e5e1296680f25bc196628725a09352b\",\"_d\":\"58c6711bb923bc15cfd7d174df4772507d6c41a36e280d4145eafcfcce26fbe8b47c2230189e17da8eaf2904a417bdb8f3a26ea043b77a9fb55bea432154866190deaeacb9ab1c07fc2c7c16a2a36024d450a30191841415476a09caf2c1ded7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:03:17'),
+(271, 68, 'fd2d02c520812e8761536cf3ad9c0684a26aacd41732de78b98c25ea96efa92c', '{\"_s\":\"bb96d932db402a59efb0ab61c0e07f0e\",\"_d\":\"8dc64fbbae2732d37fa4a656738858711a77f86e25e81ee1aec0254714e32af9ead44c8ddb5748a52121b6b15880cb29816bee00b678e2bfe4ea8aedee3c627e26a64c71ef439203d6b725fd833c3dd71ab4a2270ff8d6aac287e8ccf4bbc13e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:03:17'),
+(272, 69, '86d6433358974f519c9fa635bfffb48a', '{\"_s\":\"00b7ba4c252c25a7444e4ab1adc54278\",\"_d\":\"2ee706dbab98b475017680a7a60553e4e30ebc1e518f704410321d79fc156bf28314fec14aba3d3688d9a9670779a27ed492c393da18a9835928ea3694867230a0b92a7961ee86f74e2c4d370b13f4a7e14c71ec61dfecfe87190bcb14cf058b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:05:26'),
+(273, 69, 'd3e85861c0e60ad51a4717fcf8223452', '{\"_s\":\"9d0d0bcc88fd443b259c8363444d09be\",\"_d\":\"8432768ca3b8cf897579e3575d6b989f2919a4bc842dc2688efc441aaa8ac642797227fcf3affb5df7c2c95bb3dfbb8123162e3e32415ecd8c4e81f3db2a97f08daa7276bb4721819ec11bea2e83f728da17ae48446fcffd52bc1f43a46a26c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:05:27'),
+(274, 69, '23271ec121e2102d17138c0f481a33a0', '{\"_s\":\"78f1b5c1419d77d2902d45b63c6292b9\",\"_d\":\"9ca905021d8dabe3e427ffb4b2d89714ac30a2b23433333956cf21d7613b27c068e77f45d03afcabc21f2d0805872db9066dd21f1af540de28e83140fe1b6361d6a8c9e46b961c09faad30a123071dc63e0a72b0c4dbd611cd7b8cbbdb03aa2e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:05:27'),
+(275, 69, '748bdc2021f78fad32b9841da079c46cfdb873506979c5759add3d2a37706641', '{\"_s\":\"17d0f7b56df6fe4457f2cdaa9b6874b4\",\"_d\":\"ac58b5d5f68b5e6cc01a89d7f596fa77d3db62809bb6282b697166351742d02063e2d5ab03c3e208eb4f77b07b6a495bf3137975bd3dfad5b4232cd8430ea9798cf435815cab40c973db8936a7934b9503b38d2060ed43c672ec34e5205820c0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:05:27');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(276, 70, 'ce50facc8f69a394ccdab08bada7b7c1', '{\"_s\":\"5583ae839bf9e6098e457b294bd44413\",\"_d\":\"78c89b85ad860116cab25059202995d0acb8b8595a7be8a0150be8f3c7898ba9e0e7e7c7168176cd099adfd166a440e54590c18446e6c0a8fc069ca16deb1737c368ef95714d3225177d6da42cd259d6723e64c52f1df80e50bdb82415f8278f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:47:43'),
+(277, 70, '439cca658154c4d92a11f8806811f487', '{\"_s\":\"f8f6c32bcdbb7e533295651aca463894\",\"_d\":\"a9bef50d14f6ed9571b154d617736a72cf50aea2b17aebb7b71187c95009add5166b03b4ddc438a0a15ed0aacd8ed6e4f065c25d457ffe281f873fff0993fe6e240f88b8977726cd1245047c6896d8cc85226011819ef4fac80f9c475d13d658\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:47:43'),
+(278, 70, 'ba80065c9a9e3151242382ba821de03d', '{\"_s\":\"7a7d35baefd27684c2be9066d52f3a56\",\"_d\":\"80a9d55961ec14154a53954dccb28728ac73129a4f367fcf29a8555e0f243facf87162d72509a2f68315c49c27a6627ef0b6ca8f8fb9cf70585886937ae096c0073a62dd20de784fd536d4e079cdb78e50b45bda24c2d47a922bdd4117fe53d7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:47:43'),
+(279, 71, '88117d716bf21491852d7eb01e4a467d', '{\"_s\":\"ac3d2e2b24c7813e00647d4eeb37141b\",\"_d\":\"7b8e0608d5060a0df38fdd6b2bbff8b1892df16fb8706da80dfcefb9712cca38e2fd01c0dc0dfeffbe1cc39d66fad261ec3840641ca4b5d41c7f16aec657d26a4f12dd19dc3551cff0b6378ebdba4624d91a9191fd7ef5f44c95666933090043\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:48:55'),
+(280, 71, 'a51b8c6066a54f0093accac8e7f7d374', '{\"_s\":\"bcee2b08481e0af4e478029007644fb5\",\"_d\":\"f7c14f27283725434c40c95463c15ef9ba15e662a29e9f5f68230677c21dc35ec84465f4d344483eed7ed48c6da367009c41765e073d78c1426074886721b954356c8ad9bf959946a3939b3a42f4dbde665aafa50cadcc2047c1b4e98f474384\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:48:55'),
+(281, 72, 'cffeecc38f2402e0c404b242f46322c4', '{\"_s\":\"ae8c00c922f013247bb07e2f8bb2985b\",\"_d\":\"1a458827597453c7cc3ac7bf8683ecaa1d1a7c9b963340007cd09238b9644457396efe767136a7c37ba7b6474a2119752967e8cddb0b0061aba130d7cdabba921db484f6ea8da619c66a22e4efa217adf3e59061dffa29629e3e5881ca885d58\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:50:52'),
+(282, 72, '0c2168dbd86f8e9e37bda1273986e5e9', '{\"_s\":\"b607c20ddc7bc81b80d15191a42b3767\",\"_d\":\"aa52736fd7a71d1c302a6377d1960ae5d99db0b1e22cec94ef0ebbc1958ac7c47578a04ae6edd83ec995ce3a8ad1bd78f0516f8acf6422d8fb1e52c6edc6f105ea425a2ac7a834213701d841c2e5f701d1358bf20c47a7bc03050f2a6b20e6ef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:50:52'),
+(283, 72, '7ed1fb6cae96e78b77ef37bbe56cb7eb', '{\"_s\":\"1dd4fd57a60a17236a9c40cad7c9b67d\",\"_d\":\"b123e0e2e894c6ba8753ded7b38606fd66bac36fb19f2d966c2488418d5a70c2d984deb74bceed715c1864cf74411b5d5ed17b9ebb870bfd2f27e4b312bf538daac74ee7cf10aba4afe613e3cbf757296a3b5fa95e64a730e537190af62872b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:50:52'),
+(284, 72, 'b79dc256cd1d767feb37fbd2f6e01d91', '{\"_s\":\"970df1090b5aea0fe09f5d80faca02d7\",\"_d\":\"a821c2e97dc8d5bce163e82607e4e2549c74ca083815c256669f3a5f89014bb31b0b64c12f56e2b783bba4738334fdb69e2e8e17654ad630e2b0b47414e7ffa61a3188a6405286d530a056bebb0e7c102a2caa821d70da3f4cc20273bc25453a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:50:52'),
+(285, 72, '070703de5ffbf47d399e8c1b5f8bb35f25c82c38d4f24d25783500206fa8dbdf', '{\"_s\":\"e8413e7e76eb8fdd8b776c171d3bf842\",\"_d\":\"e8c50fdfe8901dddd13412e6152fe34b4f645f18e3a3f3e66778c8bff721e08a035d629af80ca4f6d22d7a00bdc3eb18f8ce779ed2b3a1bb46b159d00aa9bf61cc1abbd4dc09e0bfc30a7ef2ffceb963981c1a6494386b5a4491a912921ca467\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:50:52'),
+(286, 73, 'b9ff70e9697d032ce836cbfd93823bc6', '{\"_s\":\"e366766822eee5a52ab5e68afb02dd6a\",\"_d\":\"a8a6159f5b521e61d8a665198351a094d968166f6c8f21eb7ebf736af8af67eb67b9bd0885163a4b8fb688707394d8c8ee1a8936384d734858dbc367d136611ac8661b660d4bd46c27cda74ee00a54052ef15f14e1a854dae26dab1b251db42b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:52:22'),
+(287, 73, '26eb2c6155850a0cadeb3efb26a0333b', '{\"_s\":\"376f323590a0fd345ef5322453c56aae\",\"_d\":\"52b8def638463419d6a64bbb1dc6b6f17c2d57a26e695050ca16aba64da697c11eb5a43d227cffeb0c373a4412115020ef8c302faf490844266626609a974c4b10486bd76c4663852b123687dec0678eb1420ef65199f4bdf0ba030011364c0b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:52:23'),
+(288, 73, '0c2a60d711edb8bc5b7c9eb605415385', '{\"_s\":\"4648fed3dc6f38ae2154f31d76ed8157\",\"_d\":\"487b06043578227f276b6203573c7645c2d69ae3baf357c4c6e73c55ef48241b18aaa1d9bddac97e47917f535f59fce2f7941115690c2e259a60ecf55439949318e59ecb05138b3a3db585231b317e8143f55b755e7fbf94d08051a702882663\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:52:23'),
+(289, 73, '80c6ca8333459ba8f7c71826cf5eda26', '{\"_s\":\"4f21d1bcc7f743c5d1328d37ecffe19e\",\"_d\":\"245a3a12e0ac93df2ec315c1b32635462a9232f9292c10bc266c65408ac5413d55b8b87fc4cecb55ead24c52bc2b7acb631e4ae44b73409922d15fc72d6ad2b00d35b9ccb3d4a2cf626475fdfd0adc550066bf7f7e2359e3a8a0e92473dda222\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:52:23'),
+(290, 74, 'b220a6a06c0d7687ac4ffc7d33a07e68', '{\"_s\":\"5f3d19323929b04ef9e06ba68f0dd676\",\"_d\":\"3535479e504a1c03a308a5b9663f155404f6711860cc41dfe1dfe89d6c332735b458415bda2dd6af98ff79c8e4a4d7c8cd5aec468d9adf9d30f684ba7466c1bb2ded03149117868cd8fcb1ccd48c672b8c4028f0588eca8211f5826e6e795746\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:54:11'),
+(291, 74, '62e99605304c964e73d6f133e00bfae2', '{\"_s\":\"eabc5f9f1e6d22ef40056a267bc0b40c\",\"_d\":\"4b011d01877294bd5a8a305eb973da75c58a8e07b8f56eb437a091e4a1cb4af5835c4187847f723f7d8453d7006736e8228ab50b2d2ab1ae6e821af47a553ae687c4830ff7afce96758ea3003957da2b665b355195ab35700aca5f5f2283a37d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:54:11'),
+(292, 74, '0f0cdfd6af980b52ef07612004532040', '{\"_s\":\"43bc65427c678e3c0d185eb8fda33da0\",\"_d\":\"5accadb96cb59491aa5030144586e8bb1869fe559220cb05d074b033bd5c0ea00fd0cfad5d0400d580154a1b33f3017d9e2f19cce0200642e269a9d451188733bf423171b6a546f6cf74808d61a3489a3f045689461de402073441893ef02ac4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:54:12'),
+(293, 74, '0c6823eb378283685b1024867497401d', '{\"_s\":\"70997aae0a30ef17b74948caa7e04ca0\",\"_d\":\"d89859e8d6f83fd8035d3252083102f05fd644bf4e5d2df9198789ac4a9bbac266ccc576235049078fd9ee691d9e4728913f9e616e38f8cca6291a26e7825f2aaed74027dbac322599be3252b62adf42c14f679c33955bdaf80e1f41e068a2a0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:54:12'),
+(294, 75, '021f82e17bbd6cc04450c388c1ce3935', '{\"_s\":\"4c5f62306556e5f824f749d9c26e4e39\",\"_d\":\"9bbb4269d7d3dad3c2fdfff810e70ddc9a12c6dcb81eda6c7815e212d1922959e0acf9b9d9113935befad7f98da5a26dafa78ad563c46bc849f9249b50f46934bdef8da6efbcd37a509e74e305818c274866474034549ece86471f9965af69ac\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:48'),
+(295, 75, '3f51f3701cd3001dfc44b83f9628676c66c9d32339c5b3c3d028412ddc286807', '{\"_s\":\"a8fc1938644baed54a1f628e06261783\",\"_d\":\"cc660d962378a0752f08261aed432bdd6dace87753657c39f8471586ef03d571e0f4658b107beb7b1a7dbfc4210a43649659f8aae50cfc7b10f06e9f0dd9d4049cf72f7df5455259ba552f9d830113e3d54fad6d531b2ac9efaf6fe4b853786f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:48'),
+(296, 75, 'b5df0d6b4719f908084a9f3e3f88219a0e68f7fddd32e32fe0e459b5c9c55736', '{\"_s\":\"a7294c9d0fc297e5417b55f25bfaffe6\",\"_d\":\"facbf98b899122075d3a31ddd0ee1b1179f46ba13b6deec6e11bcef5fdad9c35d0d6a0264b0e8fc7290ec23b54cf81fe924f674a75e97c895d145450438d6d73945f1d16bf8f369dce991ddb98600eefb58b958e44a5ae0c6fc907d7eb0e606f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:48'),
+(297, 75, '77f45d4b7fa4339ee6a53646a2339f31', '{\"_s\":\"5d360cb51b2569fb981103208e370448\",\"_d\":\"1f4d155dd48dfdc63b53a57f9d073a45c5e01d13769131585bcbce924cc54ffe281caa1f9436d887c8cb1151a03cc7860e10af87d4426b6ee0524490e70eb073705c254e850eee0cbe60c5294e525533c72d3bdbc42fdfd9e27b746008fc6ed6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:48'),
+(298, 75, '5c4ef93a75540e2d6ccb3eb20fd2c282', '{\"_s\":\"6548cb5b46b74c6edfc071c97d6263d6\",\"_d\":\"3805cf4f7784a48f46102f50130026cd4bfa9d259dea4a1d3d86205ef7da4667d143976b65f85cf8e30650e64f7095d934a2af0e7f73bba05fcf784f69e9fd1cca87232bcbf718193e46b9c6766e45a57ded90cad62c974bc8171983ca590c0c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:48'),
+(299, 75, '04bf08ed726ca413016f860e5bdc5145', '{\"_s\":\"7def3169f7a00edc0aaece8637725cb9\",\"_d\":\"0e83b42fea3e4db2c195a9cbf3691077b989a87bc1a79db7b67417fcd7131e714a429b2c0efb080fb9d875d8c98cdde5224cde316cf85b1878b32595fdd042578be2e386b613540418a2a5a5640963aafd5ea39cc3ee51fcf2f34af848a8e1b2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:56:49'),
+(300, 76, '62276b6a1eb1ffbeebf83b465f085007', '{\"_s\":\"451ebe7cc37fa54a666feee19e058a42\",\"_d\":\"2bbf347c2581998280af3327e12c2f989b128bd19ab39becb34b2aff0e4b4c967a281431a3f10dd8df2e3f91041d7857062cc46762259750d509c29c2f844f5b849930f5f774ac23527a6318682cf146f73e11cb881ebdc0dd3c49774f22dd86\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:58:05'),
+(301, 76, '00eac66c194f40a8df663b5a1a9c0eb1', '{\"_s\":\"1d551a5d22c6f1d78fc003bceaee3178\",\"_d\":\"a600676c15f93046cbf142430c817bf9d384a3a13b0f85adc552a3cd64dd642e5a624603ace90345f488141a799f681e30c082989b7473ec22b3cdbe74c0403da4d3ffbcd0605a977b789102e35e5610342ef2c8bef170455025e6aae90a9666\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:58:05'),
+(302, 76, 'b205e8e98e40b1d16011f31b80093546', '{\"_s\":\"da8f9696a52ab3c5f954e960fbe7b736\",\"_d\":\"7cbd5b163b8a78a62ff2edc3505ba1f73e3db61efbb5a4b5a6068ba6b0e5bddefb38020c4f65829edef24be9a9fda333f98d3edf5751250b034db0ab87ff1b6ca01c3150092c21b5e152aad27103bdd6942cb6463faac52370d3ee90c27df179\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 11:58:05'),
+(303, 77, '1de63ae9803b160f95ff57145c9eeb13', '{\"_s\":\"4767f0bb7b4a5732e884bffdd511d5d2\",\"_d\":\"00a83d73631f973710d96ce70cc09ba7b8a78e46ff0332ad2de319371e79f87f79c129c973c7889d2a60199ecf0a1f0fe0168a56984a8c261663cc640b3d0d7a60e2e78a05e503708c100f1a9751b4639d7ba89974503c49af1db273d095ef68\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:14:57'),
+(304, 77, 'a0672bfacb331be67ba671743fddd95f', '{\"_s\":\"27524335ec4ec84ad32b1c41087b80be\",\"_d\":\"f4881cb5a5930096fc75bc0bccf0230969021295cf8468e5b2d6d094ca697aa863e876b523cef5af9bb81284e73442dee8b2a7c06cd4adb89c125cd564b50bd24f7122b2c3761800356773bb59ffb2ceb65da39c87b5a5d18575a23ce1c1d35a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:14:57'),
+(305, 77, 'b5fc3872830c3ce340bb10cf49e5640d', '{\"_s\":\"462e0150dfd8eeb265c7a10f5e141a0d\",\"_d\":\"e32f2bc7d7b8da86b7c1bcbdb7d3a91e167e6d72fec80aee6b10c54b7f86a271aa58b7a9eeb6faccdca49c643964b14099cfce58caafd53c827e346520413d596d73c83e94130b57db2548a078f78d8c078cf3bf865f60cef4ea814034b8a55a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:14:57'),
+(306, 78, '89f06dd82793f23a273fce624b57b39f', '{\"_s\":\"6550ac80fee478e22e203140bd1cd75e\",\"_d\":\"cf1da557f3b9fa488da084a235064474012b3d09edfa5e1de7ec993ed0c451b40e1872f636040e3635ff510bb5eb31fd314f3feffdaf0d5cd646af335c74e194dbf6d23d4753b5145e238f17d88fdf5850f51f19001db952a7d4eb4bd1871cda\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:16:17'),
+(307, 78, 'de8c9d6433f874b9d3b7c88f80c89480', '{\"_s\":\"ff03e214c02027a9d9a8b2bac8411308\",\"_d\":\"40772e02efebebea6b850ccc39d82e4125b927db91b27058bf031d2603117181285a5e78f30b6fee55e5b054bc86271c44261474db63dfe843148d00309401e28b49f9bfba1f2e1ae92104edfe56c6f6aa89bc801c3ea380382082a94ce3abae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:16:17'),
+(308, 78, '436f9ad431dd442ba7ee2912a939c260578d513455c11e923a9e29cfa4bfd6b9', '{\"_s\":\"416448ec430e3425a1a41c531e69b4f2\",\"_d\":\"b605d076fc3f8b0f4e93ca1781d513df643df88a41cba92e934c1c2a4e329fe0611c1713577c43194b2d553a58bb9c3e433ca0fdf5b1b2d294619c2c50b7299a4cbd6b6d76e24e01cee8271202d309056e39015e4c08a7e04eca20446901b558\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:16:17'),
+(309, 79, '3eea9801842719b5e712144020b4be00', '{\"_s\":\"b097757af9857fd3d1bd1ee1b6661188\",\"_d\":\"b5daae032ea691654c59691a30ad3db4324280dd4ef597f3adb7c07a1dbece866e5d768dab3f8cde78d7a3c87f2581ecd6ad912474c58463b92d395dd5aed61c34706a2bf651a769e1d36aa02ac2e410b93c15652fc2862c0f00d16223dcd897\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:17:46'),
+(310, 79, 'b528481eddad2b1d9647f8202d32c383', '{\"_s\":\"194ae984aca7512cbc9bc0f12cefc240\",\"_d\":\"f540f61daf484aec67f430c15c0a2175b21730bd52b70e9939c81d3e8c7a094352c6d1e11cf73e84e132c829630c399d73a40549cad7b40b7a81f46d3005d1b29675264260b12e1513dc64fadf687e86305d8b385373673d67d35a704daa9d90\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:17:46'),
+(311, 79, '64e3c776713d14d2af417830446611c6', '{\"_s\":\"08aa1b66065c7d9bb920fb4d34070c9c\",\"_d\":\"07ebac08ed884baf190cc474be85889a100d33cdc3a89da41e7379d1a880163c5d3220f8d8aa5de08d32e0a60cfc0bf1819057c680e58c06d9ae7cb02e0c658bd153f4900a90d89490a3363430d02e0180dbe6dd3efceb2e03ee76cfcbd4f66b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:17:46'),
+(312, 79, '349ae4caa8a2298681fa26ccb6c5d7d41684f290b79ff0a87edcb268d633b561', '{\"_s\":\"fe7a02c21dc8261cdd60c8420be1aa06\",\"_d\":\"6fdda304d384dc8f23b0d92cfefe71fdb88981f98f95474f1c3b5cf9531dfd3839c3accbe4b8ba25652a14a99f542d639146b9a0dae6db2471302a87d633229d58bf4695cba1f56504fa8424e88e11f8a73479096ed9cd104b09d0e24b1b6ffc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:17:46'),
+(313, 80, '19e2565a9df1da543d92215c6eaba0af', '{\"_s\":\"84eb0772f470ce2b8d7afeaabc10a7dc\",\"_d\":\"3fedfd15e31cbe4278305df70f11421e5f38e5cbaca1f11ca6354178f6e596db5095f8b6a8dd17ce318b561505a01cb033bbdd856b466da1866db95c4cb79200f12841ef9df88337328c1a687592714d47123d8118173279f48122d8dda6afe9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:19:02'),
+(314, 80, '32dc09c88b716a7495336a66b9092810', '{\"_s\":\"1230dcab6c47127f935cb41e0824f9c4\",\"_d\":\"86659a3d5f9309dad0348fbdae1cc66c831b866148f213c581bd340094c85c6dd9dc713bf9b101c42bb2a655998148ce838df3d50624c015bf884deb146a00cba1437eeb18d5a0e645c5e67be2b5b69245c5967898c30fd67aaae8e9f23155a1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:19:02'),
+(315, 80, 'c80c03df8ba3b3255e5475ad57af668b', '{\"_s\":\"393cded8346b6abfaa4e48abe5ac3de0\",\"_d\":\"b2eca11eb47751c34ba09f3816eb074597488aa70e8d567ad8f41e9207f072e4556c0f331c0f909f27f219af69bd94ee1b3bacc755efa4e799ffd9d93e14e264f363417ff8cd39b0c59f93387ba7b50d582ec07cf03402f863450cddf760f1cd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:19:02'),
+(316, 81, 'd8e0dc3aa159f342609fd916c041b8794d54063a2b746ca42b5b933479ced08d', '{\"_s\":\"b1e3819bc493ecfece638ef884bc0a20\",\"_d\":\"b284b4ee8e0581e2e669e489412c038e678e1e8857034b22d9d96662e223ba66e70aeda1124be17b5ab2dd5c81aea614fad50e1eec9b7d9ae74b8689cc30fa74b3dd60b4ffee22b6d52810aba63e32b846e955def8ee3f5ef0b4e638387fb577\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:20:38'),
+(317, 81, '8779ebaece0c7595d77c9446da0b6017dade0f014bb842e99f9ed7610002bd3ce553b7c9726a821b50c8ca29c05a2255', '{\"_s\":\"88212f3a0892b1d4487b6c8f7d67110d\",\"_d\":\"c57d724ce8456786661092d88e58350dd68ad103220338b5afa67ac6d8b569e7279f8f49e94a33bc9d257911df4e9dd560cb83efdc241697812cbdcd8e5dba44499d26c30b1664ee5a429f131da1d9c528a221dae20412524a55f84ae700e959\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:20:38'),
+(318, 81, 'c4f0bff4bd6948841e6ca065719381fa3ec20f0960466127ac3f78a6d4d4f424', '{\"_s\":\"850f9c4b14a436712b9731d039a377c1\",\"_d\":\"2fabdd658fa782815d1c0db1be0aca2a202a8b94936d43f9aa731e6039ef6d479d2ead538cecc55c5013c75688ad2fff1e4b152ba12b9669c857352d98349dc93afa9a3f5d56ab38832a6119fa17e6dc833ed5286c673d34cf50762c4b777394\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:20:38'),
+(319, 82, '2c47e1f14d1bf7980288da412000cae3', '{\"_s\":\"08843b718986e6c955a98444c2eb7062\",\"_d\":\"ee7341b2caa41baf54dc85a67884d333a9c712775726563dc75a5e0e94828b478bbd0a9ac508c1eeaecb6ddbf06a050cc4ae2c70950b26fbe61dd1408841d58ba9f86437b1ffade112fff1de3b0f9756920b50f8fd812c562dc1d05b6e437683\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:22:14'),
+(320, 82, '338801f9c010e7df5e0c0dedce9d36f6', '{\"_s\":\"9206901443836ad8e1883f7269a99a9a\",\"_d\":\"d686ea6af74d22baf6beee6a0094ad47eadacdf584161d982fd2953d9d10c3f71741be5a2fd99624ee98b399a4831b5078b0da4cd4c5eb91ee711ba9d36d6ad7ea9bb5ec271112793c609cf5804c10c66e27d10472114ca5d2a372fde73f214b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:22:14'),
+(321, 82, '125adb22abc93f11e9a395b9def21176', '{\"_s\":\"672e9d7b07459b23f4bceaf2dabdce79\",\"_d\":\"a8db5203d293709a3b8674e75791f9ffcdf68a9d8aaaabb58f2ca977a7a346fb8f98ad8a86cc2dd95dd84e106ca246a2b692f429f69398b18d0166096f72e7fbdd67e48f716f37f8d1a2fea2aef0ce6fc293be99b49e0a27a7b438640d413034\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:22:14'),
+(322, 82, '96901c07c2f6b830d5b1e2b069fc24fd', '{\"_s\":\"b4053ddce39709de8b1892a8330b3c9b\",\"_d\":\"e0a6193d1e0e0bc0fdd16dd82aadc2160197382b10f734f17adda2e6036ad60d9751445bb024e5e484118a896c9df244c7ceb56d01bc21f10044391f51f8881d1ecdfafd7011b7c902ce8c120bbfb4595aee1a446e9b61abcebca32d2aff1da4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:22:14'),
+(323, 83, '6c9cef8b9ecf035380810236948d2941066bedb8e46c8873ee4e8b6408968be9', '{\"_s\":\"3601d071f4bbf6075cd16b74e21c889e\",\"_d\":\"42aa09ac528f7ebd737f5596f04b21ad8b07770795085684d90af3702e1b5a4abf4f8051342da0d2849830cab02cc3a396629107ac013343e1f07f5d242f3aec0463bbd6b6d482f2618140ef9bb29697c1f2d3a127b1078d5f86d417d14ff41f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(324, 83, 'db41b3b031f82e234566bf1e96e8fabe', '{\"_s\":\"af2fcbd4a8c1c028fc9b60659ad89042\",\"_d\":\"cb64140341fadeb3ae76d09c884a909d312aef758588823c27bb393bb9c28533895c1214644a9d6e7d5ad5003eb4eb03c1168b0d12a384b2611fcd6ab1aad368c6541d4d71c905aeaf72adbd4f2a01748d8f1bf5695ec9f20719a2f7302a7e78\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(325, 83, 'b8b6e5945b9d744f12d42299e830a1f1cb2d69356dc6613c44bde291ca194a5f', '{\"_s\":\"e969f615a064b260c8288b85af562501\",\"_d\":\"013ad59f627d1f455bfc73ae057416dc95120fd5f9d2043fec04ff55c0246266b55079a28d2b37da1c7d46d0883a07edcfc7034c5aed091be13430f821c3b22ed059d55cbd632dc8485a4b2742bfd7de2bcf715a85d4ef8fa8d0b60c6c037a2e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(326, 83, 'ba7c5e8dafa1d85bbec77f44de323489d1439da476ca2223ac5ea606ee7e2513', '{\"_s\":\"5790e5267dfb787166c455ef70e5e158\",\"_d\":\"475b2fde3e5c36dae6bd5d2634706f4368d749d9bc750da5e532773730d76bc61cbe37ebb754c2dd04dfaddab1ce3acb9407b8a852df8a86f696449f49a210f9b65a0b94ff54ef701223bba0493bc123981f053cf9a7ade6f9264704c42e8c5d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(327, 83, '678af8cfd8691e1b45b9d36ad6fb9c987cd7027fba00c6fe75f205ce444b41f0', '{\"_s\":\"99b713d8048d0527bbdc570d105117f9\",\"_d\":\"24590df58b1dcd5137ba9055035c3c6e1b860b0b3ed4dd0842cb7489a3e8b68daee5396158371ec7645a5e2a650d6c687a1a5acb48bfdc7935c2016d41f1d5130db897073ce273c06bfd122af10ee9ece32b9eebb3b17f97fd62a84b4b35da4d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(328, 83, '8b12f0981aefcfbd565e3cde2f43c78bd0cee73067d5e9a9cdee86d8f20c9099', '{\"_s\":\"75e06e2081f4b59aec5fd2e4a89ed26a\",\"_d\":\"246ed6baa6f84bbd9ea2081110af62688db5242e7bfccfecd25b48ce470c6a3b0e71a25e9cd29b7cda9c7c5493bba4e4709dfd6e1e684d40257e5f32b5e35fa1a30254dd17c62dfbd0da930aeb0f4fde9c563b8af5370cc86094e4c09eec76a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:24:20'),
+(329, 84, '2720b1bb6423f87480c2aab74063a1defa96e994e03a95642a0d784cf21f01cf', '{\"_s\":\"2ff142af20ccd6cd323ca7f596f24b96\",\"_d\":\"90937a234006d546a1879fc85dcfc772d1a7927e5276c331d8eefe0677829ad8b70a5bfcdf48b4ac15cbcbec58b299f81f7180a0a431ff3dd9fe0c6e25d3be365f580a5979ac1b8a990440ae1dffd45ae0b0e8ac705117448738b77b1e51b7d2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:53'),
+(330, 84, 'cce7a363bbb965cd57c929882d5af09968dd218357d1685a1d8ebaf22456f7c7', '{\"_s\":\"f897222720dc20cb9e0b615a25fd2c8e\",\"_d\":\"2fa05fa9eab29f8e80e5fcbb1e3fb320f18c59c76114c674439131893d72e1275b6ad0f8830345f48044fd69c6287c567685bd437d90b7fb02453d3bb7a1164de72b5a8b5719a70fea1c31233774ee27e1b26f61fed7f726a5c536748d3570be\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:53'),
+(331, 84, 'f9540666a0c8f3f22310f47b76027bded8739b1d4c2ad9c2f79b90ffcbef04fd', '{\"_s\":\"c84267630bfc7267d43d10f77bd130dd\",\"_d\":\"616c4c067b65738ff9b23bc576bb863e49e121873911788527830b5005cb14f5bbcb169e792bfab93c236910107afc662ac68f471674958c36a39d9cc9f4197b0063af3e07a5da8f77737195e8e3e48a256c36d18c473a699443e67dbb38b358\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:53'),
+(332, 84, '089e8ba43bd998f3882b4de4c77a4aed9e5168f8ca82029166af46fd9bd09870', '{\"_s\":\"ed683fe439ee20d8a6791ce169d77b54\",\"_d\":\"420815bbd25347d276a56b47f254c6d413d27bdb3b4335d4a3770533bb1d42f462189f6d6d518dbdf07f1894a3b84802d2a56b802623296d9961f3731ca178cfe79a3c7ac296abd5c57014bb2112f47320dcb32d0a5c1a581410d810220c418f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:53'),
+(333, 84, 'f89c459bc37a888471a078a1853d647b912855bf797ef143942080a15307479f', '{\"_s\":\"fe323a695d4c4b95bc679f13066ec14a\",\"_d\":\"b3a72f2db49b9bf39a76a164f7c7e6733a2845230144a3fa6509e734b627180f7400a76acd945ad5eca4688942dbee72943a91188044e9d090c201671e7d47787c490fa01cd8c5babd0b36d235b20ab89077c6feadac43ce855ab70461dc6349\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:53'),
+(334, 84, 'ff4f709d0b52fa6caa145919acc22f7f9085c190e2a7933e4b3df7268024ca0b', '{\"_s\":\"84820cf72fed800d859c4f782c5d7b4a\",\"_d\":\"2d3876ac4444289b1b16ee703d7fde4a7c6164a220869d071a9b797f35f6769bb9fca4d34c054669db3e2c23311f95f24248afea39bbefc1aa82f67171234b79102bbc11aa6846bb4f160d7309f5d6b0abee88eda37e480e20900a28fdee55ee\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:54'),
+(335, 84, '19a8857afbaf02aabad36617bd7d273bcd5a3e6a3bd0938adb83584de5454040', '{\"_s\":\"22abdbb34b17d8dd0db05cadd5920c2a\",\"_d\":\"25f7459e1a0370304c17263918d3262216a18d34f6164a0574aaabd0302af0eac97315ab77cf3cc1edb52f07e52e45916467adf4ba1ac38984c96cf3b6655aa5a3ac0b677080de0a12382fd8dd0da3815e5eceaac23b93232bcbb03ce20679ee\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:25:54'),
+(336, 85, '2f9e163b4b858397c3c8c0c2270d4825f3a3e338dcbf0c4dd322e3ba784a132f', '{\"_s\":\"5b6b647eaddaad3526f0dd0fbcffa35b\",\"_d\":\"6c87a1b1666cd34ca262e8b073f9b3c265c23f139a5a10c7d46d52022770b48a9e246564dcbc618e047ea4c8864432278bb3ab1c7b3ddc729ee1abb2747edf518e7ddfe295192eafbfe51da94def3a19aecb738364f404c92c6b2b4bfb06e241\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:28:35'),
+(337, 85, 'f31a11be427c71edfb79e6dd6f17bf2794d0d6ef304235b1b5477f8ed2d6a53c', '{\"_s\":\"7fae178cc8d735ccb4bebff601ff25b7\",\"_d\":\"302265381ceb64a094913524c7c4372890515ce493aa7e18f6ebe6d767ed43e29e56c7767b15a5cc6bca33dc628481a6703bab2607b2ccf81f59111a50ea81c28449e5199a90e962b6d38e422899e27245901d37331ce1ca68c5c6f6e78ae095\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:28:35'),
+(338, 85, 'cb5b49422dead62d8e7d5c85aac18808f3819b441cc51a40e41cb1c520780e32', '{\"_s\":\"7e5cfc65127aca795c2a8975a26de152\",\"_d\":\"8032f2c0be2db324e6204008b186ad0f3d7c4bde152da0dd34f84315e1add62e4380520ac251a2b87df25fb629143f9a402b7c16a642dff59cbab8d12aba189a84ab5fe241839975501aa48d7adade204147b7c4c5bd47cba6b19bbc692bcc25\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:28:35'),
+(339, 85, '160f2fa64a36a88e6372188e901bb1308990634a38acb4e2918e7f623db73045', '{\"_s\":\"23ea78f2acadd7cf8091057d93ece2ea\",\"_d\":\"5f68b9e30affb74f4e33a1328e4db90b79653408435202dc3377a65fa086544b2d1080d939dd57ad83bbabc87a355e0f8f7fb5321915a5b66744f3f2091a8019b098a3a1bde2ada970cea1c6b3e4262dc2a10a2adeb925ae64b669bd0f878ea9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:28:35'),
+(340, 85, 'fc32381b417a78d257b3db579bd1058fe8dac9caee77dcf1762c459c29227db2', '{\"_s\":\"f7c6928d31fb4b8debfb7f5acb7571a4\",\"_d\":\"cb6f89bf8b2f1755c9f878e14caf8df8ca3f2e349960af27f8d8ad4909e755c5b6f3037d011aa4926a0a99bf1d6c2bd1f1192abf51443454f5b2f0e5812434f7be5f5ea0b8ddd504b8a67015cdd0879790f5968c4ec58f6054f230a0d5b9e6a5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:28:35'),
+(341, 86, '1eb5da5e683359072e11322efa62fa09804744e39b9a37e94be20930b1ef8aab', '{\"_s\":\"6dcc596e7764d34e1213e47ca64dcdf3\",\"_d\":\"d406dd1a12540e481bac1e6a7c908ba14897081a9dd2068413ce97ead243d768210a4ff777dc4bced52561e2522cec153d522cf5b7d2938981ed6794674703f6a4cab4958096933d2e974176a80ee14409c854558696c1915f7223a963d1eda4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:30:46'),
+(342, 86, '52eac974b0cdbe4665feafedb0df6d9272a258b242cdce3367d7ca1ff0c2c80c', '{\"_s\":\"33e4063ffe30f422cbe386dac519ca24\",\"_d\":\"c51690d7de005192d9514d4b1959765fe869a95cddcd5767c15a4ac9ef84ab11d2890cd8ce9732766519e83276e4a668e0dd66927f835c5cf3fdd619a485e6151f0818dd59bf9934aa5627fe8721a47be067d80e52377cd9e0127e4695cc52b7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:30:46'),
+(343, 86, 'b5bb8213665da1933baee7e25c2dadd696f0db80dc6034633e2dd4cbd155797e', '{\"_s\":\"17581a9e8b790f651975ab3339617bca\",\"_d\":\"785b3c77fc2af4a26dbaaeb91296ed7be5ed587baefa67ae5be8afac8a1f7ebad1ce4233b615139c5418d793d9cf20a0b56da13d55978751cce367daa14554611fb85d1a17c12a447fcb6e6408cc352f26107402b82929424dc5e233e6877864\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:30:46'),
+(344, 87, '7fcd0931af0f459f85b0923714314a30', '{\"_s\":\"6c4102fdf2cb95e1a5538f5cccd9b78e\",\"_d\":\"3651b7649ccca8214a559e2061878ba3ee218774a2592a19249781e195f82fe153e1bf655258e668f0a1c4ec6eb291f188cc7127d0f092b37d183993438fc578ade2234aae1d3d6ba562a822766d6dc2c6c336a48a81f597f89e9672a6784ca5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(345, 87, '3fdb1360e3843d32aaff7492bda3fce2', '{\"_s\":\"9859c2b4910f56145b4d84cdf8faafb5\",\"_d\":\"22e7a5210ce0d0417418f730b6e9bc7af24bb2390dc2ad704b7b431996a45749a60bc7f713b23c0b39d406259fbe5aa3d3a6e4a6ea9354a6490afb260b9b29ab46ece8ece3628a2e01838671ab5c2d4cceeebd655e23176a373d7f0531491ccb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(346, 87, '54d985d31508d61ae7d0027c647409123dcbe98d26108b83185de6c9d55a49a2', '{\"_s\":\"370b73b4d46272fd5eae70eb683d7f80\",\"_d\":\"291472744b34404101dbdc60fff14c57821d0363608fae144aebd5e35107a8fa5a166c6880ee32f1d41e4bd07f34d359a12348c3a966f1930cf50dd80b9fd4daa564f94f118376fbe1c53c4a9c817a18026ed3bda61eaa9faf43d72e188b00c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(347, 87, '02643f5468acf1120a6e4ef1628ccd15', '{\"_s\":\"a19932668402b32a1eb7b7acd8110979\",\"_d\":\"edc7d6db5c1c6a4925a1b574b516391c0b2793bba8c917371c4d7e4d997080cee27eaf7cc4541a767648115c1804c74ffed564f3d4d9feb7e16af64f9139875b3b7d843b5a7affcac21d627998ee73ece52c8b78686f68fff06d455295bb1820\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(348, 87, '7075bc8a969f15d274e650b52dcffa4f2f536d9333ee141a5fff4734720810ef', '{\"_s\":\"371bf98e6517524b4710e353d63638d8\",\"_d\":\"498b1ede024325ad3a65a0f9cace0de835ef913ae7734929f736e2f03ad5c53cb611f7f52104c1602bdaf6e8e95d6a345e75e6a4d90be0e3f2c9065b9dc13c9664693147844c1197e68fe8e9ba4e56187340feeb7f10beea97e595a525cec29d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(349, 87, '3be562fd92446711c3409be594e2ada0', '{\"_s\":\"21b0944f3abcbc1fc80c3401c258a061\",\"_d\":\"537ae8244af4420b2305d00e25dc5198f8fad939bb86c469e6e7e90256656e2ff45e9f955d55a216f4599bc20df2dcf4cd13f6edca44317d787191ebf7129c3a4f18185ad25d801246e4feceda7dd12eeaa8b7ece48cee0f00ed7e0099080602\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(350, 87, '0e91220c361ed967b9954839436b4f9fa77781b14b2be2a8564eff286c69cfde', '{\"_s\":\"f7d8a300238cfbe4d01b6847bde6d0f6\",\"_d\":\"b744489c46d0850ee9c26818230b19936c01822a525f70759dadfc2038e148f88d662f9f5bcd003aa8ff37225490311754ba3b2b636ef54703a267adbe9326b4c4e4a591fdde941c055920d065197a68770907ee161b2837c1eb5be48567d16b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:57:53'),
+(351, 88, 'c6fb99368c8d73b55b80561976d06a4d5f44a345b0b828de626c58f712917e8d', '{\"_s\":\"d16803bf5db6dd18496f01e381237a84\",\"_d\":\"c6732f377f34b36ab836e51218a1b0802f6b3b1c74aea516e907b44974f05bdad755155312e2f59495192b9b4e43ba15853128f4e17f88bddd88071cf3f5bdd9e5ad851581053f689a12c1abc3cb02b7a7cee0df7e4550ad2bd8e75b75fe238a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:58'),
+(352, 88, '86dc0589ef7b95c89bc54ff2cf05d6006044c02d05b189e94930eb9c1ca676ea', '{\"_s\":\"cb5d50aa3e353383b91d2917030e1766\",\"_d\":\"2a46c8626279d648d7294ea444277c5729a73ee794d029c9dceb44c3b2b2071859062e9774517c2ec887a54539360aadabe4446ade06f59895fa61654077389ff4f07bf706cd082c8d6492366bc09b327bf970bc3a8987416fd2394f007bb5b4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:58'),
+(353, 88, '66e7c5b33124b9e15deaeb85cb5ae0bbc61a5383026448e9582f66c19ee2e552', '{\"_s\":\"525d41f55e32ef70228a668d14af34fe\",\"_d\":\"c122b3f9a21976b105793cdba5d9b289348991aec4a9637ba6e098d807ba37d5118e36948324804bb0e70cf60febb2604924d8f6cc10340125a72649f44526af550108b4de7893517376bdd7fd0955fcd1a0f7ecc60e5b5bcd561562047d0cc5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(354, 88, '2fd3fbd9da4f9aa6810f8aca2b966d25c896ebfe4e52e7d38685b9b2cab12629', '{\"_s\":\"10ca7924c1241cccfc036b3c3a64133a\",\"_d\":\"9b85672dcd2a84bf1e0fa9aaaa6d507e9c12c32cf38641986ddb718b361ef1ba36d809afc8ca24a07de18d4f74e12d5f429ca19e02e65230ad9757cb6e15ab7d2af21e688af55c7488e6755a98921f7035a36273fa08a61986bea4946f25bb2f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(355, 88, '7ce3779687825c939e0590ee96fc80d2', '{\"_s\":\"db3fe9e2f700617b68a28f750ae869d5\",\"_d\":\"e78bba764f72d5080a6e8f3f0c9f0a08ef531dd2632d1888f1fd54939367a46f672a89ec2a5307eda669f78ec4b63bd54e52432017f424bffe2e2c66444c1ce5945e02491dc24a568bf18c928e1ca1852ef00c43241e4fac4f63d9fbcbf888df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(356, 88, '6cab3606584f4b15776a861d37aca15a48e89bac4c49f92b8812a404ac85f3d6', '{\"_s\":\"e3798824a448a62bff381da2f682ae96\",\"_d\":\"7262e3dcec492ce1c3c501e58a18bbbb8ca3ac160949d69d7768f5c3f2058a43e040594d5da5dc68c5d9009f457d08ade645ae41685e22001d5f280d63b4ae2e9835df4bb810fc1b3606e29a853aea5036c1cb52f0e29c952dde680d0ed86bf1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(357, 88, 'f548687e006b27d2e8c137b69a89c11a65e869e4b0c30a07025af74b687471d9', '{\"_s\":\"322ef9df654e2b95ce8dff051577f98b\",\"_d\":\"dc2a2b994a3d2176266e4d98838ec62ae261b5b1b22a2c713d84b32df277ff3da66a0238045e987fc6383b5633a4bde7f8afaf0bd82738797d550de141b610d7c9f19282582fedd49203f392978fbf0c147d10e3ca8506e27aa3554b7331522f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(358, 88, '9cfd276469886bf40879ab2d9cdbcc286b8b407c320be347d845be41d001bbe9', '{\"_s\":\"554ce47b44155065c525c844ead1a1f8\",\"_d\":\"ed2bae2b17e5d40606b79d387bf16650ef475cfb924a3f9e35804d74c4d3b72913433e3125f67fda7914954c0aa7010163db604c394572d7eab659e532cde9e0de423821eec4ed9aefee77aae926402dcfa36374b671f44674bf60c43d245c42\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(359, 88, '3ce41b65d1352b7b12effae5f4f2c20b6b4b6006e053c96ab7b9cff6b32943d5', '{\"_s\":\"d02df942ee1733348e49a1acfc78cecd\",\"_d\":\"3d4b3028268a0eba25849d185207ff33daf7f0eb462f18a1db4e5c740f81dd90ddef7dd2f77e8577d16b490a9198004ccb26f3e3c60a006c9def5b01e0a6f53e11bb5a2168f53152490b2ced2375e636a30a0e32e70d512c9ad384419fef7e2f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(360, 88, '44100097fecca831434fc35b29a3e0c193dda8c46da5bff2d109661e6c91bd5b', '{\"_s\":\"fdf4fa625c9e9aa3f64be1c26a3dd76e\",\"_d\":\"a7ced673c5c4b4a3f5954aaa6717ec5c96af00aadb97611a530ac996a06aab8823f4983b72ee1f16c02774e227ac9fdc1fbaf9c2ed2a579ef9be882dec9d718cb0f8da66e9638defb7059697aa6b126b824b28dbe7e21eafdd4f89081e210756\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(361, 88, '0af9997325e1f756bead25a4029a26e7', '{\"_s\":\"f8c8a75d6c6a74d3f257d623677e43f8\",\"_d\":\"82ebe4bf7fd1e4bc9abf1633b8c2d655ea1e8edf5d88c7c075db2845ad00c0ddeb012ed27543ae9fd3da17abd049084cd361b2da910f55aab5c90dffe10736e74077773789cd428b74d10cd15f5ed3fbda2d0d4643efbe25c0bcb1ecb937403d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(362, 88, 'f854a040567452a9e1299192d2a187c1', '{\"_s\":\"b519178fba044345b25e1fd5d7c67483\",\"_d\":\"b7fc7107857ea633d6efcdc829901203e083139ba5649920a21060e55ef5016cb363a697dd5580fa843c6c5c1652730f96c236e21b30a9a04480a85d9dfa5f53073dd1c7cf42c54cc3c07f52f301017faa927d9285e3bd25f9c11a770482e17d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 15:59:59'),
+(363, 89, 'f3c0dde6e98a6d77b74e289b0881da3aceb1b5e54e6bad6654d9fd7e009329e4', '{\"_s\":\"bd1bb9de947d1531646a89baf2e3bdb9\",\"_d\":\"aaf689a895ba32ceaa4354f59fa974a4eee88d64122e4c34b682aca1906be73811d91b11498ea56fe55406959ec167e7fc260e3cab50408d1c999a72e3245b561545e5cf65903ffbb5b46addbde91b6b73bce47b7296aa20ecc5a156889a5d07\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:32'),
+(364, 89, 'e21705489c48187c0c090cb9c7f3c7af', '{\"_s\":\"244555e4d2f66c31fe2dad230e15e0ec\",\"_d\":\"c86ec821c9cf1930c9ce744c309574aadf9e97db3bfa055279a387116e29425768e32c5e91cc833512ea77a7cade43cf4ffea029b59c854ac72131e548767d5b464dfd8bb086f514488cd440862c20188f4ec7660c67e6a6d98743fb40a6e192\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:32'),
+(365, 89, '3784e435e0ee6497973cee4a9499b1def1b8022c116e5d61d48f2b831e77b530', '{\"_s\":\"2ae61a8a598a7bf0ab5df8db49e0ab5c\",\"_d\":\"7c653f8f01764e8ba53559c77ea74da0cc6218e881f612f1e1d66fc170c713b501e57f2172bcae22e487e84338b67f87183e0d2c972f6ffc9f0a35181a2365765355b7569e998aa3ad5e48d263db650700f0b034bcec2351b63d64d4655b2e76\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:32'),
+(366, 89, '055188dab63388bc21e59ac396107009', '{\"_s\":\"12811ac8fa34aa6f299ced365641ac72\",\"_d\":\"7000c8a2b0256d58d6472ef7c49cc75e8f21fb9bef4b70e519a45e138eca808a4e9460ec63963a963bf093df91a243c8166c063a014f3b64d39a16dadb9a51735a6f0ba8dff4ecec580ce2dca2ced8ea04139230a6cbca0a8a1f19bed15e9248\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:32'),
+(367, 89, '0ff35c030316cf78d2bf545191ba21bf', '{\"_s\":\"021a6e42bcd09e890a7e9d2c56d6fe8b\",\"_d\":\"8bedf6ccdef09dcddbd32ac96b6c2811f99d12007d4e77646835ffd5a1653040c9e822ec565adad8e1538f8f7e967d8db9fc615c382735ce8738eed6c369f4701c738f9ddfe92665c2a808ed72e195cf6c7180a57c84b3bf0ce9ac75abaa8c8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:32'),
+(368, 89, '083bfe70ce045cdb6e4d9783cb6fd38dde39df9ced6a1994a8f468198732ab56', '{\"_s\":\"72f37b34cc093f57acdd0ae40c032dab\",\"_d\":\"b4af6c736d09987ad88f2fc590730360e7be7ff841fa18e3d94784df35a362680520b8af31a63c3c909f8ce08edda279d69c9e2631b59f01d7eb1a084dcc895b363680d009fb1a6be85b76828d5483283c60b849c869dbb9c70516dca52b3408\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:33'),
+(369, 89, '38033b9b2d9d626ea04b55ceb5fe3613aeaa5ae8e77b0486e791390aba01b0f7', '{\"_s\":\"80dae5f849861db3ec2da41e0f17a769\",\"_d\":\"f637cdbf6bad879e7f1ea134c83e36415376231c2549153b8cd05973eda851f9c5410da92da5dbb3233897f3e5bb6004ab53f2dc3c94d3e8210687cc49e442f7cd97aa42f2fa61515f42726a03b21b2e66bbe582c246fbe6fdd513ec1274c0c3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:33'),
+(370, 89, '803ab0ae2ecbf223e00374b24271c3b1f3a935564bbbaf036ceb6feb5d2e4880', '{\"_s\":\"fdecf90930ac3e41ffa07e192ac21ed4\",\"_d\":\"e11aefea8439c65debb2b2ff94afe739fabc0d179d3b7dede4a81729046d4fffd3c6b6cc27278219c2507acba1b595c3536d26dedf1b4d701f3506e774619ad4de025d6ce220d41a2874422c10021dcd1e383f4c7496df78c3c01e3ea0efc274\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:33'),
+(371, 89, 'b03af887b8e1ee8aa84183613d7781d10dc291f9c6b034a409c5d7c9d8a1d78d', '{\"_s\":\"6600a96729d55c12d94a074d35073a81\",\"_d\":\"4709d3d0206f9eeea16d4152bba03bfcf72a3d3017931e2060fe7ab0fac470a8918460496eda40560f6182deabf5f58ffca9ba9c9fa0d73ae66ff8c737302f927f1707a466355cb1cce64966a4d5463b5854a41585bcbc8b4aca0f6b9a664f29\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:01:33'),
+(372, 90, '8fa9bc8d306823d4c3fd15e65fc48a57', '{\"_s\":\"0a562baece0c121ed5582c9594878c21\",\"_d\":\"16bad4782f6b512ab15cdca3daeab58fb84e888cb518173cd9fdba76a0de26f26bcfa2fab312dd7875e9b4a579363d40aea992cb53120690c88616c143d5a93f9caf68ee07430a27efca14fb37be9db553f21a09274198e891aaed5082c41017\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:03'),
+(373, 90, '5be6c5edea6d4466dad2f74c475daf8d', '{\"_s\":\"f28b1b7342265bf20b46cc8a99c4b3a7\",\"_d\":\"50082e7e0c223e73db1b41f0359e124008c1b9e02c52ff24583094e1050525984e277b984a1a236e69cccd333aedad352c79d67c140432a0bd547a9884296a98a7ba7ef17e3d72cc1816a1fef04501ade9a6fcfb0b03c28bf1f4f1a6907baa2a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:03'),
+(374, 90, '5b6cba55e94ba5ee4e8cbae51eb7a2c5', '{\"_s\":\"b4c0a211a249ec167cb3abd6d041c62f\",\"_d\":\"72d02a33f1be85e09108eced2b9670166cb0fec76679612210a8770345ee785e4714a738f2884cadac39ebfe53f41de355d672f7d702dad880f37d0d9123df40a610cda7092feb5ea41e5ccfee2796cb5897b4237fe7d4a65d81b67355837510\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:03'),
+(375, 90, 'bac7624d21ab0bc282fbab5aec6fd21c', '{\"_s\":\"ad31d910c08243398116aa2b95860766\",\"_d\":\"09a95081a66b672eff49547f9f6ab602e57dde78f2a78feef98300f71f8aef674abaaa0fc4690019f6ef13de352c36f81d91c2118366c631267ca2049e1ccf3c8b4de58225f487579d5f8fc2aec294d8208673137d5c7a3e83f0afba22d51eb5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:03'),
+(376, 90, 'd428978dca3e7fe1676a3fde034417c1', '{\"_s\":\"074aabe3afbfc438d8592457fce6cfc1\",\"_d\":\"f1c19c021974d1c671242d8a25ddfbfcfb8e367932658f49fac92ce4f0f990c4c4eab326091b3f5e8c4cbf886e8005286235b920eb146901fbaeb8d62357384b623c242bee0e1b05f500fa18f487fd68391ba14d4cb7bed7791088e32f65f27b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:04'),
+(377, 90, 'ba1ba97079e1e84755c3790202ef465d', '{\"_s\":\"5bdeebbf0a33c5d4983853a38ce30012\",\"_d\":\"12e89a1911e439d75331079df69ea6ec09436361816bfeb3bcc71c4a89dbf58296b431e911c56f8099a0f0912a2ca0b91703ddad0f485fc99cea063a3d8d534ca2510274537457b678b219e84706f5453a55a482b89ccaf451d478fc00dc5e02\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:04:04'),
+(378, 91, '947d3a0be2d9e39c0d12c3c6bbeefcd1', '{\"_s\":\"a6b7675906b40caa1597328e2e731713\",\"_d\":\"d0da7e1a3a66bb6ab7981d4d373c2deb07bc28defe5dada25d3f7778c9bff17a361d4edb71d8f94dbb8cb42b531a7b6a3ce7328b21103c8c8f6b56425290b403295fefe5b1b0cbbff034a02bc89455ad159fcdc988bf747bf2e0e90e25c3b5c8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:05:38'),
+(379, 91, 'abbd4848e114fc30f22a6e7e70de1df9', '{\"_s\":\"3de5ca24e886c861bcd4b1ed6ce9fbf1\",\"_d\":\"3e2a67ea74caf63d8fd7679e04b23951cd81d036a1c3c1761c5c6e63638bec356c3dde984db4ea3a2274397c149a591d3fc06be26fbc928166ebdfdf09fcdd8621a29f73281a8ec3bc8a15e4dfd6b577d8148b1acfba07f8dce2f75b1e27c40b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:05:38'),
+(380, 91, 'f4195a93f6d42560ab2314c83e0e4e10ca072638f3c3a8a85a02f4fd652889e6', '{\"_s\":\"15f615187473077fde0efa3827542152\",\"_d\":\"832ad5e8c33521168f260b1a5b7df065f8c00afeb72061e291b2207c7548f43f71749a73b70e5e0db59bbf5e3a106256b54214716278952e74ebf18c7954b02960b4916a57635eaeee5b0a167fbe5c8bbf0deac3f7cdc7624200598d3fe56fe6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:05:38'),
+(381, 91, '850ef9970217a16fe835c649dfd42334', '{\"_s\":\"2b642e372fabb7fe60001aecec13053d\",\"_d\":\"013c3ad7e5ff41e69175361cf1691999e937399427c91dd2f24b2b572b7ff558f05ed04f0344db95b8f8b3ded2cf06b669f3c5189e6c1cbd3d9fe2133a04c02899f206f90c00d40032ca6e8e27dbae887a114037bf091e21d6eb5329ea7fc1b4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:05:38'),
+(382, 92, 'e6d586b1e6a08aa0f4c196db42d8babc29bfe467d0a4f558b6b9354a9e583743', '{\"_s\":\"bde99220b67a3b5ba0c1cf6f469b4c8d\",\"_d\":\"8007308d479014f46856644e1cab6a0903fee96426c7806604e382a5c0c5952a2fcce5d27f0bcd95a7f73dba120f594cc9e29dbc06c055eb8b8eea38ea8e5423f265912eb3f50c8acda8e09912bc05df39777cc8709b8ec390a07d0afac1d8b5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(383, 92, 'c024d7ba101c18ccb042e3a30fa6e068', '{\"_s\":\"f64eeb98afbbefd3b1a0dc0d13a7f559\",\"_d\":\"3f2801fddff64ffb7f0eed0c3e69f32059b60c974c60fa50b8e9a8933960e8feb775911ddabdf3d808f00551560855af5fb82812c43b15a1bbfe7ef90387e12f6a0f8477937885a98b43c9efd4371a44116547b8aa2187c79339d9233f1e64b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(384, 92, '6bb1ba7c7ee6f33f3acaa8366e26f4adc29d9bd22f6e6dbb38414c7ccc73a30a', '{\"_s\":\"765dfc5eba041ef14781b9dc123300f1\",\"_d\":\"49134102b278f41a7dcb58b5a3f9e88d3bd1fdd72cf8a926108e986001c6f606f7b4301f2760eb1127d4b36baded9d099d1150372d849bc38e950b63eac6ed067e2c947dd0397a577e08b5904bf8d93a2600940ed8b8d0dacdf67b81dc116705\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(385, 92, 'ad123d06509fa2eefecf8f5771eb8888a14cacf86e9a366f92e6b2a514282315', '{\"_s\":\"c8811855254852bddf5283732cd3af30\",\"_d\":\"1661604584fd8633a10156807fabe1190594fbcf76f9c584411c7a5ed6f74f58da42510b4d082a3a9a4c7e3189d46a9d7aac3ee0ca65a14e468c015dfe97c9ad2fbeccdf57dd21d5c6a31a911e0c389bccc705e79d33ca3fcd8f9d136c688044\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(386, 92, 'b283a9e0fceac0ba96f39d74c3e7aad8', '{\"_s\":\"948957a189a08e406e3dc74b82b8bc51\",\"_d\":\"a6f618a5a03c7100cd30d7f8997aa0bcf35a062b54b8c1da8132e703785d046de3d0492bb811110bf61ee076f8a1b8e6bf06c59a4bf7da4195e562b57ef6e2490c49447bba95d0e0687c4ad6c65e9db4eae1f0791785bf8000daf6aa9fbfaa43\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(387, 92, '55774ce7a7c6ba0fda63b080745455e771623f98735b9749053b7541d0d55f11', '{\"_s\":\"14942e6ea0214ff1e233d29da11442ce\",\"_d\":\"d1290ad6457cc6ec8d004f96e256b4f0eaece7b969aadbaa35428d69fd1caf96744faa92178c2c954976bb82a01f3d78edeaab47884fecefd78b41096c9ce0d3d94d03f1b0cb3dcded2bb52630a6e38f925ca6fa29271682f90727a823b329a3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(388, 92, '3693467750a6b6c4838baf148e93398f0bd0feb5b8c43f931299df0bc6033fb3', '{\"_s\":\"1d5ab6099cf58de275a8225a1423f0d1\",\"_d\":\"aa2dcc31045025d4be3f80209e7ab2a6e1f21a7e3dff95dbca9735810e069897cfa45ea4d37257a69ce3ef1b29e799d17f6edb74c198fa74ad08874bf7a38d583f4f4590310124ec8e3cd3b90f0472e1d852d68c888794be6636e384df1fa969\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(389, 92, '86bdfc62b74b656b569de84952d41645', '{\"_s\":\"0dce27cb78be73d851a97669206f8559\",\"_d\":\"0e07e06d09e229641d6c893ac0667b7afa588ae93b6101c7a4b7cf50058fccf503f8cc136381dd72f2ad478b337a579cfead80805d4d18587ac6be4ca36af9678ea20a7a56b87481081369b5def7e2eaaf16f6a6e10b0b848fbc42222eab85b1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:15'),
+(390, 92, 'a751d0e051bbc2fb5b4c15697323396d05475080237b627b60947ca6e23736ef', '{\"_s\":\"7a5e7cbd21669f6d09cac7b874505385\",\"_d\":\"d54140176d5c774cf158a314f8d372d781f6201e4bb280631d239df2b4c34f763ddaa323435393603bf11759d18f0f83459abd0508a9be55c9b15f51e6e8d3897ce8ae89aa9917c68835baf87c9f1cd58fe85365b0de9d49d690a7b749363890\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:16'),
+(391, 92, '5488db27f60b146b9f5e16be3412845bac04ce1f99e82b2e0fa663fdeebbe085', '{\"_s\":\"414697cf106ab995c5a3ae98f76b3f6d\",\"_d\":\"eb48e786e64f87103d0c95fe0d1b095145b0bc04fbeeb6e0693f203e5ff784c969ecebecb024593207d7b990b2958d792f170a52df4a70c6316cd454df604a0c61ac81d530a68ea0ffe0bd9d2d1024a8f209cc68c13afca9c40b26794adde089\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:10:16'),
+(392, 93, '80a98dee6b2ac3b078b62124beefe586611a50137dda54cb0d96f50c5d276be3', '{\"_s\":\"2ad7a732540b1d9b81f93b5522e3e6b9\",\"_d\":\"f7e265544efa58ebd7e0ca47aa2d27ec151c006491bb82dd417aa0a89cc8969dfd3cc5b53ec85efeacae86a167cc2301a9087ec5cdc7329356ea93aed85d9783aa222ce1cd6e7de6c3667c31673fa3926fb77b0c4cb5a2267bd4cfc093ad2f91\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(393, 93, 'ad7371953db490afa5f6bcbeefcb3871', '{\"_s\":\"de0d371c71dc7509ae923b642ce7773a\",\"_d\":\"dbff4b9be613e227333fe58e809c1efdb9e6012765a8aab711bbaec8c228ddd2dbedfb07fbd87634651457a8d3d387f74e8e06df52e25ec4e8c246946b65439c4997f72bbddddbcb7ce0a208ffc139ce1b319d46663287aa84f06eb876e7d30c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(394, 93, '631a902a50766f1992518def6e5b75d1af3bcfdbfe5235449d0777b6717104de', '{\"_s\":\"b57c8330bb8b463bdd16f066cc020f6a\",\"_d\":\"808b44427eb73867d6d1d028585357d74cdcfc978cadc54bc7827ac1ebda30a12150719340805c23a046048842cc24ec8ccd3454c2452b545e91806a8b6f4acfa1b3c569e2cde34c159d7906280ba68fd11e86943c233ae5da068ced6eaee09c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(395, 93, '00d965987b2c4a81507f979920af92d0', '{\"_s\":\"769ac11c652fa67b8c3023b9129b7099\",\"_d\":\"b924cd7f8e843f48c25c2aa46297e9055fb65c06ef25c1048d6867c1f9a1509b8651bef9b2ccf70c5c997e0c9b7079ed3baae3ed935103ef7d7a888d25923ff09f7b2c3c4615ac3c9c2028d384c98cc11037d7bd6e3005517cc0d0e3cc186d19\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(396, 93, 'bf4001d16b127d696896cc7bea826d55', '{\"_s\":\"2c96e890f021d0af1aeb044653222518\",\"_d\":\"7f166b088c06cf72774107531cce57349e45f8e34ba6034a8b27cf34873c5a4d4a58c89a308d968a8dc91f1bca9683dad2b473c49c52e7c3adb2910247d791ab2425f5cd7b1813f53b55af19d0400e739b2723c569804ea6ce706c9be65a41a0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(397, 93, 'cd5bc8b91b3310d87f8b9e874d38f0beea2959821138eae7b6df7cea463072fb', '{\"_s\":\"e63f311c090ac3efffd6a7447caeb86f\",\"_d\":\"d6d93be14ff8ff8c6c2640f41b0ea3150f085eb4167c7e16f5b792df7ee305deb3354ab092a4beb03120be97a79eee93bc50942c6e6bf69e0c6a0b1ca5b1ced1543e3bd55f03a779f27e9a075c65028064013f6e1b3ba3146a5678e5f1920263\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(398, 93, 'beb4a05d0872e1eb5f724547ed670e363409e15275eff824706d1d3a5172ce0c', '{\"_s\":\"163d449c44833aa6c9b258b04370d076\",\"_d\":\"6b72fe59f438caf9ef3bb81222628728ab2233e5c363cc559001f59abb9d48dbd704a2ece501abb01fb9a6c63249a93751f3d0fb4f91faa1c5fccd135f344b27e006dd68cc9b1aee780952394f3c0e9851b206816debff723f3b693be8c00261\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(399, 93, '15a801e5d3e9e68704449af9f1648852', '{\"_s\":\"78898929b427966e2eb26746cb72fd8c\",\"_d\":\"c0961566d9f11953e9b5cfd706ff87d956fa16bf57e50ae4acc092329374cf7ecf151adbed26c506bf3147d164c3ebaccfae68be5f64eb449549b9f10c83aff39291a6c38b76b022fdbf7c70ab677846cc2d948ea2f4b0a70c9b49e59c160db8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(400, 93, '2b397fd8998fc470a9e195f90a77799fecc04c1893b58c79f2a8e5ad1fadd64f', '{\"_s\":\"dd40fd8b30cdc4af6c36d17a59250e3e\",\"_d\":\"c57b7f5b02b60261616816b6048e03800cea8443d3dfe5c4e32f6e5e1591ee44920be50a6fe9137085606b5d562833105aeeeff3c3de30495392bcf6d6fedccdabf223162d18881a6ddc147bb16f3e7ec56a470e281a4791f3678666d6a464af\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(401, 93, '92b922cf9efc4d0555a4aa6b9e208cb2', '{\"_s\":\"0ce1a1ef9bfba0e3dc27cbcff8a386c8\",\"_d\":\"d7586e110169e1fdec47cd0d536f6361ed7ce52a3b14bbb07f39bf23b9c085e2568aebfed84b6ec0c92d9ebacd6b2270063696db54322e4867747dd10d2fe4e6afe0392db4af03fe73cdfc93bb8d442bb3c565ccf4c754abf6e597812dd86f33\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(402, 93, '49e4c41f2253159408ddf5777d95851e3874faab44133fcd757bf50b1ece7265', '{\"_s\":\"6aa52c7fe60dcce4d9e236983073f99e\",\"_d\":\"ac761c2ee2ac16983aaac1952df412d99bbb138f81bfab94841cecdecb879cf9cd92d5e1460309b7117d20b2f78fa2705f57305d2f5bb8ef355196547a6bb0ecd40ce13650b2c430b104b81aa143b35fc37b8c6268b134f923d63847641c441a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:33'),
+(403, 93, '99036e1024cda95395ed7fd87ca46214', '{\"_s\":\"d7de4cc80d263cb8b7b4bbefefe4f691\",\"_d\":\"0efabf2ca3f5bec88a22c00933bbdb4389926290867dfbe3aaa902b55563ffe2b2b81eb9635f8c9d50a2f394ab22321684b0366bc03b807c0cb9a6982a14b1896b03a74a252abe256a58092685cfb2b5ac098ab1ae11da72e6041f84e7969f2d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:13:34'),
+(404, 94, '12f032d36d93508a2b3c0325298a1f9ef76100c9e498785b57c82e2555d12ed7', '{\"_s\":\"3914782a6da31810645cd976d015bbb2\",\"_d\":\"c5d71121a9de711aefe41be51e01b600d909f13ac4e36efd879b8e270a72ea35187177e3290ac871b2d8da3273548861f57f325cb4509d13c449815a0c9093d90241ab87547311489bc75a12dc72cc08b71c86b20541d4fd5c284e92ca2ba0fc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(405, 94, 'ce1b4cf9173b643b996776f3c66dd69582a4cda8e05eb18bee0156e918d0f1d1', '{\"_s\":\"f7cfaa392023db2da9c1ac15b3e9abd9\",\"_d\":\"270085660cb3cab5c7ffba51e302465013926db7a97cbc4d5f04169a97dd76e010a2b2a21466fddf5a3ee64b3a8a05883445915838bca679925e2f9dff47b5049c6d7304580c8da24a435b6a5cd97c9ce70e361b1be493cd7e1fd709abb9f82a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(406, 94, 'd2b1066204d6ea8c7b6ca90e013702d6d78042b4cc71a836687f78f3a44e45ef', '{\"_s\":\"ad5706e320a4f12b38a34990fc7fb544\",\"_d\":\"153994f3eb13a16911c480e3f1539e9e4e78b710600b0bcf51b6e1e788c179a3516192a4df21ce5e743b025ba172136875a88644134d7ee631335ef392b8930796c25fd9d8d3aa72351520b349ec6e9bb330db13b70e0358a292b26b371b5fb5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(407, 94, '0c439f6785bf67df22eb9232313ef8bc', '{\"_s\":\"77f8500a58349575e8504c2a90748a91\",\"_d\":\"a42df1fc1b52a9f0d29365f6c3d5d311f4e81dbc9f6afc250617c9bbe957088d1c4363b991853c4a7e67c151dd403fc5dac65206c35fa6c53cd095fd69c7a9d533eddb62628ec402e7a8aad10c321498fd7ce98bdfd6f702fbdd35384c580aca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(408, 94, 'ab8cbdee51b66f113f3a9beb77cf74467dd1a34abc7838609680e1613f4ab316', '{\"_s\":\"b134f1c18a44e0584d27e6217355d1bf\",\"_d\":\"9ce6532ec410c5e86100954833afafc63328c0fc10c294ff7c33689110b4edcae96b9d19a28a85d92f3388e8778b141ee49b963e1b3dd4e5fd45ee4e5a89db2c85d1228084f662a2ffedaa5274d97cb3e3000d33041d7cf4eca8d1dc8d9fd6e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(409, 94, '9e624c6c17a1a6fa4ac96c80764f6d8066d6c40cea6b62c263ba89123024412d', '{\"_s\":\"c0c9ef4055cfb5929db4fc81fe0a5f5a\",\"_d\":\"ceaf5b7f495898f665142f24e5e742b2656edff1a705303bcac7a8812494bc0238668688debe0a982b3aabd2a8a2fa1116ddbed17fccb65d4fb2cf63a4cb30577417a9ebdb0676c3bf4977693f2041402856aa1951d6b47b19f5fb3fbcf1d4be\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(410, 94, 'f94393637abe76d80a9769c8c715e5fd', '{\"_s\":\"55f1cc59e6248d8ff283dd7eedbae1a8\",\"_d\":\"7df67c933f1ed00bf75944d08e2909bc1ca13351e6e6b29fc1b7e1d0bc1251b735c248e728564be295822f14eb778050e39fbcade38b6a9d643d57c5ed4a8613c4525abc9f2af9f8a906ba1c3a0524e2e7c16f4054491bc3c247650d3c8e3447\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(411, 94, '3bca679cd59b546455bec970883f245d', '{\"_s\":\"3aeaea51bc53b625e96064e73555308c\",\"_d\":\"873b083c39637ea83bf4da4e8960ce8e0db77df0b52576fce55301e2110cd4ec41e436596a0fc71cb770d949e8971de27ba338289a309835ff16fd9db2393a5cdf8b38ad2284b0204e95fcc383549cbc6dcd09293b92671864b7503f929ee335\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(412, 94, 'a6f589e0e50bc5645f62408f43f1a8ad', '{\"_s\":\"4a2d45a887b4b301f6dde283c58049da\",\"_d\":\"5198cbfa9f02350d8947a8167542b9d4f97f9e08ff2029ce0fefb7c0ff0c3477e41ceb2be6d1d080c655fe80f77a53f989ea8214eef3243150a3d622d9f5e4c7c29222dd81deca396a69eea1a9b8aa70680054a60ab46d55cbeefaf29f30c861\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:15:22'),
+(413, 95, 'd26308372c8d7be7c8d8872702560903', '{\"_s\":\"a510022d4bae1cbd1d0e5ba1e314f80b\",\"_d\":\"18473c279b7ce08958e7317a6df46dc48fea577e6f6abbd113041b5691c7225fb128f5f4e4fb525af6b256480c8b088ed23e99adfa30dfce7626460f1f1f5401a0d2b4685879fb5bacccb882499be20163def0f7606b82fa84c44efcfa49ce05\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:57'),
+(414, 95, '302cfa9dca5ee0cf4a7df093f0aca8c2', '{\"_s\":\"2ebd34b96105d0838f55438e95fbab79\",\"_d\":\"96f2450c0c0a365546ee9cd1b4dc2c22110e55d1d3ac1708c1619614ddacae24bcf693e7da7c2a93fac1951db5822ef5419ca732cd7c6d21494f843e03a0b15a2424c4b4976336256223336a71fc6aca1f1a92eeaf6eed872fba7465454330ae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(415, 95, '279268d82118a9cb87a48d93bba7c06cf7591a36c5784b03cc63bc3fe0bb780f', '{\"_s\":\"c28dfe6700625c38dfb2a7a9a455fb7c\",\"_d\":\"5e882686770190639cdf16d0f80d6a493a972d6fdb2aa6cc1544d016188827cb985f41e7017b81d3dbd67949926639046e0b93b34d3232e926173314bfdce4a211aea336f355a548b89095fdfafbc9c3fb27f637d3ba7731c971637467ccb020\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(416, 95, '86bdfc62b74b656b569de84952d41645', '{\"_s\":\"c7d3de0a6dcffa31407cf0c01af46f71\",\"_d\":\"8e37ed25256ffea8c265c873a205615bc5e6bea5b63377f2dffac389990da30e01a83e7c47600f0c1a4c37baa8d7ebf3a9d1985c91578806d6b62c9b255891d36911a8c671808d3f7033e28ee49266cde243c242b5d6d1a3dcb59c091cec89a1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(417, 95, '8a3620862ffd807b07c9531dca01ea51e04f0bc0c20f5e56a3dd990cf340b682', '{\"_s\":\"e82ff3097f678289a28df3a40af7ad95\",\"_d\":\"34a99aba430e25b424c9a7c476015d92bacee37c66b45f2d71145c583285b0e0dbaf8effdc0ab38f342d0b419072473b409fb8f48ef8d4a5b03485822d8dbdeea285045c1ddc4bd8f4c259c30eeabd6e15ea392d34f8b5bf328c4551a474770d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(418, 95, '2d104b89278d2e97d68468fa21946b8409768301a90cb3e4d06f91612d5080c0', '{\"_s\":\"639e22c675c990085bd848211e875482\",\"_d\":\"69876fd0c76a2fbc70d5e1d74013c45c55ed5ee5b0da08b033ff0106267bc497b85244787cadde88e9bca1c204cfb6c95397590099e5cb79d8d119105e04e1a8756a306889afa624064970b1bc9cfcb9235cee7713c63aa12e715bba9e6b77a4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(419, 95, '1f4bd28d355515bdb38d516d08a4ca0451c0e503bc68b7a2896cbe5de59b772d', '{\"_s\":\"4383c7a2339e5071ed86ae4b49f818b6\",\"_d\":\"dffc5d1ca4b4febe4c07140eacde76c87e288d9a551b87908cc7a26da5237a3e44d0709cc28ed92a8bc0ba7c33b18c84ce9157fa2d70647300beadcea074843c17905038657d4b7eef86516ef255b4247330598edd733ab2a4c52966e2f77eb9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(420, 95, '1bbb1b8984d5cf9cee9225129490ca36', '{\"_s\":\"bc00ea8090ea7fe71afd45db95dd5944\",\"_d\":\"a9aaa5c2c5fd3f346d4fbca20f6cfcdea1cbb92a5d12c48d49a67abfb74dbf60edb67b8d111372839fc3dac968cac1cdeca523fa6f107f2ee710f8bec1a29833cd6992d3cee12bca592ecb45f20a68a0e055a9a2f8eff3c6762aef72280632f7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(421, 95, 'a541c48ce9bc4ea751c1a588c74dafebde249f7c9c0b34cd2f508611d00be8ef', '{\"_s\":\"f90ec9d43617b116c183d52ddd2bb304\",\"_d\":\"e63983ed8a3d32db3d0ced84e90b50e91ac944aee5ed1371c140fa49dadee3851f35e5c0ffa0fa60be1d20ab6816af49e58d0bc02de9e8a574cd68d05fb2429839716f105bb41d13731fff754c38f78dc397bb7f8ca15dca24ac12746fd68e49\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:58'),
+(422, 95, '4861cbad3a4e7f0fd28130967582b6f0', '{\"_s\":\"138e762180a0f844f10090ba5933ba38\",\"_d\":\"943089a103f8e3766fd8d6236813947d6fff8081e535743aaa2ba99e08193f22064614cca12a3d371eb94ba59bf98f682e891841506005055b5a35f69c693e89810574fcb1be11c41ef6f302f3528247d32a35316b672dcfc2010db6b25f1d47\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:59'),
+(423, 95, '59340ea87c3aad115ef673b3424a4452eaca0790dbd8b5dca0cc9139b1aaf1ec', '{\"_s\":\"d66f3b5c8fc7384c626a27ef6bb87dd5\",\"_d\":\"d41f1788d103fab941e0c80beffafe12ae9fca015d28cad0862e93262d105600b9a734c7c16cc89018ce786e21fa53bff005c8c44b798e81c91877afddd78160e994c4a436389c2dcbeefaedf50f297ce055b5d35ecee04ed7f620fd6dd51a50\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:59'),
+(424, 95, '1c76cb0442772a6001f70cd9c6071506', '{\"_s\":\"ff1b3f42f066186d2e8e4a649dae2ce6\",\"_d\":\"876e36cf9b04dab9d094e17ee14549820bae9cba0227abfac10caca973d0eaab0bd626ddc26037e07a3ce33625093199b95eb3db7611734496eb6b6c2bc447f2015662d614fd95a85ac55c001a5cd72841cc994739adbbb603f37978141b0f0a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:16:59'),
+(425, 96, '52f874e81b010ed7acd81989e257eca8', '{\"_s\":\"486660b91e7374f7954f54c8d8270342\",\"_d\":\"85f7752c552ad53dbd2a88048e9561af80161bc577eeafde3e714e967b5220389dcbf22fba448f5633ee3edc4e5bf417dd1391c0d948030556c35d99e15992164794d0e07d0403a505c0e2d774bbbf55575eef2e83c5ff05bf1f793176ae5162\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:42'),
+(426, 96, '749fb4dbd8c8f3e77cebd83dd40c5b413a3368af3941c6d8cbf891c5bb535830', '{\"_s\":\"2b14426d02209b5bfac90928f010eff4\",\"_d\":\"19c3dedc75751e8ced06678c58b0019bc2d8933f12ed115f2e7aedf1d3aac11527f7e10cc0fc16cb7987259311caa9e4d732d4399c3cc0556a2dbdcc2a8a331dfeba0943f88305e00a87d44a7b69338088ec0846c56d7d4505c3d6ccde6baf6b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:42'),
+(427, 96, '2d2e16dad5fb7e6bba5bc695084c96fe', '{\"_s\":\"b485619ecbf13738283ff55cf2b8bb7f\",\"_d\":\"8443305ee7dc164bd32916ba2156c3b821f586c1c606231b2b3d700075f2208412c4d76125f1e248e3108c74d262d66db7df50c9481c0c38f8ec59d69e3c7c39696ae4cae216d298f4c59768dd489d78e8d6a64041163864643d423217b41968\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:42'),
+(428, 96, 'f04f52462fded2d5322b91f8b5f0fd8b', '{\"_s\":\"0a26590a8d6489287d5c27f8bade8e88\",\"_d\":\"7234504e0f76212f7a0e500a538fa0fa0513253ecb0badf892844f648c1060bde870e2d94d1d7265e65a5b5d8afbeac9fca160a929cff5978209573aeb15e6bda860f109a669f3f95a9f3e2e2902000f1f7dee87f805c2b039708a64d7dc0eb0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:42'),
+(429, 96, '9abb9fb13b46f89c693cf669dfbcd241', '{\"_s\":\"11854f4a213d6e1e8783580074b67ab6\",\"_d\":\"ae3d45c3fc139d787c6f09977baa1a8b2453276b86c9291bfd0ae64d547fb3430dd85a26cdaab4799b774c6244adf58991b391ca54f93db8ca7a0ca4959fb40d2f5aded8e73cea95334ee0a843416da1238aa9abbff5f64631d223948bae83b5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:43'),
+(430, 96, '6839df1cbcdaabc6c03267426134768124e0ff84a78bf35ab652632493882cf9', '{\"_s\":\"4f4a4989a56137309153141d1ce413ad\",\"_d\":\"b08ff6fd84c5f657b7fc902b2d4b1d161f5269320262b3b0fb7eab6295dfb8235aaac9cb55169ad5a88d6ec53fcf2c41d46a6138d0f477a35e5493a226bcf7bff5042e91923151fc873eed9b6d0c339b75b619536a586457045c96483780aa05\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:18:43'),
+(431, 97, '87bf58348d01cb5eaa9ae76c856e96c751afe36431af4906ae8a2579152376d2', '{\"_s\":\"f4cc6ed8f3604c3942e75c321991d259\",\"_d\":\"f758edecaa839b3a24aeb16d3c4fffaec8dde2847e154d4d10ac3b28200f34630e43f550d5682bfdf8c3454132de7371dea32d5c0e6fe7d3b157c631093a1e169da5afd1385298501b5a731dc7c479b0a02e09cca55185e3aa98b93d1de1b646\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:54'),
+(432, 97, 'ee5e5b45898e496362bbb377dc4f6658', '{\"_s\":\"67b57105f8ff9a7ca8b003e972dbf4e1\",\"_d\":\"33c96c3e314f47de1165775632e5017ef0f701e7f4c4c6b0b74475e2f197ca4dfde7b48fe4f2d7d4da527f7648f6740865e4636fb33d54786d9f7311c3454fa4333589fb1b0b08053e0ec613412f744edac048b10d4fe2b8c0a465bc3bdf6d4b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:54'),
+(433, 97, '3633032c7def3a5d4440277a72940159', '{\"_s\":\"aadc516e44b10e8630833b71dd41ddcd\",\"_d\":\"eb7a810b917ada685aba89f0675460d0bc37f81cec34ff3c0e322467554f12455b386ec9e259aad0e18cb66bb6a627b3a2566e2e5923eab89064c1d23042cfaec556994452674398f49b79639e756e750159fe4ff756990287a390d1f4b37da1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:54'),
+(434, 97, '7ecae257a6a6d661bc6f0628f45edab20150642eda1ec01509998a747327ecb8', '{\"_s\":\"e90b4e9d6595492df2b4009d59818b1d\",\"_d\":\"d41d6224cbc1c1496808754d74f595d380d888582461655df2725e2ee117020e81d5c224133768d7424b0dcce741696c1e0b618e58e783e34cd33dd3b64fd9af36ca1ff897f5b81ffe44f098ccf6fb201c0e324522f5f5400dff92570bf8ce38\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:55'),
+(435, 97, '3bd2c8da68d8c0e9ad65b487bed2b0be', '{\"_s\":\"b45eb0dde28582498ea5fde981f9fc79\",\"_d\":\"4f072755de3db625084f0ff75fd0c2366643627e4c2c2dea627007ff3386dfe2f50785cecc1d75ea2a2ba47cf9ee71055ce6a81a69dc93192124c33620dbb7c83ddf910f8faf8793da3b77eda92daea810fef54b01941e638c2187f7322d7a5c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:55'),
+(436, 97, 'b03184b6857e171410d4f065995f02b1469f8a003af8ad73d1984dd371fc3f59', '{\"_s\":\"f03c71c8ecd16e4cab2dd2e83c599c37\",\"_d\":\"a2caebf71c822ac3b097b49cc26e55b1f18dab865abde225d884656e02b4b9c325fa19bbfc25662e1202f6b49769da147f9e1ee96ec6db24fad2926c11f99e7fe9204c34bd3d95f2ca424f4f28dbf229cf3c625e5aa8a84d7a51e7e3b9c594ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:55'),
+(437, 97, 'e58b44cbd585c2c6a57fa8b47da9f094c16ab2bfcfd361bbe13984730f224cb2', '{\"_s\":\"02ac75326304c0199f627fada0660833\",\"_d\":\"ef79ec4c4ba55d4de7331d78d3061b82e8b2d96b8bc088ac25494bf84852ed81de8a56758c9827f15f62638fd77d90612205be69af109591760e2b17fbc0daa5c8546b8cc21f4d6b19bce795ed2766072875e36c84f62a4b21a7a544628ff6df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:55'),
+(438, 97, 'f84894e16fe61f135f027ccf9e4210cbcdaf87a2358727e47d0613d44b56cd8f', '{\"_s\":\"03851d7b7f24ea5f6cc451848d6fceec\",\"_d\":\"815daf5b8295bd5c9ae938ba4c95e24cd3356fd6904b45de8a382b0fd2e66d2f03a1019703f64551e7f4dbf8f0793853c0fa6104429c0c1f1f63d1a170e4b8617843904535881c9d5d25a539b94b53ae7916e1903993d56db0586568aa46f97c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:19:55'),
+(439, 98, 'f3eab5338219f7aea266cbe42d707b67e914f5a58a5ca9c95f24190f9149b406', '{\"_s\":\"77f1c4e5e364a1f8696f13eeaa301dc2\",\"_d\":\"b01ad02620737f4428249492ce52091e0122d8a32d87b16c4d50b16baf7570ec271dfc3c486b05bcbc43e541651874eb894e2eb49e4ee5bdbaaefa01086920455639963f1d06169c3adf48c598148ccb7f6c4003c9214cb0c80567a49b041ef0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:21:31'),
+(440, 98, 'f3eab5338219f7aea266cbe42d707b67cddf13b62e85c3e4dcafa84cd5994fec4e9c195c59a74a3e2583f035dfaed230', '{\"_s\":\"19dfbee3131b3ff310f466cca3d36e02\",\"_d\":\"e085c588ae25a93930b1b4c15c7a136fe3ddd1424982789c9e33305de56e9b1ed055ee238cb348554383cd8eb50728f8c23e21968ae6d4e29057ac43f83f2ee6ab3af651efa4f6c19a9abd81d1e60a5c94046f10bacb3b27f1d9f669e1f06f45\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:21:31'),
+(441, 98, '747fdaa075770c17b85b3b857f0ae8db5bdb3977c5d6ecb1c4ce1e683eb4ec02', '{\"_s\":\"2527785b4d2dad7ae6c778d2d1821c21\",\"_d\":\"5a0faec61bae86eb2edc89d4da99efa20cd85ff6fce1252959b4749f9187d1dae94e3a654d00fdfcf1732fdc2e846f41efdf13bea99799df0b6d093c06fd32f5a91b35cc4e4cce263c70fa7c1dd0b8d2dd9e3f0b6787943ebd8f14e0c02d0a39\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:21:31'),
+(442, 98, '6626f10d5a8cf7c933e14a96d1edddff421a37ed24d12ce05d9545273364ce85', '{\"_s\":\"836e7688fd59932e0e73e6961f5d7cab\",\"_d\":\"fa72daab2ba53507a34a748d7acacf1cab7720960177a0f6d251161883e5c6816d4f148035b854f6e087551806e73632ce9369f65d83835998b20e5edd9c73937d9ce62e1052745194acdf0e041090ebd697c87b1769da506380090b33f039a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:21:31'),
+(443, 98, '76256088847c80536e5272d982585d0981fb44b7b9d85cbdd845c8545b863aa0', '{\"_s\":\"a8958235dc9ed251864ca486f74b810c\",\"_d\":\"14f3a20d0d2aa1d56aae594e8dab553d858211da2b46d3c31f1be479dbee7236069ae555202503c51fdf1fad47fc0b42e1c441926079f421e0a362cb40b9fe9b29aac4f265d6ce79c57765906c533009f969095d5de69fa96f920b150faa4813\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:21:32'),
+(444, 99, 'f8b8353a106273521d1ece8b69077104521c3b6a52fccb7447a35185f89dec23', '{\"_s\":\"9358880758c72f37252a40f2ab1d9e9b\",\"_d\":\"4b0b25238252ea91fddcda9634b1c001984055fd28f8f36be4cc1a766af7c516dd707bc9fdc5613d44dbecb8150f0d3480473b186b75383ff3a515a7fa5763d0e528164e3c394b00eeab2fdcef508d9188a2df482f285ff62b3000f488e04b3e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:23:12'),
+(445, 99, 'e5de62696dcce04016f8dce7a5a8117ebec6e42b37c9923e007413396aa3cbf4', '{\"_s\":\"f9225f0a4b39780131037588dc499539\",\"_d\":\"af96ac3b69fac8248e7082c6bdcff2a8b4be027668b487e3c047f4005a5deec47d93f620729de5e16937864417aa374a681ed0c68ad9ac1e49b563d07c9323b239ba1e7ed35781d4e6b5025002032fbe7f4515e220e903f13cebe385c96fd86e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:23:12'),
+(446, 99, '4e09196d6d12e803902103c2c2e877b160e1981e90d0762a52fc68fd6ba7cc29', '{\"_s\":\"6083c0d25019e59028bdc28e255af2d4\",\"_d\":\"a841347e909a22e8f98291b93eb308ce6c0036b1d3fdd1c6a4498ef6a5a7a3d9a90f32fe749d051492fff4ae664a25fbe2a9f67c1279921b36687b5bde9268fcdb02de0f2d8b4ac21a844eda3b6bdb9b501e5682752e1ddff04f04ff4bfabaa3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:23:12'),
+(447, 100, '3daabaac1ba56b936c436b9503827977c22b409753d6f452ef0c53190b0b5298', '{\"_s\":\"4c8ccd674af71f7841a6f2060c6540ff\",\"_d\":\"2815b335df892ac949aa378b9b5b66ee733c3e76c295238b54307b65a76685bbf2ca66d79ce8c057e7c759feef6d2b4a89cdd7002378665ce420cba8271944560e5d20cbc1df6656857a7df0c4dba71ea1cacf62fb3e60dbee642b34812e6ed5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:28:46'),
+(448, 100, 'df74ab4d379795129cc317b22c686c0eaa47fc196875173f30c7450c68411b55', '{\"_s\":\"4e1577ebe2993ba0dfb8ba39fa51aebc\",\"_d\":\"dab9109f22acc178a266d5ecc71d24095f005904a1c32138e4740218549a53d22b7a1779f6bec7aa0b23f61c8dcfb5648e02c33865df985d6fa406015623cd03ebef8b6f6ec3933dcfea56a8f31f505cafdb1c9ca3ad959468655f61d74cf7c7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:28:46'),
+(449, 100, 'df74ab4d379795129cc317b22c686c0ec92747506ec15347d7cc31a56872cf01', '{\"_s\":\"042f439a06a32289f1c55b9f29fec6f7\",\"_d\":\"387e4eac696ce1ecba58750ee9e199750af76b56bff34a948d1d32e2271ed3fa923deb537b2ace394e4cf2d1cd5376e4fffd5651566f7b038d7a016c23fbac07f5ae47d879a9440c712305f567a8d5edfdf5e2b461cb1272c6ef202b27a3ad6b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:28:46'),
+(450, 100, '72e4b703f1d8cd7c401b40e9d3434289795d8391f127c0c6ca11c14dcdec0694', '{\"_s\":\"045dd6a121958db323a45715cf805d76\",\"_d\":\"ab436b5c9d35181f5f07887c19f88cbd1441c9b4de4cf35a71bb81178f53a2f81e05ed4ce0c8181ae8ced294da3362060ed731787c4f0e27ece9d4c74a2421a88b9a4573faf264b3fc0f77b22ef89234c07b7c083f8f1199320dc6902c3789e3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:28:47'),
+(451, 101, 'bf2d6fb8388090f0129dfda85fa25ca5', '{\"_s\":\"12597c773eefe5d104cfe4134887c22c\",\"_d\":\"00f34e82a9be4c060253776633b3cfca486abca61bcbf5ba9eb61412bd04f3f74adf2fe3a060874e5633fca2cff8994a891cc9c4069747bf640b835c68442fde3b02c474d1dde0dcd90bfb9aec87552cd3913cc50ae253e3906630f8ca60e28e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(452, 101, '7536460318b04c4f4969ff1b30c1f794', '{\"_s\":\"6f95b62db7685a5082681966945007d8\",\"_d\":\"efed0b68e6a286cc897333d340b80f7f06ac504972a0f52e55d60d9c8271e01f50754e9fb164c797a2bbf440449daa9ab53a010be2b109da429272b71d6260a6121900e05ec6931599e814ea10bfc4d40cd148f42095530be1bbfdb74540713f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(453, 101, '5dd298120911c1dadbef2d7114806fb3', '{\"_s\":\"50f1f069f31139196e7b8629f39a8ef4\",\"_d\":\"100f509ecfb20f066ad5c7c937cd570df615a5f6f457b56bcae19f3b49080f305d143eaaa2616671e718a5e146a875fc8590a5f04353c2c673c67f1c66a8d3fe79c6ced9a1e8856983bbca4f6290b7545d978cea55495a0915a1814483e09609\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(454, 101, '56b929d937e1291be5394d1d410b8278', '{\"_s\":\"37edd5facdd6638f90ab2ebd9364b0d9\",\"_d\":\"b21925ee4714997526aeb873d417119a8e556f7955695c969033148244403187450f7a974bed955b71bf3bef29e67b12d8b7aaf2408dd0b4e8bbd73177df611dd1afd79d07e60dde138c643d71c9f8b76567d1d7152d2b0c62020fed10b58259\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(455, 101, 'd38ec8cf4e0408db4a9ad3f4b56277b4', '{\"_s\":\"a112c0e17d4bbb9bbe16bd0b9f9c5887\",\"_d\":\"3069e1c7c665b339344a7c91ba4e7bd90b542cd3cf8cc8ccf0940b3afe9da8603c77a8a2f2bec67b718f32742236a951cb14a508a1c1f1333e414f2c0013443078607bb0e0ebcc40c327305be9d80d7ada22eade3fc4324840ab957cfb3eb7d4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(456, 101, 'fdbf0284a5799dfd31cabc8ff06f9e2c', '{\"_s\":\"fc9ef86546f579cf4f2c4aa285aa1226\",\"_d\":\"b9664b7d9763d2b0c9fa6957b4e7c8c6ea147ea24dfa4122b89c807e30ddcdd770c20976290b0d33ffe9f37483f6463c77ec44c4570c05e9e33330b52a9ce5215497be43df5b80341683e5143f5aaad4e9d3a732f7cf76bb79b34a39d60170b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:30:03'),
+(457, 103, 'e96345ed349d1afd0d105ebaefe4d0e2dcc87e8776a7b81795889b702142081d', '{\"_s\":\"09d013d8247c07ca5056d215d12f93ac\",\"_d\":\"a0346a3205ecb69175acb64ffd1b2342287fb0612c6fcca252b68b77823e4b6166deb2e4d4095674fb509901bd41bd4f357b7785c08f9a13e4ca4496226778f6bb5d773f71ea3c801fac02794f748d093daca8a8ff5f8f5d8c6f462cf38c5150\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:34:28'),
+(458, 103, '9fc76aa3353c716f4d6f11ace2a7d187d78b5ca19f5489cbc9c6d3c4524cc960', '{\"_s\":\"6a5bbe106a1170d6bd042ae5b47b0dac\",\"_d\":\"e0d88812e14b60e0c081dd577e1d014f4d1c3bff9fc43ed0a451617f717f47ecf2309f128154cb1be623b66d22c2a902dbfac74a658b74cdfd3cae9bd22e202ae8482d2dbd9f1e4dd3abb0aa6a46183d09869b304b3d26677d81434111d33271\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:34:28'),
+(459, 104, 'e96345ed349d1afd0d105ebaefe4d0e2dcc87e8776a7b81795889b702142081d', '{\"_s\":\"3c7741d21a044c084165c7d0743feee7\",\"_d\":\"ec9d6928a5f56d86dcab394900b2b65346c6b5e3768219774d03de2a09ac71aa7c8c2f906ee2c093973ffb5d7e8f9432cbe57bdd6a20e4f43d3c1d2552eb5f34443e899e2f63cb8be3a13ecaa1372e2615c56596a0d5838f80de938db434f069\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:35:45'),
+(460, 104, '5ccc605bf12421ad49b7b0efc08af4a50f88a8369ba6cc4fd1ed6f293b890cfd', '{\"_s\":\"8b8d05b8c8afef0c01154ab7fa4ad7e5\",\"_d\":\"e72f308dd79e60f73b5232398520e8918e41b4ccbb1d9a4bee64ba06ad108f84e9d9a2620be9bb1696cbac5f5de337b95c471ed3615d4c7140409068382ea14138ce610b911974eee8413e2d7b00bf244072b638203e2f46d01fcb119f0f9349\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:35:45'),
+(461, 104, '10fefcf142fc4dbefdc1c7f234c71224681e229306f57df0a2353bc4704f6316', '{\"_s\":\"76d2f958f40299c815dc8a97d323eb8c\",\"_d\":\"8fc9e4616d95ff30f77b36351c9045c1c00ce03aeced26bca71223ac2245659a317ecb8f09b2a6301bd813bdc6250d0faefe357478ab2689003ed6c6a586a5b73e6387ccaf8ccd34a733471ba4507ba67a71bb117f531db131f19574485a10a1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:35:45'),
+(462, 105, '919c6461702b121801da5684e1ffe35c', '{\"_s\":\"306393a833d68fb9cd507955fa66cd7b\",\"_d\":\"d135ca3e2d09b1f7f5b20a504380fa7077bfdee91a0a1306c38355fce62768d35569113389dd9c1f2f0d00d8c1d27f5fd03bbfda47be09176e2f399f80b7fdb5292cf73050aa7712f5ba6c0484dd5df2cd6262fe74cde2f2ec508483b3392f46\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:31'),
+(463, 105, 'b4597531151b329a36d2d6205e8484c4', '{\"_s\":\"484586849ec7168e0a119de285b95182\",\"_d\":\"3f231426aa08e5e605072b76fedef8c36ff0f2cf52eff6cc72b39e15c402d1f9d25e570d5ec6c8356010cbbcefbb399e67c108e2859e89269c111bffd4d54122f6929174a2ba7952c56d4b49342cbe47b48a4d58306ff9b6be87489876523eb7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:31'),
+(464, 105, 'e96345ed349d1afd0d105ebaefe4d0e210599537c934ecae1c0962df83ee9f9a', '{\"_s\":\"34a1598c84f34e6ab9cd2323f27fd28d\",\"_d\":\"57a5c754e29e89bd2c168163016b086cd390a8f8044ce852a9c70158b3dbfcf43ee82ee12009813673ba4dc0951f66fc1e30977fa009e47e98f71dab53512560794fcbe55362f2380abf4a9bebc10643ddf585f63ec8fce820bef2895a857615\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:32'),
+(465, 105, 'a832c68aac805c374bb5c130db399f55588475329e50180e211f08ccb23a37ef', '{\"_s\":\"1bfe1fb5e8941990c6cd77c00ae0292d\",\"_d\":\"6bfa83fd089906d74ee7f4b2e635d8cce97df069cdf58a4cfde5777eaae8e0e3ea064839c39999c51cf743d87b966fab63139b7bbf97b70c44a68982bf444346f8928ba2b5d079bc1b61727d49e9df3d19dedcfa20ad73545858f2a86ee7c9c0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:32'),
+(466, 105, '5ce317d64beb53a0d911c7b6668c478ecc2d549384fcb95a5ed8d2f764e1468c', '{\"_s\":\"482f7a057010726aa4f91d7145c4e95d\",\"_d\":\"533989de313e0217bdbbdad42a134fab3ed14f9a17ee223609477300f105713762a4f5fdba8c5e13f9860ce5579eac8bb330cee5a80df36a9ed8dd2e57bf0a98fd89bc605ff4555dc2c64cc181720de5a8ca7daa67f446428816f530f65056ea\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:32'),
+(467, 105, '0c162b44a131c9d60641d3b7482d9bc7', '{\"_s\":\"eca092bc895cc3ef009d52e68290b549\",\"_d\":\"5aa18f1d1550f2b1d537e2efbb0cc2c4339b44e27dccedc7b6387dea13b72f6775f0b90fdb996592318e9d85131c67795bbb83b5fc3e4d6971eb14da73830f535f4f277ed7278410c4280eb3821296f34de258480f8814eaf2ec63fd37201b5c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-21 16:37:32'),
+(468, 106, 'da0e225bb7e37e03b8db5be8168000a1', '{\"_s\":\"0a1a3f6220e01f9c89bdd38809f40fc1\",\"_d\":\"1aec2ac1dcf8d628451b62baaa1dc429c0e3273cb27d12e72f436f758478267147a2ddc892058309351e845770b409362b8e6c0fa4529e1139199ec4f4c8c5e03783fcabc78d8ef717a4de103639bead8db9fd3422c826ecc7c09b6e8bdc57c4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:01:24'),
+(469, 106, 'fa1295816ae9654438db984a722e96d1ca532bf1f58926ac27970a45ba86dcaf', '{\"_s\":\"2ccaa035b1f54d2977d2fae8ca92bff9\",\"_d\":\"86c832fefd2b1fdbf2bba1792cfbf7bb7e4dd6af54b4a63252ce7abc134a0b1e606902e33c32506fc2a3f30ed3781d41cd48607d88883f9586dc0bfd7a9bac8680dc490d56bbfb420ebb4c09f528ced6244b28b199ad6353d6a1ea94792c8356\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:01:24'),
+(470, 106, 'a8d94494be6d93265f2ffcd2e1fc91754be9e43c78e9b98655672de861a57f67', '{\"_s\":\"b58ea95406843d85762b52897bba6dce\",\"_d\":\"516bb682c1c993e0e304a0d975f7f950b8eaa2cb6491c2b287a8be5c029b8b269ca8449747b4a30962a60633e153d7930df92877ff9768bc518d87d85d9f46a9e0a0d26fe1142cfd8e87e183493801f537d739e2c9f837c70b5fb6b67c5f7496\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:01:24'),
+(471, 108, '3a31f7ef139eb4d88f947e32c5690b89', '{\"_s\":\"216c816fb7b7933ced322c8087246e16\",\"_d\":\"33b309807ca2432ce4fe7c05a5c8ce984d714c3bae0b6ad09f88e2e2f2eee7ce3ce4452c0e085fae14f2a69d47a0d569e70cb7977ef7dc89c60732c72ed5f3ab2dcd0f83fa21be37e660c67d8869806a3c1b005513bc3dbb8712cea25bbd2d1b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:39:20'),
+(472, 108, 'cf3ec1af329574cce45d28792773b2efc8d9eec8910e349f3883d753768aeaaa', '{\"_s\":\"067134e5837e9beb9f1bcf79c209f2b5\",\"_d\":\"4391083d27d069cdf3cf483cfcdb91bdc1cdeb8756b8bbf4e79983eacc3e8893d36d9c194dc9fb7a1eef8413d08f67cb54703511113ab5c0e89cb7c81cef473899cbd5cb548e05837226dd8d1eeabb1c9218ba9cbe1816ba6054dae9ad2d870d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:39:20'),
+(473, 108, '56990c6e33b068712f17d119a70f5463', '{\"_s\":\"ac607abbde61b430f5cfe554ca48a84f\",\"_d\":\"30b436e5d351afdb6b2fa6bbc7772a73dac4bee8aa8a1e349d7599bc7138a89208b9ec1c89a000ccebd30532a09b8988d9265c3752a47f849e439ee2031cca357c26d8778f3603494bff1abdf6851bb4192938cf77df5d05386b5bc465313970\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:39:20'),
+(474, 108, '216fd25e547ce708110c6a2ca7d734a8', '{\"_s\":\"3e55dc7bb1659eae4c224e8220f15db1\",\"_d\":\"eded7024a3a79d93a3724b2d4005b8a2eb072512458b7cf600455cbbb4f722043d034e2566a7cdaa0620459a8f3087dda65006281f8318b15e272f7c3b7885e92130fef093b7d15e2657924ad2f81538297d2ab542d2870d6222710c9f13f697\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:39:20'),
+(475, 108, '5a79db3f0e97142300987bcd790ab3ba', '{\"_s\":\"3bf3b674dcbfed3cca5439485c49bdc6\",\"_d\":\"157faf8ae1d74d77aa7e5cb8614539de07e48614476b5e9ce225a1567a400056ef1dda62ab3d9f793de03fb0d5a0b7c04e3885ce754ba7ef77ba4675050f980eb9f839948ab9340a10355d5b3982aa2c1a3828ad937fdd05945baf6055818c74\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:39:21'),
+(476, 109, '50e039ac2989b74b4a83f428b31a0f68', '{\"_s\":\"a98c439e34b18a7728c10b4d3f3b0f46\",\"_d\":\"fd3cad50eff6554905a4a2c85f65c3401dfeb1d827b36dc921597b1261d4d09f243b84fa270871cc50aeee7f04fc77fb0880f3482a12c628b18c810935bfeb95e95a054c14cb79f46c6f296d752378a02b8b29c237432a372e6bdd99540eb6dc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:43:44'),
+(477, 109, 'f1bdedeb53aa1cb2a01e09055bebc327', '{\"_s\":\"d050089754b073d16f77f6bdee12a6b3\",\"_d\":\"6b41322211e126bb2408abf9501b1b28e4b411d8e1d4949f00ace30fe89aaa5dc1ef1debc2edcc13725b84a5ce3607f651254c3619b79fed3b74ba38817550bef56ffd528b6d9b6ae1461032b822207ee401dd0f0da32a816a71b4523e9caf9b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 08:43:44'),
+(478, 110, 'cfd301b3a60bff948cd77e1857b3ebaa', '{\"_s\":\"8c45e8bdeceba520356f61b761c3dd0d\",\"_d\":\"50ea91570cbabecc4e8a47b38ca2c3dd8546a94fce5243c714fb06586b8185d95e863ebfdd0dee6c9f6e7fc316c727db1754e072071576365d27a9b4291010b197ba7a3bc08d07e0f0ede8072b4a15912b6e998d5c787ed9ef1ed56564876455\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:37:19'),
+(479, 110, 'e61b57a2c22f509b9f20710ba0bab856', '{\"_s\":\"40ed032edf12e154c4da96796209875f\",\"_d\":\"29c9be2a77bc2151788d411092617e27c3ffa06125bcbd32e9559b4bee85cc00ff7e402c99e0d47a4e03d93dcafa137358ac371e3637d3b70a0b3f8ff4d2d2fd915ceafbdd9f5270b07c045c86cc6017337de51fe6a31b4e6e583fa51a9bcb1f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:37:19'),
+(480, 110, 'e4f4ba4c24a932a7cc365c2a699b9982', '{\"_s\":\"e843dd3f7027512bce992780b55c7f08\",\"_d\":\"6bd6fed047a3375de644b981c2a0d7255202c1bb147feab4a80e4facc736052e862bf77bc0711a9516b953df729f1cf58cbed23b9f752512ba2504ec69f7a4517d6538bc7344f8b2d094bf33f91ba562393e92b2a81abbc596d7bb7a8a992943\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:37:19'),
+(481, 110, 'e679977071f06eaa165048203e8420f77373d7706c9f00b41870ab02d9dce6cb', '{\"_s\":\"af8de96fe7abb6be8ce278882a7a7633\",\"_d\":\"b0516357f425fb48bac5a4d316cee49777a8a8bd81383c86f4e61fc0f782d09cd1c9362aec2bb7aaa7080f3da8326161465fcba108ba2d1af43a626d02e83d39d7b4bdd5cd1438c8f9935d2ecf78d34233a2add21a1b8c624ce8f8d434fe6fa6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:37:19'),
+(482, 111, '669cb94deb09dd79c94fcb4176d43a8b', '{\"_s\":\"6db207ec20828f7b0110445c298a82cf\",\"_d\":\"4655b4e73280f86bb1799b9ef16fe4648390ac61f846c136ac1dd77b5182bc508f705438c514e485488629ca7ad7c22256ab0e7767ff7c675b914ec07bad1427db70b8fa1ccc8d2d851294b916e038cb8f3f8aacd119dd7f1e4e79862f67632e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:38:24'),
+(483, 111, '4855bc3512d5c1da8068e705573ca983', '{\"_s\":\"d200e71f7f9823243fc50ddfcf2679ec\",\"_d\":\"d7198d4f5627c0da3ec382f332567d33c97432a8c22bdd47e9afa14e1a9ec118a65cfe2745e6516fbc71331899f1dc2f0dc864ba27ca7a0497fbced34994fe7fa87a101efc650f84819d8e875718b0dcc004e8989ea8f21eb0661592c010b927\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:38:24'),
+(484, 111, '44e6948b2c7cef5d6f32403a180d6543', '{\"_s\":\"645c5dde51eba8980b07da2853e3b526\",\"_d\":\"681ba4cc53436bcd5351ced235b36f5cf609b67a0a303f8e7a44a9f084a6b8c1742e8138f3bdbd876dce1f1d70b72c272bd5652ff7e21b1cd0e0d60f0ec41e65a371a2c6b91f3dd105e63666b3128d3ced61bbbb4d4e77e61566bad29e03ef69\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:38:24'),
+(485, 111, '12ca093ff77bc6fc497e4874b4151697', '{\"_s\":\"aff3e0392775c24818133fbf8f3722d0\",\"_d\":\"859c705474341825fc63381ab87bd9b8c3dbb24c935062f04b6d8f364c4b2e7b4036eb5e4afb4c76eb3c2284a8d61fcaecbf6159bbadea46d9281bad909558ecde76213da125d7c0e1e02f51572bf47bcf3ebea0fbc7f4a69b21597ed6db890f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:38:24'),
+(486, 112, '4ecb0491757f9dc626f77f0c42c7136c', '{\"_s\":\"5d13f376ddf2867bac16f845e9b5c38f\",\"_d\":\"f76dc58d3bb498d1dd5f67d1c5e89600db89bfd9a6dfeb18d163ce68743ed8d2fb9943d8d66dd38870cc1269fcaa6ca6aeb259167fe43c60acf661a2cd6863e0ee09d41a1ae59dbe4f50fc0fe4f40ea304bdf0d843071439af204661865e300d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:53:28'),
+(487, 112, '533dc39a04ab183f3373ed20994c0dbcd1dd5bcec40050323c748aada695f1ec', '{\"_s\":\"952efbb87cf69601ffc842c648bb48e8\",\"_d\":\"851d8d64fb4bcac35788035057af2edeb36b87b0bbf207219cc70753c47c1141376f6cfe54b7ebbdfa6cfa24e4ca85a9ceea81953e4a6a8b572c2d5431e039aefa2888b8690421b40576a2a321ab6be22ca8852f9d71ae1599f841741e9a9082\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:53:28'),
+(488, 112, '4cabce11dae8172fcc1630a214396522', '{\"_s\":\"57dcc74121dd5eaf5fed41b8d2dbecfb\",\"_d\":\"79828b8e5732058fe59a6a96a3fc5a185ab49710b739272a6c1d5a8095a2baeeeb85a15ce6eab501f667cfd49965baec7181edf2f04ee27f953352033cc338d8d2bb2c317801af5d6f064d431397f282e410de0f4c81ea9c3aab849ec0200ce5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:53:28'),
+(489, 112, '7c3c76c19aa3710b2526643b39bc6b80e6489cc26cdbed0ea90028c6dfe8db65', '{\"_s\":\"9da9e3d636014222897cdfd1e90563af\",\"_d\":\"e958fdea9f9882a94c72da2363913637910a00bba3b1080b12544efde85e02129a3a2cf2d59b032ad8ed7608a5fd6c21e56a47abccd25486c9a42eb300a53619343a27153e9193409c90cfb12b93a0f3e4f7ff626ca4cf10d31a6769f1ac5c36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:53:28'),
+(490, 113, '6d823867a3413ea3ae351feabf0abee11b93938863c740f94bdaf3b564ff6f03', '{\"_s\":\"52730b351753d4ed0a1146797546781c\",\"_d\":\"a737aac5c38eb4019cf468a3fc80aae2127c73412f1f81c4ee67e434a3952c169a3bd22168c67a78d99bd3d1c9653989c2e09b6f2b2370a067d7292dd62fb1fed9db6e693f65d381ce1617e0a882cc5ca65c2af03e22c16258d1b6aae4cc8167\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:54:40'),
+(491, 113, '65aea9e8abe0c3b07f4a6b7a19d235d4771bf8653d14cde95c1cfe4ca4e9b466', '{\"_s\":\"28194340ac131a32c753316581274113\",\"_d\":\"b187b1f815488331802bb1be667d12cd4b08443378b8fe492dd6585ffda8ad76ff438f1518e1c710ce1df70f6c50608a0a90063552d632655858fc7dda6a5508bc177797c10fe9af4cb311eac5ccb09cf71e392a05db4d68af45f67aa47af9c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:54:40'),
+(492, 113, 'f77b10121db2be71aae3b102da4ed41daaf48619c61701b76a16bda88f5455ec', '{\"_s\":\"8c857fd13232f8a1b5795870ae0546bb\",\"_d\":\"779b7b6261b997f10424f1c1b220d4cd2293d4caf0bef5a14612dc116ea66dbd0ca8b10af329e2f4584cd064c8604c3d87ecfa01bf19732d563c943064108c8523688f08413c635f6ad1c78d0e24397614dd125aab0462b1c38871299ccb3ef5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:54:40'),
+(493, 113, '35b8b7e791c2e5e2bfbeb782db35b2b4d8e0c4a72f3174f3a2d4c958698a563d', '{\"_s\":\"d23c7b0d8765bb95910dfcc81dfd71e6\",\"_d\":\"cfe1fb8e6fc44103823f686e6cb984ac44e7540e362272c9571372991981038dbf7abb57542608fb156caa1347553b19c6bfc152e6c78c5a5aa9df85e54a0c638a880d0b4c82a055fbf5483f00b7516c228d42ee368fb394f8957a329027ed88\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:54:40'),
+(494, 114, 'f505f0c538c2059c61207ab99510262abde090680f83aeff16b57353e72cb008', '{\"_s\":\"19999cd66da1ffca0a788813eb15eb3a\",\"_d\":\"2be939fd8ee4b3ce69fc9feae8f7ca304b2243d188cbd556bda4ccb246a6e9fe595537e3d25047b55f8175409bf699a201952e9dd4a2c23fd851aeb61134fb2f5b0e00826be585104ad76c008f36ca23c8f8cc266b3dca10a7712bd7a291f0d5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:55:45'),
+(495, 114, '619c7c2895cf6ce625dd02c5fbd2718267cbaeca0cbc9dde42c5902cde58bce3', '{\"_s\":\"fcbf51209828dc52fdbf5640dc28e692\",\"_d\":\"35a998fbe6638c3521ec5b95274ab13550da2ea88e37fee8a9763c4ebc0d3054040ad799183c5548ea50c90fd91900c63503528ce8cf837dce622ff15e82529238bcf103a05f1f5313577da797b606d6ff3a7e3b26dd1d446a6d01fdc948d2e2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:55:45'),
+(496, 114, 'e6c9692883b16a5f07de161034a21266de07bcd8f1529c6634a77fdfb1d834d7', '{\"_s\":\"3c1c9e84b9a334d232d3b116cdab33e5\",\"_d\":\"12542baf8a418dd7898c9a9db52a563d874997f41ca057f2d74c9fbe1f61c289e288e38c16ab5cc59d5b3976641a3f4f51c49485f92dd6940702b8ca5d7f616b28b38058eacb1819f162d81ddb1654d0a359c635b8d5d0b6f49b3bf723537659\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:55:45'),
+(497, 114, 'e30de2215c8a56abc0f2deae9fb4a870232c843895e86854e05239bed113ec8a', '{\"_s\":\"c36752697ce72e37ceb90bfd1ede40e9\",\"_d\":\"d18f5502f2d5d5b24206f7ef6662c81cd2838da272221dd00c7d51a2f56b0e2282fd6ed6a7346ba4af1f646d3680edb63788cad33a0a05d9ea34f03f56fe8629757e2d8f17291ba640cb745df2f17c8bd048dc3af6534fc6f9877df0b02deb8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:55:45'),
+(498, 115, '096ad5f8325b41e8beb9560971cf41993b1e0de3b5fa3f4236e66dc2e53e31e1', '{\"_s\":\"231b59cf04a60a19bf8101bd551750aa\",\"_d\":\"34b9d831e5c65a53edfb191a3d55c65f0cdf43c6a6e857cf3d8fbdbc73f88dc001329d8a003d1d4320d593c7df704e776f3f2dfe942e89b978f476ffbe8c29430f055c620ff673ee8fc2170e0ae6cb3b14c4aefe2d333db17fb46a7fb55fe399\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:56:51'),
+(499, 115, 'a1a46baf55d7ea3b0d6f2915d38c331d3f8d03e0dc59ec9a9b75d93961223bcb', '{\"_s\":\"90528dec4392176d230170f207836358\",\"_d\":\"1465c2795aa38dd1115fb58489f1a07c8f4d5ff38f9a07360c38c9bdb3362e96c096f1f926ecdef9546051d497c5ddc58c7a2ca3309e47d6c8c8f3f0f6e617baf2255eb23a061a633f0f1c7510bf24bc1badf499bb18a3c48d6a1e38d326ed12\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:56:51'),
+(500, 115, '303400aba415a7678a38812608a51e1a5bdfb4cb39e0e5207d13e9a78a14622b', '{\"_s\":\"9e06d84ee328c72d387dac736b43c7a2\",\"_d\":\"83f91781d36eca0f124d48646a5d30eff39c0afca2cdf3d09a41781f58eb3706600f5979f0636809016ab8805088049f15db2dec96db1ed7b149c500695787f338355436124a6d62ba7b8a9f76815986adc2148ba72744e68412bcd1528b2f97\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:56:51'),
+(501, 115, '02e17937ecfc96b676b470aebe30635cbd5a5a3034a9ae584ec1d84481066aca', '{\"_s\":\"c20e26cf791d1132ffdde61276eaa798\",\"_d\":\"a5fb49a055b7820fcf460741a8b1d71e94f69570c48891cb29ab25d49eb7e6a5d23d087af2cb448a18f4d7bc93facee57917e9657b463460306f416f8b5b649f7279f42a121f0cd6e7b42e585ff849083e5fde95806a5977958bc84d7b3dcaef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:56:51'),
+(502, 116, '6247cdaf4b58c751056588aac3e9af7d', '{\"_s\":\"3d303a79e1583ae332590fb35d3c5eaa\",\"_d\":\"abe644d721d04ea5ad8c34090d82f92eedacbe878385b52e6baee8f195113f8224cc98f9f1c4568c5dd4f8c574b1956a1fdd8cbf28dd4215bd2589e4354b3841e94e147fec49986ad56205f4924837ab6b2178a90044f6bf88b3899a4b385ce8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:58:05'),
+(503, 116, '7585c0cff34962725f390e6e6ec8ecf0', '{\"_s\":\"b667a45bbdf41aac36d150e466b94b10\",\"_d\":\"60ace9d4b9b710fc61370d308075206ba470ea65ce3788b91fe545754f04c4610936b982432f64a0dfcff03759266ff8f0cc3a74bbeab6184ae5d73fe13d7451c16d04f31b826143d8eb7c5f6bbff86c57de4cc4b98c6f0dc2c8fe506902ff70\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:58:05'),
+(504, 116, '7e0b2c81958b28aed13101b76717f610', '{\"_s\":\"61afc43e84886e5f6377cf7a1342b2f5\",\"_d\":\"0d8baabebcfd2baacd0c9c2dbce4f0d9dd5b5e6b8877f916aad78af99692e1cd33be9e3b29cbf7f6e6f53def0cb159b0bc9649f0d70fb91d7a6645b29c8d993dd1ae9ecc588a1f9b552a1b190179d073b7812107f098d82c4804272b2e475385\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:58:05'),
+(505, 116, 'ccc7be83409a1093306f92d59bdbfdfb', '{\"_s\":\"12f7287d68153eda92f01b6373309200\",\"_d\":\"f065be5786d871290940e16d7b4bc80f76fb8f6dbe99144b4959a1ecb644919a00c8d020fcb40ae56e324b9e69908dbfee32005b8e41ab4d7282f50d0ed10e387cc4ce4ea95da320a041ec99eba62eb8c3875715a10ccd0283db9be1914e1438\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:58:05'),
+(506, 117, 'e8893cc808e30af12b4d38790ff6816c498bd7ae09b55c924b05e87ac542f8f7', '{\"_s\":\"633f371e10fddd84a701840b7803a528\",\"_d\":\"940fc2151914f5ece97418c987bd1eb259381523ee55627e54c3d47478caccd2b719a8a26189a79500c035c269f3df30ff5be266898955dd0b65b70f4eb0f002417a96bfb8db453c7a0ee572f11b7377ee91bdbaee80f78914cc0d34cfe766ef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:59:03'),
+(507, 117, 'bba16de33b6061180ff6fcf561256eb1', '{\"_s\":\"45a493e675dbc458e33fce8d283670e4\",\"_d\":\"ea3362b3dd31b0cf292c6425083238a3abd43337051ae05848c7eb791e0bd7ab41a8fa54c84e931d1b04c881a4d46374a50be8640a7492ea983fdde2b25cb06aeb5e5ae8d3a4cb2da92ebf2a347275d5f932442ae3a176d210f011be320ea837\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:59:03'),
+(508, 117, '0eba310ff2862a2d70ee7dc306f50a6a', '{\"_s\":\"ff41abec363aae7f16cf0f5a4bf630cc\",\"_d\":\"23a383ab7c9e8c685bf1e4993785986fa49a63269364770518aaa7b69706536a020e87770ffe420d7a276b91e56f6a92d056d90fd9ae8cdd98d2a8955e60192eb6391c2d523dd495b4fd682198edd3df0b065cc80589e449a6eb8c34746e8175\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:59:03'),
+(509, 117, 'eda83250853c8bf57821df1985805c5e', '{\"_s\":\"209ce8ddc29794a076aa96e8572f54f3\",\"_d\":\"7470f1e4c302052b97ed6f065098f6dcc2ad5597eb3baaf0a933ef67df6fe0dd4e7bd41804112b1d2cb5a7b89485dd4c3685738a7c7fcaf1738ea99eec6271576b038ac74710dece076e32bbe7c88ea830e63e233c4dbee323332bed97545f49\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:59:03'),
+(510, 117, '982d44062056a8b2403f76c431e95e3f204d0c239cdd8bb292d603daf53225f7', '{\"_s\":\"d888ca9a07801af88a57c868a0691fb9\",\"_d\":\"727cf2de5a43302527083753177ada3c94472ae72a7f9ceec053f0b0d5bafb6b5e7e2fd60c37935d62573e15d0ca91ff069cb085ef4df04ffdaea89371139c4f697b2297d84a471cdad1f62e2b60be52f58e391ed70aeb141665f38149da8af1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 09:59:04'),
+(511, 120, 'f8d8e9e72f4ff86a98eaaf2dfde13133', '{\"_s\":\"028bf5502aaeb6f4c2bca940cc993cc6\",\"_d\":\"3d5cd8219480563581b29f169f30e0cbe7124ff325ca9dffca611b04dc82e2e2c53606d4d10e6a81488c0554416d3a4df127d6551a8bc89e6792b7232330695006ad5c69149b7488adddebd19baa993bf9fede7c4bc9cafdaedd02e1e23441a3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:41'),
+(512, 120, '8910bd1fcfd34f1426599b830af91616', '{\"_s\":\"44ea2f7d92675d1dd09cef97b052f9da\",\"_d\":\"3640bfb95a838cd5151b414e5ea80f3fe5287e5e6f928abd006ad187e789e82de889cc7a36e9721aa5c54e1723bf9cdfa874241de6cb0b375d1edd3bd110d45b252da5ecdb2e1f7e8d1d5be62d1be7533312c7b45113e6e6f986042eb468db2e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:41'),
+(513, 120, 'a5318bdd560976452b9ca775f5db626e', '{\"_s\":\"5699bab9e7ea5e42907405008fcadf74\",\"_d\":\"8f1ec0f0367014af7a2380911fbee04ff4ce13f07a64835f30eb3eeafc1b2ab8244b9431a7958f6302d6c7f765daf788a0c963f53f65c627d9f81a112e07f3827438fe66075a79f0bf39627a233256bafbfeeed99d068a41391546b277684e8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:41'),
+(514, 120, '732d31888c08d7a561ef91afd1fb2119', '{\"_s\":\"f56d588ed7712b4f0375ba677c7a7c93\",\"_d\":\"2569bef281aa9831bdbfd6e07c75cd7084d2e4706423fabeeae82e31cf5e524d837fa8886f6eae0f0c0907f8bc27247cec1fbdfa2f29ba0a9b49f2559c282d3035bd73cfb3132e15e48995dfabf702dfeaa882d44ad914802d3429e76a67246e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(515, 120, 'a6c70b1fa34e50d0de6cded8fa6c281d', '{\"_s\":\"81b9cf7be620319227b7c8d25aeef066\",\"_d\":\"0b8f3f6c3c7587d94d1fde214ebd4d474e858850b2d16959d015dbba07067f6e820c20abf0383a972ae8a4866c366044a8fc5f18404fa886e83eb87e76e966967dba086d66f583b5eb69175da833de30f932779bffc851d08e6d6e2b80bd14fc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(516, 120, '62f6b550658fea4580a96dd6a4690a31', '{\"_s\":\"cc63361e2be48eb5ee6409433c82d1a5\",\"_d\":\"f8a152beea2e905307e21e1cc482454b80e3066dbab373e82d02db23e218f949ab23ca036005f030fc878448c08ac16433fcd083575786ba7abec697e6470287542bbb8ff22da0cd20cd970163c6cad34f9e7b2993c3e76903c3439e2aae3158\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(517, 120, '8be8582b14a53d539f54764abd7bdd97', '{\"_s\":\"237e990dc0d85664ee84160a9c1d0059\",\"_d\":\"9c31a0c527e9e87eb447c8d5ed6d0443313e28812d2c1a353ba434c16591fe7f22952cc7e0467b3d816a4706b75fc2af52db856bc0fe9931e0ccb0b69cbdc3eed6d60889177c274dbe33ce5ff9ef7c17b46adf9bd84a85d44178c57834617576\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(518, 120, 'ed58b67871b5770f635a12f51d179dfe', '{\"_s\":\"342da63bb842408814d6c35f37ffd137\",\"_d\":\"b043b9e5ebec935c366be0ceee552d4cf69d681fc5be28655cff37dd5301972e6c55ad5044111f4621b5fd440eba13930d27178d1a1152a2e92baf0437a728803c0b410628e155106498bda18be6d2506f04e484ef6e038a35fd1628186ce649\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(519, 120, '40b074087ad0392eed82d31ed67d1397', '{\"_s\":\"2676bca8708006f92369a0cb8ff5fac0\",\"_d\":\"667e7c0ec5df40af3e28ecf39174e3143f024f52b194d51cca78b8844df8a34655ada6e6c0fe93c9b8bc640130b23dd82ddcecf27328a31ca28749adb2f698e8320165cecf91d5e5bf1e8666eab5a097c05035aa3a27ff2f19d31972839d0bd8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:42'),
+(520, 120, 'dfaa629e00a3ab031db7862e2e342b66b55e2eb95219c46107ca0329e6ed5391', '{\"_s\":\"05d8598cf1825c2a9d4fc32d111034e2\",\"_d\":\"15049760428a3a1bfe37d8700b9ba25ac286cddfc60cfb3aa37bd233fa6044178441ae2e8c92d22e051040b98091fc40a0a94d6f211fc7aa6a229a50f3f7faf5251cb128778af47a005219444e97182c589f477d9609cf3d8dae3857b57dfebe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:01:43'),
+(521, 121, '0dd21c06933211cdaf0cc47dedbea438', '{\"_s\":\"36b72c71d47800fb1978ade08d0e7ab4\",\"_d\":\"6ae170de8912bf643084ae2cb309e3114bbc08b534c4cbf802d83671bff4d01d8413a6f07ef1945b9c46fcd3f2e70aaa1785f6797a389afa49ed9b57e16837e5ab17469774cd091b0ca825863372fbf78f6801a3fa054f7460394d46e66c65ab\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:04:29'),
+(522, 121, 'ee88358314f40089c168d8f5d3dc0ec5', '{\"_s\":\"c85c04bf3c14ed47109977267af2c395\",\"_d\":\"c9106f2f65a6635ed9ecfbf74249902568774ca8e25b203d19ed1ba732c40fab0b23bfbfbd70bcc2c9ba9874d6baa1040621fbc2552c21d72c9e69a9a4dbb8e4c35fc95c87d99dfafb900b0c24dcc759599d5f4fff42b5d727b0873dc38b6901\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:04:29'),
+(523, 121, '1d1b665abd1e8a8141b3f2e4c626d4a9', '{\"_s\":\"5354cecc0e2215b2ade5a5e006f35ec6\",\"_d\":\"45ccbad7c99f084988a41ee1ac3c9766ce832976f2849b4eb29ec3a66be5c22a841df493646e4756c2244fd2d5e1ea95b104e369cabdbd9f005389ffa10acddec85a7bc46a5988a290153aad2bddd92fd8546d8c9efd9813c9019c968ce14716\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:04:29'),
+(524, 121, '995ad72b37d349f1571cc1015a22aab1', '{\"_s\":\"498041cda3cbd5e101e9f66bfdda7809\",\"_d\":\"461a11de119e54bf17c61207017e88b5b6395d2c92294549708cd1c306bc5df25e237e63b5f7ef2aae2e178a7b7c2d1689097628e839d13f572b5e3330e012f8809cd7b47db9d2c2fbeec6817b45fca02fd5fd6e12cf51f3f438deeb8ff0f444\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:04:29'),
+(525, 121, 'dee593fa353662b02b0a902acc1d625c', '{\"_s\":\"1d95ca8971933b387d8a30ca02986b34\",\"_d\":\"289a4268a4b40543f12f9da44f37708f649eb850cb11e33cd689dfec2c0a2dac973b0d5a802cdad0b8487294babcab125f4edad973ea68228de178d47ae2e5068acd21a63b621ec9c94bb65ec77915ad152939f697f6319dc5b13cc55517f5e5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:04:29'),
+(526, 122, 'b0778a7648ffc0c631d94d606b2fc960', '{\"_s\":\"78249ef819076306420cf4ccadebef9b\",\"_d\":\"666c067d29f75859161f9afc482bbb20ad2ee5154a1b768f043f2433450e233a8ddffac6d65e8cbee00791e642693a3021a998ef4538617ffb5f9d9c88ca5e7dd7fa6469706e24a76fd65a9fe785a23b302131a83c74f3444e5df0b53be322ef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:25'),
+(527, 122, 'a7ee6e5e7255e15471a188bbf879cb06', '{\"_s\":\"75ad179c75e46a8d9fbe765cccbb975a\",\"_d\":\"380deb781fd1b4a42cb211111f9a39cc6992ce4219c5fe53cd9394fd80ad73e9f100c0a950653015a141223e11a2c828075f133bf052e02bb5c85efdac5b1f9f36adeefe6465d530cca270f9af40d568349cf73b2cfa112ec260d71817ea5d11\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:25'),
+(528, 122, 'b06629e93f66ef5bf10b9b95eceef2d9', '{\"_s\":\"ebbe5878b0d2c82e94a30a75921a2e83\",\"_d\":\"3eb8eb20b730d0d40dcff005256f6a78610d84c1b9cdc79193e1c6161f2235f2b6a7e2f8518502eaa4f3e695c7aa0ce857b06b8775ac0c68a60b313e679c7f25430666d0a489ac4dfabd9500c874935aaec04e7db3905adfd0d57ac01479d711\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:26'),
+(529, 122, '64898c9397f3710f111264af407b4093c5dfd61940b499bbd85df0650054bfc5', '{\"_s\":\"043f1e6090dddefdffc3554d9114b714\",\"_d\":\"408d6767c96bad6e212f641cfaeb8574d627e609c71cd6acfb2d47e94461832b22c84a325b7bc3373f330ee1342eeb4db4fa3055904016fec5b4064a93d37e6a4f33ee718421aa8a1bde371021663d85c4624d107d92e9b229e653e3ff26706e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:26'),
+(530, 122, '86f2d1d428a6aeec860eef8cf02fbaf72bcdb5e8cb6c80fdde28827ef2df473a', '{\"_s\":\"fd254ccc1e5580c832ec197a5f85c58c\",\"_d\":\"32a5491cd37160e4cbb3ae1e2a26babac49767e9773eecbf67822d1830145e9002ea025bfd54413d377539d072b9795eabce68167ebb57097a3e0c4b647700654bd66550ddd6379a33329ad1f579677733d4da6d2b893b2049288dc5b3132c94\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:26'),
+(531, 122, 'b21bfa840a926769d0e0a7bad9e79d21', '{\"_s\":\"8277cd2c106319f2f9e4f3143ef18201\",\"_d\":\"70447c03be3586b92cafce3b779fc70a8c66e1b269c306cdd71e204893a7ab1e21bbb12e893e5a3cbb4026d4e5951dc26ed6558012c201fb8d02ab4e88ff0d476961d4dc8218a7adb62bc6d81ddcb34f6ef3ee96d8a72978c3baeac38c1cffd6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:26'),
+(532, 122, '3c5eac36a01ed1b5db6ede93b0c6b9f0', '{\"_s\":\"c68df51c2d1ddbde319fb80564610cd3\",\"_d\":\"c56f4153391af3686989b2d46a6f010f3277955b9acda3a28154da16aa18b05218e273bdd8e4b44a56ed80459f5b40ce9605efbfcee7e09f4427895b534451f8240e78fd4971476766803252fd7d5ebec86e290c67f03bc191d106352a6a0944\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:05:26'),
+(533, 123, 'b3db1d67f2ae6021e0996e5a10ca636641cde3080656ce2b2afa4da5f41d217f', '{\"_s\":\"ba20873966cee0a6f4f08a2db0e5989d\",\"_d\":\"034923272e55b1692d3047bbf73997b1c65e6f81b0052cdcff958d0ffec0ceee7ad32656bbd7070eb2c1abdf12e783957ed782470eb44fb6ea59abd518b4cb8bad4e8924561c2b1906317c4aaaa0c0b283fb6fdc35156c89ccc4137e6c3c53dd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:08:04'),
+(534, 123, '66913a0bad759372e1cb047ca31f02f788c9b81553d0103450a4795781cc638c', '{\"_s\":\"22811d65fa185c482c35e268a1ba5ec6\",\"_d\":\"015bb33b548e3e9c17767873c150c7d9b0ea2b3703b1762fbbe946bbbec96d140aadba09c91d7aebf778f5f929c6d5a73f7ecf715c73149ba765553797f1a7a5bb0050c63b8284f4b329111cfa2768c37aed962e8980b1c49e4c06484e8e5496\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:08:04'),
+(535, 123, 'bd343a6f78adef93e6b98676b43ec546bbdef5a981029a1c7a63c2ebaf75d3a9', '{\"_s\":\"73780810430b41400a984da75a73e3d7\",\"_d\":\"9466e5b44509988eb2bf88052539415e3bda1a6d8d8ffbe4623dbeecee95629ab13b862defd44cdfe9415afe0348c5f7cb20bbdf9c8a5ace98a7097c82e77f6ce037c24148a57319ae14b10761e9717f5432af1ec157eb15f0f21f159aa521b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:08:04'),
+(536, 123, '7fdea026e73762f3a534798c17fd6ea988114fea4770a94d7826877bf42a1b51', '{\"_s\":\"7c17ec7a6dfe7ebfa61846d1646095cc\",\"_d\":\"c2cd0080942b053e654d7c493ee44005c9d6aa2965ca8fa2c460ac17b51e54905c1019c638cfa01473b3386d670e23d3c2223d2da058a26de8714b20b4c9eefa1a6d13d2cfb54d841de0a6b314d23050a7608edd7ac4f1cdff6d0f07ffa6d62c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:08:04'),
+(537, 124, '464b7d7de74b9e97a2458d5774c290572c06c67465c1b2369c984bb36c82bc58', '{\"_s\":\"c6d27b7af07e1da8ba5f4ca2412d9d8b\",\"_d\":\"db73e322c0377a8ae7d81bbc15216918539c32b8f6a5b46e9427582647ef611aadc80f2b7c97825b9f3666bd65a9f14786592a44cb0145f98e8b9b6bb9a5d5a64300dd71b827d808dc69fbff955ef2a792ebbf1e23c7c0a1c8aea1cdac42bda2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:10:45'),
+(538, 124, '92dc475fde360346c86d8d546b249fe5c31d31393a8013785dbd78f46b9a83c7', '{\"_s\":\"39f2f08ef6c6702d0434b753ed2eb9d1\",\"_d\":\"bda3bc9dd9b5de70300a40a93d7f42fb673b7430b47a89549b77183a6c471db85345ebabf4b09c6a3b0180c2b62b7a104fa7afd044b386822cd4471cd4dfeef9e69f060d69715d3f6ca0ec31bed897fbec53e4ca72e181870c5bd3c5554cc8e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:10:45'),
+(539, 124, '046f226cbc41aaa4f34a813c176bdbe71c213c5ca4726e4e89f52cfa567be229', '{\"_s\":\"fc8ecaabfe9aaa9535423e4d8f41ea8f\",\"_d\":\"cfb84a265666bc45b1d3e5967ed2825a0e87292d78c29057ed49d68d676875065c68d8adf302557c6807900b2451b858658916439eac3ebce4c521c0c88558611f24d7adf58d99b6523975fa560a7bc01fbaf094c3cbecbf2a6d9430c1165c8d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:10:45'),
+(540, 124, 'c5dc708b1e4857db824b58608e4b1713ea992f5c8cb15920b6d16d32aadb065d', '{\"_s\":\"42f3d334d81ee2418580a80c6d2f8417\",\"_d\":\"2876815112b007a5947a8470aa8a55a3111ea7bd707becfb2f86af6234b5613684617e9b4fe63456aec07a59e87e9d79b783e09f80c0218e8dd08568c9602c780e8225eec0885cc46330258e34f44f9139a8eae49c586fa59f4bba036ef84006\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:10:45'),
+(541, 125, 'daa4243aafbe45bb53faaff16d853c5d', '{\"_s\":\"750db03e0ebed326c52a2bcb9b156cd4\",\"_d\":\"2d9be246ed0c379bf126072310662b0876bf2a72438d141197049a829850aeb3c746626e55b5ecfa45759b659f98ca1052cb97f2af9f44e5a5e771b42066f6fc8642c1a8d7def227810bc03a7e5ae0ba41e6327f52fedebb43cc027489b07571\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:12:05');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(542, 125, 'c8583a00f026d04f2efefd24e62b98fada9cc4347803184159740ba1bcecb416', '{\"_s\":\"7a71fbf9ea942a597321ac161c2b9c54\",\"_d\":\"455f780b04d7bde82294977ae89fefab22142a639ca9861cc3206580e5093c920153da0b6dc47ef86d1ddc18a0b87eca6f4ff0e992f6fe30294bc29a107884ed62d9aa51dbf8bf4b20f87e792717bfd27f2302c8517ff4e8c157cac42cbf12fd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 10:12:05'),
+(543, 126, 'dbe695a04cdc6cfc6860a91c9cba2764', '{\"_s\":\"7500c05e800b3a91b3fa8304417273da\",\"_d\":\"2f35f8ba3080bee0ee1d06ba846fc64ccbd9bf2679518242d717dfe5be41d529fcb84ec466b8a4d41ac26876764443bbbf76be47d1ee795dbd714dfcd2e2a7bf92b693f4ef3ab7b745b35601c00f66e8762364a8b65f6c7a354818115e30ac22\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:44:40'),
+(544, 126, '968ca6a6cd2dac8e56678d3e502cb7d1', '{\"_s\":\"31e900131a97d10b6f5dd2511f1d9841\",\"_d\":\"41b16419f2420d07e97321ea10915a53fa9f7f723bca0d295b0ec510b37d413ef3cf08f91bee66553b58f16605ce40ccfa808c55e21f350760d6eaff365b567ef118a16d3e85d76d7e961589567984815eacc6c6cfe9b9b401fd57eddd07c326\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:44:40'),
+(545, 126, 'b61e9f4622d2006af8444c1ba8fdeb0c', '{\"_s\":\"b947eace17f1c55d87c48097409e4243\",\"_d\":\"3083fbef765e00c6bd93d4e42ee60250c520aaec1b32c0b52d0298734bb0fc2e8c3c201d7c39106e218c7faf3c1680bba4c74537de0b2cb167ef19535330e9cbf7e2cc761d25bc2b9ffdc17daf20c8526b01160aad93798d89557c11f93ad0b2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:44:40'),
+(546, 126, 'ddc32912e6a55174047cf4d782d8249619c4975b76396d8e3667414b560a2c1d', '{\"_s\":\"c0768b1ba988e2ce880f3a44e8e33f01\",\"_d\":\"33e8204ac315c5c5c6ea7b9b8321f4d9071cad4ca6ac5931e5efa533a90988442c7b137e6e72f1a52468b60beeba1dc86f2df80d0ba2af784ca5e9b5226e71befcbedbf3799166b6584f94d6865ae2f8909e8bf8a516f88d1e02344c120a0e64\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:44:40'),
+(547, 127, '5abf2323ccbba7bac8cfc2c580eb44a0', '{\"_s\":\"7982992773de1647f0d1c360b4d9be69\",\"_d\":\"5922f18ef8b2e787b51417b659460790664dd531c2e96d524fb4458c6bd9aba23ae292f93981436fb133d845626b0a5a14d97b120d756237026c3106ab0a8b132f5f59a70aebc787038fdf8e4a1f010fdf81896ea184fced75b689d164ca9564\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:56:11'),
+(548, 127, 'eafe639d2a518774bf0fee197842732f', '{\"_s\":\"0a65943abac5ab958c4f84d12ab9b09b\",\"_d\":\"c170babf8795ef2ddc56ea3f2b42e5dd9efb831de13a705220dc5189de45a0d3a43861f6fba7367f0f456c306e0d3fdac5748edb03bda5f9d81df0fc29ab5492b1cf27fd50b2fe7d50fea9b19e5cb5cfd8267622fab768cf04f4ff618e46f167\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:56:12'),
+(549, 127, 'a6e3ea6b8145038dc54812c1dc44f4ca', '{\"_s\":\"a12f56b9719f3730a106d24f70fabaae\",\"_d\":\"b2a2468e4931aa26ad93517691ee844a555ad2e64ea5c2f72a9cf7712b0129eebcfcfb1f68f7acf23b35d1f79d88ca38193e230bb84a8c4ad0c33aff19c3408f5fb97539d6f2d409e955eba05e7c9702179fe8246e1528a9b227a9e6c3fda451\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:56:12'),
+(550, 128, '1e7b826e109c3fd274223ace90745b72', '{\"_s\":\"440685949db095aa7dab5fa3dd826c8b\",\"_d\":\"8820d327270b9527220ad1c787daaa0d3c231527a2ebcccfc75d43a78d2aecb59a5e0e225d3dd3cea7179e89cdb15c38fbbd067cfd689bf368a56c4661a7b2b89997247b9fa634f68c149ac347fe95b086797dd727709f997ffb2110a6c2c35c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:57:46'),
+(551, 128, '9bff7e09f4ff3668acee7b237949ad25e30c44ec046a70106427e979927aa555', '{\"_s\":\"e7bd79e9d4b6a0972871de82d00a85da\",\"_d\":\"2cad80a922c638de70165168bdcfc30fbe4e4e4d66f3a3c8f8de9b502f7cc3fdbb52f36a3b04a4754399e0f4a3ef7dbb6e62c2c19d67b6020190a880e39961e6805e123898eb353bc03e3addacb6da1cadffc70436e9c70b8a615f0d7e7efcae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:57:46'),
+(552, 129, '75e9a94aa1183190899e06bb00c88610e6481b7bd490b8a944ec287343d4ae9c', '{\"_s\":\"5fdb912682895c418f9bbabe82256a7e\",\"_d\":\"788ad0fa2c76ce72adc697033f1edbed1709be1a0cf08d4f9b88dd6ef11363097b7685474fe6490546d803f7a350d19e20ae5c7e5c2b5aaac743c211733b29fcd34db9972551255ea8a47a677d114d28c7e2ecb3ca78b9a8c067808216af0aa0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:58:47'),
+(553, 129, '125d6877fa29ec3dfd87a6ee6036d94b', '{\"_s\":\"5a85734cca3272fc3b9431b8996f3842\",\"_d\":\"48399561cd454a4992aac7d390cb18b6675a144e32a4f23bd30ab5dd0a229120444379af133db5596eed418afbb5951fdcfbecf04bdf5b6f3970845cdebf99281a40fbce41b27917a386fda1e3719039fb94d5be433e0bf86f3169e7af8a93fe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:58:47'),
+(554, 129, '4d390faeb14549bdf2729a4db671a6e9', '{\"_s\":\"cdfc9d18efa8a597e698a8686822dee4\",\"_d\":\"b2e00a033def87301b3d63833d188bc31ad7f80e2dd648afedb75841e686ab0d75b543ae8a150e951f2d9a664937ab13f4459c7d131e42d8a26b24c40fc469286232684bcb3039273384eabf9ff129eab7e8e4799d8263c1dd154c22d52a7cc5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:58:47'),
+(555, 129, 'e5394ccab1eb9a8e0713b91e65f4b2c4fa33c00a931303bd4576de720ab96a7b', '{\"_s\":\"447d710e65332b7dbd5158a0738900ab\",\"_d\":\"43b3ee437ff22efb15490d734feb6dd48470e8353ecab34bf36d2327f7cb2c7a638bb38dd6230b2e6f264afb5ae7abab0fbff8bda75526cee6f3a850521f5e75ac939ef9177e36cb73828777db9a7f05484875a5d2d30d924ddf7cf2f5297972\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:58:47'),
+(556, 130, 'e5b5e6509c7ec00026688003f4894a76', '{\"_s\":\"4f2244e8828dadc8c6e365b09715f5c4\",\"_d\":\"116aa4febf4181b2f197ba210a4edd1d086b48767b23f126689bcf15c4e1784052226d0fcd52aaf5553480bb50159c94c582a260984eaa612601e81cc0d9c046c52f6fde7a7b94da6f7cf19a011a7523f600221d99af23d4a49db36497a8adc4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:59:43'),
+(557, 130, '1cfeda4a8b5ea6f1ff6a1954ba33c9a9', '{\"_s\":\"70ec0acbd3ea8147f6f082488a5d4870\",\"_d\":\"8b73f8339708633e8cf6d84d68ac76fb5773cc865922d2207ee3382da7d0af65cd82fda7bdabb7aa8ddeee034ab92a491d92659d5e7fade5ea2327da860f04fa0a37ce0ab9e7ae1eedde55aca8ab513cc1b18e9793fff90767126bafed92a555\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:59:43'),
+(558, 130, '6c5bf34dc29f580f8c4aa85d4367ee1a', '{\"_s\":\"ac6b30cf97c1603d7b330e381228f4e4\",\"_d\":\"9ca3d241bcdb098f34dfda45e56301a71410c9128822d8cfb4e5e46b2a4cc4d771b4a5fed29e6c79ed7fdd9e2857257ffe9fbb861ecf63f4977f61d59b413c9ea46ed537e4b8de61cb51c78728df2bcf00c01ca09694a2ad97484a1477640fd5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:59:44'),
+(559, 130, '2563a1d36159a3933eeffa282d31d3a3', '{\"_s\":\"1cb6e94a61a77b3b89fcab3a1c9fa49b\",\"_d\":\"480448b92164ccf5cbb5a745ebd5d334122d229a07af52426d00f64e59cbe1b26f90fe8cb5620b12826ed16eed33bced4063a8b1467643535fbfcfc67ba8175a53c0dd66b2d7110f27d57ff5661de36c40979148dc58260112fd383bcf55e146\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 11:59:44'),
+(560, 131, '4f84f10c6a73ed9e650be0a478d03b85', '{\"_s\":\"a0746a2deacc1875c1229947e87fd085\",\"_d\":\"e6a576fe6d215ee1e94e5c56950b9c334c940cee02a32d9b7b6198127b981e228152116157212598b332fe8340f7e8863f65a53caa6182e76f7c07b77f7505e9e269ef99ca2460aa8fb93b12c45f0cb5db25d6331d4704d9317be121514c3ac6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:05:56'),
+(561, 131, '513de4e75d7417b2cc8862f869c06e41', '{\"_s\":\"a270c20fa0291c379a7b00a585faff04\",\"_d\":\"e46a725ecc2da2a07d95aa7beec20c9ef1b1f663bfc087188b202322829967c504450d6e3ac390620b4ec63bef969395aecce71c7410b874121b3f4b405699d671e2c612660ef1b16f8b98d78fafa562cd85169c586d18374969410cbde76b60\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:05:56'),
+(562, 131, '10de38d4d03d591ffb3ff3534929e7f3', '{\"_s\":\"dc3cde69c0b50f8337473d63f98dc57e\",\"_d\":\"ab4e2ac6d4dd087a25e0016e3eddf6f303abd5836ad8c8a2d95df4afb656fea0b9b0c87206fb5f6ac37a407b5765e0ff067148ce40c48508f3d6c7a80667fcef62f8a74754aef924d4f025cfd0a65f615111415aa569cbeeaedecf2bd0a5d73c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:05:56'),
+(563, 131, '86be20373bf21f430c0977fdca9d0ec1e3aa8de5fc2224589fd629ab90e8d5f4', '{\"_s\":\"339062f227ff7e30c1eaf388dd80eddb\",\"_d\":\"454d37555b6978f82b460fda899e6024cd54c9115249a4000c0d9fa8c892a9555b24d5213d656803f3761052a760345f71df45d4e8a065bdbbf4e2a1071a9439560e30bc1ad4256641f39849ec7757e630139164d6ea960bbdca19deb3e964a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:05:56'),
+(564, 132, 'd9d8795624e0984e4fc87fdd87ff0e35f14f1fa13279721dfb9668378e6a69f0', '{\"_s\":\"fa1d5a3ecb22bf6a3d3eb4d6f7eea310\",\"_d\":\"445c43b1ef7307edb0a9b5f854e3ddcd82842ac7f6448ffa82321a38b020e8064dabe273dfbfab009c3fe12e833a97996b1e0b8f4d24d0c4a9af452549e2aa76fe29d984f0b681755e9b62e86cf701bf391b08ea7e3d7265cfae28c9700cc78b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:07:37'),
+(565, 132, 'f643559e55b3dc3829b7a1b3044545f7', '{\"_s\":\"23428ba412146ced314dc17c3797b3cd\",\"_d\":\"8ed0abdfba47217069a08a5390b37d2ef76facb187b662fb5434615c2809267a473a2feb989d77da0eb92aa329f1f7d0cbea50a5e974ea39ddda18bd36073d212239f8d33affdf4bddd4eb11a07d80dfd3e532b89eab920f297ea409c3127e2c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:07:37'),
+(566, 132, '7462afbb5865592738198ecc6b3b9e79b28270207a9fbd96ac2251f23d34a971', '{\"_s\":\"347c42815452c82934ae38b5aded6ecb\",\"_d\":\"36910a2c748e6e8443ae82a077d9287b666dc6a7f4064d35c4df9c70d08ec1df5351acc7b0970e25d2928d77a2a6f3ab2fe4324b929156953b30c61ace1328aee12e2acd21896a3c834d4de351850edd9d0a7ca42052604f009f7ceb792242c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:07:37'),
+(567, 132, '57bc34e05e2819c618f2393264a2ebe1e5cbdceb32ca2870764de8bfada87c74', '{\"_s\":\"661091426247f9794948d32263fc4f9e\",\"_d\":\"75f169084ef4d8f066a2a7460fc83056816281fddc069f0e71461d01db9ca8c23025e4f36795c4ce1fbdd847e38ad8c6f9da9303de8bdeb0f93d982fc164ef57de3b1b51f37c163d7a675bad2d3f298d1bf51086b3df882e9280a8b36a2d62fa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:07:37'),
+(568, 133, '7be7047a6a278f3266adf887663a7473', '{\"_s\":\"396f46e1ccabe4c6bcf698141c596c1a\",\"_d\":\"e81f74806253b40ce7d2b6ddb7642606edcfa7915ac176c3be04e37e7d2311f46324f9a256d5e1041e869213ca8a47ecad0c0fb7bbd4ac60c71aa55bf999f84f2d2eb205e4f6c42734904353a8b5d57a67f2cead21e8157eaebace94121ede44\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:16:24'),
+(569, 133, 'c1bc056f63ff64f9d487df96422878d9', '{\"_s\":\"fc959d68c3a9724f8f65fb09f05f134b\",\"_d\":\"2d53d8241fdcd0236947449cfce22ddb1d351cffd2d19440b5153486d55d9ec1759d914c1d3e3e190411c4302f8a353d2614e31f80cb35246f8266b87664bdd393c1558f50f7a0d4b9d5303e21d2ea07d355ff3d0e59bc1e2d3217fcfb05f8eb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:16:24'),
+(570, 133, 'ac7c952b8d57abb74857561088b1afea', '{\"_s\":\"219e65c6c4fab06ab4aa3ab609f45bae\",\"_d\":\"e07c5ee65aa2fc84b3676973cec5dee4e4b60d9f9b2089b4d3d652d7e0d8ca5baba5113cd766c812a348e21a67629e55340137ab4ac46dc973c240a585440953a6a6c3c1dcaa266c474b5b2d57df61fe397439a833b1165c28595f95a712edc1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:16:24'),
+(571, 133, '073f4f0b99bd2f47a003723cc6200a1a', '{\"_s\":\"8f00ef5fd4dd675690d1f5d6343c8023\",\"_d\":\"9df0b6f81233a36828754e123257ad29f7364c414c7ea38a6045e344ed2b3b4057b384e9df45d4bd6ba5bcc7476ae905853693ff6e083e5690c9ceb75bc10440443b8a176a5dd901164f0a7b7b5e3a21a89c49362cf524f3b26e8159910b1efb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:16:24'),
+(572, 134, '2a5ffaaaf49ce4bab3632aa1f4614cd0', '{\"_s\":\"e45aa3e281ed1f2104eb572014625ab4\",\"_d\":\"01471de712ab4a766ab8ab14c360129aa3aa5a97015c6838aa93e1fc747448f579f9afe6910de3590362c71fdd6c6967653a70c57c39f50bc8e6bd84ea76fa13e879139f6273140b3a6c3b784e7ca50da9a85e8819f3264caf2875627330604d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:18:21'),
+(573, 134, '1e8d257700f39011fc3bd900af1356ba', '{\"_s\":\"cbb4f2948a1a015663fa32a1c882a9bb\",\"_d\":\"b3db4afec08994232132f587fb4b6b3189bc5329f2222c3f0c15257179e62c9f1750dfe672a6652282701f2c7d145d6383b38975a4896e0efc49e54204f3d995b80ea7fb4fdddefb449dd0244ef479a97f9dc8216807fa0abde47ec5a0802094\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:18:22'),
+(574, 134, 'a06751b0155ff608e7d9807d448e0b2b', '{\"_s\":\"292e9dd04dd5ccf7dfe520e84950d1a1\",\"_d\":\"8b1c374933d9e86ca46b2865528dab6d1c8e08370aa679a826eb4bd56041291903ee08a4c04d0c7b1ea067ee7500132c6596cbccf820cf36bf6417668820a6da6e48c5e0953a1f6becdde0d9bead7ce43a1e1ac3b70730bcbf2e04b19d78dbca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:18:22'),
+(575, 134, '3291830ea68bfd1f3d7fc4f04bc35869', '{\"_s\":\"03075f86a5744254aa3f0f7fe03e8b07\",\"_d\":\"ba6c619676752c83ee32635a8d8cdb9b589a22294dff47ee46f5ae0595d28f0791d3072d13c437112d62662651c424cc98103e182f50f3dac482d5411b8cfbd98e27210af7af51d9a6efafd11b1f381d160af3e42a10152c462fd4dfe5aeb635\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:18:22'),
+(576, 135, '4b7145d60fa8155b935e943b2df5901c8ac0677f8df29029bdd1deb9eaff0d02', '{\"_s\":\"76ce0d6e72519cf656afb01b05b480dd\",\"_d\":\"1d003787946a69c07bfb9436fa53eee98e306552d64dd6728f24fe6e11e7908a9fdc9fc8918fab18502102fcefebd7ec986abffa17b86313391d004262f41d772aac8f68551dbbc1920ef0ea2aff3cc923d88c21f44ff93a0616d938c99e535f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:19:15'),
+(577, 135, '4aa9140943f021710e8b8e5c0960f9754da5fa9473de174b32a65b440ce223b0', '{\"_s\":\"3281061ba78d486afe01084ce600a993\",\"_d\":\"af70d8e867fe68734e34936f4bccab44063b2c73926f3c6a7e22925741af3853feeb3e1dbf44a1a733cb13de9ea5c20658ebbd62f09bd886c52fd56b78ba50215610c5db948f03f8154509256b28d3d1397e62c499d557d646fb8161dab17496\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:19:15'),
+(578, 135, '35e79266d6db1af31556fbb9bf30f1dd', '{\"_s\":\"f171f6f4d8b2f8937152dd64e104268f\",\"_d\":\"439c2fca1da96513d680ba9150d52d7e65b920bd85608a3b356d75fd7bdcc1e57e89bcc0c17c62c152ee3759f83c3a7aa55a757d77bf5ba048bb2c42f892b6eac3855f5f3e40f78dc0b934740b750085843c624ccd4face940a053f1dd3e5716\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:19:15'),
+(579, 135, '51605cb83f60180dc70d64157798194f', '{\"_s\":\"351a76374bd4706cb23b223613af02e7\",\"_d\":\"31e0eb67a0c94e2d4000c4229fbf808d60496c754f339d4e13f12d225b27eacd59b46392e39255cd6886471b4bfc25e42e5f8141cc1637c78413aea50796ad36079fbab81f3ecddccd795e7ff4871345329257ecb08743030aee8bb8c5ff6764\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:19:15'),
+(580, 136, '6c5d663c05edee4125a7b615cd4dc2c4', '{\"_s\":\"c50d972a84d3c4cdf907c78136b1723f\",\"_d\":\"6d56df0ec77c19936eb1d92431aa91c3cd87ceba7783dc472268cf99d0e36c1ff3795cda3fc703d895094d21589e1a3051a0529efa33416361e1c9955106358124dbc568c328d7cd754ea3b88290de57612ad33aa4d1b58b30423599a9d7ee0c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:20:05'),
+(581, 136, 'a08900806881cafc8d86d5f6cffc3200', '{\"_s\":\"d34a9f52c3ca8a2affb2e278b6dc38f1\",\"_d\":\"4e3c60e64944c905094119c09a96cfc47486af97625dcab443e4df0354d2e0783e8ef3379a747c930b66dff8004083b3d4d92e67141e4756871fe68648f28273dc5cd0f5e098d9e7c2f511312b0007d20750f8f052976b7ccea790a2752473f6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:20:05'),
+(582, 136, 'dec5bb2fdd03a943d18245272e78fb1d', '{\"_s\":\"7c2823a5a1689ba4076f1581b81f6f8b\",\"_d\":\"915d5388180500a4b443d2c502515dca7a06b65d39e3e60ea0dda027ff552061342a2bd2e5e4ed43f80f8ee60db523a516304a676002c34784d350a4877e30ec0d927dea20fc290024f63fbaf806c7f1a6e46e8512d420dda2197dd8b23d121b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:20:05'),
+(583, 136, '4f6f9d6cd84203949607bb522ae0f7da36f885e467b382a84fe517c616909d66', '{\"_s\":\"ee3bfe399042e3648967f32faa0057b4\",\"_d\":\"f99422b2b43d3ed5401ff4b5f565f6a1b203fb620929399ef0c3024acf40d2e62947efd15dc5d22138a0380c99d3600e7c1b59c2a8af8ad31c8a94d15bca1cb9153ee79d61ddf3d5b1b002c357aec1a6ec1b7c88760da9a0938a5572eb35243d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:20:06'),
+(584, 137, '33232c478130167cc6ed6a0fa57aa8e0', '{\"_s\":\"0c6b86cc5834013dc7940abcbd37e75f\",\"_d\":\"5f6d355245eaaaf12c6d46514e87f40a313ee28a0be515f832d4505e02fa7d25e258444648dc46434cbcb8aed6068b7eea30deee8c3d48b59c37f90693df94fb320a6005718103be208431f157f7dcf1fe6d5f10dd2ff5c7453ea9679a25fea9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:00'),
+(585, 137, 'accc434b23ca944410f2a027ff37ae8b', '{\"_s\":\"ceba2b67a30f15f1e41fcb76422b3fa9\",\"_d\":\"01b103fcb489b819c739d9e8db28e985c564bc8cd356eb5122a8905b21918ead94347e9bf19211df955c190d2b3e35313844b53697aefa61c236becf3aac42017914913367742e803818570e45504ba7ad22e34fc65e28dbbd7aec0a42e2f1a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:00'),
+(586, 137, '596039cecc5dbb41a0cd12bd9884a58c', '{\"_s\":\"dd6ac4ff82282725c548e8ce31353372\",\"_d\":\"febf57c8542a23f8a0331acce4813db935af6bfb0cbc7666ee5a7055e5d3a9c0dd7c1564a8f7ced11c0475a422fbeb4975d06bceb2e0c1f72883e9e28adab38585a610b885a85f390a5e33fee52fd740ced37bd15940629798ae5a075aa2a822\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:00'),
+(587, 137, '805d044d384106af441236e0eb92275e', '{\"_s\":\"92f8592462e455345479d9c1461651d0\",\"_d\":\"bf9fd71221bd748e3f9ea12408032b37052b3f352b8f1bf5c4c41378bc11f3608764f566a11dca4e51daa0b9c38f481050be43fdc02d76f062e2fa9f09f04877509341b58fea4462470d720555a14cc35c0abd61d727dc95df209d256d866ffe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:00'),
+(588, 138, 'a19ab01523b8a87e41955837dd51de7b', '{\"_s\":\"53c1abab0b468abf7d392c2174559070\",\"_d\":\"1d48e95ca6c1ae360178df02d569b33b15f03c90fb95d5318bda5bc9dc00f960863a6df630fe409bef7d83c1cd6a38372f9832b4a2dff9078c2b315a0f1994845e08946ddafc7409bf79ac5b61fd1ea3fb765acc7a14cdacc5c35636d234dc36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:48'),
+(589, 138, 'be8b8230c5750727d63c7c5b06bde67a902c3608f469856c97a24017bd78b167', '{\"_s\":\"3424ce64b6cee070c4e1d817b303aa87\",\"_d\":\"8f214e45f745a3f5cf95ccd2b8311e24320f68f1681f09f89b2355a6e327e7e1e96784ada4cc1ec4bbe13cd48be78ae05f7ebdce1596d9b0452197fc6b2a4aa02bd51e534c870a227694875c091f016bf0cf6abee5cde9ab85e145e9b4ac8958\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:48'),
+(590, 138, '0e2dd3f9e1d8b1f684ffe4d341672d23e55b851e7aa37a00418bcaa1cebfa923', '{\"_s\":\"96c4b7cda88155124715c30bcbb05c24\",\"_d\":\"51dd9b5a4bcfaeb07e4b2a7f8bd4f030f6ec91819460741eb140534edf37920439c6a8628a88709f21829a10f52e0f8f78c9cafeb8dfa3dd82e157f8245e95d70a85f929895047fa10d971da5f6d343cc4929dfbc3d6791de278eae9f35e1eca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:48'),
+(591, 138, 'a1f6a832a3720c14c32334c2a9dc7ed34a4a3f5384b684bd625f228a3ad6499b', '{\"_s\":\"31db651e53f6e4bb1924521c35afeb92\",\"_d\":\"cfc645ef737a11a3afb8b5585e15777bbd80a502e84531a9d43f5f31cebbefc8d0b31ef649deb87df40d398f1e5e86c4de288e56b563ebd553e27cb89b0aa2ec08f700b7348109ac0c12882ddd88797dea31f22a7168d18c4f11023174c7f724\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:21:48'),
+(592, 143, 'd2dc7e8f3355e05a0bfd589be0095dcd', '{\"_s\":\"80694427060264c5878069ac636d94d2\",\"_d\":\"a16606ad6b92798defdb7416b35124a30191d345225a10c60d3fc160dd42cdd21ac7ae8361864b0a5585b0ecf1071f2462554ee4ddcc25af168dd099b85cdeebf3850c8b8ee0a85b509bfb50c1c2f752d8b8fae0ef463d7dda9c7eb2be887fda\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:18'),
+(593, 143, '1f8aaef2a86fa99e69197b1cbd714524', '{\"_s\":\"adfa08f43aa88990c848431b1776af67\",\"_d\":\"d5d7180d47c8a439aa71d6f0e3958dc2396c015dba834d1d5bcfdbbb52457da90df7ff0c1af092946bc86a97487f2d899d826eb1d8518676ea91caf167fc9c8b99289d845a870d2ea38cc87996e6e12d6f013dc071d189909b3847d7ec35e188\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:18'),
+(594, 143, '4cd74fb3419d04691c2537617d3ee85e', '{\"_s\":\"19447b0c8bfa4d2ec29815fa5aab62f9\",\"_d\":\"e33fb70b2dab80bbfe9deb6350c4d560ac8cb6f39b065ee973b366fe36007a7acd7502ed27c5332efec0c84a32775672f015a536b5c6144e5a63a538a74824f476b9d83166488ee2a09cb8b170656770b321ccbe1a0fcb36ff57f2c293b82d8d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(595, 143, '8059e615518654a7990ae635e386b819', '{\"_s\":\"ea0baf3694e591eaa4471d95168bbc9f\",\"_d\":\"18361000d6bac7a5220cf57c7f922facfdd2ac42868336246107654d1a137b518a6ab83435633cafd3318dbdc843043dc8dbeb59fee284ef872857097ab3cfc6bdf9485d4fb24158915a4d1541ea2e7fb425863d44d4fb33069fc6d3423829d6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(596, 143, '0761749f1dc4499f0e39104f061410ec', '{\"_s\":\"75497f4c0088c871dc985d3a7cd22eac\",\"_d\":\"724053791517116317c02a82107cd41220435c2a0b01078c61144e4eeed1ea5b7136cc54e48aad6fa50e140b13e48306d9f57c3a0864f7bc329178e1a04bf177db0d95b50ce2f09ffa659fe2ebca91e71140b701174853d12cf2f137d08cf6ea\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(597, 143, '3c213e0806bbb81ae0769289fe2bf6ec', '{\"_s\":\"ef9cda92b6a14c110f19c4557ee7e739\",\"_d\":\"7dc68ee31622593ae769c3f040188fd709b489962dfbac2206144d689f992b10e93e40f0385a31910ef714eadc4646cfa19cbffb0b89d5023696cfb12a0a28ec9dfeb6bdf96f537a7003ac505277672339e7e29deb63e32d42c98bf5ee729f1e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(598, 143, '925252ed1b101bf1bab709f681a2a117', '{\"_s\":\"bef0565c746c181ce588d182afff6383\",\"_d\":\"c3ad4151139ed3959feca8c7a0af95502c60f015dc2f50abf4cf55d01c7df05a82ac242223f37ee1556816ec684c3502e5a35147e2e9b2078d1e805c9d15c1bc905b53eb275409aa5c7ec8bd7269bfc1cc5bcf5e3a27bcb8644b329fb14777ba\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(599, 143, '30d49571a7eb978dd69a46d849fcca2f', '{\"_s\":\"2d1bedea0a2d95bcaecb17104d319a7a\",\"_d\":\"81c8989f75a2738336c7b358dc652f93bd1a382ecdc540ac78768fb1ca279d9685ae90afc726c8402a0f5afea2a8697bb849954bd0980c8e275c60078dc4a878c2cfc28ae0a9712947cfdeacac848f65bb508b91e1291afcb8dfd3469a57c07f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(600, 143, 'dc1c0af098c2ea46690ad4cd6a9f1ba4', '{\"_s\":\"1abe4ebe6783a2803356df8bd288b08b\",\"_d\":\"e5e00843150d607113930da353ca2b5cc6bf77649349d8030daecbcb9aa3cdfb0642447e86928f4d55590aeefbe13bb96088e3212e3dbdfc79ff52308fc3993be8e75154e0414e492d2c59be489bef57f6c1fe09030506cbc218ee1fd7ba0205\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(601, 143, '1f4c3bc78d84aca29316810214bf943b', '{\"_s\":\"ca437e679e71d94a697a5233d0001c48\",\"_d\":\"d2b5533ea0dddc5853c4212064718b4e10d5e3e0848f1c310f657e095d7e4d5f854a5d77a960ab8fa62a37b0cce41b0456b8396e1a90e5ccc790ce2a164fa8b4ea649a4b79aba46bf14a64aa8e7db1470f3370d89de3d5aa853eccb8d17eee65\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(602, 143, '5cf88c59db48b0a4709b58ee74b908e1', '{\"_s\":\"5ebc7c411ffe86d5f3e7c7cbf15bf322\",\"_d\":\"9f7e4793e04b92eda2215e328a930146f44dee787cfaafedc5ef659537fef17f80b37e2293977d79a7cb8f10caf3b531886a15e86e9dd1c4b72ac2649a348c41177e134691308d5fd7de8a3e65486ed10f509d59e6c7d77c202925227baced61\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:30:19'),
+(603, 144, '3b8a741d9cd1ae3b29c60a1a404e916658d4973dac0df2144ea4f058308ed8b4', '{\"_s\":\"ce36210eb8758170b457dee92448eaf7\",\"_d\":\"3a7c1e13f0c0a81a8fa2ee857dc8b82a697d8789d1efa1e7ac59cf716dac63e15d06abe207bc61c9757a5144154e352cd1940226630bd0008f8bc6c7f6f210f32f910f391076e8902910c38ee86ad570d21cca7a40c8746ada063ed426865982\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:31:36'),
+(604, 144, 'cb075f2e9e6d94ac2bc446c784096f5a2911f3722be29ea5e456bbb823937f77', '{\"_s\":\"c47e0e2377a4f2d429cdc8e2eb98474a\",\"_d\":\"8abf435ea23d147119f3dfa80ac6bf582ad08583ccc3445c247163b4bdc972b1b77156535621fd48bba83ae063db98fe73de03ea61a45eea601c7a1db0d053168e469b63f61af370ab2c9ded054de7932f8771f2ffd6107cd4abc508d57f8370\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:31:36'),
+(605, 144, '8ab1908ddcef46e0e2f578189455f129', '{\"_s\":\"e628b15d55bd378205176e4312b57342\",\"_d\":\"d857ee1edb439f18b3173b6c0fa3f92b6611029f48df5b720d98490821ac3285363aaae16a46cb353c4b333a2626cc02c32f56d58278871188cb7d473f9d6df8c7c85bb2beac5cd5101386a1562d563348de4e0e474f1ddb4c4e86f969845ef5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:31:36'),
+(606, 144, '16ba15c124d6c130194719dcccddf8e8', '{\"_s\":\"d9b0ee909de9241fc1ac29854d59cfd8\",\"_d\":\"1177ada5979b8a413c038e8acf2ff39e0d8612cd29b20f204bba8056ca4fe81b1e798d0da9edc628c0aa431ae94966a9d1c3d9ee3f631b797f97b9f2b51a5e0f6bfbbccfc4e1f548d799681cacaa29f40b4c6077513e8cd1365f4772efbd166d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:31:37'),
+(607, 144, 'b5db193c5abd1a19e80052fde46d60a2', '{\"_s\":\"7011564c13f01459c42c50fef6ead122\",\"_d\":\"1c11a8abe73b5a4da76a2929f43dd1947a87b255b7c230eeb2557e3eadd7b05e039dfa3bbfbb6e7de58c02c67b1849bbb6416624a39505cb1887a904ad664ed4301515609d57a0ee3bf4b33de97154976525a775474b0317ef92a83eefb71885\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:31:37'),
+(608, 145, 'd7c5bedf4a99864e1b43a35f9b12f767', '{\"_s\":\"09174160ece0b3d72ee78bda61e735e1\",\"_d\":\"4d4edd930316d281df9c31aa6b0e745f887301ed77c6b4b11a587597b3763ff9a4ba55db662a86c2661436c87496de1f03e1de24e3dc6bf7c1872f6428c613ee8e1cb56538a74c62afb567abe2265e521527dcd762dc578f597c2b3d07001a94\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:05'),
+(609, 145, 'c5adf4b4c6331896222ad4e586cff44f', '{\"_s\":\"7268f1d5048d85840254db71ce8c99a7\",\"_d\":\"2e5e8b051daddebd2a07dbc067c2a486748f53cbb367b3f12901fa6cccee55608bd908f0f893535d44e075457cf64e80fcc0ea0a5e48e6028866cb3a20d14415d18414fc143a4a39e0efe369d7d30377735ba53568614561f88d58b47e088991\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:05'),
+(610, 145, '61ce5718804d65e6080cfc2fd8334866', '{\"_s\":\"082bc595ffe377856a27b97211aac6db\",\"_d\":\"4d5668da5e2595e71c82c152d508af27fdd2ad24c326d98f1bc6b0d97193661ef76d51982517bcf815a5620c09d42f85d1125a0249e818309cbea3bdff259bbb269b5b6294daa82b6716f086da62dbc7e7188413565ed994b0bddd14a9265137\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(611, 145, '5cb8319e62649112bf7c8f8ff07610f2', '{\"_s\":\"e27ca2608622e55bcd56e18d96108694\",\"_d\":\"daa496ff31ee4dab49752dd5e77c53ec1a35feb304e5c3b9605cd5d2ac6366c80862431e050d6e995e4c496c6716d9bf8f8fced13ca220dcd17572cbe4b16fbb77e18b4096663e04547bc295ff779117c97ed4dd6fcfbaa9efc5af2476984013\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(612, 145, '6d8934eebc7377b3ff739bc18b2fd94a', '{\"_s\":\"84ffbe4cd9df8ecd466ce3397cc754cd\",\"_d\":\"5c164408bed9361730b712754edec81cb78634ef8093b2dacf4a6a15ab7ca5f528094fd96c52d1772b257e41446d57b707ad662df808e8607b3a478a41af1e8ff22627a6b5f9a0e2c8a9c25194fd4ff6a62d1f1258683cd4a83a88fcc9d15cb5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(613, 145, '12b1e4128024e3c2897d364ba5a30251', '{\"_s\":\"c491bc5c23b5dcf1fc87f22ebc0730f0\",\"_d\":\"fc4d8e7882178a35290c74c079821f2fcbfd462bdc172e8918c0c7d3132bd81f78fe539b8fbb2fa8d8d738d8c557c0e5a6af264c039c9b3d3b784054eb36c3e5d6cba27c84c98b5ad56ae97ced4f780c7450c225c295731cf1f11a398bb259f5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(614, 145, '5c8ff7f3584de8cc5fbf6e85db76808f', '{\"_s\":\"f465d3748d57af74157e164e0477980d\",\"_d\":\"1334e623373e20fd019a180f20ff74170f1014a6cfa2dfff0944e72200cd9fc85f10aa18d4b149780b376b34711ec88ac5f15677bebaae22bd1ab28d50630504902da481ddb280a2c8d083dd9e3aea582dc83d6913160f383a5fb3f59f1b963c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(615, 145, 'dae6eddc7e2690f92b95b3706bb4b1c5', '{\"_s\":\"72196ef956885e782264ca2bfdf4094d\",\"_d\":\"9f85142fad85af439e45e1532871af408504991829e5255b77dcf9c51de2ba5b69348678dfdb578c6b482211380cd6447888aff85154efabc9c15975a847c070329ef334ebf0c6e3d9f753c77760a635239903c475b7a8b6268044dd6e82a6b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(616, 145, '128fd2f74ce15482552a3845669a746d', '{\"_s\":\"8e120ed0764bf7da271d8ca0bf362c7b\",\"_d\":\"7a242748aff5855870e1bf88cfd4dd8c7aabe9f07d724243f3ffd4b7e3483269e2a7290766fbee5eac555a856dfdeef59cf2c3dd4ee9a9bf15f84986c212475d14e7faa6794ebfdb67ac9c71e1f3a8eea35318c67b1ee3465f8eaaa3ee4b6737\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(617, 145, '9eb51d6653c54861013e6357f8f30d30', '{\"_s\":\"2ef09d5aa743bfb0857d39d7eb34be44\",\"_d\":\"1a0c1a00969bf4a278c9ec2f686aa183f57649edc9818f2d95057b496cc2520a77d5c01691fd5e849fa411ccb2df8847824783e0b3c57fcb0051d7ffc24e5a9611b1b1706abf780d1067a1bf7c8f94455f35f7a64b766c1e15d78ab92983485d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(618, 145, '3f051e4b539f072a0ee5752e875a2317', '{\"_s\":\"fddb6d9f9ed323f0941fcbfef0909ed2\",\"_d\":\"8b5403d7da5ef877d852cc90e4907fc3fb0a4179423fb9820db49e208509b2b6af6cd6880dd31346e39fc773b176224e4a6e0f8db66340e67c31c790d51646165834e9cbceee560c1053f156514a19030ef49f06b2b89ce759fbd828592a12ef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:33:06'),
+(619, 146, '6ae8dfd75677c739a398f7a9061f0499', '{\"_s\":\"44bafa41059dc66c001f5e09d919e095\",\"_d\":\"a795fa1fc2963d773fa7286b29dc21622a0789b93e4ec73c328d867d6e73e4c00b2cfd26298ff9e5bf0538fb8f4e4f69827c04092b05f3da2bc1b96c72319bf471ec01e32352618dd5d0ab636fcb3f02f49baee7b7438a72b0a90855d9e4b0cf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:36:12'),
+(620, 146, 'f9bbbbbbd4a7c5068d4e3297bca273c3', '{\"_s\":\"e7b04841c399cebec6ecba442837952d\",\"_d\":\"1f7618eb5a34105f44b8ed0ab08a45b2a736892261adf6a492a4ad963e505e632ea31f98103e1949a7f3ce0745af4d49bc5049f06215bd14aef68562e1bb5fcb05b77f0b843dddd5696af837a78a09c23cba73656c895ea0c9eb789b9e306493\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:36:12'),
+(621, 147, '5e843d9c8354eed0355c6e0915fdcd8b', '{\"_s\":\"a40d5f3a39baeb54bb8379555852a6ef\",\"_d\":\"9fb96c483f54b64fc52ac4568c58660d1bc98408432be36d88124bdcf07328e355e95ccc9ea492e944e4112aff89513254d17e0ad650fd7565682739ee499a4355366fa886af286209356aee0d458eb8157cc9f1f725dd7bbed33cba089a46d9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:18'),
+(622, 147, '68b8bf477b0a73dcaa2e9eb48f5e3603', '{\"_s\":\"a2fd21f7253b98ed874f480a42ef3024\",\"_d\":\"9569e695dc8144a8662b8866f71679659b83cf5fb7f29aed98b8f9471696ad5b9223654a7c0a764f706fc7e1b61f0c4db0aa56cd5c406af97219927f82475adfc47c7b08d7077eee4f831e244197a29965e64f1930542fa343579ee76269df1d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(623, 147, 'f1bdedeb53aa1cb2a01e09055bebc327', '{\"_s\":\"130c26bdaea30ccdc8059299fdcbbfc7\",\"_d\":\"eb2d995ed945d80114c0c16eab719b28f42312e4ae7a05cdc796ac8ad7e0ae5d9de76641e5c37ee74870fe9eba1174829fc60af51a4bb39b12fb531193ea3d42fd22363b152a0ab46a919fe59683a29520c5ce181a2dbcfc4005b3a2c82961c4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(624, 147, '73bd6a9fbbf93c266bf3af975e141e04', '{\"_s\":\"54b579087e9ce3b952d187d55bb7bb39\",\"_d\":\"7f55ed243e07c9bb35dacfddcacf5e28dbbe6f89895a331404aa22d97e62e8f03cd1a603485637508addd2ff5deb8a208acf12692de22d26c1ad4dc9b15581346f3bf3c05b18298800758c8197fd3a0d67b77dad931d70117fa6f95eca88b452\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(625, 147, '6b5fc3f4bb5bae8746b0e18b4ad75fbd5b36d557785f09dcdbd91a90650ead1c', '{\"_s\":\"94d2c6c84a384516272623af9a657f6b\",\"_d\":\"fd3dbc6800ec8c90ff3cd17f406117503e881de9b1309078ab3db4698b5de31f40bc3aab00b148a931185f7bd84056029f4699481f8d521929f3524762b6f82c3f6bddf768c79a5bc12c5f90875577c9624f7656620a0c8b3d12b2388f7cd114\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(626, 147, '2d3e2f948ab5078bbc862e11038fdc97', '{\"_s\":\"ce96590c3b7d739c66de2ca8e0153e12\",\"_d\":\"e7e59f2593a4dbf7c72d99abe45d64b18b29e21f036f17c8bc027a036fe68c00962a748b28ef5b679afb6fe19a60c11dfe408e60aa8cd57133979de05a369905de561587e8403ea14c30f832e76f1bf7df35556c6e573309beff969d9dba70b1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(627, 147, 'a579ed187d170b717dbb32936919cada', '{\"_s\":\"3bb5a407db597523d2ebad35cbe58154\",\"_d\":\"08d25012ce12ec27d342c6b3bb5ee604e9a122aebc81f22d252b49575d1d55aee64594d094008e9b9ceef9a669442c4e0a24e7f790cb65bf9682f3e8434f6bd68f407bfb9818d301c6d61204216b1a6041fa8ad2fb440c749b412e55b85b7388\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(628, 147, '2ae944d86bd5518fd312b10ad321b295', '{\"_s\":\"a3ab4c4a37aab9ed2213c848f03e3410\",\"_d\":\"4aacb88b765b3d9652ca32ba993d7bdb9a86256242e64d010eb43ecc4f6c1aa47325ae422ee6be027ff5eec0b126538cc897ee149fc20bc63db92e0e5818af9f35e1cfbe59944f73efc0cc28a2bc0ef5b1a544ff7d12b6934c33c90c8a3a8876\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:38:19'),
+(629, 148, 'f7de7c137a2f4d3493f817e846d77179', '{\"_s\":\"2a1bfecae8cc8018007043cd1d6485f6\",\"_d\":\"f238710f5b8aa059c4f3d1af098ceb57e7cb8d416284ad2a14d8e42f5440c47ff7ddd1d2bc7214e844e2a68b4da6f7b76308dc1752f1fbba6a453704de30e19a5498d7228dfe69ac731138c28e3efa02b0c68a71070197914eb7faa47b2e946e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:39:26'),
+(630, 148, '8fb505020b1cb8749f2d9cbe10e7285f', '{\"_s\":\"e9b2e04f7abe4aec3d4102d403cc4d1a\",\"_d\":\"e3d3d6c048b7328e2f29e985735450792b2ced42129310768d6b9c8ee4554cb4a160acd4fae51342e508072b482f13ccb19b8e66f06ef5251a1efcafc5749447ff7c775d079d345f203e21d3734d6278155916a059b01b4f024f70f00eb8b5c9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:39:26'),
+(631, 148, '1bb30256877dd24e8d1b1135e44a9ab3', '{\"_s\":\"e097a8993f952e5b359f030283f11831\",\"_d\":\"ff681bc1b63dad07d268d61feae88fcf804a57d49de341c503019a30d9da4af99a5455c452fbfeff4c85749f644cb712d1410f1c1c8487f09936750e69343d1499b51aec0fcbb5db9502246c8905780ad560ba1cc8668c09b9260c44de0e2d8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:39:26'),
+(632, 148, '725f81896c960c4d3320c7a9f5b3443e', '{\"_s\":\"99d4b61e1abb597e6a514933986d74f7\",\"_d\":\"5f8749d876c71ae578d2003ff59431970134bb0c16972bfa63ac83099f82fe61d3f86f163316adf7204cfefa5a119967189ec6ab8b90241a1f1077745ae43b9fc9f303e1617a4ba4512e5956e52ed74091cd35059c9c403097c389be6f010f4c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:39:26'),
+(633, 148, 'b49cee748ec4608b755c53a59a864684', '{\"_s\":\"ff06a5db0a45016c67b82cad59b800b7\",\"_d\":\"e8205fe054f370ef1b530bd55769d3ec25fb6895eedbc28b6a397a6a0ef5d7bf65391e33c42c234988ee56f8b364aa39b7a714bf89c49c12ade90ba5aaa01655569ecdc9caaefd1f2fcfd953fb3e3f5cdd005258b76378987d50612e2cdd2836\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:39:26'),
+(634, 149, 'b695fa2354470ed3ff8963c5a73c67a3', '{\"_s\":\"e440dafb3ab1fb44b7a7dd2ecdc62009\",\"_d\":\"3255a65399f371a78f5db4c7cb01c47f44633d9c851d522687bef2e09e7ae1c1f7a44c642ab1d270810ff354eb1e22d55cb26d77a67a4d857b5dd14a5c71cbe12f892e17434f27e225c4e6963b0abd1a3e2becfa67ecd4a12458555c844a249f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:43:28'),
+(635, 149, '1338bef42abf140ff553ae003567f82d', '{\"_s\":\"148e2cb13a8f15f8038ee1190cd04463\",\"_d\":\"6983063a1605460c0216cb3fd5665ba9728d5c0f61df40b25f39f2d85ee0065c33d5953a86f7313d6cede900e27ee605d0759d744b7832eda8a5657210a4571166864aff84a706fc680c6620773e28fc8997b3e3b807eebe0384275cc9c88d09\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:43:28'),
+(636, 149, '6f9064002eafa20090962d5ce61c5dba', '{\"_s\":\"8ae431a2c680287f48ecb4f9741f2292\",\"_d\":\"1cd2934e1d87567f1bae07b527c006e113ae106242ef82e0783cd4e5e4573d16a2299a10787a9efeccd2abdda5f0edf17c3dd8ec2acf24cfd6e534f0a07699b3911b92163c582f4b03ab810b83309c03eb8a10be43d394f1612641533f9dacce\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:43:28'),
+(637, 150, '74b5401d7a4342a9b65a09f17a1f44ed', '{\"_s\":\"7b1bcb0bef292d4afc5da5e1bf107303\",\"_d\":\"6655f9a0bb49e9a0e5429272c43475d8605493d449816aa6b51f8f0233eb57fac82486a57621e237200141728d41780bcf30b341ac2412de5275f9746009f80a8e85da1ef5e69ae11c1c4eca466e506907c55f837adc6c0b56590571c96d6359\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(638, 150, 'e773f626031c8cd7f9bdce3d4ce1950b', '{\"_s\":\"897c94ea4f5114c7d90dc30b7d453b91\",\"_d\":\"03304d6f00861f231262c0b956c3ee3c012c352241ab8a7820b63ca607c9382f8a364033c1c157819b9fa7f7539ea1a47261ad5fbec833790312bd768676c9d34286e00d6fbd4c0c8fbcb9d9690c0cea18a5aabf86e0b879c491959ac1979fb0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(639, 150, '3aec187b182ca37e2b1ac38164e92fd6', '{\"_s\":\"c3fb7fa4e2e3275cbe1adb11cef5b6cd\",\"_d\":\"378b53831ba922add04bf2a99937691bb61541726ab0bacf6b9bf7a3e8080574326f90a2bfd7120c1fefe00d7d5f32c4fe7b7972479e7ad06043c3c469cdf5674726796a031b0b7bc4c3c04a6052648d949819ffe04d63082475b96851b5d37e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(640, 150, '1ad327bed30854d8383444fd70554deaa40c70e467102bc35dade8a783d58f2e', '{\"_s\":\"a2e48bac49b3a7600730e230d0007724\",\"_d\":\"c8f099c72eced0533a9808200159fd0f41325a1ef82515f72afaa0fade73e3a3bf70816bf464d67200a81b1224240c4dd8da5baf1c7ee77cd7fb2d49fedd5726c179370c5b1513d4b90c7fc63f71651d4e18e0ee50b4512c682dc1dfb8a43220\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(641, 150, '50d95b36f207c978de085f6b02442c61fe2fc9f3ca70ae41428f80a829278daf', '{\"_s\":\"7d49b697a04472678e635072255f9f99\",\"_d\":\"8ce48a4430f4ca07b7a9cd0faab86b30f5555172a5e7bd88c90c0b5e7ed24b4e2d9abdc28e3aa73fea3a617ec559937d1575f2e97f758e7fff64ecc29da02fab2878a741e7fec86cede54f2164383b99f3a5a5382d7c3ce1cf081cc453e4ff92\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(642, 150, '87d320d9849b3dc09d15e19c155857d6f0674866475cd3c6e7656c1d72030aa4', '{\"_s\":\"a01347125528755f1457389d0be490d7\",\"_d\":\"dca077539d2c28fca221580d7a98c43dbcec867754431998986d6df56128747f83de1eb59e889fd579a2b6fb264d21d853a5b07b43cebb420fc63365e960481362f3b2931f60096853d8d24b659ed3d3181fa9f7b5593402dffa932a29c56513\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:25'),
+(643, 150, '4cf40216d441b32d683133d8076192171d95efb8d45904ddc3b8005dbab7db94', '{\"_s\":\"a2c501db103b1ecfac395c3f43a21004\",\"_d\":\"56b8ba3279ce25f3729a1b2cc679be1a06c5fba574e17742b6bf87abfb594be93f30127624fb6506bb840b279107bf289aca1b0625374b8363849a9bdc96f73f68e1e3fb77c046ea7996b36bff790898968deaebc5490ea647d0e976737db217\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:46:26'),
+(644, 151, 'dbd6f54d940abe04d950f5c0df793ef3', '{\"_s\":\"56c3ab2de8d3c20c69f4ddbb1febf2be\",\"_d\":\"4315f5b13e57ee715c1235e1ee4e33732e2f80c8118343dcb10e3d047fd37fa8d6de6180a5b9ba265cc33bb1d147bdf8c6822438ae022b1e1b5fb3a3114497cc600a2d1f9aab29ff8285f2f36627da282c33d54919736940968bfc6dc5021a36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(645, 151, '311b7a5216b9893ab334c90e09c43be6', '{\"_s\":\"3d160d9bcd415f72cb09b063275fc7f2\",\"_d\":\"9fa5511933a84b427060838b0bcad6558e969d359cbf9b692bdfb3f4a09733dc15872bd9ea147fc29ce736825d558f7fe862a0e8b2bd176407872cd13cfba1dbf83ed62abae7c28f694e4593e1f57601d8040d6accbb5251273fd320adb41115\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(646, 151, '3d2cf4e39f41f992203a16ede03f6af2f444094d574cbc7c0a5ec56e74d79b8d', '{\"_s\":\"596aee657fe72669758789d59ff3cef0\",\"_d\":\"8c733aa5265d02a703c825a8bb2d7f83a3c7cc25b6f75c4d58536102074976962d377f92dc2a635d504c02343dcc8cdd23f72fdc4ad728b1d2f03d377dea9647f0ee64e04e63b69809f1687d33712f0408ac9554b68b06ec5deb4d054827d777\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(647, 151, 'c2ba83dec058eae61bc8c37eef1c495cd0c9dfb034601f6e556d47d339383ebb', '{\"_s\":\"ea0f15d19a4f1a64da357d82f59e7fa4\",\"_d\":\"e94e1aef533b9c404ab2d9c452bce675d940febcea914e17dccd8d13fbe1c9a0cae2a5e211358d1f154f56f50258f4b82e077fe19a68095552e049e82b3ede8cd4c654df363b911235daeac8ff6152fcfde87ca316d39770ebeb837e49ae634f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(648, 151, '9ed3b2ce4eac615028255364d9f10028', '{\"_s\":\"4a78d62f931e40e967c97c5e938772fa\",\"_d\":\"b0475fc9ab8ca5eaddfdc20092e59c44b4b5615caf8f8c57bf35d6b05ebcfb0fd83ce94375fa5a398a2a5a080c78675d882b112e81994f8ab049de534d230551fdfaa721d688f91262f8ce39526a757ac86fc12d192fc763edaf21f397669f61\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(649, 151, '216fd25e547ce708110c6a2ca7d734a8', '{\"_s\":\"9e28184b87f418050c66a53beb183339\",\"_d\":\"643403521e51a3f23b6b2e30293702c39556019d5bc3f842044e2047fce58f204e263432cede13b4454433ebacb51061ef5c03ba6b688f995dfb25e7ff8a204119bf88ef6fa4a266c15f213fdc928b70e71c617be0530e48b19e25b1de1110fc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(650, 151, 'cceeb0ae501c3f12f3bf7a13026834552b0c721caee1359e17699f4ab8fe8aa0', '{\"_s\":\"6c21b24ad31c342d357c49e504cdb27b\",\"_d\":\"21f2f51e514080fca03eab628de688238de58f56636dd061d8cf65366180194618c66c877b2e5500667cdbc7afa44dfeb67e83a000344b334f56be59d64b604ad0f57dc3b92c4607fa304b239ac8a91d0bfb739737fc048d12341f6063e86266\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(651, 151, 'b819071d63973cdf160e3872314596a5', '{\"_s\":\"1e74d36b939cbb2f074766c0649a88e7\",\"_d\":\"1ee1e6f7e4a75a49f5021528c1ae600c712676345e15f7954911470cebb6da0a3f68ae251922e86c0c86a5335d88cfa0d2a5ae3e11c34edefb9b0b16db093cda3f68352ff4f2393521eb0dc79e654dbf650dc1b2a46819699c467bbc87c81b13\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(652, 151, '56990c6e33b068712f17d119a70f5463', '{\"_s\":\"00af5e46b3a94806500e2dead514522f\",\"_d\":\"6d2e929bda6d049179badc5cd3e6fc25f8f3c6667d8afaa6cb38584a71d776febbc94ab221d00d4c8ef3385a3ffbeb435e600501072e05ccfbad87fa3045be9049fd5da29b6019b06a78f434e12abd2da81529fb8a4d8f6fbc02862d8fca5eff\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(653, 151, '3a31f7ef139eb4d88f947e32c5690b89', '{\"_s\":\"1f0ac6c8d108f77513db569282802295\",\"_d\":\"809f7f5bf2d3cf66dc452bdc29ab9314a9e02ae0b1cb78dd7f9f2df89f14d5f8dec1d656560bc529670467acf24051b7d19d6370634140dee9525a6fbdcb8b351c9e48065ca26b72cbffcd2120fda7da883cc79dd351d4f27b7aaf99f0306a7f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 12:49:11'),
+(654, 152, 'f1bdedeb53aa1cb2a01e09055bebc327', '{\"_s\":\"56261e96874311a84e3eec5cce9d4f63\",\"_d\":\"3ec55ec9e6cb1b6cdf57b201e27dd02044cfe46a78b510c20fd75419e85922a059034bf04430e208e71e8142d96ec81ffe646ff9c936edebd1c5b7d19eb821bfcf27b98fbbc3ec9e933305c65f68af149859ca300198405f75fbe7a0f55a8eac\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(655, 152, 'dbab6ee7ea1720a8c4a9232f21a76618', '{\"_s\":\"c2720557a9acef70da1d706615d8834a\",\"_d\":\"ef824a57eadd74783495e3d96d8ea8bed60daf1d36a26c0c31a402632f256944b3303b84f256eb507f8878bb058285a605e991477737070958ea07e55fc9b39cdcee6ff227f5ae5b024ce968b9e54787639e717ce9f9195e4f71dc169b1c93f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(656, 152, 'e2aa3713175936ccce674346472194ae', '{\"_s\":\"40375492f89d68cf32991452fd2d7434\",\"_d\":\"e3298b456ac6fdb1ed02fbd7bb1521cda6e1c6f126f49fc6eeea6be5b7a16bca9af65339d9e164d3a8ab4e6f4f4f413768151df71adad0d86d4181ac039cbd5c79ea362bb8a6a66d53159438d95b82fca163316ef6e4dc699d6df3178fd7c718\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(657, 152, '50e039ac2989b74b4a83f428b31a0f68', '{\"_s\":\"be7d2f83fe79d9ca9bd1ce445f139b50\",\"_d\":\"42d54f42c5f8952f7db6dd3148932a00897d6113eb97525f58b3b1a8906f5a84b701a92eb94b464c81c40cb769200219044f2942a8807282c827863edd2fd7a5187ef4a85f9ebdd64000ac9d0dcb86ef8ff555606dff029097056d11fedd7b80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(658, 152, 'a579ed187d170b717dbb32936919cada', '{\"_s\":\"54683eae874bd9f34994ab089fb37829\",\"_d\":\"21bb68ed76b8709f49944f627fefbdd998e0dc40ab70947f9371a0cc953b6f4e1fc0de327b633f0de55558e240ffe5c8ffa68e907b0feedc59cc401ac679476e1954a07c83b546f942c79a83933b2f52e013312e95cf53958d84deb85d6dc48f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(659, 152, 'c40c99b42ff16369f1d17e2a014d94ba', '{\"_s\":\"1de18d5ed81842032b817e5717fab0d3\",\"_d\":\"ca918e614442570bb096d84af219ec5906a0aaf65e180cd28f19239b3d76e2652981c21d54dd99f423dc64188c20ba63c1c787fdd33d064dc43ae5f294a6eb260708433891e4e751f019b589fed2bb1b0be52d216ed415e89d22eb89868bd2cb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(660, 152, 'a3b77918b14ebd83c3d34d30516abbb6', '{\"_s\":\"c6ebea83a7aeef5da5ca00ab751c9282\",\"_d\":\"f74e6a13c2e2b65c30bb44a6d363329a7133ee9dfe55ea6ff832fd6a1fd44e70cdaf1bd7f7c835bfc8d206f6ffb302cc560487b4696b1adfa842af93cd3ee8408a63fe1016066e976fe7268087a964c5036c8549c8ee51b7407c79b6873192ae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(661, 152, '8c2fc5ed37327d4f13e7ccc754c5e61e', '{\"_s\":\"78533f2d1c4c14c616b98ed04a436793\",\"_d\":\"cde1930b91f5a6363a9a560df9cde949953007da8924a2e8c24c6b263bc569a5e09a879b6b7f0c4f25edd36f711bd11e361787cb4fca141e97f4bef767acee4b37f85f1ffb08aa020eaba0d762dc5adcb6f575a95b573692293fb7e5287b7fac\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:06:08'),
+(662, 153, 'cbc8bcd007d2e82feb3b860ddee5387d', '{\"_s\":\"18b939d39d080d23caf5d6bd6ec389ba\",\"_d\":\"053ff46db8af58e199509dcb62f040f7d25198053d7981f677a7ba32d5381ab4dfc08c10948d894405bfe3b992cfbaffe1bded0a19aa1b0f18aa51a9db653b5c2343fa9d1bdb098bbda3e14cb36a80e5e43d882b08f59f8ab2e323a794abbbf1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:07:41'),
+(663, 153, '3b08906c835e5d98bf4984f17e6c580d', '{\"_s\":\"76fc1e15f14f0faaaaf6215e30f428ad\",\"_d\":\"f355a120ec5715deccdbdfddb5c20d730284b3ffcecfc29600d864769437a9fb79379f2c248fc6585c0e35d5ebd778132855111b2e2fbc6504ae4cd8859d9ec9423a568ffc461b3a78a9d692a333819cdf526c2529d653dd02e26b50d5e6a5b2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:07:41'),
+(664, 153, '91140af9a015375326de4c1c7639790a', '{\"_s\":\"be1ced5fe6d45c8c6cbb7caf2a3d84f1\",\"_d\":\"5daebf5f92c171ad51609d89f0d92c1e3d798c2305a7f4b7f9c23fca75893e4e8e2792d6140208726871a731ccf5274b9742f34d260e58539f89b98a7b4e8b542af38f76be8d54d710772b2bbe80fe0e7caaaa35f86d48cf1f6b452fbfdfd3c0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:07:41'),
+(665, 153, '0775df6cb8f428d1de9334514c0ce62c', '{\"_s\":\"9acd6cd637ebff82098ccb49959ea8c8\",\"_d\":\"6b9ae127e4701f44ff8913ea2c911391a9add74e456b971847f09b4cf8a34ce550d168db4ea7f3e64176726a438c58fa2269f9dc06482f68bbd088d56fcf1f58445f17fec3ea44f516c637ef4f308feacbc4543c6602b2d16984fc6b04cbcba4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:07:42'),
+(666, 153, '402211a9218d1152639814a866435bed', '{\"_s\":\"e8c94af9bc05c1c8c43957de35380062\",\"_d\":\"7c03fcc3a7a3515ddec7c41c03fa4d3421ae492b463e92123aa2de9ef123c8f3f343eb4c3ad1e8ed20909f14cca8ef66c102e9fa6009cfda3edaf6a842e312bf3190bbbcfe55c018ff2c7a6b3a1795b6579dd9aac999d309d686d1f21d2d7040\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:07:42'),
+(667, 154, '07c1326563ab75caede7df833cb8a690', '{\"_s\":\"87c6567f93d45236be32fc4f3f2fbbd9\",\"_d\":\"05866501ef4035cf1c059b2feb0844725332dcd9759bab0b30a8901369894553e8b2971f3d74a28fc8dabee0aa3016b9981c46431518605993ab3a93657ac7fb0b457251681f9564e4c8f446f425d7db684149f913564438dc1c5f6ef7e33d53\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:09:32'),
+(668, 154, '624a1814f2ab941066e032d89670589069837e9aa3bb29b92c2d57a9d13ad223', '{\"_s\":\"62834cca47e06cd88a402a2416f2d691\",\"_d\":\"a72b6e00048e7912d7eb852f39a6410a222bbb07804054290120329b4de9d34d23dcea42c93b2f9b7b530192209fb182ae2d5e3102d051c68200ae34eedd60ff0b0dbc87d2b5870c99ce274d225048036f1af82f2832dc9658d8c2000aa0171c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:09:32'),
+(669, 154, '020e86e7037baf280553ca64a7b94fc1acb229db18ffe5d87ac75a9e3f6b2d2a', '{\"_s\":\"ae3cf80466ca3d751d1bc17f967f85e6\",\"_d\":\"4c22a40b1bccc3e0f5f26d74c0e1411bc7d2c4ffab01bc31ca58b6560f6d388d1b194742016266cc8369666cf67355d19f830e6966d3ead5d8e4c07f2e4298575e19647f98e0b278e9531a78e166364bec20c8cae6937f5be91e0d73ce69a282\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:09:32'),
+(670, 154, '83d68a1610ce92c173838e15934db5f9', '{\"_s\":\"0ea1a184a4cafa6605e8c0667a8522dd\",\"_d\":\"f6edadc4cd27aefcfde6f07ecc5a3077e2a288782a67435a1ddeaa1e36bf7bb3bbf29e5745e64cd0717818634c3cab0867d899324e7bf65b9b84e09de016aa041da12b51c576e6fa6e45098bce60807324d5691fd8a708793df60132d6d8484a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:09:32'),
+(671, 154, '7971b92de2faeb03727ccfc8e11e9bf3', '{\"_s\":\"9351951f92de97d22d5bf1257dc8cc6b\",\"_d\":\"3aeb2103203e8563399de64c54cdaf0dd94c02bdc64ee6b07f7899bc5ebea083ebb3740468ec4fff33aeb0d1bc596667e3a52fdccd9448d7bd0989f8736511828dd97dc99c69a9cd52ea13c255a5006019e09d7dbee64d4d377218f8c7f36215\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:09:32'),
+(672, 155, '5e843d9c8354eed0355c6e0915fdcd8b', '{\"_s\":\"c68ab110dbc8ec7fea92c146e8ecb940\",\"_d\":\"621543280cd95dc83461f3438a3d33ba028f32fcfe5e67cf3252817e80244b6e39e195a46c5d5df4e004fc4baad205929cad2ef108efaa8e49f3c6b14dad1a22eebeb9e8f5cd809acab7f5f2a2d4bb63721fd5a2f6fd5cc1c05db59e5405fe3b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:10:41'),
+(673, 155, '44e6948b2c7cef5d6f32403a180d6543', '{\"_s\":\"61aa4b6a6eb556d236ea7f6ee9107450\",\"_d\":\"d0659dd6577b58a1af738805677c0ea6d1f9d7df37cd6fb44217a91be3c6b4a1787ad45705e2d32bb714541bf70752005b4683d7e0921f653f00a3baaf6e2a038f36f00cd68833568da17b8eb8039fa6f53768615f39a87946622f8b4bd6d663\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:10:41'),
+(674, 155, '4855bc3512d5c1da8068e705573ca983', '{\"_s\":\"6c096acce6e82730ecf9d4725d1ce743\",\"_d\":\"7b732b32dc455924458f7d8832dfada643d2fb35ac5a54e4e758dea4451f3cd368cfc899e9374aef822c37c5546655169448726329f1ab051a0d10f6f0ac7270705f369b265427635a01b0343b666ce6a8b186e74696958bc220b2f6366a50c7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:10:41'),
+(675, 156, '03fbdaede06cd7c7e765eca0979fc259', '{\"_s\":\"82c4dcd33784c3cd9ed6b57932f8e707\",\"_d\":\"9b83a4b8db78685a2c7c5598dbd151c3a44e4363a55a6b1b0f2c49d9853d4bc0940b934574b827c8502a30d0efcc24731737e954a39376c0232ba76071c78bc7ab67a35bc9d39c622f62c08dbd7a9bd11e0380fa387210d62b3f72613c3ffd22\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:18:44'),
+(676, 156, '3f93f6893d95ae91f058e5846d2e5eb6', '{\"_s\":\"8dd5f2d0db088e12ba0c4c7f140cf6b2\",\"_d\":\"ee5173c4f5d95340931070b41a85910e02e34304c7fe3145ed25d91dbea6a97af1b49a57c979162ad44161e320dcc7c37ba7c0fe40f5645dfe1aa9d1ade99eb81258fd99cc5367947beafaf6a144dce6453da6e0723e96518499b8ad93b44fa5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:18:45'),
+(677, 156, 'bc268ab60d092b5bb1df7cb290797c60', '{\"_s\":\"e9880c6c7b262e8466aafcbfa0a6ab3d\",\"_d\":\"1a46546c50ad868708d507c6f6b237ade16635e10dc24a95af152b4be65320d24b4c782da09567dcdbbcb73c5b3fb79e31e438d7039e1d78709221bee7936068e8c4721989f21047f1fe01fd2f722a2ae272a2b918b63793f60fc3d7c4040f3f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:18:45');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(678, 156, '60b2bbe3c9aa68bf2a6221cae354125d', '{\"_s\":\"616198fe48fe18f8f104e42b2d516a3f\",\"_d\":\"25fdd3a1405f3bdcfe0db86848118a23ea83699863686d020226a94f7c91b9c720f035bc5b24920a1e6773005f6074d81aa525dd1dfa2defa9c668039d1998642ba2a4e280ac0a642b3a458e4f615c7a8c4e0448af16ccfb0edcb4e8a33b3a00\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:18:45'),
+(679, 157, '8b2c3f86dba7f047e29348b1a026d2cf', '{\"_s\":\"0a92901bbcfe3751d2e979018984e122\",\"_d\":\"cfe56ce7ded534691572f5b38d33eed744734451f5c2a7f0351a8c7f5ed288de56b48b4f89f10d110976f347312d34d071d3562e40dc7e824396b582dd5e84f97c4c7a0ba1b355585d91516266d974cacb46743a48c5b1787899208dcd71803f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(680, 157, 'aa96877ecdeaa7ac3f93a20a601c09fe', '{\"_s\":\"0a0a19c2924b9e6877923c4392133aae\",\"_d\":\"6c004315022bc49a8a5e676c1d3dce61ab894324ee729ecea1d4e41a0a3c68c617cab7eecd9741370332319e570f3d1a419739d8533b345b945079f0e676f501fb7264a45d3d271c8fbc4fb17cba2c69b12899910b9343575d58b885c36451c5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(681, 157, '645dc18091e8d7ba9542d22c9783ffe0', '{\"_s\":\"92c504f65a159cb66c868e0ba242287d\",\"_d\":\"c8c0335f29537903a59ebe7390e92d869b0f9303995288a7c762b9e37c3a7357238bded9e35dc015ff232987f3e8fa573f5c877db1e78363ec9870fa3862a44115b257cce9bb125f80a4e1979e081dbf102b40886c44bcee849e4e00c08fc8d0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(682, 157, 'd98effce6e58f7a11bf642a1410a4056', '{\"_s\":\"d3e90c33f8ccf17fa0fe8a149c82ab3a\",\"_d\":\"239b8c42a2801dfdc8c6ae326d0ad641aa2a34fe3d20e4c09f67d7c01d04d424630b15e45902b68477af1ea266509b41a96cfe55c10926144b4aa7b4acdfd7e99f8a2e1b0d503dfef7122f9bf3b645af3967606456d0f6a67f104f1f0927ae37\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(683, 157, '755bf96608391aa995a6998035e1a7f4', '{\"_s\":\"8aaace0203b0673b19e7818c887e20a1\",\"_d\":\"ae5a0524ecf19b414b7660223c5370e85ed99e7495a47f2d865f3604c4f9dc9d87b90b07072d01f3d341a390aab00a645ac380d60fb4b4a3021a8bd47516cf4bf248d6b48c38918263051f02389751cc09bed08dafa1fe75a12b45cee402f1a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(684, 157, 'afe2221ade17bd83a5873612e7325897', '{\"_s\":\"9171e7b1ecf4c14610fde13fe23ec81f\",\"_d\":\"eccc70f080997a3250a5c2129cb3707896d7a1e0c2f832a60abf68c2b8a645b320899b4f0259b9f5831abe1039a2f39531c2b610d92d5040acbff9fbff5c25e5be39ecb6a417d6bee59cdc8ab0604c1a8a4d82c9245059bd92047091368398b9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(685, 157, '9cface3e723adc94d3e7da872d733909', '{\"_s\":\"fe0cfb0a7ab3f193aeb1d891299f8dd2\",\"_d\":\"05dfe77e3559f8c0a08dacac255f12ff57e0015e91618ee6c5f424300c9dcde57c4db8f09ded86744f6351ac70b167bc960513295d171fa15767273252ab1bb20b4e60e9a81d620c054093302877cde92b2ba2492451e6bd01a232859400716a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(686, 157, '45e8c0945b977e6e0f0f7f2527d16576', '{\"_s\":\"3d01167612b1ec37f335354cd9c7040c\",\"_d\":\"65665acbeab9dc840a122efa257605f30bf5152ab89cac3504ec8de79b262bdcea281f9f8d522f9ed9a441fa9fb1f675ad2b1604291e6e59ef45c9a13177ec8461afee5aef331317d7dbd44ff70e309d861db342683d0eee507a087090208b3f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:00'),
+(687, 157, '55167d69e16e36bf57c1dbbe891f401addcc43b565ffb3e7b970d975f39ec318', '{\"_s\":\"9f74aec845b56db8f26dcf53e2ec9283\",\"_d\":\"f24f42be1fd6bd8cb4a6b6fbdafbbab2dbd6ad51b8b4c59d449c508f8bfd1329385271cc14be5535d994e5e72dd9dbc794811660d9eb7e67da7940f86437c38496eb22fe1efe6c20105f0aaeb307021469d59574430381e1408ede17e4ded5c5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(688, 157, 'a44af55ec2cc62737b1f4b141b2a7b7cd8a436eec2f545d33f8a66511b74d8ab', '{\"_s\":\"51b83c90933cc34c2520550bafc5bd5b\",\"_d\":\"c6dbf9ea3ba37c8f1354c4fdd129647fbc84777aa0dda0aac197d7681c2dc082d81df9c9cddd3daa428fef9a878405ceae5f1300fc0f7b888128ae2219244ac60a958c0f5ed676204766bf0f931955a11ce7cabe213069e6e715aecb617fe7f2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(689, 157, '526658dd4c98267a8a1d4e45ea8ee0d1', '{\"_s\":\"e23ea77a6c0a597c0aa4574dbf23b17d\",\"_d\":\"47354d5181b106e1ff1297e869c69aa293077ee723e424026735b862c76b0dafa50e8a2c94c1e05e9b03c81421178d4ced60239df5bf1a037a3b772fd3fa37df241296abc5b81018f81b326aec6df20e17f4b1f7e11a30edc53d46851bd0f4fc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(690, 157, 'a42fb45258e4c375ab95308e23d54daf', '{\"_s\":\"b9bec0e66565377ed3caecf03d8fe0e5\",\"_d\":\"92e26bd120ea43b9ca7d99988f5467065a27bfb7c8617fd5f04f792909706ed4fe1f76e9b0b9110602e7afc45a2a5102ddb894414df5e2998b9823188217b33348a67482a5b8e8f3dda94ef8a5d17d1fb5b9b91652628c22c20ec30b7a4cc1b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(691, 157, '04f68cd998c25f85ca235809efe95a8365bf8713a4b3636b87fd3b5706e49b22', '{\"_s\":\"a48b639c258f4479f22873250481566e\",\"_d\":\"d952ec89f4eaa2ac50e65b0c77b9703d9540b603d49b5cc2b0f8e62cc2c1905b9bb3024157df60bcdac98e60e669c18267519776a1fa240bf8aac8e2ac4ffcba872b40639fce31b6e012f137cc57d0e1ec2b1a0461c96a3c3465232daf228f15\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(692, 157, '3ffafc5ba8569dac8952ccf5311117c1', '{\"_s\":\"72ec6ac10cf880e11a2ae693a5f49bcc\",\"_d\":\"de2852ce256c2ae40a89ac4de2373fe547283c7c20e2ae3e44e09cab7ae473b5edc50df0180bf25dbcbe36be86c5e944ace29f3252a421182a89562c8dd14cb5c7df8f195785ac31591519ac5e196d3cc7ec18c6a88f4ba1afb58de824e03b74\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(693, 157, '6e433ae8b6f5056dd799983e37655e27', '{\"_s\":\"1155e6c45199a8dae37390eb74bd6e0b\",\"_d\":\"8950f83871b210b5c90ed82977cb9b1867dcc599dd98256ba1a69c6d19badee66732674e616ff884694d4b415efc1e31d89749c6f03594c20002e1d901c813c911acc5b9a97bafdd86a120109db9e0296cac8c893913242608d7bc198cac2bc6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(694, 157, '459e263ddae0d3ec56c7818648607dff376bb8227c51840edf6a72e423a387fb', '{\"_s\":\"7dd2ef0ed570dbf43687e719808ac1f7\",\"_d\":\"f0f3d5e5ea3cb2fd5fd521945744f1ce877a15fb2fdcc9a350bfb9b034853f80d0944294e36eba92d625942c80ca1c80b40074d43a8c45ee204aa7be65539501cd03067fe4bd1c4941dba45cb27c88058dc2c5320a421e981db1d4f57193b739\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(695, 157, 'b6874dccec58952a7419e21030b88640', '{\"_s\":\"2f4cba1431a8fb311fe962bc1aad2f2a\",\"_d\":\"cbaecff8bedccdbcf971aa46af61fc6e50e5f4ecca8a069fa44313469fe50f8e2bade17cad5aa562711791cc792cd0478d471430eea713941699ef2f797ec1383b9311a17b34691083a6b12e2d480a4f95c5e402d6bf7b47bf3775c356c1c7a8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:20:01'),
+(696, 158, '74b5401d7a4342a9b65a09f17a1f44ed', '{\"_s\":\"4b278928beaee3cee96d7fcb96d875bb\",\"_d\":\"6de707d209a3315d90dfcb8c69b09c63198f271dca08d158925f2a39330998af42dd01826277ab56016204fa91ec1d24fed9eab2fdc50cb6467e146fca3e5d0a339ceb4bd52c427201fe3a3f6d62b7bfe9f8407762a8e7c555aeca239bf369d4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(697, 158, '301963f6666cf57ebc50c86d2e4a79e554e88d1f996032538c3c07a06db254c6', '{\"_s\":\"052c0039a3feb4018282388075042ed6\",\"_d\":\"149e58b5cec554aa62eedfd0e21c578e2eb3d7995b9467073a29ecf17b05c823f42e4b64d28bafed788f04f12b49bd1c6f187ed59d4793c5aeb5d7040303f4110e90a3977cc50bf6fee886af587903be34a68424835ce2003ba4104300dd497e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(698, 158, '1ad327bed30854d8383444fd70554dea46cc7b3c713449a9faa4e16b0fc4ba02', '{\"_s\":\"8cd1a148356de254cb85a0753df98ee0\",\"_d\":\"2e4846a00d580e3fd9ba19afa951decab8610ad0790e69db88eef9bfff9d40fb00959e62ae0d849896b8dcf5225ec9aaea09c36fd6ea555a82a511dc10ec347eeac7e634cb8c657bf3629dfe9bfcc3b3fcc8a2080327102d1f62406d71847221\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(699, 158, '4d7ae712dcf6c7104751077bcc4b9d49934ee5bb2bc5ef3afd7d338ffe10c4fd', '{\"_s\":\"6c7d60fa56d0e1ad38f9ffdf41d06ab5\",\"_d\":\"1b60a068ec704215cf0fd16b4579e27bf81ed57b3639c875c1a0f8d8462329346701f9cb1ea0dd743b80d282f0718d9e9da5af5ed6a591b0224bdc21293d10ade0d6d8006d0fd715f1970fa9c7e5c38591804eb70b408fcba0170e7663e12818\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(700, 158, '87d320d9849b3dc09d15e19c155857d6f0674866475cd3c6e7656c1d72030aa4', '{\"_s\":\"edddb95acd440f2aa6eabed8de1de2be\",\"_d\":\"b368086b661a32c02eecde0c15d9d880a8a461d0539259de951d2bbf819bb2cb1c1787073c97ef2225f602ff048e630fd5fd961051e7a15f713a0e87b5e5f7a6d0c3aa486fe9477a5acb07488e651a7c8ca14ac8ee7ca8f5c511cf99a8d35f48\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(701, 158, '89e52738bebb4219d666a8e1cd026fde4f9580a6268a8d49cb8a64087ca6c846', '{\"_s\":\"461b20b15a157503d7bf5b50c19b0c9a\",\"_d\":\"573bd444febfd7e19b6ebb7df1e4257371d553612d8ba327d94885ff2689a5433df1044c7c95e9d1e7204fcaa13d61f18df5cdcde289d3d5cd2aa11c166dfb374b58266bf5fabef7cfaafa5e5c954fc4da1a92f76ed500d4ef55d169186d120a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(702, 158, '1b6703816af5de0e5a7a3846fb8b013119067e6461802e4f02d1c92c70185a7f', '{\"_s\":\"f31008fd383af65ac0e98393fbf575be\",\"_d\":\"6a3d5531d05569a1fe00da1fc3e5dca73fcb6caca15bb0525bcb791c67d3328781d7e6ba9c5754f63023841c6888f96862915ef8023e6cf6c8f9ff88463b856ed9c58b9e713a0d08345376e8e40e76303c90c54f21bd0f51b27230df9d772c0d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:22:37'),
+(703, 159, '655fbc092ed14c875dbeeb85956c3b4b', '{\"_s\":\"3ee1878b0e462514bfe8ecc6f73c3fac\",\"_d\":\"c9a7791f1ca5096d38dd7a47c59026843e57544666a360b99ec5460de0b59fe756e14b2cf5a2e9174ba083912a91b85a050ea7540122cf3333faffc77cc58885c21c5abc09b2a40aacba2456978ec18e9fe18c4fde41eac3628e920129cba0df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:24:25'),
+(704, 159, 'ef953b9dc61b8429e8c95c35b52e3e8f', '{\"_s\":\"65bdd4de553b0a9844e8b06da01b797f\",\"_d\":\"ed1fc1061933c9752094dcac0297240acb103bc8c18f6ff624745f8c51683102e1dccd1a64e0dfe5b7cedf3fabb1d46098fd25be34cc35a02af9494fe51a871410e4e897dd4fb2c108eed98da0d05b06d0c8fdbc6e5e9d5bf39b27a1fc466cec\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:24:25'),
+(705, 159, '8aa5f077d39015d46075cb9f4673ea42', '{\"_s\":\"974a430536deb238af66b8e3cfc00665\",\"_d\":\"01c244d80124af2300dcf76c1c039bc2d0c514d45f8416bfcc999ce08b0c5275296565ebbb3385ace1c444a4cd7c4957090115ddbeaacdba5b065a44189bc2ba4594ba956c4e4fe45fc4a4bb7d93018c2108646ef20373862eff230a16c0ed3a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:24:26'),
+(706, 159, '184037d66f3fc47b88ceb57f292dec479e1bca275f6250c3978da703ecba8f73', '{\"_s\":\"d5a177b6d6b7d050a28301a4fac815dd\",\"_d\":\"95432acc491352326e1a10cc11aa4925101ce2972dcd1092ce34f371921b7d6fa2547446c059e7382b8fb611d54f53de504c044c32c14a235f321448c05ee2847697ec961cba3817ce35abe7362533dc423a69a08ec633a8a809d092bce9ddaa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:24:26'),
+(707, 159, '8722da61abad99bd4f8b5559d86b7de8475eb4341eeaaa707656fca0447d4a62', '{\"_s\":\"54f16af64cf6615eb70a17b998b90f18\",\"_d\":\"de3187fafdb9f3d87338297ee6b63ed625262ecc884a4629431b3a86ca60c8ee00c2b3ac2ccc99030c718fa7611b082b5af13a25f08ec60228fffee6e96d8cd496fdf5956887be26e4a1b00c3cf713767151ef211c9f1d44ac50194d27044948\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:24:26'),
+(708, 160, '70f0a45c6fb1da94ed805ee8b9cf6d37', '{\"_s\":\"387b0d86a03dcd8f39294ce78a7909f2\",\"_d\":\"84bb7d619dd833478826a791f4a74b306b182ca74bcab96d8d0d13fc107588b600a9e67e2f0247acb3378805b3cd98847b38726de354cb9d0ccd4bf4cde846b02c51adf5ee3143fd71143b59f32722e871bc59835754842fcf98070ff41e5c5d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:25:32'),
+(709, 160, '358ee5bfb6ac706834a8179a859ed2d654188717f6f5d2eda383ee9b8825d6a2', '{\"_s\":\"3dd636757e9d715160fdb6c7bbf76968\",\"_d\":\"7d039f1daea5368224b4eedb9b10c4e33cbd4c742b2460d070c0450695b78e498da73e715c54dab363b35cca799338450c010c2ff9b7c8596c4b4d9f0e64ac9d93a5b34141f8727fafa91aa814ebc0c4966f9e6272fc4c84d09858338c021c13\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:25:32'),
+(710, 161, 'bc0cc0776a4c8aa0772fd2fa99c4fad0', '{\"_s\":\"e1b52e7260b1b92749b7742d1d89075e\",\"_d\":\"30e5d72a381b2b9570a599fbe79b79ef9ee9ce0b9c900a6225b53962d56b602fa965e2804ca65e80f29828098e6af68656586c58b79799a1e7ac5e900708be95dd5123d0593143797f7da866c44f37b6a48db23f9e221b3c4db855fca4936e40\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:30:48'),
+(711, 161, 'ddb7d378966813a141a9d53b2399ecff', '{\"_s\":\"5ea929117265a047a510826802780e58\",\"_d\":\"6380c99de918203a16d34d8e4d8c7bb59e1a26fdb16cbe3af3579a6faeace49734f83c07b2efaf53b66b019cebd9738af3e86972d20963a46bbcbcc0087f338814c64b3fdf7a2a12984caa8df72861fa08b0f224fa0d81f76cf805e4263180da\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:30:48'),
+(712, 161, 'd45bbf454d302998925b83f9e033605f', '{\"_s\":\"d8fff8a50a9930d33acd6cea443ac5d7\",\"_d\":\"c393d01940d87c3d741279d563eecfa445dec1236bac1882a254a888b992f992a07b469c1876a6eb628890ee64bbc16654f8166c3b9d26cc0bb3f4194161fa97160bea73f0faf10a64263011bae9e42b09411f85e2709aa98988d1faa08fbbfa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:30:48'),
+(713, 161, '79fd71cbb872e0b02a80f3dfc8ce5b02', '{\"_s\":\"3f30b32565e5022edd1fc02f4b701366\",\"_d\":\"cd18816598f06cbeba61d58a6b3fdd74347b323591472288aae47b8a37862084e09bdb2a7eaa208676ea6326b24f001b30c79fc6137335ffad57073043a5789ae44ee32911b2791b0509b7376dad70dac65e4a45be03a4c57988475b097daf71\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:30:48'),
+(714, 162, 'e64cce74060e94ca745110f650600b70', '{\"_s\":\"21a7179f6bedd4c100d7afd67d60babc\",\"_d\":\"121c705cb3f9984f95099abbfb83d68f4a45f061776c1c0d73337d1117b2df33a8b3b16d5cca52596460552dfdb9f8aed845c0e8541fbcdeb2a21508da5d8aaf35f77336896d899cd08d3cf6a5315c1067052af253c654a740370bf72314ed7f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:31:32'),
+(715, 162, '702f360e5f101f797478afe5b9afdc01', '{\"_s\":\"525765aa6a6f3c56e287fa14c875a223\",\"_d\":\"12f55ee302ce45772b0863f4185437ad4789c364867f30c681397e11cb7b2fe119e4da156bace36d480a707807ba3c4cf0ff81b89d649b07539ef3822bb99ee2ce32cbf01610697afbd89bca6ee6ae6a32563766539f9d3cc697e512c82afbb8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:31:32'),
+(716, 162, '8145dadd313a19df3c582a7f0d86fcdf', '{\"_s\":\"349a6b5ca5a4a635d647d208a5d4ce0e\",\"_d\":\"26ad61310645b4f665f878759d9de817ea36612e657a04cc277fcba3f2bf11b3c344795cb572ae694c2171fae7a2ab6fa7760b1914d3805e7b38b17b650f2c2b8c382e899394dc2e1cb8b9a3ebaf5179126ec8681fd49b471302a962cb45e5b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:31:32'),
+(717, 162, 'b97dba81b96d39316c8dff3293880945', '{\"_s\":\"b55a509fc5ed076f96ca3f60564c4343\",\"_d\":\"e576cb9cb10fa1a5c408d7c8cc0694ea662b22036c39da022ddaf1c6cd60213817462c472e9069c583c2932ebd61f2387f6de1c5fbc06a5b53fb9c0f2a0d5e462c1666668ec3683cbdbd36e4665d42f900176c154bb7b415f7195466505f405c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:31:32'),
+(718, 163, 'ba5db8e95503c269d87c7f50f27c7f8b', '{\"_s\":\"4e056d47cdc55ffa8312c276b80b2ec9\",\"_d\":\"2645e8939de349fdb237b76312ab550ae1b180462159db06e66dbe05259d91c6e1e7f08ac1961cfe60b3c755e0f44bf34aed14b3eb160f129c78abbf2c0a065b593defa6cf787da8a15aac5a79179257c85f350e68f03204a2de997a53b6d117\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:32:51'),
+(719, 163, '17753a41217f3387b66f6477d30a3dcf', '{\"_s\":\"6935ed0dc0f02cb4affe084b03f256f3\",\"_d\":\"6a558c471cb42c7086e18085089b5b4c82b01108e7ee210b9968b5db0726befd4f4da88ac187d60f68a63de9e25414b67086dc60f55c8a8a56f368cd94c3c968277b8e2ada0995dcd779b6b120389cd6b7b9e270688f8fc035bd16e9aeef1270\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:32:51'),
+(720, 163, 'a41048c2a419dd2a0207aa8b00674be0', '{\"_s\":\"44cc7c180bdc83dc3de1505d67992d2e\",\"_d\":\"d84f35de712c036bdd0d80b9a1573edfb7ab6cc11ea214f63babfb6591cc1bbac501fbc72f19a32175d09608ef2b47e19844b125adae166690cba9253591099814b065725a687bd7b42bcc02a4687ee71af600e083b0d0c56cc7a8bb18481fab\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:32:51'),
+(721, 163, '25b52311cf0cbf4fa36949c7d6f5bd66', '{\"_s\":\"f8f3e84a4c90a28c6cc7c13b9ab08ce4\",\"_d\":\"d181c2a164a0d7cd1afd6c908f835eeb935724712112c999a2d596aa9424c4f088fcd7e8b4db59d126459367e5f76479a7a6188e2e5e361d3d51f68405bfde13f9697aa5ec0af38d4c95c9f40d0e39a4a5d09530a0e5a2870320e616cbfcd633\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:32:52'),
+(722, 164, '3d60b8bfca05c31302fab4cab1b29179', '{\"_s\":\"8a16168c9ac127dab41c9cf6b1de5ed3\",\"_d\":\"1dfc4a46e2c5a1758ecd87b14395aeb21fd55c0dcb3059b30c2db6027a732c0374c9badc82c24665dc8605e6a2434a67f98c4787b99a61057767ea4d1cef35f6b74fff6b923329b858054bffaac7e8271c8d0f575b48744ca7f105d0c5cb042f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:33:52'),
+(723, 164, '1a5f1eb5e26d887daf7c7f9fc0b551e0', '{\"_s\":\"91035b07ac98b568f5a4dbbb94682e7e\",\"_d\":\"2ecfcd48851a82b1122aac52bbc0881aba2ce3c5de7d02cf885da06e075afd6e9a292e9d70dc8976bcc6893e5f27f6a11a0b7755d10e31d32a40762c501dcd3c9986f075a2c176abc7cca2b3f37909fb392f0fd268b44511cc4d80b62a22e6d8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:33:52'),
+(724, 164, '9df2ccfe1922091640717bfd29300b9e', '{\"_s\":\"ece8b5a6e0f566cc2cf803c9a1665230\",\"_d\":\"7cf517d074e2247c2c8c8e88da16550af08a30b1eb2bc865f1d3ba0393de1326046f1312092eb05654d5b978abf7f2b36e576dc62cdf2b09de086b988ab989292a5e5c659f9688f77ebc66ee1d639b3c237e5135de8bd891c046557ff0673df4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:33:52'),
+(725, 165, '30877babb34fe5493f92aaa8544d58b3', '{\"_s\":\"bffa6958fa7f151dd6b4c45043fdd01f\",\"_d\":\"3ed890966ee27a8286065deffcf83a88cb5096a0f55e95102e00a276b43daffb097a3273bfce88aec9e054c0638c602145a035c5b59f96618258244c9bcd65b87c6e6205c1e075fe5dc61f631c3d1e3872efa65b9c90ddff494aaa330a24c121\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:34:43'),
+(726, 165, 'a4b839d57ea99ff954ee0e42046ce476', '{\"_s\":\"f6a6b4c2088567da34b033a877b1e10a\",\"_d\":\"beae95fb3e9c202880892eecbe4d8f8b859ba8064429a683bf4d161bebf9cd5ca69fd07dad7ae1ed296fc4c5ec24f5dda5b4877312f31432fa1f745e4075499241e347a30e4822836ea059c820acb6b8ad58bca6134784182b43ebdf6d71c2ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:34:43'),
+(727, 165, '84a49adc072e65621921182ac6cb06ed', '{\"_s\":\"714df562eb29f54537de70a7c18f16ca\",\"_d\":\"405ccb0ba178d4679b4e51aef10a96c4ba867040f464b4295a63208ee76aa996a0f0f0e93982f88d2c2c01cf9fd2be158232de6ece4d54e4c96fecf8884b31f1ec8c535302dce9348cf048b0452e596d931f6745d3a90d46c770a8dae895dfe8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:34:43'),
+(728, 165, '664bd45554040b5b646fe155346e828e', '{\"_s\":\"b8f529ccbaddab0584fe9c8bbfec48bd\",\"_d\":\"7e303e193581f138de320c66be495f8a175c3e86e38680d5b3f01b0e2ed2ebd807eb2676289338b29c9486f445da9adfa365561a0de72396c669c56be97c19a07ee8802a97b97a71e63fc574374c8bcf60073a83dd17c47c6126aeefab259137\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:34:43'),
+(729, 165, '6090c544e90bede5549a490e1b10fcc8', '{\"_s\":\"58fa90b4f70d0925f37656bd436d7eff\",\"_d\":\"a6950dd0c84d140a9cda88873ed3e5a26f84755e6707a6318b7bc556993229f2ac3a3f75e6973954f93e43fcc1f0b7f89654deaabf27a865332b908031ba9b24b37317ceb60dc45981c86beeb1e219b72144eb14d5fbba3ca43497d6be6915c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:34:43'),
+(730, 166, '20b535dda9a91737597642a6c0a68f91e0efd6ddb3aa70ec1f0f030a24617574', '{\"_s\":\"31c7ea8ceb488155efbce82567b8d66d\",\"_d\":\"b651fee3125e5b1690293abf8ae7980fcf5d0245c536664ee48864a4872fe5183dc8f19b6fbc4f5e5497d7615c23b4926eae73c73a85de8017be682691843c309562a586589d935f054abb3a17879a8fe31cc0484c1133edd8dd7174788d9857\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:35:30'),
+(731, 166, '818ef786ee32dc30fcb2f597f4881e6f', '{\"_s\":\"a740041af35944915a5df3d214e9f1f9\",\"_d\":\"51ca1d58ba6d433a36152e5b654d1ed29cbba902b3cda7167afef820cc5e53cb995b9fb40819d3e6a25563aff702339843ae2b1894a73fea08833a2ca3aac54e481bb8a2095f65c8e90b958cf518f463a48256b93ed4b417b4d1286c275c24c1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:35:30'),
+(732, 166, 'c2052c4f4023ee5cdd814ed299b4f240', '{\"_s\":\"d1161dbf90f35214e10cdc4b62764c9f\",\"_d\":\"74f070aa4fde0bdc46e90961ed77f53ecada1216e5f2a31d934c385a71befa52c32f7b13e6eb8e23122d6276468932263d0b82e8880d6c714df5de640052acb3c4381a883a8f456d0d02348585b2a06fff3c7d7d8543d746715fdeab06c49b6f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:35:30'),
+(733, 166, '969431d1df0f19465849e2a9c5474583', '{\"_s\":\"53f9ca044dbe4e41db7f93b5308a9a0b\",\"_d\":\"fed1aca89a9dfecabf6a13dbc7da04b1a9a1b3d8df948a5777b971abfa2d07ab566930e55b638b96fcb15a45703da735f904854a04109c5d015544247323b6b673ea03a3f70279ca1e0ff6e0d41c6a8e898d70667b88e317096f2be566137d7a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:35:30'),
+(734, 166, '52d1e93c1f505d1c2835fd40f11c2982', '{\"_s\":\"3da28b46f46bb7f982ac66bfc1b0aa4e\",\"_d\":\"db3c7ad0699e41491de9cf51de9e4e3c33dc4875c50859225acd8e7d6dc89e6cf55cebc15dcf78c3332c32415067c24f86f9c8d9103fdb0463cac451e5d62a5904820315e33eb760c4424f6b97209a3edf9e009e130e9aaa4f81da0ae495f297\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:35:30'),
+(735, 167, 'edd356577cecbba439e874fe7fc796865ababc384485ba6f1ae5562f92e50be0', '{\"_s\":\"ce975a22920f31ecf654a121783b6d6d\",\"_d\":\"e2438428faeebe98d65b071a35c1b4216805cd35d70d80291ed84ced9bf3c0eab9360c7f442817418452ef233fcbe2dd514348f31f6da4b4fc21aa6f1dfa3246047d84ff09da6c5fe35886a234a4b1b2b68a2a38ef7f769e81b39c15f04d8c29\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:36:44'),
+(736, 167, '5e79d0f34d5f42d96bf96155331b3f7c', '{\"_s\":\"032b47d61f64333865f506cee5061a7d\",\"_d\":\"09f9315d5c60f9973b3e0ecd1346f107846f88918df4a7d5cdf4e05fe746a96d746ff50b2a24ef625023f8c3437708cfdf3062dc8b6f7743aa1cb64002f11d3a0bed538e62e98ddbbd66fb72a8814390bde686484dc0b49627c5b66f69ec8ffd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:36:45'),
+(737, 167, 'b9d075e29c3d37345e9531dbc4a6c5100923ee6d3a23722ebb26565cd8dbe4c0', '{\"_s\":\"fe1a484945dee485c04f282ee4e810a8\",\"_d\":\"e23ccf9f98d5f99d0b819f8b5f244f65acc9132bd5b8edd0f8d564c6df6161999a0095a0213f3e2ada4bbd4663fe06aca9d36ac22fda85e1fb4921d13a6a60cdc63f7bf9d5ee9161048418a3575f377c4dc6dbd0158e447dff4cfe68e57c10d4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:36:45'),
+(738, 168, '71322863a7bd44ee6a0cabc44a4ba069129c62af40a213324eacc7cad64ffc92', '{\"_s\":\"00c53d3980bbc10a5ba8daefe386ad23\",\"_d\":\"39bbbd8799da3cddaabca2b2e84f06126922989207336e87692cdd88ed4dc0e02f5dc21be3ac43622a79334a0c045a880caece997bb596ceceb5a336a607800b85a1c1a2c0d1d1e70444241ae461eae9733f49a954f335a3287009ed55028b62\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:38:58'),
+(739, 168, '59ae31e11f4c90f6c8e03ffbd8dae3e8', '{\"_s\":\"64ce5870e6fd48806233186af71fa4da\",\"_d\":\"5a8a22b303f3b9f74c1e334e40cce45bd9932d44506755094542e75a88e333e13c3c46ad520a0d9c6e045ed0619909fbce8539baa0c6021cf10bf8a79117da7fa5e9408a1eef23599316043a578ad8542dc77651c1fb6babb4bc58785c375327\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:38:58'),
+(740, 168, 'd2a87ccf8e49f8056fad78b8382cdaf5', '{\"_s\":\"2cc0d762da6687ed8de71a0885590942\",\"_d\":\"88173cfd13c9f709c2cfd267f2e3a06bc3085e3adb1e65be4038c99c2d57dddf9f1437b47ffef32f26dc5e21de0feb7e3bbadf9466c23e9aa3b386e7164f93a68301183d8010b6a1ae08dbb3e2a6ccbc4b6ccf66b184e5366f167e250cce3491\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:38:58'),
+(741, 168, 'faed1cb1db7ec157c337a8fd435d4aac', '{\"_s\":\"9007bddf7ffd3c3bd8d203ba90a699c1\",\"_d\":\"2920f320a0fc598d51e164699a433000b44571a9880e7dce86598f3e0d68d3afde30a679bb3d1ff7f8519e1519cf7a33be2f4183361ae59d02a36958fa6cc83fab60e4561bbf2996e6ec98cfbadca329811419964f2f86cf31115a0480a7c3e0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-22 13:38:58'),
+(742, 169, 'fcbc19f1214eb842e7b604518c28855d', '{\"_s\":\"fcc7a78a21de3aae06aa1f242d60f5b5\",\"_d\":\"9d7fbf9acbcd37b6b2c239be11113589a0b2b1d1e92abaa16083f21b165e7779cd7ef07e5be7729b76e09ac5d0caebe0ad38b58be1c9169f46be9068589215b196b41b4cd664ac1576a1edea9db3263f23d5a7f64a0c154c85fb4229b3a7cf04\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:53:32'),
+(743, 169, 'be80f7a2914cf2e0b8306a2665fe3bc6', '{\"_s\":\"0554022802b8f8306b714528033ee6aa\",\"_d\":\"7662453c63df72383860f4a2175b3eeba01a45637c156268356f7a080841b7a7184f8a1c24542392219391e55cc192fa8dc8cfe63691065369bb47c2472341b268bd9a5a92d736c73a183afcf177333920923fc035c17698fd3f2c0b5c98042a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:53:32'),
+(744, 169, '6f68e4754d765c34084beb52e78fa788aaa3742d0f3336bc7aa3e9ca0c8c26f8', '{\"_s\":\"9f148e80c656520a78d6610d79f4c8b6\",\"_d\":\"1f989536ebab72d071e8917e11d55d1c175ee9b49fcf94e3ec3841d23993a7545d0ffab5b80f708d0e4d411215cfb09adf6c08c3579a0abbd768a01dfd283a3d41bd32b805abe97c8112e3abdf3f4e8d81922de6a301a3210ee2c24cf35c69c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:53:32'),
+(745, 169, 'dac4221d0a45dc1b14eb1f8a93b379fc23c22595d1affd52bc891819ec35a558', '{\"_s\":\"8b22dd60ee54e03e011590ce5111e963\",\"_d\":\"85265ae3b742d8af92069ee67f189ee87eaf6355b18ea293a703895d3dc81cc11cff6f574cd18b9f563c3a4dfb45d2f5f513af76f6c021c71650f4a6b8a97dd77fd85613fa2ad192d40bf1a29b3b4d3b32b1cec002e87f78e1cec14b5e508f9e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:53:32'),
+(746, 170, '6e1ba05c6f7c82f5418ceb8e60626c73dfe5c2e0113c8522a87ef397b593a6c3', '{\"_s\":\"eab55941f90225e36a542565ae405f73\",\"_d\":\"23a31c9dd8d05e125f6b037e6997e74871cacd5ab9996690e33b3317c3727a626366490e3e8b491006c8044ac7ec81b14114b01de3a5cc7f00776ab9e5827c180ac8c7ee05b85abb66c35a0873e7ce95000b791e46a179eb0cd5d31a0337feae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:54:38'),
+(747, 170, '0b42705c1658df3dea1340a978ba7d1ef0a2aa48bd81d9e9e0184af0c9d0139b', '{\"_s\":\"de9aa807cde3d34c08053375a1dc394b\",\"_d\":\"3ac037973d9db271fe4aa3458298d946088d8004085ad00b74e46de1d4176ce677d31785b5854371f979a022db45a30884419d5016bda1187b1f75cb3f9700d6e8ca6c8fbdbeca88e22f452e69c6aa897453b2d42e254b7c1eac1171176b7b73\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:54:39'),
+(748, 170, '44a02542aa2719b19f0526af09c382fa', '{\"_s\":\"8b5aa566ccf5f4e156ec1565cb214730\",\"_d\":\"8550531e3a12d171364e8b8d12a8f4e5789f6e7ddb53c48d73cd2bb37150592a4936e2686e7fe14f9954aba093ac0c5295ef82b97dee3bb914b21f6c3c0b8b8373de8adf300e9c975b9a0eb6499ee63d0d9d7c2ff15db2d53ffed3abd3074f99\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:54:39'),
+(749, 170, '77d4328b8f2e3b20ce0576dc64de5afba4022e5529ad1479720322c3746d3dc5', '{\"_s\":\"d6669c7247af83125e8608361605f7ba\",\"_d\":\"9d7e882347e4adba3f32f02a709bfe23661359bbd1704ae65065aea0b1b9be4900fbb3891f0ee647974e5aed240db89dd33804c3a065fd41247cdf3e3f4075d0182c555e94d435bf33fc0cfa1920efb2b964ea905d4dc124d746e01e71969815\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:54:39'),
+(750, 171, '4e1bbf4fbf81ea9f2ef9fdae600f7b1a', '{\"_s\":\"45cce006e7bbedfd0037f5224f9be03e\",\"_d\":\"fc261ac7fde9701379905a0ed966fc27e593ee2d8ece9145d76792e530b80d1c2540cca54cf20effce7dca63cd488f01a65f614339481271ed2d1aa15d0c2442ecada65c5e27821d8492948a99bc07e65a5ae21537f9672e55f4937d0b91b970\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:55:51'),
+(751, 171, '1b4f22504ee4e0e7f08837aca384bd94008169f3679fdb304edd9c54399ba7e1', '{\"_s\":\"90c75a3b614e749b1149e8cb16dd6eb9\",\"_d\":\"58b304a0ddcfa4f6161d336b7c841d37232f37feb98472fc29e9caf106915b9d43c18b8a2ee2c92972c449f1fd86d282ee669c07457f36f1a7afb9adb6c8dfb5e473931b6c37b544f6a8f8b31ac2db8cee439011e88c8853ce7b5a80c378d9d9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:55:51'),
+(752, 171, '9ffe757724af84d5e3722bca9a89272774994daf808ca8c1e67d5465428d30e7', '{\"_s\":\"99383af3b1b6ad6d0d52ca1db16b4745\",\"_d\":\"681ace8ed822980cc5931c3ec74bcc8d26082f92809f1054bfb8d623c58f59609447282235a119d24e6df708f819d74152a632514328b513cc497ef7f4c85165c24c3ace7314a0a257203f23e6f4ee2dbdced06e9e62879b25f7a1b23291a95b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:55:51'),
+(753, 171, '458ed7da7ff5d287e72fabb561edb4fe8fad984d43090d4ca8db7cc1d0ffe35c', '{\"_s\":\"05026a9d34cec59c315593b9dafd820a\",\"_d\":\"95c9f22f58b4ab25a119a7366dad289af2fb5b5ce8faaa6c10080a3f893f768d11417b973229f099bef5ef50f6d9948ab0edd1f544dd73091715bddbcdc0617d2e2a6ae60e3cc1537cd3ae248f1cd50d5467474644730b847c8017989c3406a4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:55:51'),
+(754, 172, 'cfdb1e9ccb8a37289e5d2c1bc29eca6a', '{\"_s\":\"009c936a260b1844450c4c5a5b40de46\",\"_d\":\"81534e4a6fcf2a2251a471ea7582d4aff54b3916f48f1a00351bbfbe2f891000a36146c85ab29fd268cf1fcf9d6ac377174ebb7c34f69d71bbf5c072684bc144fae202f950db0da9e437c597c8745453cf20a2d5a6dbaaef602005662bb8dbc3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:56:44'),
+(755, 172, '82bda51c3b23af39dfba4257c3c998e7', '{\"_s\":\"a36c0d9957653a13ea730d649fd8fe00\",\"_d\":\"4c658ea66115a8f4bcac96abf2cd0d43ccbb78aff52b6a7f2d0ff129a29fa21d06f6fe1d8801fac5b1e9bcb67ad067219b76a54a03bffb2bef5b5cf690074e5b0a3c71c65b07f56bb5d6d860c5b0fdb65d14fab64a194ace83f0c26f15dda7d7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:56:44'),
+(756, 172, '642b17e0f91e45ab67dcf5f7a1468ee69bbcfed9ec0fdd4e99b4e6712d727196', '{\"_s\":\"dc348c4432fc6d1d2f4cdea5aff9dcb1\",\"_d\":\"31a7883e7571cc9a5aa533efae210e1d7a1688ce3793f17416dd11890c816f760b50705bd439a5b10eb92dd48ca890c78f86f747725a9e77b5023aa704677c852040612ee5bde4d0e0db1b295f08c3b896df7381fed82ec631b87a27d2541bc6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:56:44'),
+(757, 172, 'aa1b5ebca1cba0f98cd12e1f6d51e0d5', '{\"_s\":\"ade3a8394534701e990897ab480eaf86\",\"_d\":\"474ca92ecf15b7ab5141c90c38fc300a7414e5be82f6f508ddc07234a638d78ea2e7f52bf7979c745b1427da44d0b6a5e8a647fecacc5d248590b9bf3f46e3497287d89e02510d749c70bc5ba9507c3f8c16d4facc7c612f6c040191951b4747\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:56:44'),
+(758, 173, '2e43b92dede1383ebda578b2978eefd83e05234be05e6550f32992a7a9d31198', '{\"_s\":\"d43059a0a0fb1b1a691a5848bf8a24e3\",\"_d\":\"1a9aef28ac5a794afb18d0b1fe08c02f75d41b0076fec265c978402dfeed7c5181b717e698193fda1616a03e5eaceef8ad57ef714409a123f7512c2258a9f6115afc0abaf7208d4ae451582eaccc378261f279375b54084a58b4795d6ec5d800\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:57:35'),
+(759, 173, 'b78e3cfd63d089d8509d51e2d8d87579', '{\"_s\":\"b3a9fdcdf70dd8abd35a5f2b31591cbe\",\"_d\":\"ea561eef6f0b98f3a018d805495627ec67f5ba9a140f8e4cbb14e14be776c2a570159de1b80a3d36bbfbc4266bc7d1b73280a7b9a84902aec3ddcfa252fc7a1b2b19decb9eb240cd6995583d8228433446aa0da4646fe0381ae1904c80c1ed22\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:57:36'),
+(760, 173, '5477f2e96b902740f01ebd016dcf46e4', '{\"_s\":\"1d71777d9e9c2276a2041469918bfae7\",\"_d\":\"d170fb74454a9ed729d4e95a09fb4bcc92f73472ed2d4aff5978444958063d7132b53a3beb8d0d18228b7d210c94d65fcde6e230f87af26390dde417b8f002eaa8f58b4997cfd6727c61e9838d963bcf43e9b95ad1be7251811ac03c076a0d6c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:57:36'),
+(761, 173, '37582b42762f3b22b353af5ad113a011a076859446b73cd92c733776d5733230', '{\"_s\":\"74a951e1953b4b580f1f2863e1d1b9d6\",\"_d\":\"9a8b4d186dc07ea9bc7084116daa858e4429e50bf168d2e742a5de97b233dab5f8b472c4a5ced02a928664591f7d6ed0348820e3a15c53c3fbb21d5056e1281fd27a58d3a55aad79ab5797b1c5b953539e885fb1c3871d2b36033dcddbc111ec\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:57:36'),
+(762, 174, 'b3d4eda836434e26529d0e736f1c606f', '{\"_s\":\"0c87a5a01d6cf89157de0b7594075966\",\"_d\":\"5fcd91799633501a91ed17f0f4eba0db5371810b2e00c93a5694457e5e1b5732047f8e9a7559ec1d024f48bc412ad1a64a3e825962d5e2fa0e90dca851f163edf7461ccbe34340e8d0d6e55d029dbec853520729818c9babf8c4a0cdcba34b6c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:58:43'),
+(763, 174, '03c43eb4760a6836c77a8b493b232822', '{\"_s\":\"275a22b3aff7ea1737cb724569babff6\",\"_d\":\"b79d93f8e739591e7c487ea29cbfc51656727092fce4b0b0d0eae3caf44e6931ba21d0c0e3b4faa319636e32c3a0cc32ed149d708d9acb8177011688327cd8ba720ce0e9c77989ccfd386a09917018c54b1fe706ee2402d6b34cd43b606758f0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:58:43'),
+(764, 174, '58a4ae3494e6d271ade48a1e42fbf351', '{\"_s\":\"7fc6b4dc2badc234db290fb50c2bff94\",\"_d\":\"08b4f58f6c7006124f216fe6e1eabd6cc7fbd59e484d690f294ef862010dea648050c4c99cb3e90b6fa37d1db9f7777c6862db29c3532b17069f3f40e2862333af2b685afdd213cfda51eaae766cee5d43ba004a50571f63a22b50bec91b9344\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:58:43'),
+(765, 174, '8d384fc65de2dac19338c97a9b044261', '{\"_s\":\"ca42e8c07492fa7b383506e129866f0b\",\"_d\":\"5ac89b663f399249b99fef3efcb1e5add7cd4d8580bc35570fccee278dab6d894772e3b1d09ce72f52de2e98aab8674a2acab4aadb62da20ad8b2513f80c05b1a1368d1552df826570b3914c852baeb6d3618878e9e23ce31050ecd0dce6d807\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:58:43'),
+(766, 175, '3d89cf4a316782953f9030cb5f23dde6', '{\"_s\":\"685a0ceeb3d6d538b6114821c2f29d48\",\"_d\":\"56ddea49b09ab92a73e92b2f493f7410ed28e58578a269adbcb04edc4403dce2ca43281f6bd37d1b77dca867a5ceb5267414dd01ad749b89b1232f9ad8bf7d0a8b597b5a85c12bd1fb2bf9fc80ee11dfa750d6f551df53c3f324fd075e1c64f9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:59:48'),
+(767, 175, '25788f8a827bc156019717fd3c8f8e68', '{\"_s\":\"59bfc436d8fac4279a303987618ad252\",\"_d\":\"f208f0be11caf338531da3ddc6042ee613a1cc4726b99133bb057e53fa04f55281b4bade56a90ae04a841cfadef5915f864dc5bbce40bd8e1cafd538c12086da896a7d78fcd33ea0bb436a57fa096158245378021a8b67cdc39177804238e5f4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:59:48'),
+(768, 175, 'b058ea71e055f967a18bb90a048c8a201dd033e8db80650c82169b87ee360285', '{\"_s\":\"f1feac6950561e5ef08170e578d9034a\",\"_d\":\"5c4acacf61256f403576631cf9c070de42f94a05f79fe3fcd271cf20b272e1cff52fa0c8738b7d751905f4ee832b5e85e6e6bc8f6003c08e0a5047776d306d563c7b3ef45b8e76718e88140b3021a2604c0f511fc57f6b9c6b3e2a4eb619c57a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:59:48'),
+(769, 175, 'b5bdfb9b88c4fe37d6430d75873ef5e5', '{\"_s\":\"6780006ca3f2de089b04550bc617b1e9\",\"_d\":\"6ae65bea535f11ac65e09a184908a91d49983ecb760516a91b25b5e1a5431da8ee8a2ac9d124e20020208b68addf22ffe3e212132322f956e578687c38de2a290178043dcbbd54f4ee1fb196999c6276390058358129796e5c69418ec242e479\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 05:59:48'),
+(770, 176, '5ec539d649875ac1d3b343f19f0f5f07', '{\"_s\":\"02fb00834ef0e6d83458cdac002cba94\",\"_d\":\"323e20323193d80249876dda03edeaa2c5a617f040dc30b78c9dadaef2b86936da70940efcaf83e2e48c3ced6b45af009b2700f137634eee91467b2497834e41fe2126803252abb7b5ecba2192bbed497fee8c4eb380e26fc04c4aae56e96037\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:00:55'),
+(771, 176, 'a902733b0734972ac4062c9c7bed8042', '{\"_s\":\"3b132855394a9d39b479bed00d89ecf2\",\"_d\":\"bb158c87d0636eff90c16cdaada8d93ff8f184d0ec2b52ff9f6931ed8d8c7632df2a3e327770eec3ac55a1ad2c394876757e491c8cc011457005686e7fb57f11aeea145566ae4bc6db92ce187f82251d2fc79eb40605129c7c12fe08b7090652\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:00:56'),
+(772, 176, '71621f09fa8b29f358402e4504d36c2c', '{\"_s\":\"62f7b0914e1c84de357bbcabe2bd0627\",\"_d\":\"006f1af6b2978f8d384c8496532e2fdaf63316a0182afe78b3e04e6b532794be68e69860f525006137a5add7f393b6c984f10a9a577c4ff5217d051f1081d7e890ca978f9363c6895ce7b0e98abd6dd80aa87d312dfd06c5dc54650afcaa861d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:00:56'),
+(773, 176, '8e79934ff3a545598ac44846a1974da815f44609de8ab97e185e51a00c9d1900', '{\"_s\":\"da1127714cda660c435f6adb44d1683c\",\"_d\":\"1e8c16c088aa8fbbb1b66ffe2a1e389d858a954c00178b9cf551bf9bb2d21750e631ce3898879f7d4039eee98fcedf4ed99f75d1e8e42daf329bf05c48fcf1b4c54d5d0071f983a60452cd0c4fdcc9b0ffccc321b6f4bd282d3f4e21376adbb4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:00:56'),
+(774, 177, 'edd51dfc7fa0bb809ce09c70c1b8717211e2a596186116f57ce53945aaa77f89', '{\"_s\":\"76ea83362b71d8c0b1a8af757fef1e4e\",\"_d\":\"8ce1dccd7413ad644379576299338e3d483bc4eb945b37f4d405346135c0ea100f5d2a0a35399ef1198bc185f406a0912c0d27b14aedd99edd67c95f4a2bce7f76bc8566b1ac5bfda026eca2411bbc4341fa06b5b2db05c99c6a6797d04d87c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:03:05'),
+(775, 177, '7b5e0160840beee946fc9e0cab9bfed5', '{\"_s\":\"85b06aa79f48080021bc8d9969eb2220\",\"_d\":\"41757f2fe1f8f85d0f8115abaab1d156c22625d76fa6f8b0167cb84943c3484e8c47090beafe56cccf517ba92660630cc7c752f0aa2243c7e5e06bd4e2f70d439e1f69111363cf7047601d001e0a008c74e9d4ed1c2f3ebc8e9fa605906d5cf4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:03:05'),
+(776, 177, '5be6c5d58cc980d4a530fdb1d4ed08c6', '{\"_s\":\"ffac8bdb5e020aac9584e31ec9949446\",\"_d\":\"e75b6f5af4f28aa4a3960694f45f6801992970ea2b366d9da0fd62e1d67e0ac9f1e240a81edb6ef05713ba211a98cadd0de4834214b38f180bf90a83a1bc1699a2270e88f32312dc07e8cc6717b26e54ecd4051f6df4101754e5438f136a51d7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:03:05'),
+(777, 177, 'fb6fc219c25d507610b872e2a3fdc935', '{\"_s\":\"fc8d930d4e59889e633a121873e90f82\",\"_d\":\"31e2129cd5b9b95423d223da26478e78eb54e55cd59af5ff0f94f9faa29d351e1675aee2e4ddbd6ab177b0e2b138c486c04b77bb0ad4a76ad8e7abd4a4985dd76cd45e499a85d87324ed07aa509ce866f955380b9dd015a330fea7f2b4f8d0fb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:03:05'),
+(778, 178, '32147b935a7f223ec084ad477eab3a48', '{\"_s\":\"5ce9f7560fcceb713d772a9c7803d72c\",\"_d\":\"3c5627f3f539d228fe120bfb299a18a5bf6b9f2c6d7962c37e0ccb5c3c778059000a199c6017c9d4e0b33293e5fec68f68b110538f5e6ebe59ce6182c671911db6aa8437963fd8f2f04a393d414d06b7f7035510782e4005f1036e637fecbbd1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:04:02'),
+(779, 178, '70145b3f01b923bad2260496cdf1b120', '{\"_s\":\"67c83470edadd484422360b7947f27ed\",\"_d\":\"3ef2e878f703de45c83646c6e6f9d5d0ea3e12c1e30c26df0a87ca0b41e494db9fe71df822834aca3d19365f2e4afedbbfcc55d6c301b5f4236d402f82cd086bcacdde7c5f65af1d5eec58bb422af98fb5f89005ae26149f0d83d886ff72280c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:04:02'),
+(780, 178, 'a90adee992feaae2711881259ac72561', '{\"_s\":\"87bb902c578c4ec0c95889cd0c617e0a\",\"_d\":\"c81fe9ae2edaacfaa3f4be95a3a26037c5b06574a16217fc09f092728a3561dfd217b8afa1c5360a6b8bec20ba0bc76bd64d7ab5f9cde367022061f7520b5f8225107b49c7acf3e10cf6ac7b493c7d7bca75ce0162a85100241db93ab5ae8139\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:04:02'),
+(781, 178, 'c0f9e8c78798d5abeea4178f04b08bab1eea06fe7a2535456058dbf76e154a25', '{\"_s\":\"ddbdd4ea40a0c55e35461dcf570bc23b\",\"_d\":\"f8b13a8cbdc9f9668512c3be87932005cc31b89aab94b97df5c35dde10677aa72e98bc03700170e25e22cdd036567f660132e3dbf95a4d7711d4fb4ca828e8066831e7916384eae7c707fdb1995939afadadfd7a453773540c1a0f02752c2225\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:04:02'),
+(782, 179, 'ecffb6cd980fba47109392220439fc9777959bbd84c90c431d1101bd35006b4d', '{\"_s\":\"270292f62b5e1a7f6de3d8bccee3cb72\",\"_d\":\"b293725dcbaacb8111f1ec856efbbb60e5632c2593ed5e245d2fec26663915c53fb9262fb95e6a6b5a9faffe419df8c77fcff04d21923d93af005b09062ba738a8c1f2110cc184123f96ff2821fdca7a7a1e631226eafec962486828816b935e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:05:03'),
+(783, 179, 'ae432672bbb586a9a1d2040ee5fa64ca874625bdd8341a93b4170f682dd94e15', '{\"_s\":\"0a9e0ae63e58492affac56803f28adad\",\"_d\":\"62f63dc85c4ef49b41bb41131f1ae77fbc938ec8e5ac9fc52f3153a3f6064d606ecad35b779849257edefb2d45c1908a62f60d6e0146f932a2c7351e0cddf2fe770a2977078629b5e299376e5cd7fb10526d35ae82ccf9f661fb599214d2fb80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:05:03'),
+(784, 179, 'bd5cd37fcf05dd83ee4c19d9de9196e8', '{\"_s\":\"311b1e0601b52b7d37e96d5a2e4bb99a\",\"_d\":\"e1099d2c3cf7c7b946ddfa65a8b80be2c188fe92947f56db58cee86d37c2892c22d15403ac869889cc78f4ce43b78865910171b6074a1f9c9a39caafff2e129805160021df5e63e0bfd4a1b411fdc55a095e31b347b7472d2d77b4d0c4a99d83\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:05:03'),
+(785, 179, 'b6601840c2d14181de80be5a56998965fc96c96f0bff97569dc4bcbe98a2af02', '{\"_s\":\"c1b7457ab519726049928e3943734b31\",\"_d\":\"d9ce389d6b38dbaae8949f591ca03713bab23e2bbe8e7a3e9fb6a12a535e047590e7657c0d30ca15db9c22d0b3b7ab887efc01139fb4165d3aabc1e3a7fac22b7b01ded41bb881070c2552a157dd22cb1c640b677ff53d9596c75c5f105db6a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:05:03'),
+(786, 180, '96ff560650e4f69f519fe8868c54c77c0754def385027f888f0623f491dc62bd', '{\"_s\":\"4814946039ac8b2aff882227a770a4cf\",\"_d\":\"b7eb701072ae334ac571b010f3dea16af80749905553b3573ec6b5839525071895807d1689ce86df71e704ee475e5d10374af70c1f8c63a5954fdb9a8de8cba91f76bb41150ccf128a9bfce167d9711a144b05abcb771bb1f17fc28775071f02\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:06:25'),
+(787, 180, '392b8425d5ee59a9e31d73bfd1ede596fcfe4784c243153b8c1c516e95831a00', '{\"_s\":\"2ffe7140325015b6e0fde8e7e4d3e8ce\",\"_d\":\"b237ed7a85a0e3d31171470840f28d647f2c46eb2a48164fe352712ef4cdce21e6b6d473023b068bd64c1b1c1ee2d50a985d7052bb6b8d58b613b7cc9395f23d6085aa19cc6363d0d015331cc460747154787de0ae63822d2058319fef8431b9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:06:25'),
+(788, 180, 'cbde631f7a29d777c8263494fe9377f4', '{\"_s\":\"8f7108dfcf2381b4093951f903a0007b\",\"_d\":\"c1d192596b82abcdd8322dc4f8f427dbce93c6e5ebe17edc09bbd7a050529bb5a2dc83194b4d92f1bbfc4f35c1942d97a871352f30c530fdb89f7d19390953c0f2a6b15f071d03f1c0626d297fe43f64428e9331f8bd602fdf14bc8d8d9d500c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:06:25'),
+(789, 180, '5ea0d65e7818bb2e4f6bf55c39b58e3a', '{\"_s\":\"a581cecec11ff8e9adde70cc5a57afc8\",\"_d\":\"ae13a59c87188af62887d955f80614dd753c174b270ec1a2d8d528587002788a0b7bfbd47c440bd8df01c84a3d75f390be7dc63bfbe3f125a07d816638a2ef41c7e464fb8b933e86a1a5bc946719b81670b1c41c9887edaaa69f33bdf6d846ed\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:06:25'),
+(790, 180, 'a904768b2e11ef8d035d2fe7b498ade5', '{\"_s\":\"1db957cd754b29330323fc31c2d5b28a\",\"_d\":\"78e5464af73d0698e85b7794e1ff7d3a12dc4137ba1c60718ee23aa965f25986077684c6ea3c67cebfc7c0f811b1221a943a9f7b7625efbc00ec381bad3603a680e0759963fc807cf672e27819f61efdbad6dda141fe1723004665661eeedb20\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:06:25'),
+(791, 181, 'ffdc3f224dd6bd6f7aa6eda21b8e4f2a', '{\"_s\":\"73cf8ecdabcae48cdb3d45f85614d205\",\"_d\":\"dc6e4aafb64a6e0a7a501ef116088aedd9de213caff1b0c51a9f651a54a12276bcc462cc744830fa9067accdc677de0294255fd5b03689cebfaab34edbb53419af62b2e5f923e022f50897cda7f619803dde67182cae9794866ae4ea3f3be284\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:07:20'),
+(792, 181, 'e88f5530ffc80e205947e5b7230d8557e82125eca28167b82530a342926c30b0', '{\"_s\":\"5cecd9f94b941a3d7f51759856f988e5\",\"_d\":\"e319d0a9267068debcf4ea32e5b0c427ec6a143db96be392b6d30393c633b7bed7ae6f3974a664a8d1280a821527983cad95a820f65821c5adf8931d4c1d7fbdf1cf156939ec011dfdea9f09eac54c3da76e95d4624e18631d4abd0724974ba4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:07:20'),
+(793, 181, 'b0fe4672bc042ca16498198ade1d99f2fd05634e18cc9b9d4d58925d3c4ba54c', '{\"_s\":\"c21f140f0826373b7d97dc188fad0990\",\"_d\":\"a5e9088c3101a93154576f7707aef52728c3984e29d891bc39e5a1f74a27714becf3943799b1402851d15808a2a98bc492e84cd890daf2e5f062c08b16690944e4f44c20abd1efd303d394fa4d7b152e1057b42cf246a0b488fb63f2ba32a78c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:07:20'),
+(794, 181, 'b79fda2c00a00a66f5ad3f9819e36a13', '{\"_s\":\"b440e1e27eec61a4d4531dbe693d1d0d\",\"_d\":\"2b2cf49c3212d5117d855309c7f37cfbb17683a2e0c056e0f585a3716aab22ff2c955167f435f9941d90931a9b2f1848855f28be75a22fc34066791a415950d8b9d3cb06ca054baf71b8698f326e7e93a2b61bb05697246df01f8787600e2ae4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:07:20'),
+(795, 182, 'a4602cea84f6344d1963c15aa8a730dc', '{\"_s\":\"48b6e44f8cbeda1fcc4e971cecffef86\",\"_d\":\"0ff661b9acf2fe138c2922c18bdd0440884d98629b271b1fc436f1d2d653e749196ac7eb7bb0049a4b2dbb44437fb55912fc6f059823509082c03e3e656f10221313f8d1ea27e580e5927850bfe4e9b0ab95adf499e11c02d0a0a71228c77a12\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:08:16'),
+(796, 182, 'e49b1aac92911c8f06e470b83e4cc288725ac24a603d9d4a4e146b5af30af42b', '{\"_s\":\"7ef7ea6d7ba367c6022962fd0b202da1\",\"_d\":\"df1ee98a219d795d3383163f4ff825628ae9d276550b8fab256f01e155f3663a0efba3f422e376d224c671e411ae7fa0d352effa3523dde22dd43f2a0ff18522eb716fba51a544a224f42c26504e787c43c86acca0cced0e246bd8693baf0e18\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:08:16'),
+(797, 182, '5c54576b2c9d567332a2089586d994df6572f8ec82b024d9b9f67b4e38bc6e70', '{\"_s\":\"b73fb199e0b26e32edd21dbb8030b0a0\",\"_d\":\"c3cb727823f7f79763e1c2173f8727b22d8885bf3f45dfa85ad9944a4e52786d789da8233e7ca17ea69e7cb458a30fccf4ea49a08e9f3fb25130df088800a266bb449903554a5b463165cce40ab1a73d46cd5b80f621885973a24de118aea0ac\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:08:16'),
+(798, 182, 'b600d3c6b0d042f452e56836bcccd24c', '{\"_s\":\"55de33bd91f8cd4d358ec6f1a8ea7c67\",\"_d\":\"a024945c07d286d34158379a427eb5074dcd0d3b0a1e59c68feee00faac6571e0847cd62c9a3290e1fa4d53ab684f2edcb623829528ef840e2e42c80017b6e819ad19808ad2769d431c9e5fc2a0ec48b67fb41604867a47809eefb555dfc565a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:08:16'),
+(799, 183, '7609d70f61c2da833a50bc9a85c0368fcef3d6c04a20fa6eac412a97e527b19f', '{\"_s\":\"41a124f09c453f6ed2aa22c5f4659c6b\",\"_d\":\"bc06ed6588692a99bc865112845bd79a7dfab9ced952d168e87c1469adaeb901a9077f402069485592d90d9c3474fb2434760aacb8d6f25defe045a92e5b23a417de7e71dac5035b7a48276e28cacd703685a570e1ef0892b695af96d4d2ee97\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:12:18'),
+(800, 183, '47c44297a15e2afe12e3a4ae13eee67294b5acbe03b345d8b72319648581ae23', '{\"_s\":\"a74ec38c954b910b6157c4637e7caf4d\",\"_d\":\"c0559f101977cb62af5a594993db7a9dfb91502e554340503acbc286afbfac3fb0ae814b3a66d3b34dac2a06a82ab1e743c3ea6933575c36bb9a47c97eb26dc39a1323a5a19bbb561d2e132697bc53cea28afa638141e7ff7b0f3736db96c5d8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:12:18'),
+(801, 183, '1157f0cb2ba3c50481c39340ecfa647271491fdfdedfed47d6c710e9b37a60da', '{\"_s\":\"5910a6892571048b84a23673f5157d6a\",\"_d\":\"cc932232eeb028b1ecd6b395a8a42bb8e72494f913a7c3bf719d94216c30191a4813c14cb2dec5e53aca3b55cfbc042dc1347a136427aea1033c4799c02fa32798e18e7460eec1c37edded2b1ab92124ac3a8a8c87e5e6eb82e0f53e5e503af3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:12:18'),
+(802, 183, 'fcc3a7dd3fae04dbac26a2f5c2064b8e', '{\"_s\":\"dc23ce8845271605de40e163642b8cbc\",\"_d\":\"12de11a9565a164729acd0e06ecc49d717a9cbca3dc51f3f944b3a03f8ebf24f8b30ddc40e5808ebc3f62237e45a59fdb1718426300cd0c5614d2ecd9b80c7b18c04714443aa63dc30a2cf337ecf4f3efbe3e06de5c2ef060aff91a60093a43a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:12:18'),
+(803, 183, '96d62e788b5a8d594fbdf19a3b5b90f7b4ea62858e0d22885933524bd767bd58', '{\"_s\":\"c205bc0088727ebd4008c8638d361186\",\"_d\":\"8a653a1f111c7702ab5e24174bc87c8b898a41af7cad5d123b4ca460c90390cadb361de1796506d77a14aaf18092ef52d77b64f8a20f971ebf6e4384fc62f6a8a9d284e0191941c4f140a7f2a1662d1e383e2314ae61853692c105e9f19b0f3c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:12:18'),
+(804, 184, '04b458fe0cf1a96455845d4cca0d2e320d3928c6bce8ee951f5e2cb7037a51b7', '{\"_s\":\"7e56d30a74de68a0e9dbbe719a320eed\",\"_d\":\"7df66649a753f6a00e983434979b457414b591996b231f8c09f0ee87d39c728788108ad409f4bf52737fb03aed6f16a8bcda6bfa53033a863f047f16eec05a822709773de22bce60b1757d7e0fa95c5fefc102ee2ceb4e9efe57b23f56909c31\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:14'),
+(805, 184, 'c78828caa83d3b902d66129defdd8226', '{\"_s\":\"18eec1823a3e327acf6ce371abcbd7c9\",\"_d\":\"38fcae550b4a1a132bd1538e812e66dde53ad8576e018b578bacaa764e37849611ed126abbdb04d92ce709e076f4d15a32d3573d061eee1f11e98659932296034bf329bef968d12f3824350e18d0a590e53e440c96c3045cfcc629f23db1d306\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:15'),
+(806, 184, '73fc7be4c75fd5d8b3c12935ad2f6787551a745d7169da0f3a34256b650199bb', '{\"_s\":\"b0a492dda833a0cd79421785692d20db\",\"_d\":\"270a30df4c604391d1ca4dd0ffa0936300544630f2391a02924131aa9c4b5e6410ff4496838a0187570bda9b5f094adb093e9fe3f232fcd0bb8d95c1ecdf913030c4709f726281029ef6c5c8bf98866beb05825d98e23b7690132d3fcfabf259\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:15'),
+(807, 184, '9f6f207fd324679609e7cc299c20a2a7b53e5e6f97020279d2f7511850d1a806', '{\"_s\":\"ddbbe58d2db09d96867d8cc567673454\",\"_d\":\"2f68bf33de2b7eed892f9bc1472bcf5d3f818215c8ec80cafb4a7514f9c46492932c40cc296ae00a76d4f1e784e123d5f601c4b3984e336bcad71e48cba94dca9fee9fb0b2e3a81aea8cff9c881318d0e02c909d867e148118a3409778f91022\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:15'),
+(808, 184, 'a5f5a00888144d5567fcc3519d0995f842476f468d2a083678265c02e3c841a2', '{\"_s\":\"a5e549eb5c556a50513bfd6e31c341cb\",\"_d\":\"fc44d0a99b23414aa1c76dddaf9589b0a9de54215711b2fce6f5dccd9f336c017eca53bd556b4d623c2aad36923404909d9153481ccc6cd2122c576fa1b625cd526fa3c89743380e8e7ff07d199423b73ff4d73c86f03d465d20134afeb554e8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:15'),
+(809, 184, '448f394bbd03dab826c92a9e216414f50fb818d76b88171af3d1e50ed86a66c0', '{\"_s\":\"ca54aaa4f1ad628b3d618af713a9391a\",\"_d\":\"ca74728a984443b1f63ca6d3a08dba2c625afdd3620042cf8f2e6485f1930b1f0387abf965d10c696545aff810c15d67a25068efbc97c88d72962cfb756ded0440e43b93000cb549bce8cd2839cdd2c8a97bcef76259aacc131bda7c59c3c721\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:13:15'),
+(810, 185, 'e38c90f6e28600d71a2fb9cfdf0f92ec', '{\"_s\":\"bcd183336f0386db3447a7eb1d50ad03\",\"_d\":\"071d36b64fd1b1a463f43025630e2889f43809ff985a5713dab0a53ebaddd7d35950fcb9e3a23d27786321364075de6c62662fa7c0c914e9dcd0d91d18aaad7dacf18bd8802a2e76b4eed36b7c41f2c39fe01a534ba2da66f147c00209278179\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:14:30'),
+(811, 185, '0713e86352047d40a3f83ffc344e44cf', '{\"_s\":\"9e834f4292be4dba79573680cf07127e\",\"_d\":\"e51ea0796aea475ff56c74f62b6843322babff4ce8339060dc851b564ed4770bde48d3088d6397b623a818e62b87f98d728b52bda6660bbbdeedefc4ed2b7535d652e253af61497ce12e2ca30a4062dcf8cbc98f451231e18df5f0760479a0a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:14:30');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(812, 185, 'c9d569038396f6a2a62a2f29a6c07cfb', '{\"_s\":\"7676ba140bb8e5959dbad9edd8c63a09\",\"_d\":\"f38d1b0c8e09d15c4dd634f1f67c760659f5062cf593bc9425ad4b1c0e87064a4c6867e629c55a2c6d23320c08cbe9b99ef7a6c0983934499bdb35b151c2eee14a0e10c8935cb2cf3b936de7ad2cac3133c547aa8d892f81c04acab11e8b01a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:14:30'),
+(813, 186, 'eedcfaff417bc20f749aa9f5fdd6dba2', '{\"_s\":\"ae8c1b2da2ffdba66cec6ee9faa09410\",\"_d\":\"d51eda238ee802c896872a47b2b84215835675cf8b2217bfed0b658507f2df792fd1b188be833813ed6d3ce5ebaf08f11b27ecfd551031b38fbd83e82d086326f2682eb9be5743dc620736aaee8d6e83f9317fac158ee1b6571b05a7c71e1918\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(814, 186, '418577785c7ea82f0f96320a46cb1c45', '{\"_s\":\"4dbc29d813da5a7ea4a3f9d911ed4089\",\"_d\":\"b3634821e930cbdd4f1443a5111a0142f0b508cde29402be96035914847b2eb9a9f545865902d2ccf13c90800789071587d4953c2c6ef60ef6c3408f1480bd3d4d71ce69c34abf7585cee95997c45a58a586d0f084eb7dc4f6c62d7a64545fd2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(815, 186, '50c086cb6edc6559a44072b30700e5a9', '{\"_s\":\"ff66e38bc4ea27977252b729dd79907b\",\"_d\":\"e8e78fa99822838ac445e31c66706dd9953bf263ed3a462c593a1c2e4de1a8169b9d47f0204a2ba5c20f25cc0d6aa90372d99aa3ea12e5599b9db87c856850d2ad6bae6733072a40f0a27ed1ba5994c3f7390aa18cf3f66d2421448e1c09061b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(816, 186, '64a7f2008a508bc5b9648e20a089bd49', '{\"_s\":\"4dc004c7a4ef8a7902224f7e307d044a\",\"_d\":\"74bdeb5317a6c19a9a9aa9b87ee8f725250ec6e3e938e1bf771299bf358d6dc85eb562cc88d588ed1a1942535a33b7866dacd324a3eeee629c25ea6cb30317776808b43d4fa8e838cc6585ceea0d42b376df7cf9733acc478f9405bb5dd52014\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(817, 186, '38c2f71f4eb3790f6ce9c4ed10b3ba41', '{\"_s\":\"a0496ef1a7a38df408411ddbb3e53874\",\"_d\":\"43782f57c3e2a3d17d55c739201356cb80f67bfd32939d33ac109bb792cafc55b5b285de2c14536886e50aa03fe461eba32b19742d0f9e04589f979cca2f611ccf15d7d277e9ec55bcdd9bdada2ac2c279ddfbdff5f7ffbab70c5ab30aeabe51\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(818, 186, '3fad317763a8a6f4e07deaf127052d5b', '{\"_s\":\"694bf531ab3cf298e3a8bbe910172258\",\"_d\":\"6ff47e3017aa44bb2a7d1f253fbabea468920086a918c7b6d73e0206aacd8c7517448ff08eb2c82fda5bed1de08528ab85bc35946da760b849d1c5ff92ea7decdfda0fc0f9781c7912f0286a32860adf14ce41b7a62dbd87e79e53c5ecc5f49a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(819, 186, '3f883fc7c636f48b72d13dcbcf3297a3', '{\"_s\":\"008d1ad52a048484396bb19cf696d1ae\",\"_d\":\"85be4f487104bffe8526d390f672ae0ee66a191b74bec3730adf9cf39b83bad943b1c084d16ac83ab6f72c7681cd147aecd6a25b63ce6f05ebe94edfe4514f08a0ccb107f5201587adb2b4361b8d359d9f00c9e8fffd2bc0737ebcf2b487bafa\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:16:36'),
+(820, 187, 'd367405c7ba993be24f5e7dbc63d4c77', '{\"_s\":\"6d89471a1105cab96c6612e7599d0ae2\",\"_d\":\"1cec4303169de7ba5444898e52b154eabaef03e81721a1ba2c266cb3dc41dfadae2f5971c6181ce99e2637004e39179ef0b5b118a0b2001ca9cf901ed059e2d9901f9ae734e236564d09386c861ab41b4872ca116dca52cd29653dc34b097f06\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:17:35'),
+(821, 187, '9517ddce1ceaed9806f8edba57886302', '{\"_s\":\"041fab11c4b573661187323e8f6966e6\",\"_d\":\"e9690d6a0d9a86432bede10b1fb91ec6dce5ef74dc92f8b0d2c1782ca63bbd71e066cbcb1af142f08f54ecde1f3258cb35e4d1a5234a7b2395f0b553e7d77cccd7aff1fa0016932367b7e9b363f5d3c8f73dd262f692dc9adfeb64412bf5b0b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:17:35'),
+(822, 187, '5f24cd1f80c4ef324111a0f1c1400776', '{\"_s\":\"9f355de9d6e5a073446c884d064920da\",\"_d\":\"803c0dc5311469fa9a41a0ae786f8b60c9da1dd960ae98c6f6fb31cf45c0b900930e7db5a570dbd20b3af10dc833dcec2103ce6e6d9cf4c539e1471932c34446117ee747d96e00b3aecf18e8770e89622637461a5ac741ca0d7b4df5199482af\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:17:35'),
+(823, 187, 'de15278bc7b015473ea4085bba069766', '{\"_s\":\"13d970d6594821db465d34bf056f9ca5\",\"_d\":\"14ad7d9df59abcee6874dc40da825c3aa86acc581e317283ea0630a11424539296caa0371f955be68116136ec702cd0af3e131a7f1769cc097663458ba528e715b7626183c27ec8a289c508991305ae993affaf2ea5efd8f609f9f8e1ef4d6dc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:17:35'),
+(824, 188, 'b64935f1ee6f789e134926e0124adac3', '{\"_s\":\"0763534ca5183c6a80de2247e59bd580\",\"_d\":\"facaf7be8baa86e9a6d5cef335e0c0f9491b772b25ee96b05b25037db3095646b9a6a415453c7eaee9ddb0a17b7394f5b70e9d44aa00822fd6f1745dd053cc7f1dbe55c26b99feb9e962c0ca89cf85b94408e67cc4e4438bb374c3b11b5ebfeb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:18:47'),
+(825, 188, '1c1406cae9db5c22cbb0c45e2b0772d0', '{\"_s\":\"8b6800b928d3aa13a58f63cd446bcef8\",\"_d\":\"82a6b7a6949c85f2df428feb0083d20e61d4019ce21e1d51c41d6856a7c5670d344cbcbd43c58b66b6c68e52d1c7560ae7dddd1429a730b485e9675e636a0cfccc1dfb095484455cdb95340b15e064cf0ce27545cf575d9dd79269dee7ef9d26\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:18:47'),
+(826, 188, '52e3c1424df329111a3056e146a59cfb', '{\"_s\":\"f56977fc826bc4ba805d3de715f0c956\",\"_d\":\"d10052a4302e900c0dad4460d4e12f55984f8a7f3ea49bff188cbbeb84ee5b81faba34eaf6656dd200e84cfa9eb8c2e815e158ad248df494dbd4f31debbb514c98e151de620fb711633322d75fd9c460b12d7736f0b4412608d34a33f8f38ece\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:18:47'),
+(827, 188, '1fe4cc69c601dc40e02e24c0f31b4e58', '{\"_s\":\"26dd2ec03cd397a15a0cf6421b671fd7\",\"_d\":\"176c45613fc65c25f52e9430aa465886d47200c48c1585c8fba54c958239db9ae7936a04279dff80fd7dc25473779a4cd955670bff67aa1b01487dcb2c2d54cdac6dc85fdb06bd210638f573e82e9a7d47153e0d3ec6035b92fd6c760cf0407b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:18:47'),
+(828, 189, '3a82cdf9cfee4a832caf021a9add7856', '{\"_s\":\"029e6279c19c49aeb92699bd6a4b58b9\",\"_d\":\"694a829224f9f6c282414d60eb023ac51c51b5865be62c4c09bbf8dd0c0a4ee3084c870372617f2d7d6107538620d38a44aba504ba43e3077f9ba1bfcfdc9384f86bf7fd3b58fddd7a78636d03848edb26d00c532687b6227fec8fcef0f3a0fd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:19:48'),
+(829, 189, 'c056a7e62517bc1b07a182d1787bc0ec13aa244c3101122c5d0a63748232d9ff', '{\"_s\":\"c54e6757b701c502725b93c7d109b31b\",\"_d\":\"1ddf4cdc6b9b414ce60044e587559d7be8e19cb1dc2ffb352ca939034336c6ec57cc42ae97422d1d0f297c438406be7679e4ab8dfdf59d117598f5d4c63944e87a5fd1eb19dcc586a928d5f49f5dc161874c1d220e1be5f4de271bbc1c967dc9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:19:48'),
+(830, 189, '95d4a0d3cdbc37e994d55b4118a243ff3588e99a9f74887c53843d041dfd12f3', '{\"_s\":\"7e14393c2f5b305a10c4f9b21c95406a\",\"_d\":\"8fd00a1c1d903fad8f0f3f98d57d16bb0defede5f9619d5b4e525a10f951ca6f65b926bdb0cfb190f118c58da3ba6d5426adef0c08fb8d6c6f211f540120e04e9179b4803fd9e69300ba1a73bc86f6258f9172d6b6814640f99a905b25a24f55\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:19:48'),
+(831, 190, 'dac86b68dc2fb55163fd01653cf012f99582ebd02c988acfb45d22c3fa256d36', '{\"_s\":\"67a9a3c12e05d3d436f5a1b043564fee\",\"_d\":\"9a2345c7c34998e74f280a9b03445517cafedb03d819127108a0c672ed203e4189d04cdac7d5e918ef0d6600faf8cdd851368e0c42ec283823bec57efad8123e26b0950eeeca01540db876bf0bab894493334a407a59ff5998ac261b4f6c9698\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:24'),
+(832, 190, '0f78bfc0d4201d730801673a2e2d0911', '{\"_s\":\"2e35aeb0b7ceb450861747ea2f42a8b1\",\"_d\":\"9f3f757dd6c8caae28e4bf436dd413d7bacf82e4110e148220778fcd49c4b3b74335c4609334ab9919d6f2f9418c96d1ece0fbb8f43ffc29ae194450dd3e27edc881b6897d9c809589783581b406dc4962d8789ae8f3c7a1657fea26c8a54cfe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:24'),
+(833, 190, '0e0f574e3a807c1a6b6bda1f70bcf257', '{\"_s\":\"d16fe20a8ebb4350687393385b81cd47\",\"_d\":\"6b9f5cb1d6f023c498f1469dc8c851fcb102f40606202a357dbe753eeca9117a959b80a52a2aaae4e1215e8c06b0126852d48f5fabca9697c5b68eed33c8bd8c040c7c69bb25f901b9694701eb3a5174c9511372665c2a76ea1c080391c3fcde\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:24'),
+(834, 190, 'ea7038e7e430b48f2d1eaca703456658dd0d00582c7d64f16644260a3aa15f94', '{\"_s\":\"11f1215b60b91507dada5180efa38bed\",\"_d\":\"b689827dc439e3701329f2fc0661f2dcfaa020698b737ebda93fffe3613d1655c9c0d023e9ce3cb3533e0eebdb375ff43c3599f7d1e1fa4d6270e93f660219bb002f84195fd86d6104a8fa339479973ec5a157df239699dc6377cb1300f75a83\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:24'),
+(835, 190, 'a4c1e894b706d3b9f5cfcbb5e2502626915c6f942e03fec6212e9e50494e6499', '{\"_s\":\"f364ffdbb0312410cdf93bab83b9830c\",\"_d\":\"886df792b002c55f698c7a5f7595184bb46fe78527d9565d177d7a47af144066ec80f2206b72443e6fe3efdc9a303a4c33f7bcc1dbd6cc0a8bd5e34ec4f4226443bce0b919a62247bb7dd5be588e8c260aac22ce0b1fec43088d380dd4eeaf16\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:25'),
+(836, 190, 'd6aaef83cb674f026311dc4a5ca847f13e93d2d00504bca64e4fbebfe5d5c00a', '{\"_s\":\"7fc3ec6d383d71ad05d7348cbdcd6002\",\"_d\":\"fe1c83e8e8fef89bb9b2057a23a45344453712ec3e6d41e6929dabe5bf65d3d38a4ce446b365785f679045ca651f92410db755645c03054470846386239bdf74561cf176235640662e7a843a9cb900dfa27de38e3348bc7bc8a918b339ffd9fb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:21:25'),
+(837, 191, '96900dee704a53df5a2514649d9ce50cd78bc6f4556ce2042f522c2bcb55b950', '{\"_s\":\"db95e8a49f41a871ccdcc4823c83ff02\",\"_d\":\"32b79eea5dbbf22f448c46bd8ecc968e351c0f947d54fb4dea14024e706ed945f3150ae990ed1e0c3f4730d69c2d6f70a591a48aa09880868464fb2e7d90d6264cd2073cc815cb23fd2f4c4e43d375f21d5dddadbc3f1cd5142dbf01bd9aec78\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:22:28'),
+(838, 191, 'a590a498f66280e98add05a1592b2bc3ab937d3def408dd231902996cfd6fd72', '{\"_s\":\"461c1e81d53868a2c8e3ae29886b2d1e\",\"_d\":\"81dee8388e4c964586fd6fe986b8311c31db243127050d7a45c02549364acc71251bbda4d545b2720e1edd8a27d15711110ede871e577d9a7900babe1f7bd677d351814205692da3abb48845c503ce4f829143f3d8cc1fb59997b2f56a9915a9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:22:28'),
+(839, 191, '2829e04110d349930d26e8dd021a383f5a080cf641232af6189373bde5f72937', '{\"_s\":\"b9df1c65bf231b483cf7b4ef64de8faf\",\"_d\":\"8795f89bfb9c55ac9a660c1ef6f693eaf1700096e19ec36677eaf1aa4d742718a05a595c834b8ddb42c2f09770eee7b5df09b1f319f8702d45f3284aa736da9dc3d54c28827c958a7f16c3b4c0d22c703a4d2e20b4c06d210813b6922c4da2ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:22:28'),
+(840, 191, '57bc09b9f21990bdfbc369d974a516206a01f98aa67e186c76e6c5d9cf335c2b', '{\"_s\":\"f9537fb66672fbcf75899722ad143d2f\",\"_d\":\"07207377f0e7d10a82d1a1ce3cb43e28fed78adda17a271c257df654f33c0b85567128af4b9afbc5e5c2f2df5dd55b78979ba4d1d8f6fa1b84f6ab9e734429b41f74e85ea08b07c5543c69ceb6ca6d01f6280abb5464fe0d46bdcbd5af511350\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:22:28'),
+(841, 192, '69a22a7119cd3c8ecb3b50140062b89a', '{\"_s\":\"bd8d7fc960d351f2bf1d83b2570999ad\",\"_d\":\"4fdff4aefea27ec8d96ef6c87a2eece1c8cec9bd81a5b755057f04d7a600ac9d931ca5efdc819645adb072d725307c364e439dad3b4078ca7988888c4ae23eb5449150f3c753078a200e89a9e949a22ce5c71724527f5ae787a0e9c8b6caa5a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:23:17'),
+(842, 192, 'a6ca4c9819ae32bf228313467c8da84c', '{\"_s\":\"2d3119004eb6cbbeec86ab5ab1cc49e9\",\"_d\":\"fdaabb7076549e4f59dc01b20604937ddc600b3cbf9c430dddf51712ac513bc79e16da978e4268dafe7b32fa0e489d266c65786d169d6621278a5b245d48e46e14150ea217e534a3dfab4d2fd064af06789294f093b3ff50b85364c1726349a8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:23:17'),
+(843, 192, 'da7c2ca36ce032a98e785145e392a622', '{\"_s\":\"96b664cb260b1d954ccc2832619367e5\",\"_d\":\"27205178449f1fe4e3d752f234eee1ca4ae22d2d3405174bdd317dda73977ba51c328c30bea1f0e2117ae17a7fb625dc87b462669605cf570c0257b700003ba33ac5038d248776313445cd0ee21eae078de0c3c0243ba60dbf8a0d93558a4602\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:23:17'),
+(844, 192, '31cc8be0f0787e7db865f207ecca9a773772621e77dc2fb4e161a9732938e6a5', '{\"_s\":\"41dbe48f1c2d1f46766b416a2df0b295\",\"_d\":\"30aef2a283cb968274038292c38c4f36eeb1b209ce16429d93d5dfd9d547370487f1f05290d6e70956ff0d1f79c040a6deec2d60a40e7e8fcd4e3f7da0cf514d5bf3c9503db99cce1aa88434a6e64dd7aa8196c1d520ab7a676473176f4aca53\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:23:18'),
+(845, 193, '94bbb054fbcc537dc068e18084c808b05a6c0ac6d9c58537795104e7662da8f3', '{\"_s\":\"614ddf1f3d28dd42141e3469e1fae976\",\"_d\":\"503ad56a155390d0677ad86cfdbc273cff6e0b523f3a9e65738cea34dc0ffa612c7455e2440bee060fce7baeb82495f2529c84befc81113d971609f22e70a2e02133b791f9c691fdfa12b2631ad730c2cc41a2e68b3f76dd8935063a0ea2afeb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:24:13'),
+(846, 193, '808b741b7809412bf1ff44aae67a885e90b8e2a8f9faf8ff5607874849b2a149', '{\"_s\":\"b03d84869aa0fc389d76b96f5c6cb4af\",\"_d\":\"d96aaa6e9bf875de08a1cc71539ae606e46b0603aa6c2a92210e8ce9b2a3b5d260836cf5acc37789eb2d42991d9af7497de9a0f329725013a98d88710f7d55d98c8970a02bc4bee0a2c000e816e28be9d14a05aff80b76cbd7f2f007a0008466\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:24:13'),
+(847, 193, '07f3442ad3c28b531a1333c5ea2d1527', '{\"_s\":\"b7e2f9789decbf1a81d2f061cf22e790\",\"_d\":\"015450273085e66dbf667d632bb1744bcf5a8cd010e7d7c91f5ad209433b6ffe65604a5ad55dc6ee0b5fe069bade99f09ba8616bd9683d65288bce76a1f672721c2753c3f98ec8c7020b207340f5e2936ff3db2b3576415143e0ab2c0ee20385\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:24:13'),
+(848, 193, '7b1648ae298022b71f2cdd478d6f3cdf38fe520c07c059a2df4ad352645aa29e', '{\"_s\":\"42d3a00f67432a8b80639a30618f37e0\",\"_d\":\"4da425ac08f51647172121840e5b94ba2c42c298cd89d049e81b7f0168adec7aa1f6bea21ee956ad3d0c814d855dac074bd68673a0b3eb48c4bb46656d153122baee63b389fe71613e6c4c08d52b17a068566b284d2932df0ef816c32958ffcd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:24:13'),
+(849, 194, 'd282242f198ce0aee5e0c9bfe052637f8093356f1f807106d86fd0e2aaaf71de', '{\"_s\":\"33dd3d399316d4ccab75809818c8487f\",\"_d\":\"b0a3be1bbf11ceef050de34d788d2aff8f8fdf8f6fbc07c07024593fc26767ef9d0fdc060c1311f95d1126663fb7e7c50107ce4efa3557722e1ac1824a92609f72d831997913c209861a4f00930a544fe868af78361ff7fff38a6b58906e966a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:27:23'),
+(850, 194, 'acc5d9272d6c9593a75339b7f72e67bad1319f65bc6ffcf44d2a335b20d7ab88', '{\"_s\":\"bf4d652bc3fc5ecb57852ab178ceb5e5\",\"_d\":\"8315dd89b2a243988a992e4d10e22c8412d89b4ee303e93c220bc392b95bc42fcfeab5dd9d4574b391b5fffa75f30deb0cf0c10182e2d9d2557dff33ec9996c0fd5ac7811374d596ab8901844817f81e792d1a591ec9df258236bd3ce8573d95\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:27:23'),
+(851, 194, '44d375795fb9168a8dbd6484dae233f914afb024e0a756822d3770ab912cac1d', '{\"_s\":\"824122a279c18b05928f82e61fe9b55d\",\"_d\":\"257b8210b84f84e5d1e95b4524bac83d13afa763c8da57b926584ea08a0e4894e03c0ff49e3a758cb5f30f2ab0829c744e9292b18a1456118159a84adacbfc371c20cd895edeec32ed56c3de04d0b3a5e9186c206d0c2c07e2635fe0d3470ee8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:27:23'),
+(852, 194, '9d719c4973a81a2524cc53bfe76b3afd5fc04e06cf84201325e6b6c9cff02cfb', '{\"_s\":\"709a4a39e3b73428aba4faf909d76d07\",\"_d\":\"8929c2a6c6b0e6a79eefd8c43155e34d4bebef521e2e1469b94a780e4e01e54f9391ee2265cc358a73af9147ae360f4bb70ac219251e83848dfac07af29fe604f4e382b529735e03f842428c4eef9c629f39a871c9ca00779c79e1daea39dbd0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:27:24'),
+(853, 195, 'd594fb473b8a46f079b27478e034a58f', '{\"_s\":\"29853d1b970d5a3d207524dfecab2803\",\"_d\":\"6f3d4eaaa058ca9495a8c283a219e7c66fa4374739e81fe3e7e83b5d76317abb8eaa4184c71100e7c1dd0fdeddc70e952b974862c5cc600f2d6c4e00f798e07296738dfbbf96d788b34dee8708be2fad8fc012a763571506a5312ab652304a5a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:28:38'),
+(854, 195, 'c7938cc092c5788987f5e72759295d13eb4985eafa9a444ed16e5033d6d979c3', '{\"_s\":\"8e7132a98135db1ed030fdf2d6bf5d9e\",\"_d\":\"374901e51145f8f02ce3d0d1a2cc331c96d8f076b8a56e69ba47797180fa6a2274fc4462417738d63aeb8f1e8c8ae4c5955a9a01c2acca8aa119d3c715f566d654c8198557ecab660fa210d808c5ecda649f6e976d7c58723f464db23332b290\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:28:39'),
+(855, 195, 'd388546b35194985cfd129af8807039ca4707c21c3bc8127f2177cc347d21c07', '{\"_s\":\"5d83caa0ec44fbb51fa1173f09df5e65\",\"_d\":\"2e6b84d3c9620031c8e95fe3d81c6b0f1f18d5c832a4ef5e289c231b4563d723bd728603c989eff8fe88e3a2ef5c3d233d6576f2901a738c91e6268ae3a805bdfac56b0772fff887f5b1cd1945cca39990c99df8107e7cdc7dbe61763503e334\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:28:39'),
+(856, 196, '466ba275b228f78425f058622e2b63a7171f7e61070112973c706abd2a62de76', '{\"_s\":\"8a6fa9a4b5d6d2285feab3ab046725e7\",\"_d\":\"9652f0077a679de4d39e5379cce3a87255e0fe39a6f5734b4e21f0417dc4fddb0601e2374e3726cbeb540258b712272bd8b42ec9a52d485542ccfce56639153e39502d4551e60cb109783b24c8db21552e5302538ae2bf25ab3ade8a6fb14abb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:30:40'),
+(857, 196, 'edd48c6dd252ba8e33a2e9482cb07ccf', '{\"_s\":\"b7c750d2d2479228ce72c400cb3db5c7\",\"_d\":\"ce9444091bdbbefde03e22c29ce72da3bc7bdb644f0f4c989162a5b1850611f061ac4afa4c8c217a2dec1c94cccd19b9cf30c3b8c833dbbdd9c94cd4fc189094d8a719a1e97333fcce67bfc655009e246e09d9a46afb586387e50df3e4a4e20d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:30:40'),
+(858, 196, '466ba275b228f78425f058622e2b63a78091fe848e46028e30a8e57b6fbb96f8', '{\"_s\":\"a25081f7afe6128147700b459b57eeda\",\"_d\":\"22feeab68d3f091b2f4d0a796cfb70ff8c980cd0883e2fa054d167107113e150df60f5b92ea8bc7407a0a7f43d42fbb985c581ddeb975112763d8ecf6663995432b825868fb6eb0c7ca460148847e2608af5c0794214f18503138657eb749f96\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:30:41'),
+(859, 197, '4ff3f256e3d9b9c3d94330d8f8f7ba0d', '{\"_s\":\"e03392a0ceae831084923f7651c62951\",\"_d\":\"d4dbd28920eea59d1269b16c0671b18af09540564ee9fdd2008df0a8e4e2e997c5c1f00961e925690adb051f99ce94e0ab5f2b5abccc9935d4f8d9f9fb0c7d8c2eec3012520fddc2dddd66af5782bfc702c975d65c20d2888956260ee93b2425\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:31:30'),
+(860, 197, '4c148a1a2bf597ef3477363027a21e7a', '{\"_s\":\"56a5ecb2756f83cb578a2d943f3929d4\",\"_d\":\"0e5e9901cae55e0991f99e4b65d45c058dba21c754ca4f916c8c37344118e4adbe93b13390e83e8c0b396a01917707853336fd7450e052336afc893934562e0475e7021eaf6385b06c53f0bb6894fad1da339b8a45ce914c4de8d7e3b5697b91\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:31:30'),
+(861, 197, '147c184f68f24b1906c516c86356afe6', '{\"_s\":\"13734d3875924446b7b22740c44e67ed\",\"_d\":\"a0feb56483ae7a8ae73cb36a4845f965439681517bd0dd277685999fb0dbb8796a6d7ebfe226ecc6e9fba7931c3f6d168cd326f18bfd1f62faaaaf6109d59f89b6395f7ec5028f95ae3e4194e5d758c6f85b46d15e0ed915ef638d247cf98a37\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:31:30'),
+(862, 197, 'fd73bc8be207f776b2c5a55f9d775ab39e2aea23b018a8959e2c667549dbf6c4', '{\"_s\":\"43b943e564a4eba36ca5bbc1f2c66d4c\",\"_d\":\"8a0e0869fbdda873b52a4a6bc34dfb5a97eb15aad32fa2e7969b9d7c1f44313bc0d9101dd7c88bea2c6cf768e283442aa9ec067f4d79d8223e32fbf5bab0046790f9a2773bb11857d90b2be8879f6fcdc6c0ca04c5f4ecb8128c8f2314fe66ae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:31:30'),
+(863, 198, '0f16e84d1e585a8da079e07698db143a', '{\"_s\":\"1f650fb8ca234abd05f5f38adcfb1166\",\"_d\":\"6deea9be93b7785338e6c80869eabb46057bb452bfba1f5d9e8778dab6820438a211908ce84d3e8814487c2d3df6b890056c03bf6a4702d25d349d6b2cc0ed89893dbbf25bf5dccf198599de6265994da52d492fa44dd3ff3cdf2837efe602b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(864, 198, '5557e2ea5b209124b3b13d7acc8f6e99', '{\"_s\":\"8d838f8b7514787f686bc8aaeed503df\",\"_d\":\"ad6afb556161d93aed058e3ebe9d1454f0ea912fb92d568b4482eaf5bb369143e864653996f23d2ab2a84233bb8b0bbe9627155f5e7119f461c3b7f2da2f2c22e287a87032ff3f69c0a31a0701949ac892dcc9233b91fbfdd93df902385c15af\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(865, 198, '033b2cac910cf4036ec10476ade92254261210356e267390d6284453dd231d31', '{\"_s\":\"98630064b43f1665d9ca35a77a543c88\",\"_d\":\"a6ca9c2598a807fd75a8c5793f3a8608e63b52a29de3dfc0da2583310ef20c603d1884691abe342ef8b00a7ac59aebf0dffdef465fcc4f8d13a6f40d0d791488f280f5d69a3e2e6e06c6124547a685ac6738b16cc3d4957a594b3000e3514ba8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(866, 198, '17e4cd9edfb26bca84d8b0e2bb1610bd', '{\"_s\":\"dbd490bf11d40c12c47cc5718639601a\",\"_d\":\"462d46b9235d34f53a864e0ef310553c6ee1f006a537dcd2bc518ee8d8f60f6a6eb8912b90d609958d68f31ae20bed8c7a88adb7c4902830ac938f59564f76297661bacfacf313e80bf905a8831323381b0f537bf606855cfb72d1d1ad7b4fd1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(867, 198, 'f65e03911e6363027cd0bc76d7c218d5', '{\"_s\":\"f11754ecb85f2173fe098294337d4add\",\"_d\":\"7a02e1472e5350757c737babe0c7385c609624863acf646229d24b5fc2a983b6d22585cdd48431a960bf1b88b7b98205d471c861aa3f349ecbd541796297e4463218c87b4a5cae1a9944e650b7ba014d4fea1dcaf24fe395d34d7f5fa19dafc5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(868, 198, '265b3f8185df2980a4699698730f3ee2', '{\"_s\":\"9b495fcd3bd6129178d30eb31c63ba47\",\"_d\":\"d850a5b6444d9e6489616289e9b6864d23a1a6e91ca7e463eecfc1da601d6cf7f4d8c963fcdb16a40cc9872c43ee3d9cb0d83be6875e4af6cfb31f4e4efb1148017de916532d0fc2cba6e45aadbff1124ce169d13a981187a044650c32078353\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(869, 198, 'e1af78859d72bd65cbd8f6e55683a9b4', '{\"_s\":\"289fdfe40687410dd45cb0ed72355126\",\"_d\":\"628ae371c52017317ef0f890d3461993d167fa60bcbec343073bfc291438291bd9409c0f069dc670da2372c19579a3fbfb224c15c11ba6564cf2df4728f185fb8e52e1a8071edd7a8b83b80957b39fdf06b054632f31d47e1c041bc594b150ff\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(870, 198, 'dd3381f2cd09fe64be191f7046206ec9', '{\"_s\":\"24e7f5a46a155144fba767eafd2948b1\",\"_d\":\"e345a42bf61f1aceca123c1e03899eae694beac70d480cab3065fce97d3e0e5c410595f8fedaa918eb58226935a3a826fe008ace33c8ea5a701bbce98b5c51772ea0ff23136c70f298a29f75b3b955cae62101ed6a1db9ff76e1e25808f54a36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(871, 198, '432ca9aaa538b00acd6d1aee1ffa7f8a', '{\"_s\":\"b9aa2bb1b2d40f2fbc943324ea542f3b\",\"_d\":\"e7f4a374b07469326fdd1affb139a016d704cd55c96f4541f8fc41352620c69ef68a57ec4c6d09b384cbf8b5f7baf4879ee01be86bf4e0be2ab9bdef5c553b4bd7a6bc2d86de1641f926fd145772e0c0778007e76ff7c083f016854ec8fd62fb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(872, 198, '150717d483c1a34bfc0d532c53e7b985', '{\"_s\":\"465db040e08202cfc8c6b4294133d9e4\",\"_d\":\"d3325d79698bb1cae02d33393d3046bb6272e861c0df4be32b5001b01652891ef4d87af5ea796e0d2cca4cc63ee561eb9146862313543935d5709a4ca9e0e6d7659e52eb35cb21f6784f8d2c34df4b3e29586e5ff6050b1cfaf5e07e8ec71b90\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:13'),
+(873, 198, '9ca41ea597fb5dd763b06fa1e179a31f', '{\"_s\":\"a82e3e12e4aef042514bab7a60c9b409\",\"_d\":\"f30cc1bf86271e71299179beb78e5d35f027ee3a2f5cf23ec35ec437dbc3d0950b69b36c463b216e442c432b0ccc4d6a4111ebc6142b8af8f87c71eae8dacfcd4f7d18db427f3d0ae6c0bc189edf852ee7bd15e3431f61557f005b4ed3b8646e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:33:14'),
+(874, 199, '1778809541ea7b9941bf35b8046643eb', '{\"_s\":\"8f0f43387f6f3d13c4b3c8d7ea3c8206\",\"_d\":\"561fcb58b92be5d1cf9c4d4a461fc2b599169a757741aeb104583297088ac0a640b5d762d93c1423b2907ced57382b53fe9dbedaa3ccf2024b469a4efacb6e084030ba327d32ece4957b70a3d217b529702d329dfe1971b1ad3b8d016c3568a8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:34:16'),
+(875, 200, '86f807d6b387e93265fab4c5d994686c', '{\"_s\":\"929afafb5c2a1e1ec74b696b98c08919\",\"_d\":\"4ece5bf5023eae43bfeb713c7cde0b8f59fd2d5414e7b230f08ff45ef3ce0c09cc84d4df9c790e00ff3f565eb3a5af320ee6eebae06d8f53f05d2b0fdb917bda33b2a694a5331b444fc8e93ab7a8b84a3e6b668ac9329340781e83d71606ed47\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(876, 200, '45e42f9792d19ef3b61d0f2738da8dc636da6bbd92e9c786a88eb9bd03fed309', '{\"_s\":\"66c73780f3dda0d7f0d5f83b0b81bc87\",\"_d\":\"a57e1fc1198b46c5b4e88cb7769a1f09535c4a3f9828defa1a3b5b58d543998f6be7e99eaca3496df893723f73df8b1df44625d9340662e43ae59e78151d950adf3c6faa50c15e545ba7863e42a0a1aeef26c63d6f660b7f727b697d3c50f6a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(877, 200, 'ac4c70eccb1a3a389da11869514306f0', '{\"_s\":\"b5e9516014ba34861cc36c1c70deba03\",\"_d\":\"e6afd15656a146165e59a3f7a5b245725c67a38e2de557b71f6158770916cd2bfd412de5172f9da14569061e5d6d87ce3ad438fffa7247105fc74f70c3a00acb0ea06a3aea0e6e6afc98897f5ed0653604f06b1c4c03767c49e0b1600ebc0621\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(878, 200, '6a9c404ef549bf05b089af2f75f0dec8b8402dddddf8ba0c0b08ef735058bc92', '{\"_s\":\"a740edefa7ca63c774856efa7dfd4b72\",\"_d\":\"a999d376d6fae8f357782b1e025bc50890d1efddac5184ae39226cdc6f09813dd19dd011356a2c7380241c9791277359bc1865ef9920e6d30f51ee9116802b1e71ffe131e34d45fea656cdd0ec9e3800154e27b3eeeb0ebd7ef18700864afe50\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(879, 200, '85a678d0c1fbfaada3558dc80a68546e', '{\"_s\":\"53f42ab3ff0f4569567531b17dc61398\",\"_d\":\"9e9b825bc1490743bd9acf916fffba5edbfab68e56aabf03ddc95e84a2af5b0bdb6051b7dccc011c894c007a8b1e96b3fe242e6b941798107b40e29c2c6c544c013e869a732b85df833e754bdc08cbbb4dc7b4c4d4f9b630e4cf3e26979dc96f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(880, 200, '437572a648ab62dc7b23c627b96b9a02', '{\"_s\":\"8039c423058dbb842a34c2aa0575a616\",\"_d\":\"ae865faf101a294937a160ccfea7c1d7e6b5cbcb72dd2c5b066af5e921aecc5b13588fa9f17cfcbbdfac2637743200c6a6dcc21f6d666faae76412d7047e8e2210bcf1715100445e3a2ab16aee1a9501283cc1f145eab056ec9f00fe3f7001b2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(881, 200, '57f7ff3dcc9d9836aa07e15a5b524ff9', '{\"_s\":\"bb9ba11da1661006721e0812e427f9c9\",\"_d\":\"57800eba42969448c43c8dc1c3ee18f3b52313859b6f6974da6675f1c06235dc1d3979e448bf85466de49f6588212e892d2a57b0aa31cba77fc4f158392de273e07f8879c4e06fd4d445089adc169a752081ba80cb199625b2515c4e7ff54c80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(882, 200, '0da66ef105c53a075feb08e6f7e0fae1', '{\"_s\":\"507b019a1d1bb6a45795139f746c27bc\",\"_d\":\"c5842ee14199a15a69f87bc540a86771d4440faaa0c3b2022d71552ea25ba4b68f35b19bd1145271f61b8c04d57cf8ffb152d1cc61122cf7b4399209e293346048aa27e6746c4090dd32534b337a42678cbdd8e4e44552f4721e76fe2ec41281\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(883, 200, '91bae7b651753e13cbe90a1339904c70', '{\"_s\":\"2d8f8cdff1451c2af2f9424a2fe1de75\",\"_d\":\"28c2735723c58b3969f97a94419f9c975e6b1ce3d80363794bf94ae4dca498d8e86731ccf3339986d34343b9536b6b66d7090412a1a4a7e097dd1ba56c3f2dbc15fbe4095d5efc6fa96cc074d6105da8dd0d37c1c7e3268cb3c80df771036d68\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(884, 200, 'bbef478c314f25b7244196d3eddd2157', '{\"_s\":\"444c38b767329c95573453ee2aa4e80f\",\"_d\":\"9f2504e63437224fcd4c7a2b44bf11f445f9729e853a9158487a50ea7a46185d2e499ffee8993879f0c34a08934117cb6c95fcc3275673469c3f92621f5e1c5a55814104ecad03d7676dc5d4f8f388f92ad84899fcc5c2dd2d9a379edcf511bb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:36:27'),
+(885, 201, '40431beebbbe34c6acc2141fc025eeb5', '{\"_s\":\"0e0572ccc65a39b2f8faa799b4270b06\",\"_d\":\"613cf8af0ebb7e63521d2fdff9b537896670ffdba5ca26ecd6916edc20377ee61e97970e54139fa9a2a08dd9acaa59c2b8f1abee3f955bd10a3ea50f3b97a7ad37c25794910996d0899767dacbd77967bc6babadeb907dc03b9cd75e60d4618b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:38:41'),
+(886, 201, 'a10361d4aebff1414e81fd0a0cd83b7f', '{\"_s\":\"bf51d7a730c73e24d223b0e065a0bd51\",\"_d\":\"74cffa620349c44be9ed9072e940297c2f5f7399e8122d7e320ef69d038ecfea1e745811f276de5aa01c7e9d988f49c6aaed5bfcf567db15e39c82c6893b5ad64c2f04cc7a1a33be1045001331a3e2fe9964bc9f559db94a260b802e63a2d08f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:38:41'),
+(887, 201, '39cc621a2cb98e6d776de97de292fe94907ce858d52114beacbc1961a890c661', '{\"_s\":\"f178ed2ab3357d5db7332c12680aced8\",\"_d\":\"da8a0be0967129d021db988e21af757fc21eea15aa2ad00bcd17093d8c345286223e3f0a8cad814e9fd5089422d2c854616e08b4fd07d42b4248735b685024efca15378d1440c9f5aed141b3f9266a924e8259c5bf84fddf658baa96f3d30c7b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:38:42'),
+(888, 202, 'bfd3eb4a7418f7991a7c92678e55eb2a', '{\"_s\":\"14498e678eabdfb3f0f56007a687d6d6\",\"_d\":\"7488f5ab125f4204fe4a3138be23e52a6fba415508b35fe16e7e4ab87ba9a31188c233fc85c22f65676b0bd8fd0c57daf7312f917e6c72d9b8519b41b28e193363c3b055403bb7b0c9d7bf910d76c5cce18d1c16fa1d589a0b2bb781680766d8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(889, 202, 'f2e2354d42b5b93b8f844a7f02638375', '{\"_s\":\"4031b6672fc68f19a2173fe7194b9b5d\",\"_d\":\"4a3b82f8686715d00f8774c6689524ff20e6baec82fa690193c581642752063e95d160b7043ebb408e5b577fb5a7d63167a793d15ca64cfc6091e6567423b257e76c3811f66f173ff0ebf5212ceb9f467c8b5eb7f04c404e59e0144972b82d02\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(890, 202, '04ad64dbfdaf14ffdb19448e3310c1eafb5e4d6a134ceef4bd1bea21b27629f7', '{\"_s\":\"c012ffc0452eeea353471051e31ffd1d\",\"_d\":\"a276352abbbaddc6d479bc7c534ecff79592281dba0890bd170217fc12d7d82eff366a1da9c374d0786cb0f8d585a644a012d1efa63ec2ee8cecfbfb91ba0544fac8d2e635e8c3babc4d916e59d12c12f5fd3b261dffb58485a12d1665f258c3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(891, 202, '4ddb032cb5f7874804d2658f08650086', '{\"_s\":\"21d0b51a4a2f45638cd871e5dbb08da3\",\"_d\":\"e9937b775223709af4c121e960e0c15d85f9f71e601746cf862a188183ff7fd489d49f6b286435eb4095f28cc6b9871d119abb2854ea6b82cfec8bb8a6365f69be1c17c5fb169e6d55671215306564b5f6f3f468e021f8d0a32445e2dd1da307\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(892, 202, 'da6ba84bab28dba65759a8b7b872f0b0', '{\"_s\":\"43fe78bfcfb7f8a132d8c8566be9dbea\",\"_d\":\"79127f938b7092c695d0d352442e7d0c58c0aaeec42e1f7088a71ab1b17ba1e3eeed3469f85e2a028094eb7bd1340c9a0c538b8e20f56f170aeaf5da05575515ea2728845ae0ed219dd6bc9f122f36acabdcb8da2b268c92235923399ce7a545\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(893, 202, '926cba09cc9de02fdafbcd7f6f9955d6', '{\"_s\":\"08b7138e7414cf1c95e4a4575e39c94e\",\"_d\":\"94a8a2bdb506948ad1e0af98d20c8b0ece1eea1123353b6c0117742d845903e46d3460d5d62df43dd051c3cd9a119fd021963cbb505d41ec53167a7a0d730af575a86ee85d9d32a18845e234cc09cbf75df28face42512ee471065d706c01c0d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(894, 202, '34ce007a5ccb2d73243f4e7acd2ff2ba', '{\"_s\":\"cf17975a964a0b6e0e7ac2c283380572\",\"_d\":\"0d7c1486248c0fb30b65248acde86aae66cfe28535da281dcd08b7a6300b86bfbf931a08e9c69693e1c42d298fac997f83cf52e8cdec07b3c08adbc592e7d26ad4f689a93c9655d6f4fb6f961c28b54bbc78984cff6963b47c88aada8b9e548b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(895, 202, 'a672d08f23b5d673206ef0f9683bc4fb', '{\"_s\":\"79c8ef380546509d0a6e2331708fcfa0\",\"_d\":\"ee0844a8b6be9856c6cf5af0456167f211f468b2b09eb12fbe1becf80ad3fdee725d819b49e8b3745c396c83bb8cc13961bc3c0aec63e6d2ede198431fa952671cb111593ae4f0265960339603748608a72be714bee7470717abfe2410b5437c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:31'),
+(896, 202, '894c47cf57150480d4b047595e65095f', '{\"_s\":\"c44ae800c18a1fe6b1a851e91579d725\",\"_d\":\"3042c3f3c8fb7c96e35eb7249da4c44c61866ac352b7df96574e1758917aebc3f206e3fd4743e968c3b30a7638d49e929d575d9fd031be103271357593dfc1ae033c6b5e87fb73ab838739380d9bda06ddf2d81b737c72f80c096458eee92702\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(897, 202, '517983cbf5e34470a440c39bd674b84817b4b65e206be7db14c1de8f27f64f54', '{\"_s\":\"eda49af3cf1368c73ed48bff1ef06413\",\"_d\":\"539e43f926ce7ca00809f39853f989f808568acf8e080e41c18c5bfbbf2c08dcfb299027e49c3a4c742a9272cc58a1d63cc6c81d716f5705cffc10b87ef04059a66389793addfcec818234879fd6d63cea6a289b20f08cbdde17d21b4eb7779e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(898, 202, '1add370f719661e00d48d1f1a9d19ba4', '{\"_s\":\"70ca7cc9294c95874823007c02bab80a\",\"_d\":\"e57e48ae701c868c2c5b87e9bbb2db246de7121b698005bd8f175d2a46ecc22f906283ce5a238167fc4280324e5ef016a429eb820c3e009b0e97966dcef7a5e5598a6bbf5a5e95dc985b1161005b0030550de6644b5d44c323d0c6f23f729ba0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(899, 202, '94fee41dd0f7a86773f7c4332e8ade76', '{\"_s\":\"f656c2c273d550b7b0ceb5a39a6a1e2e\",\"_d\":\"fc1da26fae6d19a264cdf08699432ac269d995838627e2dfde98ca3a7c6908ebf75d2a2b2026d7b4b496c558fe312ae9074e042f541067c9938455a8922d9dd88ff2a0484479f5e3e0d8b8df1dc8cff80ccc058c96532ebad60f2f1a5ef54dc6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(900, 202, 'ca81cb19fe1b987b8eefd4b165ad1497', '{\"_s\":\"8e1318d4b4bc26431f668e33398afbf4\",\"_d\":\"5e70deb4a84c939371c1fb5bae4a6203496081778daf171e7d630f59ecacb17307a32738257e30698cc7e7840181d863c0127e43d02ab85b44a86071603f817e0a28db66576da89e31c4225ebb27614fb2e07741fffe4f66eacd6a0b45ea6c4a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(901, 202, 'fad3a6e9e7dece93a5eaa193800b9353', '{\"_s\":\"0af0e02718e270ceb4cd81e8b53c87fa\",\"_d\":\"ef8b3ba8b67092ff08a0342dcf515262e6e7b08fde10052c77228930dbb8032bfd26c5ff519e2931a7dd2ebe90f73f418347212fd8c7cdde67e9ae34b89f2ed923cb7384923b92cdf1bf45b5037c77f442f9f67cc1a3e07b47c51fad9e88c8f8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:39:32'),
+(902, 203, '6cfe69385334c7f8925f877ea50467d9', '{\"_s\":\"827a77fa30c44107e04f066577c071d1\",\"_d\":\"2f1f2f322fd085344ece783ab516cfc0c826f855fbf4c4b7a90fe6d9db4d9077a0c756c387eaab29a8ebaabf8d823ccab4a62f9da4f43a106440b75c14ce330343a406526b6b7343e3f2cc8b01cc740e963ebbe1ec682b73ba9ba297847c943d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(903, 203, '4a923b00392c6e939559d992007ac40eb2cec1a77424cf40c679985d0865eebd', '{\"_s\":\"057a18cec1e33d426ee03da945457a87\",\"_d\":\"ca23cf50a3606e6206f4219136c03397315f99d2c4e5028bc02744662594b19dba046af17bb5cef0abee18a2447981ff92aea6a595259c9257ba0acc46b8fc95333030435d7ef120850661933992282032abe94c8e29a5b6c5f8329ea562316d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(904, 203, 'bcdd6873ce31be0d6b988d2b05de778b45156b59e23d62d1cb60c10b35d3fde8f3de37f0844727e9cf5a50ff844d292d', '{\"_s\":\"6bffc6f39990a219be8a827b4896e69d\",\"_d\":\"57b89372c9ebc44bbedecf670b6289001fc6746743d3997e2dd545b6b5222dbbabe4215e74738d797b7e87a5aefe38ce73d83a19b52d00d4101bf9f88ee73b4588bb9f5487d689dcd6dfd32190dc4f18a7398c0f8424dfa846867aff63c1c672\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(905, 203, 'a49ba0f71eac7ada31e9700000aacf97943ffe730f26c5431e6206143b5b5967', '{\"_s\":\"d48b9126011d868934c6818aeed488be\",\"_d\":\"5f4ce59acffd5e5e2785e272ff0c9bef6aacee85043765a0a66e78eddf307edd1ddc695ea146bf135bd18b1e3fed241d0b2bf72f12b4159d632b6041707ad2e667da84c51d5940459754d0585e9692d6b692d336a60b6cfb5170728d0d9c498f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(906, 203, '5e50e607734428fda1c272c53b586867f95cdcc32526efe2ab1f36005329c9e5', '{\"_s\":\"9a91d838d221d0c44914b4ea1cedd766\",\"_d\":\"6e917e95f92e0714f1e7c59cbfb760aeae5dfc0c6c9677520184961c106f396dd21faef3c9ad2bfedfbf35667d116076acc4a93a02dbf455f7ee7a628492192109c13f445969cdf046e954ea1d3eded9474870f3ab63ec9e5c5db2c1aa30ae6e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(907, 203, 'e3ed67819ee6280ebe441232e1072ef1', '{\"_s\":\"5eef8c6c8060418042428c2ce80d5271\",\"_d\":\"f4128b1ee43f05497e6ed08624ba4f74626fc9f0ff3409a731e265d10eae4ff5e66edffa7c72b7c617b360ed004a5ecf230d1e9ce364558dd95f0a372d527ccf815c88ab91ca971a70d8c7e4b4599d11dbfce534c50e7aa56060a9f9822f97ae\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:43:33'),
+(908, 204, '7d4ab39f4dabd14bdad1f16c2ab5c441', '{\"_s\":\"55bdf60bcd5f240fa627e5d3d329f79d\",\"_d\":\"3789234b05669488771f0eb39b63a231a235dd0782a54ca3386fb1198b578e87c9e7af8b7579d69b7576e66b5e987169c31aac7a54b2ae8b42990ef251e2a18fd4ce1018092a86c796327c1e1b2b7b17dd75757b4e62752a13a9b6030869736e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(909, 204, '3fe4d2f2a5345053603228f7c458c576', '{\"_s\":\"2823440055b275143b5257724fadabb0\",\"_d\":\"29cdf8f03804c96b5533270bf18a8c4dfbe843e76e0f00b4d354ab159f81fad04dd5d3e5325a94c48565134e3d84c11457e4b6ec1e6656b16ef2283e002b50d74cdbc4d5ee41d3193eabaad35509e7a810307831af413bcb28b26edaea2f574a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(910, 204, 'a648318e22fc43e00ddd56069b95bf19', '{\"_s\":\"c15a9d80386dddbf71ef520f881e1e4e\",\"_d\":\"84c9de932afc65ffd8293a929323f576752b58b12ed3555b702bd8217c87085d969d57dee0835743538dfb42029f83192059a225f6373450ed2b8a7e96a8689ab26fff9044e3f5a1d7f63ca4aeae4fe74d22555c46df9464428a67f3c9662e12\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(911, 204, '3eaa68095582af4dafcc3724b189ebe8', '{\"_s\":\"df2bf17e74f90368901b9219cc5c030a\",\"_d\":\"4e3a9f0c8c6b17d1d3a85085684c54c716bd39a3e23174bc4d62ed5dffbb8d18e2f330e7d1eb0df7ac937a8eff0493be68c724714c5bfaeda3ef0fe8d89550ddb171a82e39772e52165ac52b7593286417a1e59057e0a39f10e19ac83add9ffc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(912, 204, '6cf7f1e0146c44bd8eb78864a1746ee1', '{\"_s\":\"2b4ce5ac32981c5c0eacd086a52d7b3c\",\"_d\":\"1642c043c211a02e3a995e0e551e469a4f329119d1abfd42ed90fe8f05b409ef3c5ea03219c99ed5043de3b2096b175a1d64b4b95a97c0cb83558e4f16517b801e1053265c389e4ac64255765a0a61030f3de308cbf632e6a5a89f6c182084cb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(913, 204, '19da7281cf05e0c74da4794aa3670859', '{\"_s\":\"81743b4518d031ff7b299a3ec5bc11ad\",\"_d\":\"332a9a9300ae35b5f9b77814345e1eda877ed3fbc54fad822f3e3cd9edc2e0fc46af817ad303dd02a137e0521f19deb4b5cab825e8d32bbabc27b03eedd35f936cc7c8eec92d795f4c7b84f3c94478266f8d911b3477a6cd18dc4e2d763b408c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(914, 204, '92ee85d1bbcd7be7242cee15dff67e15', '{\"_s\":\"7c3b9613a7520c7228c7628c53dab8ea\",\"_d\":\"2d18ec54aaae96fa0a8abc6eda7e7665478537f59e6d645ec001a7c9bd0cde6b93c6c87f309d02aa2ca5d0458bbd9b29fbdef64032c9acc090056e2bf511a5d943011fc92a408abaa289cfe8d6f31ba608d4125545e4f08be2a38748fe4dab8a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(915, 204, 'f3d9a0786dfcc86c9946c2692bc2dbd1', '{\"_s\":\"6986c5d5f41ee8daebf1d40f6b92a8d9\",\"_d\":\"49e0c679b1f95134d78ee54fb81e94a0553ec7b8136e6600308c436bb53649e16065839b0535fedf81bcefbcc826e2bafacfcf33f31dc6027764913998efcdf016ee16cb42dbad194bf979eaac5489cf560eca82122a54b64581121f88599026\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:51'),
+(916, 204, 'dbb61d08cdf79fbb189dd70ac9f07462', '{\"_s\":\"ec2a8ebbdcde94d1fbdea3048e8b539c\",\"_d\":\"b471c23fa22f58cfd25a70e473587bed641af62c4d591d484bcb142668370166616fab81574403b454b252dddc550cc82c70011d5a39bacd57e9592350a4c5732d7385ffc84e454a347d93403a549555f540545e179b9b93a59193f2508903e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:52'),
+(917, 204, '63d15ceca35ac67478af93f7005ccd78', '{\"_s\":\"3fa8843142cb671d2c5979aef923cffd\",\"_d\":\"f66e915278240130d2c14b9353d220aa4759d2d7d516068797ea7ec4401cccb05345a6121789d61957c66a4c302f8b3c65669cb888f8205f7d28552e1bba63077b0b480ffe1c267944feaed2c2ec4bceeb8db3790daf11097e2f4f1cf99344f2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:52'),
+(918, 204, '1eb45bd8e68ccd7cbc0f5279137b5dd8', '{\"_s\":\"3ac48a87ea4e6a51d55aa7f110cd85b1\",\"_d\":\"9bc14f1cf5325ffba7e6277d828eacc3d69d63df2cc3669e64d0db7f66e4049ef4031f51e1c4e637f28183ae2258508c5f4f8296e5ad7fc382caff41cbed5fc3d09ec1f34855440eb8d3f3e0d78d0049f431b9487b135e6168b6e1be60941483\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:52'),
+(919, 204, 'cb4ecb4ca99df275232dcf451da8b39b', '{\"_s\":\"256cc6ec01760b5d61f9ee410530d6b8\",\"_d\":\"dbc356c69248bf7f5b6ae8b9cf0d29750622e55ac19ed7c522f44e240941b8069eca3db5a44b1e109c6d3edf5b6591cc1309fa0fa684e2bf97239f2835e67bf5ac269bf3931bee24051723f56f1c6113b2a3df69c58982d8f5fcfed0712bc969\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:52'),
+(920, 204, '7eb1078eec761e41033a13052772b88e', '{\"_s\":\"b1db54d891492e5ef23fa62a0a0b825c\",\"_d\":\"99f2bc782f5af57d574c98b41029c46e843d946030f6158fda0179b241e9e6f5f4ed83438503bde535db0b0e8dabe79a873e34f8d82c9c93423cc63a53285b7686129838ad933ad6a75efa08d144cf9eba06e6b2e26e3656a468a5f96d9ab58d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:44:52'),
+(921, 205, 'cd453f7f2a041f78953a95cbe6d9aea2', '{\"_s\":\"7c79e6467245484b380f2c8fbe0138cc\",\"_d\":\"b0629781833574fdf1af3e9139580c416f81507e471954f348717ebc66ba535475214f6c82826c4e944feb3d3eea92b4f8a42a9568389b8f4982010b3147445811ce02381a010d46cac510ce47ba666b2ef808f7a07d57dc9bb4fb02f3c93729\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:14'),
+(922, 205, '78e22289f18a08970e01b6656f5d8348', '{\"_s\":\"8f2c7227a43f7d027e2e08edc3c43516\",\"_d\":\"81c9851b2ff642b42ee0e72d65ff7cd3766775162e3f6f41d3cac05e25fb1060aee6f6943fe3510fae705bb7735a5ce2a4fbee228a9d10126e639b2002e6116be29c5b80e8b621e72b847f60e2712f45a90b3fed720e45d85e63581e6f8e731c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:14'),
+(923, 205, 'cde3e481c249b544f5bec992b8206374', '{\"_s\":\"5421853ffc536829682e3195cb1bcaa9\",\"_d\":\"5b2d370816a250d9a80c655d6d77de319cd63f8b8f69c598ba7b8dea771db2f0a56f49ff73ba4693a65b29808ffb5536240219310524915cbcb6febbf4fcb37e25a5de697af0b7e867eb7d5c5e8132a8e533fc0c123ff61dd53f2c4c27915d93\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:14'),
+(924, 205, '40428731cd507dc1d7b4e7857006c99a', '{\"_s\":\"8cf3615cb56d3dd5e09868c823eec9b0\",\"_d\":\"d1b9ad4c23d43d67fa0195a6477448145158ea523861a1b60d9cc8e97314403298845b63eac6645c92cb819b56ea2e080fdf9e3eaacd6ddb0d90fe67ca70b9d181bc21a979bc3fe92281832f8643faa21c9905da5d8a2604b5315b8de2f12e36\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:14'),
+(925, 205, 'c4ab80a91bd3c6f5176a9e0574b2e5dff955fed43d81e5923247cda9627ae7ce', '{\"_s\":\"db9052d0f1ab9706cb76ebbc51f4f9ed\",\"_d\":\"6e3bf77791bf97007c3d2d60c2dfe0e8cb00f63c6ff110f43a35ab2739c2536555e6657c425a717f3a8ff0d6fc395cd8c1eb1c542529874587738cd53310ac814bfbdfd9583fc11b5917437c621bc86f3e06acb839f805a00aecf08e27e25c90\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:14'),
+(926, 205, 'ef3498cbcc7fa8ff3b93bc1074c4da67', '{\"_s\":\"7a582edf2ea935ed3c9147b9f620dcb1\",\"_d\":\"084ae97879be0ed55d31308d40836f1f4d1a09c579f5bac2e593e9df22de02032f5348fe2594a71969c8afd39a7c14c47a59317d1f7b28d7f80643682e52d0f36b65bb00da04afa60527b287cb8c022da539e50f69f2ae96c0ea07d9b0d26625\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(927, 205, '6674e5b51da88f250448552288c5ef8e', '{\"_s\":\"780051481803404ef8295aadf1065d2b\",\"_d\":\"daa99d8727c9790e92819e262090c3594a4662f2567f437e611ca38da5cfe479d62a68368099997a3b5c9942b9e520d829add663e411a47bf34e7c5912361ced553149b3c684ade536c88197cd2d15cfcdf9ca1a93d23605aca59b006730c844\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(928, 205, '4e7fb5063e977d17f3e05d0e341a21a3', '{\"_s\":\"572697f0fce7ceae00ffa01ad1cb8f92\",\"_d\":\"6c7a01d600ed231c878ea262cf13e34ce2408e5fa70a01b90b6d71d3d6c74280177a1b789e9685253526d2aad1964e7078c7074205490bd15dfd30bf549b8bfbe664e5d76ec026cc0a3b48f34e6b8fcb32bbfec398477bef79ad7c3211ee06ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(929, 205, '91d33d2d9c7ce1fde29c2219390b3c1b', '{\"_s\":\"4560d52ef91465aa7dc85f25e2260ec8\",\"_d\":\"29296da6cc75e8911a4a0b5413c8a81bcd7c24274ae184105051141385eaa66576ccd9f3eb9736554210aa0466065061ad8484ac308c895db960fee566f78653d87145ab31d28b9a3e8f6bf9f7a8dd74d186c33a4fce5ff98f12acc3fcc07811\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(930, 205, '82377fa22f0eaceb2cb9d2bfcded4c28', '{\"_s\":\"f6f685a7f7d8f76e2727773c632ffd8d\",\"_d\":\"94c2298ef4e1ff5c55a8de8ab7ebd2a56e713b6b3edde8daeae5844da2ce1537a450562d295050c4f1ba8684b3a07a6384c840e574b6d0c2a7ac5fd028dff399d9ea2dd5e1b67a7a52da0f7f378baa439700e18e9f403f687772061de20bf156\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(931, 205, '92eb5bc20cafd5e7a76e5c47fcf861eb', '{\"_s\":\"7b026c821f7c211f438baf5c92aac5e1\",\"_d\":\"f1f8ea0eeadf4f8025cb8126a50c4ae9b6117b6f48ee3895f7fbef582c958c7dc5cffe472fe70204f167e57b6f7adf7f07992c14abffa954324d54b9c6cfc1de04fac13ee91b0a1494c3eb98e5935cbfa8868a377fd42a3410cd3462b7de0bdf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(932, 205, '7cc92742338e7ece79b0843b64a2b5fa', '{\"_s\":\"d971d0c35f42b1e205aeb3e5d272ce9d\",\"_d\":\"fb51a42f073ba37740820d2e615a33269893bdc9d90066dbc69e518d4059933e0ab15787619561d193a8f0a50aa27022751945c78e21ff06955dc41da152e951954e659932558be374b3c87504f73eba552433c723ca566e0d6da6987de00411\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(933, 205, '8edff6b58c982ca8d3a198863ea141ad', '{\"_s\":\"5b29b7212e1d89a0b69ebf35a078ac1f\",\"_d\":\"013a56a9c5db4af0dfd96ced25bbb4acc23ec54f0de5232f1841342d7cd45a3e3098479f3e339dab3cd358f7b70661c57602abcd35a2b5ed4318e3086448102ee45b4d5833256b8ef5931b3a6785f792b97d22a05366f8812d19d87aaa51d461\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(934, 205, '43691b9cccc82c772b7bded279bb74f92b5c7dd3b18c7ad8b51e7ae6bc74a2d7', '{\"_s\":\"a41c669e23ff70543910649d379b7cec\",\"_d\":\"d81a883d899e22b5be288116dfc3a3c31e42327d3251897c31513fb2f75f0fc61d29b5f2312518f3fa89c8d67551d13be4667b53cb7e0d8d9cc67b918a2cd6d8f01429b38e81e7dfb0f9cadbeb36565bf5f01d54d7eaa7a37c98efaa99329eca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:46:15'),
+(935, 206, 'e4cde720b9ae7e015e2ea4af2e9f553db5220cfadaeab9efec2e870e65257fa1', '{\"_s\":\"2649778d8c00a9ce628311b8461e86b3\",\"_d\":\"6f62ba58aeffa8524d392d716ed23c3272eb0522f2a390f06ea54b3f153c2a59888e77a53d30b5d73fd85302a177c977d5a02b43e1fd25274f2f263ea81616d35470cce752805ab8809641e6134522999185f14348beffaa861313079676122b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(936, 206, '7dfe126094cfdd7eecc494a1e7c68549', '{\"_s\":\"452e4babd38591fe44aa441e7f44b71f\",\"_d\":\"fe868ee4e845f8dc9cfd8a1d6ccf58762cf977577b5218a9b432ad8a880e4aa8e4c7610696db18572b34bdc1404f0e2be69e558b878a966cc13706676e1b8f80d6ea5cba4c3629538b7c8e16c549a22fed597dc07e36ed24699ac3f7e847c08e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(937, 206, '408c73078d0a55975add6e40af7b63b8', '{\"_s\":\"a08d3c755eebe1c038f90e4d51f7df4a\",\"_d\":\"a858101f1c77dc070dde1fb583d8124c32b865700ceac5af3b8b542843071b17704b246569093f5a40033a97e0fb2f9540f09d9f172b85f9450a1d56f9753ac2209daa4a97b6c693b0ee401cc9d0ba8749b422b743a7aef14972690a3ef21642\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(938, 206, '5ba10b4fd459afef6d1c2a54cf42749f67035a2d54006695d794eabb52234d1f', '{\"_s\":\"8dc3b92aaba74ac8f47b88cf34a4be3b\",\"_d\":\"7dbd0f9a2535d809f614674999c8ac431a0d7c6cb941d34c152774b9073062553fce1137a510aafb9b76ee3b8e09db14c3a2b7d4b7e97c7d18a2bae74c26cedc3dc34f611ef2c31065db81fae87057193f99651f06d7ac63bc5406bac064d6cc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(939, 206, 'dcfb87b71a5229d65c0fe81fd2b1a5bf', '{\"_s\":\"933e0a483e93f693950b12e982ede19a\",\"_d\":\"185ff9b3ee62c134b60479e2f5ef5e0cd122b8e29f4590792dfef2054e5f026bac1f1de4ddd771cef5ead169c0c60d7a10bcf3a7d6fde0728e326b068fb35d70e484ce0bf546d70b89b3ca5e6fb8ccfed2b67f324416efbcf012546becf4fdb4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(940, 206, '880f0c1c7287fc0b4653eb69bd425377bbfe4f560d11954e82c0ec659701a07f', '{\"_s\":\"604b30c3a46dd406218ec8f4ef6292a7\",\"_d\":\"4063503872bb689b7a02339b5336476907b66bbf179182be9f1e4fb8484896044d943a74989a3c777b2c5f86a81bb81d22ef4abdeac6cb7b0947bdfaeb60c842225f40c70dd60af039fffee7e66c61e97b3eb92286c8acd3e993e5394241a57b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:12'),
+(941, 206, '608f2cbb8e98ad6587585647702bfd816d7cba3221be83734ab5121c253f77f1', '{\"_s\":\"d10a105707970242c71529b446581913\",\"_d\":\"38c36e4a1d3426c42bc11e88d68b5d8ef7bdc6b5ce0f8abbdc7f1bdc2a7342901c0989c9581475d18dd300393fcfd5b3bcd43663a0ec36dd47dbb39c4806b18bac4cc606e470d75648227d4971d57901ba73ced7b7bff2e969b064cf07d05ea8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:47:13'),
+(942, 207, '102e457159a19ffa8044c483d871f870', '{\"_s\":\"fd0a0df606ce02c3cdc3418117736ef1\",\"_d\":\"497116a01f5eefd64d1eee8561819f025e95041e083e726c7c73973fbe371e15527f361cdf3e47dbdebb9f2443a3ef7035bc04585e1cd7f9d9b07c8084c2f2accd14a6091b951b83db6924e34f48b5c875e3841ebdee8f8ce6fec7f99b6633e9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:48:47'),
+(943, 207, '6402decf73aed2bd7e7c77b4daea289f', '{\"_s\":\"b857f5877508f91bfc49ced210c3510f\",\"_d\":\"fb0c9520ea90c9fe475051ed9733cff621a7bea11ef602d6c43f4c2794e5332830365e367d579ce501cfe06c31c4281dd0b91f4e5251f148cff445f54fa71967813eeb485be9943f00bfda7826648316c99b736c177b1804f252c5fb5cdca246\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:48:47'),
+(944, 207, '88f73903f02090e0af5e7f93e1fc6dd9', '{\"_s\":\"5866f0ae66e76f09dba20ffccb71f146\",\"_d\":\"fb9ef0c5bfb489a503e2d303c93bb3b516b6b5d298f86c0a9407524c226738621c507e5d6944a4b84bd53c6ae43188c5b4e1284af7179a1ad7c6086c95454239dc942916182d819ad50131ece64dc0f0cb921601cd7f6c7495365f6b0085f46d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:48:47'),
+(945, 207, 'cfea57aa1e1dc82223622f1f49c8381d', '{\"_s\":\"63f087e7e3708fd834b1a7063b4e123d\",\"_d\":\"5928e35bcf238a4188e6b789f38a0b29b4c6c1f7d131db97dbec778ae0fb24397787f5e576c411673ca74de5a72934ba735f1b377045a3dbdf972cdf0785bf2c2e41fab1180a2626e78fd1efbf53db3b6e37be8dc49342f129e434d59881b358\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:48:47'),
+(946, 207, '0876aac23ed49cf0afd9ded98f505d09', '{\"_s\":\"4f98b2101a885b1d53fa3d4a5d7fe572\",\"_d\":\"f0ee8f91065bdf82036ab959c568abd3f49af868534314469da0e9367af20588f40ec1bebcc989c3eef9b18118ec8ecde5f2453a0a407488f26bb7046bb7b245ed3e9237594326b459ed5d97714e0aedbb3dd41b4726afd31be8a558461e04b3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:48:47');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(947, 208, '17448ae2263aa6f408cb2d5627294b09f4054bdec851ef40923451acda383e34', '{\"_s\":\"76599e8827a29bedecf3c651933443fc\",\"_d\":\"828e4f0dab7668790575e7342c28cbd0f3ff5233a9c02bd897b2a7d30c9e3105e21f34bdf0945f94dfecd946f77a606072ad6cd5a6c08ccf27fd491c6deea781a5703702d6a4a2a1904f95d25124e02c6bffaeb46b7f8f3b03986cb6846cdc47\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:41'),
+(948, 208, 'aadb30e26617cbacb6fce827348ea6e7', '{\"_s\":\"561406d5a05ceec76912c0d17846c028\",\"_d\":\"4050880d34d6d9c404904cd9ce5469c8803c58c30d1f602254ded08daf9d3185d1ca96e6896bc60891344e682fb5197d12fb0492cbd57d542056db845ebb687dfcedf704187c0696b00b72b52cf29eac6c0305afa13ef30482de5e7435e00297\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(949, 208, 'af6870539a5ede1262ed260c8710a35fdb4e0b4be0ea989647699c1cf7f0a6d0', '{\"_s\":\"b5429444e9e6fe202536cfda00c9e87a\",\"_d\":\"1b751b825bb2481cfd38aaf7553206cb4128734a3000a3480fd7329d2696667bff18abb5fdc3ca0eb15b4ca5e18c72e4e66b7ccacb1a8475f945580cf66011400f2b3322779270869fc4555faa08d8311285199da55dcf197ef9df192394455c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(950, 208, '2a862e08de4b61d2bc0c28bd4d60ceb1', '{\"_s\":\"0e95da57eeada43616c82ba293853704\",\"_d\":\"ffc09f37073f92ac6e3885ae38e36d0d68edca878ca958c1546d1ecd39104a7d84816c2aa065af2299054160caa57303218bf84b90f668ddda949dd0febb498d43f172fee568e82348286ecbffd23dcfc1d359c76c99ab269268850c814b7b10\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(951, 208, 'b9f4e72fb1f46766c21b89ec915f0c498b7abe43b4ce7d33aa66c5b398290ffd', '{\"_s\":\"f8c66e34792ff956da875f9215aa2517\",\"_d\":\"c1e8616eab6ea1c20ecc57150f3903265db24f8bcaecb9ab583466102139d41cf76679c437af108a27c86ab9586dd6bd01a88cff9df9d31e58a0abff22f26b8234babc55f3e0a8e77ae2a213d78a49c1d1da5694189cc634c435549308cdd3c7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(952, 208, 'a8c01722a155e79f1a006dd181a36875', '{\"_s\":\"08170c5bdb331013b37dce267d60f996\",\"_d\":\"e34b0aa5614c1275c5108e063a897f2dd077e81e10c406c1d287a18e5da0111503db5010e688edaa11981d1b7b5b8657edbf76b65624080e959d9cbc6045d94a18c14795bccb5810f36ab6ebdfe78dc7b6eacef248b6ff811233f44a0216410d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(953, 208, '19ed66509a6cdada1e4ef8d773870d5fa872134c1d7918ab9ead33dfc2516de11bb4f73c1eb90309a2c79dc1981ba440', '{\"_s\":\"75844bc35eeb0d75f1fd46a7c12d84a2\",\"_d\":\"6adf6ac11a631366fcd10a1bb598ea1697da6e1080c61585610d6e75912e96f1bc6b9df125e6b4709d273ed5fe9d5166261193a2f7da67b76a3e17f1412012ae403bb15cadf103db2f6a0233f067dc950b99df618e59f4ce0848d599ff514d75\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(954, 208, 'b791fff8e81680c6717364906dbb893f', '{\"_s\":\"e550572c5abd604ba5485014c3cfb348\",\"_d\":\"6cdf0d7aeef23bc1bffe7347f40b15aa8f7dd595bd0c81312d8527dbd13a203061312c63af79c02f5862bd9081496d8257d14e3f413e8919d85b6266ced8d66d9127cee45659b6ad9a0e03a963da027aba66bb628c0e917126ee061ba4e46702\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(955, 208, '7eb1078eec761e41033a13052772b88e', '{\"_s\":\"fd12d3f913442557886324d42a9a227c\",\"_d\":\"0c664d4602f53a3584a25280e230758969826374d690f86859a9e715466e616d85e401b083784152b7024c92716cbadc1f727d2a78c235abd4d15069f408c0de23759093668eeaffeafd369ddc7b6cdc67df57bc511ac4f74509d27c7d042b7b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(956, 208, '8f71f8f79265b90c28af0806dc248ccd', '{\"_s\":\"70ebbe5474066723e7d15c5158165e40\",\"_d\":\"45dd9ff04a691e0172a2575a8514d72af8366dfdd8d7c8518dd6270d903c210f777cc8b6125dad4af83e66ade6a5ce3197c42e3d0b6c006921fd2129c9add0d2b8a347759e7991f3c3b404a28e9f20f2613e82ce12c0680a45fd727a2b6da29e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(957, 208, '294bad6db249798e39e2b712b36ef262', '{\"_s\":\"3c92d7a18b9374358bf8d866a06635a2\",\"_d\":\"ef00bcf3335bf85f8b48633cd62a5e499a797b922c0a2e4793fd34109d2d63e90130c9ef9819a5a8791a5a4f428c660a582851c3f6280d51ef37d36bf532035d8dfbf861338019968d0ac472e89f5c0da92b1694cf6ae33f88fb2341abc4c96a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:49:42'),
+(958, 209, '035d0fe66f03cb0d4fd656af8e1c35ac0549c88c2613e6d498da3c33e21f3dff', '{\"_s\":\"7eec5dd5c27f0bfd3e93bce02a4a824d\",\"_d\":\"450ceef0d79a9e12ba07586204b195905bdd66b9d0e54d29cf8a17f21336d4700a56c49800e6a0f5a15e871373e91f9097843b0540f59745d322a1be9cabd4fd9104fde49d251ff94a70844c147dd44fc5b6209bad8b8c660c319b21ab033962\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:50:26'),
+(959, 209, '6da774416f0bd56cc5783c9927b4e482', '{\"_s\":\"3ab4087243f45e9461c85aedd13588dc\",\"_d\":\"4099114b0880992ac8a22f03fdc6bfc6247982b020b064cfe1d36e7f83b6dbeb05cf678250f10c2b69fe34b72d9ef5e9a2f2992b12789fb4d9771e5e217d17522eab08055da4df6e181363abe6bf5eb06c4537e72c8d71f4cf126d3f8a8d2c82\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:50:26'),
+(960, 209, '82a0d5e14c5bcebf58b813335c87cf7c', '{\"_s\":\"3fde57ba4590eb1c9c2b765cb7eb95c0\",\"_d\":\"9b40b949c6810e616ed3b5872924aca87ed8145ad1eea36dbb85ad550681fadf9dc3e927b328037de2de4934e8a175bb74c0db7fc06dca24bb4e29271daf7ba2368347d0bde0f4bfb0d9858c76adf256120bb09f3b1c234f7b679e7cc01b7e1f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:50:26'),
+(961, 209, '464eb34028a567fa82cdea5cd53aeebd296636ff31dd7956f0026c118d597922', '{\"_s\":\"a077d0e7ff8a1593245420163f9007e0\",\"_d\":\"7de59b9836d2d099f6136220e4f70b63774273f1f47ef1c852692220b434becec7b36d692df2a74a5c34a45d3762db4df94adea0c504bc17b4b31ad7c6b7c440533154d3c151cb646ba5af251b095b6f16f5bd4521cb16f887d04718fb7afa7a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:50:26'),
+(962, 210, '3bd92fa0e547209f639d0eca819dedce', '{\"_s\":\"638de0684ae5bb4b71818b8dff80abd5\",\"_d\":\"bf0c7e17db897953e73883bbed1cff6ce5bd927d8271869364f9ed7854a1d935990668fdce994111827591e41aa9e35107da8f6bf88fa869305f78aa20fe3a63cc8e2059a20000acd549e28e2c748420fa23cfb0ed9c2ed430ed1af059288ad2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:51:20'),
+(963, 210, '76c755fa548a396d695137b305509aaf', '{\"_s\":\"82c2680b23fc1d107d12612ee24c6e4e\",\"_d\":\"dff6b9c2dcd226437a89d6dce3509a753b78f5ec18a7d04c9c5a0a637f9172a45b6c021fb3b708f047658d0dcab7b3b2d9b0ac55fbd42ea50f9513a9cd0e56b240dc17a8ce2fa0a1d80f74946a878c8fcdb3df3aaf421357036a0d4695cca285\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:51:20'),
+(964, 210, '6a95f5995d1516c33dc619e6ff6fb663', '{\"_s\":\"2688fad78de269c679d5cdf5567aa31f\",\"_d\":\"48b816cc00c91731321e7e8bc4a5cd2618254262aada91bd38eede6d1aa6b27c641be961b4098f731c88fc20fb0ea5f2ae26c97fc3172a88a9d3b40be63912c2f346e70e5fcd0d445309452fc0bb05348b178f8f4cf0b19bf35925c39c813396\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:51:20'),
+(965, 211, 'e65070d637c4aa0b2e54855ca41d94a17c41593f1ce082a09fad9e8e35d95a1e', '{\"_s\":\"b350310e8ca76a719fddd770e7aa05ba\",\"_d\":\"e4c9c320a7b86a0836c128bb17e36f8010c91b49d0db9e78826965821e6a6c3bd77982b0e22d3f7b08080f540af1e0dd7910764b3942843cdf35ef8a9ef51b16ba6ffff09494ea53a1a287b6cf6295b6723324fda214744be5f05d32f44764c3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:35'),
+(966, 211, '54d2efc68588dd027dfa9b5521d044f1', '{\"_s\":\"5b8ea8ebb072d53b55ee7c0fbfd86dd6\",\"_d\":\"33df82ce7a099f817f3ed17483519dee5b5ba0d7c6dcca7480c66951481760c6f8a6bd2d46ec3377471e2aa37c392ed9abf9b807195b3bd0b5bc62cb59e8659cf837afa2c6b6dd8a4a18fffef6c83aca221161e25629119f7b53bb3b4b4571c8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:35'),
+(967, 211, '765e20d1a305247c662376cab6222990', '{\"_s\":\"333c84d4ec7bc152ff1622465787153c\",\"_d\":\"290252024c2c9812a30355be85695f8a093a8e60aa58d680e5931f84c4f49e0b00fadb76cd5d96c09c7eb15bd72791cf31ee275663f43c1fcd349a1a20c4ca5a93120605b4cf8eb7b8eb11c5f4a351deea96570b6b04b6213f32ea5dadba6a25\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:35'),
+(968, 211, 'f82aa7174ab8b85d2a8313ba834c8364', '{\"_s\":\"79739b26f27e7a93ef538142c677d524\",\"_d\":\"9cf28ee7419c64964b90ded3afc1b6a962bfd2ff05516b0f67e9874d6473c8b1da1124c67158db5e20660e27463a8c0607ffe65f430c67201e4c05882223b5a827c6bf1db96c85dbe66c4e2910862b446143de86aa08e0381c0bbcbc1355c766\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:35'),
+(969, 211, 'b5a7fe8795439836848b4992828fc9cc', '{\"_s\":\"88feec6528d9cf95d9761ef19d132f87\",\"_d\":\"138a8d9bb665236ec414034a5ba1e1f40aef51664ac6638fc0d29d36fc6fa0a9029aabe76ccec5f77b78fc193fcee3d6bf9b51307cd661c00d038c7e41332dac8266d8caaf536e26348d0b8161a8e4fc7383a7f08e175a52503f59dc5a3225c2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:35'),
+(970, 211, 'd0511dd1ee478acf65160e512156f53b', '{\"_s\":\"587510a173c7fb657b553af75c172d44\",\"_d\":\"a20c0a6c4cbcaa50ef794e07b7698534a7042f0725193300b458c176469ee142628c5857d7fba79316bb337c3d9a83afbdb04da6da3c1cd4fb417dafb16fab3ce4420005eaf392315a04f7255d2d772ad018bb3c52d905c13bcd334e6abd2f6f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:52:36'),
+(971, 212, '035d0fe66f03cb0d4fd656af8e1c35ac0549c88c2613e6d498da3c33e21f3dff', '{\"_s\":\"faf2adaa838a2d045a3436f82ab71d54\",\"_d\":\"08207cecf406f29af24021f79a97775aeb5f4e3156ef552513466b455704acba36519b941153745c90af5a55fcef3a0e93a45f3434221e928b0af05e1617fb503cc84ab8e8881aa0a3521b787dd46ef11adb945ee99f12214cd15aeb798c2730\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:53:32'),
+(972, 212, '6da774416f0bd56cc5783c9927b4e482', '{\"_s\":\"63b67bef2f982e04cc25d334be7f1d63\",\"_d\":\"47436be397d6514e9384829e4f9cee6398e934ff6e6df45c3f453a8e4217a4d16f49d3de6ca5d0ceba02384b8419d84d08607d2b0cb102aa18df44e648b5e4e76d18fd0eb6fb63c6e92e677be2b0a42f9fcd52e61f99597ac6661ea9f67195ab\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:53:32'),
+(973, 212, '82a0d5e14c5bcebf58b813335c87cf7c', '{\"_s\":\"d820f0022b652e3e56f528f8e76c3b2f\",\"_d\":\"b47c3008ebcb494cdcae13d1eaf4df78fd4ca4b8d55468ab8714e0d0e2c8b491349a5439ca41e4f1efb86037a72f3343d9851e461d326d50a160adb005b50e924397eec237f7671315a9f15fe8abb23f9e88efc6e87ad4927f55724cf809b06d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:53:32'),
+(974, 212, '464eb34028a567fa82cdea5cd53aeebd296636ff31dd7956f0026c118d597922', '{\"_s\":\"ec6c3bfeaea6e231b14d2c42ad55fd6d\",\"_d\":\"7cdb1e580cb153cb8ef4a832e7657eb0f3086ea3285cd558de0046cc71397345731397a8a9b195011ea5fa89306cc2c179aacccb68150311be91c18ca3eb71f77628180e31d0d4068c183edf79bca3e47d9629f2c2d2f6d38cc93f6279665f09\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:53:32'),
+(975, 213, '3bd92fa0e547209f639d0eca819dedce', '{\"_s\":\"3b117e454b114fa4f6748c5c84dcadef\",\"_d\":\"a3568226a86c2192ba7c779b14d5c81bcc5a7a4dce3f450d170e2729ce5a227cc9a681f6f803fee31f44953871d3cc46a8d87c92ef73fd60dccbc5b0c54125249c750c54b42ea0493fd9ec026cd16a441bbc436dd1e0370a1561e5b695a7876e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:54:36'),
+(976, 213, '6a95f5995d1516c33dc619e6ff6fb663', '{\"_s\":\"34964e3886948e4c554798612e568951\",\"_d\":\"d67b18fa67f3332b79c0fa509c9711b322d8bd64ee151c94155f77ebde501d745104071d892235f22921a447b8c715917ce185d0f1f3c754d6cfeca190cc41db03be5ed70117b15afd23992a46962056d7b125ef838d3d27140c88dc8b537583\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:54:37'),
+(977, 213, '76c755fa548a396d695137b305509aaf', '{\"_s\":\"45495dd8cb1c75d62ec5fa769281b947\",\"_d\":\"3034ee69fa704d0a81002517b47524bad59619b8925461fb466e3adc2354c441dca5e962ead63d907ac7da62c9d731d0c18f3572770c3bae8d02c406987c2b78f82e24502262552f055e4f3960c8602a47a37f7ac7389b989f57e873e7933821\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:54:37'),
+(978, 214, 'd8e12475f5a3d5bc44769d84852dc37a', '{\"_s\":\"d652d578a23028c66722ff1567e34da9\",\"_d\":\"f7affadc2e4957482c5450186053d112194985ac2864369b942dd48bb75028a65f8e16a3c380152a9cca3af4a2f85c7aaf58b8b4faaba6b3597dc6951495603d2e3f16ef04a5345a706a47fa5fdd71e8319427ada4968c61ab6cc602713b0f18\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:55:45'),
+(979, 214, '1915edf4f250d4ae2b02c0fb3b3e81bd', '{\"_s\":\"c29cdc3b14a4c029d636d597c34ff383\",\"_d\":\"6fc7cd4a5eb2c1aafaf18363579dcc0617a3f8b22ea6cae22aa46f96ef76d55fb28fe3ee8e104b81e6a32e390a8dc1fe9483bc177090a18858832359f8a19fd95da2935532062ee098c4abd7168fc7c3c8e990d5a812641bf0875e06c90b3b26\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:55:45'),
+(980, 214, '91d8ef3ad4e012765c7c3284037187f4', '{\"_s\":\"ba788b61f744a3c7d3a163a39c8c7773\",\"_d\":\"08d42689888cdc9e386739b5c333aa8a79a37874d0dcc39e594da73b0630a197b394cde09eb1cf85ca7033c796a362f2d8d7288a6416cb09f648ef5196f7686bb23c3e2fede25166933a5331a96602b0fa4604677bcbce3f4db3aac6561b3445\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:55:45'),
+(981, 215, 'be04556663b69840d8a75c6c04bb10aa', '{\"_s\":\"9dcdd2f3ac416ca0bf81391af547b272\",\"_d\":\"b0b421d9182b950eee7a38407962f3b5aaa39f89f5d219b8b4b246d4718a38957d3acd037c20e77172dc6e257fc3571931908a3f987316fd82ca3ea82eead32b59e25719f6a21b230eda9dbc7ebfd96dd6ced5ac075fe8cacc8cc2246506d0d0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:56:50'),
+(982, 215, 'c3679d0212f9cb9ef87140aed466a76e13602499034e35e84977e6dc5861128e', '{\"_s\":\"24463471b6a6d302c91182aa90907580\",\"_d\":\"c7a489493ac2ca925a47d49c5e443b92c8198ce8d465e46d15578b16c6848d98a62471eeaccba6fe820f1b077546b9dda5d8ef41e18374ec65fb4fa780a8ebd6f8893f0e362abd780074ce74af514bdce3eddf558609ecee804ea6102d4c7e73\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:56:50'),
+(983, 215, '40ac393a51a7851b2c33554690b4ec42', '{\"_s\":\"518108bd340ae7ae2b4a1968140c1319\",\"_d\":\"f90a863bcb11bf45a87478c03eff90ef6c0a047130dc70357a0102f8abc5eb549dc407731514e2284f1d1e8984ab4096e5126fe8346f03c12e1ae4ec7f9185da9052b854f22dc44722f030343dc899c646df05d4c760bb678223bcd8593c64c6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:56:50'),
+(984, 216, '7ae8f1bbf9d18b20fb40fa91ee6909d9', '{\"_s\":\"4d347d565f16fea1f23c83612c5e6d8f\",\"_d\":\"a374d793951c263207bd75499cf869f43527adefcae2a082a9d8e7093218bc368217d6b5f798f09725a793a305497dd2d97b6b0b0680151ebf031b38a6c2090008322fbb8f6c6e1473cf172baa1f47127bd3065c28b71098603571ef95c12e80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:56'),
+(985, 216, '7ad7f7e8ea79e98d01bfac2c90b276e01e05573d46997ab50487833f6ea9432a', '{\"_s\":\"1b5109e92e546807c3ee7d350a19e165\",\"_d\":\"6fc08ae084e7ca64fe2e598bb386b0974d3de2a50bc8460ac55cf5044de46a12a068c5941f04c0d7204fb2380c0c9ff7ef7681396c25012475675243c34df4b8f93df104a4aa415a787f12d87a6b0b63633d058cc657ea9ee3b6b0479dce6e9d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:56'),
+(986, 216, 'a96937417612ced15446ddd5bafe7fb0', '{\"_s\":\"69ff7eccaf034ec8f798dcc1c2dde574\",\"_d\":\"768ded7df3a2bb2cd8c72275dd62f50299c9fd89924c792f6b11770af8e00fa29fee0207df362e3079594b1f54b0e2aee790d90716740c44d2216cc368336961f0d6f50d847f9a1850806b6a74184ba5e500493043a8fe9e17b102f9b97923b3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:56'),
+(987, 216, '62c29f6c1113fe1626610437e865a178', '{\"_s\":\"2e7622123c4995b2b143a159cd69b2c3\",\"_d\":\"30f5aff97fbbc102cc1aa445122df24a4ad56ee1d001258f9aedcf2b249807c59962d52507183ebdad15f8b3b582b79d5232ce82b1d72ad19769893dc19e415e86bff2c81a12dcbd618b47a4a9d47aed476180a4adc0f8619597fa5c6dd688d9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(988, 216, '6c02d614b6ac43c4587c611b1daf138a', '{\"_s\":\"dbba8e039ed9c3f8ce7606a66a7f9993\",\"_d\":\"6310c3bca0603385d131bae68b6dd67d6fe1c0be4e16f9c4dc985cc1d615350acc7a0c2b73e1a997fa33257d52ee82777f95daae3b9565effd67817a340974fca3459a2aa97db1c290d5bcb995e7ebda17ced2b97af8fe108bff5acfdb77533c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(989, 216, '22989cd61188d03339c26e7b6099184ab8d91ddefc6d0178cc5a4ec48dd1045e2c659eb5979aab9893b1fadb7f31312d', '{\"_s\":\"8fef099f9f6e620307be13885d73bd16\",\"_d\":\"bb454ef01aace88d4852e0311202aa3b6e44560f0f7ded3cae5baf8e9f185774d5345cfa6a9928906b9a992f2a3462bb95fc2a8cf31f0c59e0c87856e9b799a3f13ffa5b7fd023221482ca3374304abc5fd0a2ebe0b724362b716eabf777ca3f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(990, 216, '94b0215ecfb7615d2e143d793455ed90', '{\"_s\":\"f0d176d07903bf99501d4f417dd99785\",\"_d\":\"d88ed84dc0c92c0362391c1b4ce84ad88cbe83295aa22a7776b56a16f1c461e0efd2922e95ef8463ab4ac6a59e702c1c4e0433740d34271c3e9d8481aec81dc01e65f002bea2a892e16dfe4edb5cfb632eeb5251450e4bd07298d498d44c90b3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(991, 216, '88007ec624205bb352a518082641ebf7', '{\"_s\":\"fa3c52cd0689079e10337897a96a214b\",\"_d\":\"77ff25ec29a21881e47d8dc0acdb8e2f2fd45757941f597dffb56ef2a3e18c9a8142c7722d4b91bb70cad689abab09875903d2f0399a3538b9b90c92ac03e48b9375a61af76e3e56422ad9425e91a734a376efbd1e1729f9f7f9926d3c5df89e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(992, 216, 'fee7769289c82b2e52d0a19eccf45de8', '{\"_s\":\"0c7d728f19ef1aec18dd502bdbb4334f\",\"_d\":\"7e02677412b0f9ca701b6f29d46328cc362a7107eb5be5a73668715119d0b9f3da635dd79ad0b03177cac0eef9f5efda34ebfa9e7501b9c8b4c486c231b7e31feb7b50d21566e689bb44de23e333a4852e565b9fe6e8968c45e3d0a583f42af2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(993, 216, 'cd30d0b0812e454735345d2045f13611', '{\"_s\":\"fd2e1f936b9a91d2acc6687419b7ff44\",\"_d\":\"c9fcd06befad5d01deb4faea8e2d6cb055e66b30feb0e2eff21d60cd9475731f03846b44ebb97d363883b5d10c77099d04e407a6a47e338c55f49465e5e3ca0d83cf8bb9624717b88f227dd965f9ec15b0536c88ae2b1f4fb493124f1429087a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(994, 216, '0060c91956f018ca5e58b6525bdb86b9', '{\"_s\":\"f51821aaa4cb315ca11b17e0981ccaf7\",\"_d\":\"fd6313b623a82756c685bb8cdac3e3c78d3ff4fa92b3c46db54ca2abcbd7455e25248d81200b80b0b3e918a8e527fd0fd3ee719c9142c28b1a23293872c7ed0347fc677040707d2a7cc47f1f1cb3085090d60ea7ddaa9e86e5dc664e240c5669\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(995, 216, '6831694cfd1abeefd4e153af2fc33730', '{\"_s\":\"f4e900dd9587bbbd070c0ab27df2efbe\",\"_d\":\"e14f09adb8f93ff4c5f51a98c3da9a19c214bba1e3326312c2730a8b164af8521c4871fdbee2fb89388be1327dd5c14ff471060c31d8755c7df39b434edd853b66c1d9e9d98b610065997b42c1442eaafaa061bab4f04dc47c8db7f33e7328ce\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(996, 216, '5390573306529fd7100472ad6af27800', '{\"_s\":\"6c983d5e6469c7d736525a8479288f49\",\"_d\":\"0b12eb760dcbdb6b60f2b0ec69ec63c14c6b341809590a891e1cfdf48ef0310bad4fbd79140ff829d804c42a5adea8103e09aa2dce79b289bb47a2c15cf557a2afecc1a8b1492ef9196d7c98dfb3b0cf789fd93b2a5e442e397a3a3dcc90849c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(997, 216, 'c26fdeb3983711e0a0a8905f42640752704e877ef1ef91d186cbd98b2568999f', '{\"_s\":\"56773893262ecab945730c7d325647e1\",\"_d\":\"d45c0854b42769a8acafaf18dec40d8f3429a1d078013419e05e2878e78c51db1657a4bea30c3ee309674d1d77a85beb3e7d7e7d320b6a137c75bc62d27bef0dc812d08a613dd409ad4edeeb3a126c67ed60510ae5eb7547a20940b4b8f48f2b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:58:57'),
+(998, 217, 'a2b288b7ee5963f9914b529c84eb7f88', '{\"_s\":\"5feca3c7e9da09896fa2ed5b03d82710\",\"_d\":\"7fc1023919ace89966f8564aabb06a8cfe0efde7b72fc59800dce9e176bc74fa01196318bcc0e83b6cf71d41a2417fe7ffd4842876e6ab24c4a28e02606c7bd9922944717ef1471401dceee9ddfd51daaffce3568c4600019ed7ed516b63301b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:59:55'),
+(999, 217, 'd91204b05e7330a3b278b71507c64b5c881072b832caedea903f990b8ab5e219', '{\"_s\":\"4c1ce0741641453ec96081fb4ffb65e0\",\"_d\":\"95ea990e83f920a458cc4858e76f340493143e13d1b3ee897ec1be309bff953dea5b85d22637cc0fc808556278cfb98ba61c5bcacdb4ff0dbd1e6044bdb1ab7d9ebcc99a665dfeee84df4fb8ddbd536b0d6ea456e241cbe7bc786f5835d6f5c0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:59:55'),
+(1000, 217, '40f1e663bf9b423339d3450e6daafcaf', '{\"_s\":\"1f9951003d90abc3aeb8fef37022b63a\",\"_d\":\"99e12ff7abf3b0aa124054717674294fa9a0a085c5980bba572edb8cd5d68b5de9b471d56c40ad57ae4e9a4e808636ec8abf7b47e4dd57f19312de591d6679f9ed8deaf739e68027634296cbd5030bfea49fcbbaaaec1a88591e435611c49b73\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:59:55'),
+(1001, 217, 'a92d7e9843d21f782177c94ec030904835903353e55dadcfaa42887f632d2863', '{\"_s\":\"a994ae735a72c6ab3b31f7c0453e485b\",\"_d\":\"3c1aa6b9302f05a37b7d41172ed51600740f45a8bf20b9ef72ab5e7b4aacdf7d99dd5b6acb94467f35d70b17e565035d6bbfcec8178b101e2bcb7376c4aa873b129dfc5aea861cd5d5e9f9ca42a0b0546fb60eab64ca2c383d0d7c9003e5dfde\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:59:55'),
+(1002, 217, '46a03ec2cbd2de8252500b9c0b99730607bbea551df1def0c041058c07f49cdd', '{\"_s\":\"f5456d2faba7982b484d3dc87556ddbe\",\"_d\":\"e7a0650d3375453f340ec689ad9ba49630ba7529fd0ab322828bfbda989a3c0d745843a7a54199e42a9ccaa535cd119671a6a6337a24ead111ba665837a9febf33828e969aaa5cfeb76169472fab7440358be8feec0b55feabab7eb70d826df6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 06:59:55'),
+(1003, 218, '0b5518455d924a1129823ac7fcac209d9b37e8a58bb82342b70194ed4bd81b80', '{\"_s\":\"25c5dac2aafa172bc22b4ed25a7f5cc9\",\"_d\":\"942e9fc2a40355b41441efbb8feb30213c22295d33276c13fed768141f5432145bc663f83d7118cbefc77af278f829693e61e1e21759c5c307d669ede7b50b6f8761f32d05ec78e8c5b7d9b9a81bfce4041671769ee85eebfa133272cfca3559\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:00:44'),
+(1004, 218, 'e3eb8e0f15a418321ac1046ba476289b', '{\"_s\":\"a5a65e3509c35095d1d3dca3f57c38e0\",\"_d\":\"845bdcfe4b40c445c818f4f3ac1dd5a7345c2edbe90bea28ca5f72e1af1b50b5a4fb768e87e552dd1577cc1337fd3bc5bf9309e6b4527962756216ebb00a18a4421f47cb37b510c03353b24060f34d15c373a2164fa09ec0440ce0bee8ad4a54\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:00:44'),
+(1005, 218, '263383d1c181b8bd9bede1de0b54646f5ce32da1b761f27dc550108b36065c86', '{\"_s\":\"96994aef142be2d7dcefcb1a6569f46c\",\"_d\":\"edfa736be51ed28370f9793500bcd921dcd648581877e0dabbb0229a160194d986898ea69d3c7165c776aa0551af89f6a21e3d8849291fcd779e50e8fb12f9379a6655c4e5bee6ed405f1e64e95afd543451186a3ec3db495e813f380a2ff99a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:00:44'),
+(1006, 218, '9d7998d5c72ff398a56005ba9dec10cf06116bf23e1e5476e03c617be982b373', '{\"_s\":\"ca61764d9e4c57695b6be906fe868a57\",\"_d\":\"ae40a39432736d5834813771c2954467e76eb32b6c61bf1ad62da573722d3d2ed24de479e225000153c105a3f14d25e2bfdf05ccacd5bedf5f54c41ef675b37344565082f54ce77c268d5b2c0e038330e548787bcc1f88f8bb8df62736bc6fb5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:00:44'),
+(1007, 218, 'ccc64219e067f223ba3f782f84504cfeeaddba6432ef70c05d3c61d25cdb56de', '{\"_s\":\"640f8e8674736d88b25b40b4f8eae651\",\"_d\":\"00ea94e25d4d3592ad1ce58cba783b15b13dc9282eeac4df41c4e9d83c65ee17a3da514e86ddfd6f25ceb99f04a96eb4fc7e2ca0ac8a822745046a4d1f828d6cb617f312c56075a83ca2fadef58e55ead3b25f7e9a8d2825417a427c4a406113\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:00:45'),
+(1008, 219, '6b7718d7e6cd63b5b76a4c4e0cf44fc3d8a7726f3c27920ebd46f496c9f8e666', '{\"_s\":\"ae27d59723400b29f6574cf266753d8d\",\"_d\":\"44bf77ceadbbcaf05804970d5a0877d86f8dc1867554e8c984c78592e22ccaf8d92b416e47869cfb672da12bc0b1639f5533850fcf1851c96f6fc3dc92e62c0528c079980fcd0e28f00a7c281622bf62c0f801cce0c64c8ce32bd2d709f6ca3c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:52'),
+(1009, 219, 'a0492a590351b636dded673d1601293b', '{\"_s\":\"4c1b4dce8250b8aac254787969cb5604\",\"_d\":\"b6a101f097f28868011103f82eab828a6ee83004e6dc54461f19ef0c9369934678146279bb93eeb6698da4aa9e6e4b2acaba16e0d5b57de50060dca297345e08d9189d2164575bdca93ebb6786d51fc486bc773bb4c38a6c309f77efd114550c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:52'),
+(1010, 219, 'c2d6fc47738b13dbf3d333f59b211424ca043af391aef973414711092a8098bd', '{\"_s\":\"a7745a11daa6d03f34ab7414c6d7ff26\",\"_d\":\"0a983f1bdaf3fed9a8bf535710cd587256814c7f40e79f659ce72a44a6ccbd4ecd5178f23d0277f3cb5ac3680dba8dabf5b723d28741d9c3705f4c85d71b4aa684340762b963dfe659f59ac5d75a2941d8b8439af42cb5608a3a9ba6e5ef6ec8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:53'),
+(1011, 219, '8da77e42062726c9d4c890dc657580b8', '{\"_s\":\"d5d8973ebdc02d217b1e1a6b6fc3465c\",\"_d\":\"f50690cf32e133fe1bbfb740636ce695e46c6b2a324aecaaa6ea88302b926ff452cab8d24481e1758019f76285d98f35d22b3d2f003ae8fff89b69ba98211b3c1214c5e23baf83f3af2eda738b8ed622a5be843d3d512b7218ec4eeebc87eaca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:53'),
+(1012, 219, 'ee61c2cb406ca8d0b3a3fdeae77d05f118fcbc59b47120b727e8f440b4b392fe', '{\"_s\":\"3f29bd6343b30df1042e7c9c56c909d0\",\"_d\":\"23f57494240eb7804b98dc69d3f5c158d43e7f99a653bb1f940b4c5bbd5671ee75e787a2291f97d95f0683efce4ea4734195da9e9146a0187d150beb88d5fcba8e554a18ac7de1a3ea83c071d19551e3d1cbe52326932bffa7413f007cf91c10\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:53'),
+(1013, 219, '5302847cb21907813cf64466963ce671', '{\"_s\":\"d68ddc026d5878f5f0526a1e5e747c8b\",\"_d\":\"2765fa146318ce5ac4ee67e24ac26c6a36805d98fa27c9207ff6ec3379ee8e9ed02e7e3289eacd4d14d16c763031ab3c48da46429809950b2343c48ca02a26b858cc9b077a46604f8cf04d0422bc973e515dac0febbc9d75e0a2238f50898036\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:01:53'),
+(1014, 220, 'e78d2f268552a798e1d35ffe2f33f358', '{\"_s\":\"e6a2c7b91b2a3fe03d4a76c5a7a74f55\",\"_d\":\"ab726847afe34dc4963b3c3068bff95d2b52227d4e6c93193f16e90cb59dcb7af6db9727954bb37ea2f9d244c8a4e97d5a14c16a711863921ce36cd91fbc4ee16e5bc84487fa4dbbf4024e54f32ead7f781b2eda84212fdd3185e8533f1e1518\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:02:58'),
+(1015, 220, '7b2aaae7996cb357419a210d93459af2854daefccddb33a8f4a2f424bdda22f7253289f45f8c91ffaf8ff525c4c12165', '{\"_s\":\"766dbd8af3910bde919bddb09dc6949b\",\"_d\":\"f605c1fa4d975df7b3e3ad685a1e43974c1b2549833a0eec424a815bb6ca1db5152660ac3453ce63614395af215a1a2bdbbcfe0a88a0200789380145dd8e7471c4ed5ea067fc9a792f929d3f2fec037d4382e4e6fc13a8ad95a402d90cf3fa55\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:02:58'),
+(1016, 220, 'c1ae904ab2c184219c6767187aa396f71f3a524e1ac945f98d9ac041fe483a30ecece89d98831e5375db526cba16d615', '{\"_s\":\"99b5f3d99ad6aab409d3bb9970d89b3a\",\"_d\":\"eca4200d96a3b202e84a21a366adbc40476df7548c2ccf24535372df5e71ea1367ef8d41440d2a3ee9afee16fe3d42fe1155da50f983791b38110587b6dd90894e6a40db0cac2530df69522622173681ac056804c62d93bd8de1aa021bee8d3d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:02:58'),
+(1017, 221, '7986b40b11a772c4de025e3daea17540', '{\"_s\":\"171cb249605b647cd1c218d4b059f811\",\"_d\":\"7e1ef8a4f93323ba500748fd8f1104fadd2277dc0143a8bbe285ccbdeaa4eb7f0e5cd07589c48dc5e4c42e4fb4f3631a27561da204256cd3eca6e745a3b84764e18b628d8c9616c9d495e4e69305bc3f30356e06109225abda9e2b5b74261665\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:06:10'),
+(1018, 221, '8ae7a9ee4d7cd03988b6d15b3701777ab8254371428c48b1d5f049f8725fca56', '{\"_s\":\"ecc72dd4b755e6445043eafeaf013bca\",\"_d\":\"776a92def7cc1db02d429790d4ecc7378e01c064b5b66a8828a906e89b7114169db266c8bc8774d8f727fbe8a2ad39a107a345eee82d02642d919a2264fc8f2717dc9961ca7027f7461676ee81806238521a76b15ff07b76700d42bcc958d688\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:06:10'),
+(1019, 221, '84bb2b7459be68fae6d49b194b0326d8', '{\"_s\":\"f04ce0c2b1a197be55b5d8290e04270c\",\"_d\":\"8ee63d5506c41a26b71723f1c62f5efa1853d44afbd516317421ea4ba02611bf5362b0e5f3eadf7392bb626295917252d4c0a4994e29727f11e186402ccca02eb06f9be0a5fb758de0ed43a8f5a130f2979bef5f1fe71ba0bb3a7e3dd104e7a0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:06:11'),
+(1020, 221, '385a0b40bcfb6d5450c8265c8b46912fc8fbc3df5237d606826f6f2a18fe591a', '{\"_s\":\"3b5eab196d0a64f7601292eb8c7cf7a1\",\"_d\":\"2face024f7e761cdc7639d24759149f90e7cab99db62f06eda3f3699d1b65d3ef828142ef4309029c4be36218bbcc579b0ac7216e108af7620df225f7aca0fd25d1638106f1332652b0a49c4d32f4ebd7e62cba3e51c8bcc33eeeb76c767c4ad\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:06:11'),
+(1021, 222, '78c6c9dd526c8a7ca5bfda2078692722', '{\"_s\":\"d2b3100680155fe9e865e35ef7c55456\",\"_d\":\"35eeb5474ec5ffae7bb0dcecc762126c18a168973b124469281294257ce96a9e7b9f662c96550ec03883225a037e2146f2837e4fa7b5f390862ce925799c2e221f451f100920ad594868e1835077d561996a0d63d522010ecaeec204bc8a3d7f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1022, 222, 'e00e3772d40db11dbfae1973622fbf25', '{\"_s\":\"6e6da53153ec4f9faeb52fe9db2e6ff9\",\"_d\":\"8a86e161bcd1bd9ed4cd953943a716043204bbe484224d9c119fd8e4bce94c436f6a9d1b267af9b6b017856e53430bb2a02272ad3076c9ff5aa4ba70a43fe54b3fdbbacdac95851d5f15aa41bfaee4f7b6a41489f6798567b6a456aa8dbf689c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1023, 222, '499ab5f72233cb114e35862a230f6bf5', '{\"_s\":\"95c69545202bc216b8f000717cae53ae\",\"_d\":\"211bf586c3a19ba0e2aeb98636e2b8bbf52ee4533780c21dad88641aa1f9a9c13bb150bc8e5779254c54ee75c6fc9fe97a9ff9b3a1ceeafea3fcbe82986752a1b785d328bd4aef2576e95d5977361eb1cbce6080c452cf9d87bc69bdf27128cc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1024, 222, '30e8e3ed6dc2567496add6793de3f584', '{\"_s\":\"5c5f01b9c7857a0199ddb048c432cc11\",\"_d\":\"885659b36ba5185f4d3b02d8ec246b40216703e6eeac3d972cae08badf38b86cc5078760660a20d209cb1b76d83eb594ac3493a346736a333d709b983913ab27a455641cc22dc245d687f353178a7bb1963527ceffe6fb5e1973673c8f2c76df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1025, 222, 'fb590087e9d05b29032d61e75cb47be3', '{\"_s\":\"30e6e561bf928b7ea30672cf3b698d09\",\"_d\":\"5c704344f27df7fdf6dff3a5d825aac07e8ba95bf139992d209440dcf5c4e3cbfccb892df4f9eabffed412ece2cda5e3267715952e77b1b7574a199947c4cc5111f293724d42e564f1247a255bb8bf05d1307f6dc56c1e9a75e5415dbdcdc1cc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1026, 222, '615438405ffa353c121090cc56d75355', '{\"_s\":\"4531743fd40e5e35306073d1d361fa31\",\"_d\":\"aa6c83baeb2081d1538803adc5d0ea5479053f1e8aa03203671bbeb1070f728c383da2e3287048cf307c35437af8fc7906f872b37059e3a91619679cd4e66f1afd22d4c6408fed1eeee693e4fa422768de7e03295b090e6d27d43920a760cdfd\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1027, 222, '4c4e31f2cbbd8edbf84eed963a44c0a6', '{\"_s\":\"e04f58b19e3a1bd031314f1c46181834\",\"_d\":\"335ba134543cafdd25716c643d40f2b02e724c18045cb2b4e5150b975b981d1d3ecf7395b546de1c1d4d3961185a10af9183504b3be712df8a314c8bc490404a0e2d1dbe5687a2a36ccf009935bb717c9cb677c16b2fa7eccd5561621069e3b5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1028, 222, '70aab4517d212979c240db1ed5c290fa', '{\"_s\":\"32fe25d07e097b7fa433402bd12bd6e8\",\"_d\":\"7992445f0963e2a130f1cebb232ac5324702bcba1d8a8610d04ae8518da83b0472bada3e376ed37a6d79d155c78544eb49f48670bb686e3d80be981e92781208156fa21db1ee691cd1a7996f961e1da4e4bddc83c3ce0a3b713bc247c2ad93d5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1029, 222, '49973b037ef8f31d0cbe94fa859063d6', '{\"_s\":\"5e983aa592745a2e5dbd91ee194c138e\",\"_d\":\"b90322f09a5c7a1ddb33f7679e4335885f7ff5768d9306eb076c4f3438b7e35271ddf14e63db38916c38dfccc0d2bb5b3819ac05a27fdc10698ebe18836991f9f50f01b3f22f898f869e9989c1567b28c2c7e0f2d1b16e7d8c6fb90d76b394ca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:19'),
+(1030, 222, 'd473163d2860ceeaa77ae61fde495aa74b2918fb35399c4b0932dba8def81e0d', '{\"_s\":\"efd312ca680f0467f943ef175d092418\",\"_d\":\"8955460e1e1f937262ffd89952c053893dae400cd6e8d91c39371aff4425158a648452d6064704f97286c4b30b8ae210c4c2fce963e757ebab5fa042f2677cf483ba00648d157cd13b631253870b58b4bb462d236bc53eaaaaf074054f0917f3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:20'),
+(1031, 222, '3d7205d578b8175e2446b29f1076e6eb20ec5505e9b21ade6b1059f50dad1356', '{\"_s\":\"347a425a88ed3d67608dc349aa7c5a37\",\"_d\":\"0b6f0e61e00b4bda7b72ac620da2a2492a58808a4db9892c170fa5cfd8fdcab86ccb289a68e64500fd8faf7fb841a9a2f017a36af1a7b3dd1cf47a420ec14c2718ea7149f58cac8086284dc5d514728bff9252dad27e956a288043db85c59a30\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:07:20'),
+(1032, 223, '6ce6acb1520777741fca6bd95ca9d01c', '{\"_s\":\"3375a84bbd3be01ddb542667fe069900\",\"_d\":\"7b712e91fbabae6416b6f9c5a1f9271a4372ff36719ce6e0b8da042195c9cf5f2b845edd4551608b77a051ea44854a2bc32cb48d7385cc32f65c2fe618f70d896a4d54e6cb12fc666052631e10ebcf4fb4b4e52b8234428bc1f993841a136485\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:19'),
+(1033, 223, '6c9a91f2795b175e1b84f8c9cd2b994127373d4cb96a992bf2e17b55545a56e7', '{\"_s\":\"92e741683fb1f17465904ad77090dc7e\",\"_d\":\"426e411945b5f695d6f1c6a8a79c7c705cd97507a9da692cb2875af9649766db00ae59e552dd26f3b2f2736b348b00eacfa11391b78a9ddbc79c56be0ec62b57d0d479a2268c1dd102e84295e1ebf93f784ce61bc987e276edf95d78fbb78682\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:19'),
+(1034, 223, '86cac53bfdb6af67db3eb625900cc3b4', '{\"_s\":\"cdc5a0d5f133261b72d121cea1047131\",\"_d\":\"b0ea32de8d2e481d8de4393803791b8935213a2395fa5ca108aa9e9303f8ce6c218579a4dd74f9b82dfa57728ab4b3c8cbeebcb8a44beaacc8fe2b6920aa368a823e48364da88b827ac04ccca77e41803d13572b2ceb372376edfabf27a63b37\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1035, 223, '3b4b4e80b7a2d0bdf25a5dec35fa4c64', '{\"_s\":\"509bf2de2261e643518aff5f1afb7598\",\"_d\":\"86f7b0e63079db8b9423236c6c61f633af2d8afdc00faab24843779597079b62a9955ede5cd4f2aeae1f5f72f55480efb1d90ec9bda3210391ce6eb9c73b5458a4bb0a35f7f1f49f7a88655ec909285254ba077f16ce90446be9eada481b4ebe\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1036, 223, '7cef02e16b3ec3060831ba134788404d', '{\"_s\":\"aa59032c73ee17e2714f6fd8b1b01c8e\",\"_d\":\"c294d37a6bc9326b6a837eeb0e648b219464945205477f765dd3b9051bff29722d7a765221414d3c434180676588c69e1dacd00a0eecf8705699f2333dda3124bd321a8fafa9e675dc2cb1ade5c2ab7e13df19f480ae657226de1ac1e417a0c4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1037, 223, '8da77e42062726c9d4c890dc657580b8', '{\"_s\":\"4fcf28ea812eb14cf554624d0f05a678\",\"_d\":\"560a1843b1956ce092f9d66e307c4e2efc81fa9f7368cf77e9e9392c9c9c0d1c5a8578fdfd290eea738315e9514e91f3c1ed1966d209668bcc8206c222ad70ba5a65b6cb17bee4c7c78b82f0ad56128bd941c724543df96cd95e18a71921aad4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1038, 223, '7ca62d9bfb1ff638b5a8ed68e394678f', '{\"_s\":\"3cb0c9edb735f64f32bab9c7e3a17049\",\"_d\":\"e69da4c92a76b00f1074e6309444502f9df5a1e710cd514318d088366b167aac71072d8462fc2aefd55706c2dd4c2d46398d3b6f5ec30f93815fae13019b0f027fc169cf3354b9de72d125dad0fe4068c9045ad78adad68c7d3586f6bd1ced82\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1039, 223, '7d0d145acf37c2b5b8f1a2b1d09674e3f8c6d0669e07b5fd9980b029dda26816', '{\"_s\":\"efe1835c90b4c783bc028b411bac5b63\",\"_d\":\"53893896417cd63a1719a453fb40bf66adb8144c6a91609b3bfb0050aea55537aeb2495c8309aba7238e328879924d9022c481ecfd98ae70e46e62a73a0bb5b3d25cf97b1a31b7dc91b2c066dbcdbdab75c8d4b9458546133969642287d957e6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:08:20'),
+(1040, 224, 'a6d43aa29cba07aab3e0aa970c3461f9', '{\"_s\":\"d90ac9fcd6cba2963b47d502900cd166\",\"_d\":\"f2d938420fe89e6fc7395ddca3109229d958f8f0980b42195ddfe369979f4c280f9102d900a5848f3e2d32fa8c96ae4ecdba7bd7bee10f71cacd6442f20558f519390c801800a06a912612e242aa4c0257b58114bb60023764b763f881622280\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:38'),
+(1041, 224, '36cc9bbacaabe83dfe2fefe05d2b8c4a', '{\"_s\":\"97baa61f039566a18ba89c6615cbaa7d\",\"_d\":\"221fb1df96004ef0b6f533e912eb975a7e4f31d9b48a463d0e9003b6edd2f9c7e9cb5546d26293d735ba1bee9d861a66d5cc43aa87ce6a91c7cab7c59d1cac42a426ce3c88dc707ae25544a9d00c52d1ffede956289f5070c794facfb68211eb\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:38'),
+(1042, 224, '7daa626e97a3674dec652d3afca17126', '{\"_s\":\"3787debae66ae19d8c53aba7048d10bb\",\"_d\":\"501d512a0ac243e17f123e8c6ead00447796a7a421051c1841b5916c8b1c7900c111f92e8c9fd22174b7b6f0a459dce1e78171d9e9eeed0f279e1dc9a9a6626a2636d1d60764a836b1013fea776bf3886d555b0c4d321d319542e062d7733083\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:38'),
+(1043, 224, 'c38cf7ec636ef380de62e263ee00706ffd9450f656da0ad7287703b856a011b2', '{\"_s\":\"fd2035a822e58f6ed8b2ccdc9e7c753e\",\"_d\":\"35b099567f5a51ce2cbffc5621124db2a797ecdfcc184cf58c53f08101b9e0ac7c6148ebe28d3d28d24ecac5e32047b042286f485224fb760ae622ed04d0afbe60370ac895821c7ac33e85da6a2c9d1fbcafed5f545f49b5f16cbb1323583925\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:38'),
+(1044, 224, '496ca55f72ed0d4014613c62b9731853baa5e007ad9cd1c4a6671b35d16c5d6e', '{\"_s\":\"d1236794169e767444899c52e9f9495c\",\"_d\":\"d613afe73bd91e4676a320e27a07fb2d12f9dccc7d43dddb2bd3336fc94d0c1948a3d0d6eb45d137010a60fb6d162a88b39ccb20e60908543bb292eb435da5c147cab85b2f5a23a50a388fcf31eef0338cbf9279305b1a86ec2efa3cb3f4a522\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1045, 224, '7474ba9f336c51e9c225630cd9f8a015', '{\"_s\":\"99e5b271cba3ccb858c602ee536e6612\",\"_d\":\"654fda10c2b3db36571cb962cd586e092cc4438777c6ac7819aca597887c7cf781c59e5f20ebeadae70177916e7d7e5fcfa0c9dac0a90764e9a680ab4b0f1c5ec216f7c633294ae5db251cc928c73815375d893f90f7690edf5899b8159ed688\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1046, 224, 'bfdf3d77f711ee7cf02b5a58d3c48bca', '{\"_s\":\"fb439ccfa0b28891b87fd0dc63c651e3\",\"_d\":\"2db4309e32e2c2abee3d95de3f9b0fbad4ae12fb0c3b4fc6f07f6edbe283dab92c615289474aaece5d05d7dfb374cecb29b4c9bf355491c5bbb622a10a292ddeded2b1c276329facc8c7eb5c80b8f08e73d7de9a027f4f561cab6f018fc93d74\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1047, 224, '95a33d81728bac3d59c32b39e1f9886589fad5b1a78a7540471543550f141af7', '{\"_s\":\"8b42af3ab952caf8cb2a6373cf89fd99\",\"_d\":\"8e5da213e7727603b9e5007618d00d4e83ffe32d4c48988cc1eeb6ff20b6af909538324b12501a693188eb62972dbca67a9d96cc581bf39f7eec1a7b45e0a713a88fa2ad20f5433b81480365437e17bfb77dd25511da32ce43c1e9d4635184e7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1048, 224, '6fb892141a4c4e562c5cc2564b8e4ea2109412f1955ea18aa4fd380ceee977f1', '{\"_s\":\"4d56aa9986893725ed207436bb7f66ae\",\"_d\":\"4413f1f60b781356a6ead961a76d7b72dd8ec16e2b9809137c0e24381e34ea7be3de7a5d5d443673bec5c4279df362a42cf07ee2809ca1dffb8936053d74f885a644affc2973426df9f8bc03ad94587ae82d0d65133df397e5847eadc09e3346\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1049, 224, '805339bf44dab68cb083381b9db5e93e10269004cb1125331b4f91f859103e06', '{\"_s\":\"dfbf38434ed0005940b78b778a14d25e\",\"_d\":\"c0fd0d89fbb4808ee1fc0f70f4521e03304c09fed3f63068deaa334bd9c120dbc3ff200d89eae2332b6007163839d60e7533c2b92450fb032b698a2c898e227f9c4f5f2edd3b6f0dca4a726b414087a982772c57513e82661443bede6dfb3ba5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1050, 224, 'd1619572fb296773d2e089ab81de58bc', '{\"_s\":\"422c9d140c573ed6806f73d1f719aeab\",\"_d\":\"5ab893b364284d6fd8fa94c0ecf33ac1ab4132abe854c77e6ba0be6ebf6fdfd28e9d8f0989a7d86a6722ce743d04d9613268b926edf761f278bef8b6481b608f0c221e604edb9b994155b5138984d021e0bf4dd616298ad38f14c2c02b4dee5d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1051, 224, '0f5c26087bdbf92bfb4e11a73f35f7b04c145c7e2055f15d2b6d11ada4fe207a', '{\"_s\":\"1b72e9a816c9f5012bbce4613385a8f0\",\"_d\":\"03915f3e9a0cd30333c2bc87c880619f28a67c56729babeac93d16f869a82cf1b3e2300d42d10cf57510bbd33895f0558424473f549b423674a94411d91394d312283faec58338d5b2b205aa2843b35dec69dfe9b97c7626db0a21272364e875\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1052, 224, 'd25d5523600a330d4d7b06eb2cdd9eddadc3c6749c6784f2f70226ebaec3ff3d', '{\"_s\":\"5b4d9a9f085a9a5f92f4912ac744a003\",\"_d\":\"1d14827564d424e3c35d331d6c0dd8ed604eeb707ffe4629a9e2fa2bb80c0d504014c11732d9e5ac1d6eb73472c257c0383fb32e1d9dd8e94b940919e3110ba8096d63de1697108959688512d0d89ddcf4bbe6360af0c9aa9552d5f58c3fc9cc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1053, 224, '3001d3667e9af6e39db33e7a377da118', '{\"_s\":\"307a9b926603f74b516a75c81d8dbe66\",\"_d\":\"84d1cce457d28d4a551afacc353be170c5c723db6845bd27296b8d2d044739787dd61653214e0f40674edcc4050a005077187f2e1ab2df07516055c4224501a3881f0b7e360d855c9ba1abdfe9efea59bad937c8fc86538b368db7c4f27f8a89\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1054, 224, 'ca00e546d7ef769fee8ad2d942944c72', '{\"_s\":\"76ea50608eea91ec0913da19bde6b984\",\"_d\":\"9e7a95fdecbe3cebd89697040003b4f9b70e30de4e464e9962a86b679d0f6c65453d6efbf97ae47b7bdc028a0f8c04e6b561ed822b5032c15dad7d611cad3d7c1d74e3c6f576d89de65f0c59fa5d810330169b2c65a08db7b3906f2716743fdc\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:11:39'),
+(1055, 225, '964f447fa7f5e118bce68f434718f14c', '{\"_s\":\"ba6eac66e494d3525db9b388171c493c\",\"_d\":\"7d1c44711af3188058aaaae1fb0022879401bb1aad17e16e49da06c5d0693ad746a41c8847505121e6901ed21342c116e6ae8dcc03a9b57f38aff4e012572c832c11023e6f59ffa12ec56bcc46773e4aaea93d188adf7e1fddea1d0fd05748e5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:12:52'),
+(1056, 225, 'dc81bd998a0f9aace71b935db2da2883', '{\"_s\":\"e459a03730f1dce6f9331202387cce8a\",\"_d\":\"65ef96dac143d31a5f4e886fe5dbfa61b28a2ce71cb23878612a684e3f7387e943fc496bcabc44392ff9c78fd17164233d72f7a3da9c122b21517cd0184e0a6a7d85029cea4900e809d6d74b3247ff0bd623a61e45de39dee90fbfc813232cc9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:12:52'),
+(1057, 225, 'af08fee5be1558d16659216286d1364ddbdb959fc56c7d4a2d1089a76d33073a', '{\"_s\":\"9deccf776e9f3139ba095ba6ad6d52a4\",\"_d\":\"433e9a36d94be27c1c56f56d85324e289203d66652b2a81918df080dd643471e148c0793e0a8f0b53eff3929d7448cf6d66fd60bc4ef838c0882227259000332ba92f458fd7767263d7b410e3dec40b76d296a213fda4bc4f6bf6289ab74470f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:12:52'),
+(1058, 226, '536d33976621cdd108fffb94f949b4ca', '{\"_s\":\"e881aa851222fa80193b25dc284505d9\",\"_d\":\"f4fc7728dae193c2249ec9074901c81db76e7cfa2077c316d3c0a53794af01d29d5dc7d20122342b923a47ebc6e0a3b61809792b24fc75c23bafe68b12ddee4933b2f4417f75c956d798034e5684189e3bf252c8a4b03a5bf074cf85710a3e7b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:13:59'),
+(1059, 226, '3a2b2820157dd3720540815b082f33c5378e39e8c652af2552e54727dc0e1dc4', '{\"_s\":\"9b8d561fad8cc6b0e87e120ae9fe1963\",\"_d\":\"ecb0ed463f08023b9a864737e300535c2b50a0da32913f2fd899e9fd6b8f0ce27bce6da8230661f80fffe1d5a2b30e7f47398e661835dd739d3dc5626f4b96053c45ebd512a63dd5e40fd662bcf1685da6b69c78b0233531dbec78c5210d27df\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:13:59'),
+(1060, 226, '3bfb469ace26c482abdb68d0f4107aae', '{\"_s\":\"e7f1303968dc8aedd2688ba81b96bd1b\",\"_d\":\"ef8126350953c893d7cb752b52ceba86ac622136ff5bd51f139e6ddda9f311e7e80ff774236e812569db57bca63511990414c0f3f10a06b4efc4d05fd7ddda83f5c513e1b42410abda9842e65a5d1a11113c393f4e562cebac75d2ca2b3290e7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:14:00'),
+(1061, 226, '83a23c6c52d78c8d955cd6f8efea6022', '{\"_s\":\"8c5faf00b496ae434adcdede7d4e3a4f\",\"_d\":\"2028c03553827695be20ae7de5a6980edf83c65ed967f659e050afccb4bbc343cd1c63ecc124ebeb7ed4f68c34f1f55fe85ddac340db4b29d193d819d05913e424235d045c493a5392ffe1fcd34d3732e8657081039ad05ce25c14f5128adbe3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:14:00'),
+(1062, 227, 'ba4915eb46c84e71cd4557e28a71d47f', '{\"_s\":\"a3ff31c71ed64ed23b0d84dde140b0a0\",\"_d\":\"3c6bca131f12f95de8a47883b9ae7ae10759a8351db8b6ec394648f9a027851560ed11cb2d510d231fc830e17f26f75497cf90082722c1681af7b51da2fe760e3a6d475dfe55d0aca65e6e36cb7d2554a9bc44d764c027f8088f343959074cc8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:15:19'),
+(1063, 227, '3bac6fd7bb1f7084c6afd1bf443b660e', '{\"_s\":\"4c5b091ea5e5b6bb25a0123e8489f823\",\"_d\":\"81a52785c140e36000edc322ab479a32e45ca268ad178784973c8d1efaee4b9cb994ed2a9ab6800b568b869aeae6d6843163c87a2b6a0a3fe377a3dc83d7a84e8e7b5024fb182497df735f8f61fc525b3c46c960e0d53f7d2e10bc8a97abd37b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:15:19'),
+(1064, 227, 'c4879e4f7cdff57c366b2d7c51120b96', '{\"_s\":\"92527939346515617cf0c9a39d44dca9\",\"_d\":\"1881b2fc53e49c2f8cffb41b41366729b277cff8ffc8f2f8e15c61738e9e266d98c99bceb44bebfc8a5611fa79fcbcfff1509f1b58b1b7d936f674ae780c9feeba375637bf5fd79de9c96509370c908361625604291c7a56e76badd4d886dc4d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:15:19'),
+(1065, 227, '8cbf6c5c0eb411e18ba1378d1abbc072', '{\"_s\":\"0bfb1ed9f413bf916652ef1154964728\",\"_d\":\"1bf2e6f569427b0e20921c239a48de288965c0003466385c9f149155c23d8a77904a9bf002b91f374f202f5775b77f20e6be9222f432013374fedd7c5102da078510870d5b273008875a36037de3e3a27fb8cf2b765e7f33c30d80413fe9a11a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:15:19'),
+(1066, 228, 'd5917851392f769a3872bdeef254366c698b6caa755f0131dccc082d3726aabc', '{\"_s\":\"58648d074286ff28088bb9b74f1b1715\",\"_d\":\"3975c7e59c00a071c18aae5a45e7dda9ec21242aec10158f63769dc3a571bcdb04cd20edbbcf5f5ff9855ffc479f8f3ce0f78ff3260b64fd6e34a4e0dbae05fbbd800dab6216de0c244c0a80d6b0d90e3452937c0e01720f34f9f34580d5ef96\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:16:09'),
+(1067, 228, '9003a8f3a2349d8306da2e73289244c9', '{\"_s\":\"ac1d7099881c69d04953e68339075cb7\",\"_d\":\"1c08b1b9b7c71a8ce3105911e67e3a455aa0244ac435e53bc16727413623b431d8f60438d5ab3e4bb6968e08f43304d758d5e59daacb04e4745fe7c8f0195db977ef8318053a6cdc19ebb19691563dfc68bc36e7f077710b48c428fc4bfe369c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:16:09'),
+(1068, 228, '10b3603ef7f1c6dd1b72694906cffc99', '{\"_s\":\"7d088ee02dc7e049a28348b35d0d5462\",\"_d\":\"057e9be3686bdb1d6d5b403beb07a4b9ea0af9c69966640bd71bbdbefa20a69704699ccd150d44e6a26e3eff7b0b88b7a8a1f89f20a7c0d094ab5f9789cebfcef8fb2e664c5c489f30f9c926f849c545120c2eadca376be9928756a18bb3d719\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:16:09'),
+(1069, 228, '42eae5565ba476302930c3079ffe2423', '{\"_s\":\"118973ef69e18bcc41534ad5c544b561\",\"_d\":\"4296f5532a68849da7a4d8d32dd9c59977db07c537e54e61331bf2f814c31ddbf1be6897940b2bd1b71b4ec1d5d9137e6d8682fc3b44a3eefc062def8fc5c7e3ea5490250b95e33fec883d943dcfdd59088b1f13eebf7e61381295713b1de63b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:16:09'),
+(1070, 228, '99b7846689003628189fbbc3da2e4cdbe29460fc9f9f267b4013348c347500fe', '{\"_s\":\"3fbc97dfce3f0497c06aa14204a7a600\",\"_d\":\"8c3cceb5d20ff588876afbe369720b719a5d44097894daa868abfc5be52b53d2ab015dec957119fbabfce3ffa300c4b7964e131e07cf0ec6dbcec76a6eb392d407a36aaf6ab63d11a2ab381bdcd635ad2889026aeba2c2dbd41608fe33b54c74\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:16:09'),
+(1071, 229, '0d78a23aabce3f39b7eace65c09bd3bcfb2dd6abcda0ec0e1267f1a5221eaafd', '{\"_s\":\"a0b8013d5127898f5327dcaa9b061f97\",\"_d\":\"201d116050416f80192345f201c889da5489979ae226cb21d26899cb328108c6c62b98002d87e20338a45c355473117319487b05836f77e445235b9fa4a5ef86abed784baf54483902c133504510d7a88b19a2d4fc9ff84ac14779b8aa122e2f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:18:30'),
+(1072, 229, '1f7da07709bb5ad785e2faff8ecf1bfd58c7b3f4179d2d945d4ce42e89f0efe3', '{\"_s\":\"b0f92de4939043bbd1eb174827d213a1\",\"_d\":\"977d61d30d624813859f968a33451955a4a8531bbb37db1a007d92be30dd5d0c0c5bfbe2385d9b66b70e86ce570018eeff5df6967551ed17a724a2a6d414e28ebdbb3ab7443f67058cb94078078201e263029d2e53cdb9879343d534df8a0cd6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:18:30'),
+(1073, 229, '07b40388a6cd928bf398fd389680b9aa', '{\"_s\":\"b53ba0492fbf96795987373b5420d054\",\"_d\":\"7573a732ffb29c664ed1c2bc16d7b2c35b48de8c39903feac17a6548ad71a7619944541a187b0d38596295893c8c10445adda27b134e11b4d26b397f9e4f33d67c56fda32c2ecec3b55b44b2a1f0c7cce2dc780628eccd755c12bc4cf6597b5b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:18:30'),
+(1074, 229, '0d591dd3d2e28b0e666a196879c729a47ae2f32433514dfbd3046a0f310c5cbe', '{\"_s\":\"f80a5048b7b1ad057a6deea7b829ab2f\",\"_d\":\"41c59fc1ed4d2622a5f788a27b24be5627a9f6bfc2b53efa41b24645255c40e379ba53fa12ca587d35eadf132a6dd5bbfc9895d643dc639ebf33dede8f90eb62890a572a5dca71c3ab9fb4ffdf321732e0cde6cb415d4c683afa0ebd13b7170e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:18:30'),
+(1075, 230, 'c8895b89601a54130eed2753c1c94767e70f07535019080de7a6e6adbc1b5986', '{\"_s\":\"fe758c368066aa7e9a67374f19afa27b\",\"_d\":\"72ea0f3a1376396ab6107c27f75c6a72c29d3060761bf7051da1b00ecacf28707ac80632d31a0ac3b7723c42c63c53d93acb412ae926bcb8a84042bc0826edb4e08d7ae9df7d6164e846f05bbf777b57b2ca439367753fe22cab4cf7ca6a03b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:19:22'),
+(1076, 230, '3fbbd2b840ba7a84d865a82b74baefe4', '{\"_s\":\"f5cc0aa17fa0c86950dacc92b754ec38\",\"_d\":\"fd821afc3103e5e213b4184e1a130300a5c6af15c92e38a4e0b487cd18c51af6a4d0283d5cc5af50189a88d18ed96057c049f9dfefb7245f1336e9fc7f88759d07849bf3658bacf39f522737525ea3441d8759917809d3588d35d04cc686724a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:19:22'),
+(1077, 230, 'd8eca85376c39bca7bad6aa40046eeed35941d46ee54011a86fab5091361761a', '{\"_s\":\"cab562098b727a291ef906d1cb0d7233\",\"_d\":\"08ba71c16f2a50189cfcec212d1ea8e8066fe3dd09bb0796e7074e4f40633c9e9c2385a41b513492424f7596bccc4e2e14fd42d8549d6dce150b5747a2be1afb4347f7620a87053003033f16f47aae9ce6f031da2de5b0ca53cf2f0117d82066\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:19:23'),
+(1078, 231, 'f83b244f184838e78dc4b2b96c39f3f7', '{\"_s\":\"2a2a5c8d4b36751e70bc1fed2159b43e\",\"_d\":\"aaaa995ea4eb9f9fa8358f10a81c9729aaa5e935227cb6ce30a66e94f902de8f16969a54a4e68ca2a0ddb3a8d44090b1d85ae9490810f5d8c8b16ca38dadbca778e582cd798251d1d7e21394ca839cfd027b7fd2379bb579bda9dccb30ede411\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:20:15'),
+(1079, 231, '9e79da2f9f1eb46c15cad7f12efb1dac', '{\"_s\":\"06c5a756f4bb9770adedca0f00bca1b0\",\"_d\":\"7031320b925d6deda68a5f7dfa69b1a59924eb73c762f473303b417326c7d27b89d2a8cf37900f882f00035e44969c2a6b095d362db3efd2c391d5b7ba29dec599d40a83c9d7228547e77be67a943563ad9c1550d960fb5c4e61444a253d18f4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:20:15'),
+(1080, 231, 'ba3125c9b998dbeade7cec26ea8af7ba14792dfbc6b37e389d8fd73882f51820', '{\"_s\":\"0e0f819e3b99962265fd66746b394da8\",\"_d\":\"5d7ddbce1cab3891ad5e2b8bf2a1f0353943f3c900fdab4692efa9b47cc442f2dfe682e67206c7e206c1201da3c03e6caf4bd57de92641aa782aa0a90631e7d8704cfefb2222ae53a68727dd9be0f2451d0598746b9e33154eadfdf99736dd64\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:20:15');
+INSERT INTO `subcategory` (`id`, `_category`, `_name`, `_image`, `_status`, `_date`) VALUES
+(1081, 231, 'f039bea33dedda7d7c097fdfbc9e36708f131e9933e724d60a4743425b74cfa8', '{\"_s\":\"0e5942c32ef70ccea289f7900c1a1629\",\"_d\":\"26576f21875c7cf67905a6bada7486c3ac563d8854a95f0352d3d192377902b51349fa33a7e03c164cd988fce2d2b76707530dcdf5b08da80d62628bf03db52df25097202586d23a6761e00e656ffec5999797cc33a2c4049dd0fdaac63e70c4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:20:15'),
+(1082, 232, '8c26a346ad31cfdfbfd33ec3d0e25b3d', '{\"_s\":\"2dfeaa6cbdfc7fa638764beb633d7b40\",\"_d\":\"d7d953f7bf62f49ed320761afb48a7d03c23e1036d90bc52ea41ee5ea0ddbf44d5b5290d7811bddf909232b260d96eb75e9375eb48cb18df7531d883e102b33e59c5d54825350e08aadb33414a6f6d0fc4e520e275b75c7e5750305b27d9cc23\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:06'),
+(1083, 232, '0eaee796f835401df42e85ff5ff2c479', '{\"_s\":\"0f4daa64fb8023afb0df49527932e0ba\",\"_d\":\"2e657f5fb3d871c2fbdc4504e3f04445a4174db712005672eecdbb0361fe85b77df4e92de3b6b8e9ca7a8d72f51d747ab7ae38b632ab839b7393f26c7ad873c88503ffffc8429a7c6821573d29b42d8a8d98f5084b93f8eb76dc3e2a97e2994c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:06'),
+(1084, 232, '3036f5781e44de1aea51c6665dfde07f', '{\"_s\":\"8510699ee0b2232088c73ebe61489b9e\",\"_d\":\"8e2c6308fddf31f2a03fbc0259a72a2724c49e332dfd016bc93c3ec5bac66d0068ce3f8e8c1dee9bc452bfae07adac99bb6cb3a1285a8875159173e1d3fee782aebadd54cfc9fbd2328629c48e6a97368101fc13bd001bdf01e29685987ba614\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:06'),
+(1085, 232, '3d06f6deb73e04bca0e9e5e9e5a98b30', '{\"_s\":\"fa1792149f6928050e91c36f4a9dd868\",\"_d\":\"dfca45cb6f9bd85edac9d95e6d4105fa2b69be1c72b8bdeb3ed14e4d02408daafb14352752b7967f506af72543ac38f406b300c0f88efc48a2e1a32795b95fa88d4b239cefe9bee59e96094aa7bf7b4369d78eb80f17059e329ada21e2c80210\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:06'),
+(1086, 232, 'f81af9bbc6002563b7007827737b951b', '{\"_s\":\"53b185b8ab71c1db2bc9687315ab8c2f\",\"_d\":\"a6c56e46a978f378f0ab7e8a08798ea1313b41e3be65ee3abc6f11280fd7a9baa79464d4045c484a47b169d342b60549344c0dc99a2b1a5b87cd0350c8ff466ecaec89276e25533e05f2f3ab6ec5f7f52bbb33b7a16b22f42f435e707a00c638\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:06'),
+(1087, 232, '5987862692006eead16bb5f2a028105c', '{\"_s\":\"e84030f04f3a514d9784e74f7bc62012\",\"_d\":\"24d8770e1c7aab152db6cec6291d181be1e159c0b9d7e698e1a583d418d74ab7814cbe03fd4250179f3b3203cef3fb43b213b77eed3d7460d089f99647ed062d8264cd86594d18843343d86cd51b1512d40d59d6b4fdac06644965609eaf5e03\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:21:07'),
+(1088, 233, '9003a8f3a2349d8306da2e73289244c9', '{\"_s\":\"44948dadfc7fff1dab433a5e27ac55fc\",\"_d\":\"2460eaf6ff38b28bd6bc4c9762e2fccf47b394e121fe9766b6a755ce156ec6944ed57f8d42806608a286320150279ebf03cd0db2961ef831a668ce46d0b0ccb1c69246eef6659acf9eaf9d7ce9e7c0f0ed3112f47b86d5558745e4288bdc97a8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:22:12'),
+(1089, 233, '384838be5acde84017cd42a35b9968f55292b5a3530fba60284c4978fad8caae', '{\"_s\":\"06916298e5bea44a4ce5b47880af221e\",\"_d\":\"1a9f2db252c54c518c2df8c0c9fa47bf2bda7214b7bc9a674456658ee31b0640a683f9f29417e78fb4705724f6b396a72a43262dff51f4e11ff37dd6938af303b6523efc74bfed874a19ad48bae7efcdd5f031f9f16558d5f11beffa2acb46b2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:22:12'),
+(1090, 233, '6680ecc1ce4b9ad96803dd411edd5c10', '{\"_s\":\"02c277838dff49e1685ff733cb31c210\",\"_d\":\"81d79f868a7f46f17680ca2c1b6d66e2eb473dc1178026636bc8d281be7a81b906d8c8f8f8aa150f180f6209eeff4700646b1e1006118d518290b73ef4936faf3a3ac3aecb1c7d280727407eb830ee772b7ef2a3b55d289066c064601fe1e9b0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:22:12'),
+(1091, 233, '9960e7cb6f81138fd042ef6722ee865531e327bb07ae289249bb63c6d32b4bd4', '{\"_s\":\"a3a456b9dc2d2d4d84986476aba4a4cf\",\"_d\":\"023ee427289a98e583f11fb11fedca5b74a631baa8a1e4689fcba44394d8f4a64669b100409d50f58a211c12cd1be94b5b2973b373cb978aab38acdd26d1a5725a844226b6d7af96e9afd3e61605ef1817eeb5ea3d872d76994c3021068dca69\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:22:12'),
+(1092, 234, '1d4d7d742a1edc14e476738c854db547ae1d370096e2cf8aedc6dec7405acfe4', '{\"_s\":\"57e59c2055d1402add085365f3109b31\",\"_d\":\"4920788b25f1478238726d7ba0adb9ac5cfa0b3620caf599fba5d93d5554ea5fe43b1ea1c9dab29b4c009cc1592ad70a2bc118c4634908ef19777bc1c633d814d47eaa8768defa9c3d4c04aa81d67e5bea33fc671d2dfa78eb9429a50f622a49\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:23:11'),
+(1093, 234, 'c2d03b4c5e240380a3a239d3000819d7', '{\"_s\":\"7d0aa16961d54642883bf4d39c3cc299\",\"_d\":\"0aec5bb1873b64bc7a690b94310fc81e1c1b8bf976cfac44c6f4e16e325e2053b39488eee2a88f3af0a8636d4f65fa7d137c00e15472eec732ae2575dc3341c18ca1dd89fb19405b62a48766cfe536d53efe6ce3b8681ed5744b1de36030c81c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:23:11'),
+(1094, 234, 'bfca6cb0ad2abf263867c13d8389adf9', '{\"_s\":\"271b48e16a0a12dd734d6af5e9843e7f\",\"_d\":\"45050840b3bb04daca734b0c8237f66752084bd9a2601f8ab209cbbefd709f20d7157c54537159b4e8741553aebd0194ec6a36fb2bdaf8a5dcb65fd7526ba30d223bef205cd7a0f4a860459d6f033dbbc157f7b0d497016f1b83febf74e43880\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:23:11'),
+(1095, 234, '20369583da06a489ec64d1b0dcf78653', '{\"_s\":\"91a546ca09acce3f58f0f406bbaec415\",\"_d\":\"f2e576e838d951d9105f3d72a481c5aa35cf1f52a20ed5ae2ce3796a7b022cf5a69336d18cfc502724147a3ecc0ebbdcd0bab0cafd76c80149c8465b74a4262d129a23305b1843b9e1c20392c9b5bbf5cf1eeb6d3b63c01afc0872bea0adde8d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:23:11'),
+(1096, 235, '78ee3d19803090d89d18b027b5cf7039', '{\"_s\":\"bb8efeb90f393eb5e17852c66bb1c0e5\",\"_d\":\"3bde25f178ff8f00d28d7482dfe71f67b76da2ea01681e0a1ffac71c2f56eb3f3afba8539ed13ce311fdb7981fcdcdcc146acd5989f0fd34b29e0ddf579e5f3a96137bdeb3f216021c98ce851f7a289dd7beeed1173ddcbea7a64e515f5e6ed5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:24:14'),
+(1097, 235, '6750d016cc7f0a5c433c7c823e51e4e1', '{\"_s\":\"f07024f42239464c027d340b9614a396\",\"_d\":\"04f7645fa315b7d1351bf01b4225feeff0ce10e17d94cd9b13736400ea4aff9182c03fad8511839c58e5a2a1de06520a9b1bf54e1a200b4ea5e245fbb6c9dec70b3f446d8bb9b63f01c2c0cedbf89aa9103a95a1f923db7cfcd85856e13aaea4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:24:15'),
+(1098, 235, '832be491dbd2e53c0bfcb65efc477309', '{\"_s\":\"65d04e0ffa8fd39ee9ad44561cf6b324\",\"_d\":\"28e3d573e8cb162d1cb6edc20df8f9ca6d0e705c5eaca79565a23327024e17a65f017919451a4452c74ce909b8e587ef64d4834eea771f0457be919330bddb01da27c18c1a89bfa730cf207c2beda9497e0de427923b3956c962dc633f77abe3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:24:15'),
+(1099, 235, '6feb33821522a09cff29e1ab76c6bec0', '{\"_s\":\"df7d51773a2174a6cb6b7a69311edd85\",\"_d\":\"081b949d7a839d9cef01f0e8260c1d47b8ab3fc13a4e67f1e8b85a9870b86980671d70c8469194dd6c93fc64d8823682f7673261ad18d2e75301d56c5d74b165e6d80fbb6b4350cc20e02ed343d2e63582cd873bfaa8a5868fc4d5a011da1359\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:24:15'),
+(1100, 236, '7c8816b1a310f7dc8e70d80d7558e7aa', '{\"_s\":\"2003a2de56b0578b26bd9b4089ea0205\",\"_d\":\"06e30ec254a612075efe4bda9306a80a71610ca8870332df1c88ca90d8f5df7de3e8b548b2c98c9c9e6eda76f58ddf2433e65e4f93e08daf3186b6d7debdfdeb4fb26eae8fdc5422e78ff90d3d6964e13b9f1b68e722e07ebe8551df54256933\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:21'),
+(1101, 236, '8d9d5c9d09cc686a831b2ff3e55dba82', '{\"_s\":\"5fa3843cfcc9aaef877307bcee7ce848\",\"_d\":\"11123df7e28c6549b0580579a519e149de5bf120d8fac54522489ac9751ff37d0bf7465f0b92bee71e07b70a224e085956d42363f5d350fe949e13a24bc0b0338e31aea1cd3112e89be9e2595801c0a08d5dba7b825b9a4861c5e6bb5d0a61bf\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:21'),
+(1102, 236, '9d0b95889753c2f2f16cbd14edd0a997', '{\"_s\":\"a1d76f9cd644db6ca2c1834b13f7448c\",\"_d\":\"dc9e95456dd64e9d6918367f3c4997821ae1f5b71bf73ef9ac199fd7a6cf526dddc96a978596ca195d8bdd7bfa7ef4dc7fa5509f78b376cfcb0589cdd2dea5ec9a4eaaeb8b2c9b06bcd8fbb6a3d6b8c4512906f8c73b913a03cc030607ca1e7d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:21'),
+(1103, 236, 'a29c953040c12d3055b7ccf923d2ab3b', '{\"_s\":\"55851b9fd48bf8491f62461c90df67ff\",\"_d\":\"7316374082cfac9206c34d33b71053f6b3c635d0139997677e4df9bd994caef576caa13d89572eb5a69131d7bc462f6553ea456ed1cc2a5284cb8722e3b1bcb2eadf1d4dc8d624aa62bd465cccd83fae10c8f85fd01f1943e952ef8293925537\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1104, 236, '3dcd4f8026d20dd5ff40b0d9d8cbc0fb', '{\"_s\":\"efb42e07008b16ac64add5c50845e282\",\"_d\":\"db65551506a079a4aad64932af403e07fdb0987e24b775a4bc1f800fd729628b43b1cd355989add7f78cfb3e44ae37998e13d45fcfa17b9c2043481905b3739a42677e626b0c5428024b53adc99fe6cab379d16cacf0f2a267b83acff2dae9e7\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1105, 236, '8b948978cdd0ed1d602727d748f30e79', '{\"_s\":\"4cc620fb27293ee92d543c32b882bf60\",\"_d\":\"f39ca80a2b33b4a779da987143fa1b9ab9f7a262944dcd4884d6eb6761069fcaef59e8fccfa04c1e7576d322b486d5a5954129b44a7aa91491a869b37d6ba063e2cdb057af0beddb8f1da68255200a459493dbb5dbf786e447b1aab6af562b82\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1106, 236, '2063a9b08b446ade8ab23d211e89ba24', '{\"_s\":\"3621d5c84144d13f28e91bc29e59d224\",\"_d\":\"edb5ed38e8febeb8feaaa2d12e0a3b50dbdae85e6968ca43e0abdc0cb60aca754bdfc84478a89453c97629f936ac503e79daddcdade65202b5e4b3e9d6e8e85c303bf980d89e64dbbc0ce9c62c169edd5bf8b90df8df6709e382fcfdf97c9d78\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1107, 236, 'a3edf862e0145674ada23ac68bb15c08', '{\"_s\":\"69038bfa9347b95280ce3f9367809f07\",\"_d\":\"9f66308464454c33245e847eed638078208e17bb3581e86a0323713a7bf0744dd2f69a1a5850f3441f5d5888f5f5fb507e9e6a5f79d0bc0a02509d804506a06269666d7358ef7971efb1289e582462553d17da94dc8b216216df87cb587a1fe9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1108, 236, 'a246b437143b36409bfc6128d8fd1d98', '{\"_s\":\"57212bec1ff660c1083924d1aa53019c\",\"_d\":\"02cf8c9f3e3fc89ca5e9bc48badfe2328e74b162e7e8837ae4a326fcd3bcb703d0091de45b0877fc85a58159bfc1a7729fb599dd549c989119c2c090c8632c46278f436cdddf8cad1ab9d21bc3e3a00d55f60b85e808516c87dfc27320ac96d1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:27:22'),
+(1109, 237, '0c3f81fbbf3fd931bca98cfbd5ca6bb0', '{\"_s\":\"7a226f83ad73eab4dcbdaa0a45e57260\",\"_d\":\"27e0b9d9ceeaeba53fe6306bd208523c3e957940cbe97549d1db06722d5820c648e77472c017676932e71e0db5c83cd56a32eb1b3cab069838567c7605e0877bb14ef65203ec495d8c04e74c0f6123209fc0089bf6ab1eabcf58aa4ecd1f97d9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:28:56'),
+(1110, 237, '4eb9dbd9a7483ad2d843a3e1c60cd0ec', '{\"_s\":\"e05307b723d9c0d13d1eb55948036883\",\"_d\":\"258eb8adb1a70f9d7c13e92e087c9d509475f8d0d9bf709e80e8e36f4c5cbb7237c74e98911c4461487d138757a8573eb05175d49cfbfc3bdb896f86d9ac7d23063881018175ad0ee914de677d8985460b61f5163ac91e6ccaa5c928e982eeb5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:28:56'),
+(1111, 237, 'd4ff587e71251a90ae3650a86b6d661d', '{\"_s\":\"e8c7ed2a5946df495dade9b350e3572c\",\"_d\":\"3570782192927e5fea7e7d8b8637966efb64e52a627ac69af26b0a1e8b0940b4e83f700e4623535e9d4426e169d2c20e2f5cdc96cf3bf351938b995172dc073e869c78df8d0e3451a37e46b97054ae4a7876f2516ef2eb3460d97f157fb1e495\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:28:56'),
+(1112, 238, '24ce22b09e71eb482dc8ecb7b8c3f222b6a240d11f658a1345089af67b2aee5e', '{\"_s\":\"ae503ee5cc66097010b37e998ae057eb\",\"_d\":\"80884679ca80db5d33d3a4afa0074536afda96e099d2fb8366df72f57e327608dfc79280d85a8f4a588bfdd908cb2b93e755fa199aba4522dcbc31c0ea22a4531e27f696825fd87d6ce4125e4b42e18cfa80dad3f355bc0fc21b93e41c677e02\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:01'),
+(1113, 238, 'ac6b95b763c1a459d1a94a21a70dbc27', '{\"_s\":\"55b4528c1f23046d1a1401638941e0cb\",\"_d\":\"cb321c39a89de5488a1fb93e10ff04da29caa168544d9fb4906a2eab7cb8a36870d980dc966213371104b0bd559ab369c2eef8e45982b77388caa791fe14cfca3b76408c2166e2a6c1aba0505f8f434b34cd044a692de7e80635649369cc7ef0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1114, 238, '144e34614b723f18abee57396f02bc40', '{\"_s\":\"a61d6fb42b89e3bab374aa410043396b\",\"_d\":\"bb5947ac27583c1a2e9910dd9cccd95e908a4946d9015f8e1e78516d7159ca7395b06967dd83a1756fbbb028491bd724e681264c5608ae02e683e114c2487130e5352f83b57fe40487b378555e8e8914700c2361782552edc2d366ad399fc256\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1115, 238, '2f818a4d4d74aa2093a7d31edd270232', '{\"_s\":\"b4bafe4e6630a3dce3caed4f28f04113\",\"_d\":\"9083b66b9e59f1e8680f244cb44a9d3e2061cfef5bd167b2ad1ec63fa7cafb577d636853f7f0d61629baffb489226653fea3e8bba314f657515fd058c4b4d65d6c2c954f36a644fa4960d1a67c77697d814215374939b4db9f15eb0202d37701\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1116, 238, '3901d1cdc128f5a1eb8fe06f9f0f97be', '{\"_s\":\"00067a49893c1ec8ffa9aa2af9994de0\",\"_d\":\"277c6c71ebb802a7992c45522e119cd4b54fb2e9a506ec7ca1d249a8af12661ff39be373464c7e6b7a95f473f42b51cb0e9214901c9f08367baeb01cf585118bfa42eef24c81631942e31b9006bf9433f211596d980b55045441c4f6e5712588\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1117, 238, '8988a0a203b73c2c6eecbcdc2ff6c53e661ee24e4088163657a937827b2e5b39', '{\"_s\":\"339854dbe3c545102a2d890fdd7315df\",\"_d\":\"ecb96879bb196925c8b612ad3259cbb7739f3836a18b44ca5bdaa2ffb7d4fe2537dc84cbd7b2a70710113d773f3a45c754aa0773beed73fb7d1a954be61deff0aae39963ee53d0550004bda9359a0d92a1d7c3e11e7c3dd23df845cf308b67ef\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1118, 238, '56aeb62917bbed27d6f65efe4a893365', '{\"_s\":\"850e072f00d4f93cf3f3232fc4d9a547\",\"_d\":\"e7e5375388a941d4376c2f3de63ad9d245b26d8d2b301126c2ac127342928f6c4f3ac0ee960ed724e7b0f3930f58b31602b80e9bc2d6dc825a04e51ed76447efa00f4a7f39c887f7ee2d4bd2112a78a23956ba131cf035db1ebb3b8dff4cf6b6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1119, 238, '8acc3313dc37c694f787639dc44000e4', '{\"_s\":\"d66e29dca6196be7dd2325330cab0f02\",\"_d\":\"451a8b2abf6c62d5c6f05e59831c125ed247f9a44e6081ef925e16515c4d76e6718d0bbb8f193333cc697eab0f0ea1fb6c350621fc46088acbf3cb135e1c45ef0cac8084f04da7fc0f35704ea7efd022146308f893ae7ccda30587421afa81a2\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1120, 238, 'f971de6bc7c081be823acab036351a38', '{\"_s\":\"44744ef605465aacb22e00be07621230\",\"_d\":\"af865ebf6127a65b2969ead8b53f56159b62da2e643dcfe120db7a42921a29921f2a65b1c77b17233b32f171549d0a809c2791d455732d9f0955fd2800dfc11b8680a420028e7a88960915d4a3abd7f646b081cfc06a696e12a1977952622f7a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1121, 238, '323d74508494f8eddceaceae5c4250ee2aed257df75e0c660988a097525916f9', '{\"_s\":\"010d86790961a82e44a0b4e33207f84b\",\"_d\":\"36fee716eb0701df6e6e2fce68c96fd4ab8ef48ad20861bd436a881c1f056450abd32cd4752f91513ed0736413a8717a75724779843880012a03c5df5ba10302e8b81726aa23a33fa82f672bd4602600ba5f311ee5b8c85bc82d74ad0e43e523\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1122, 238, 'b9ddb6a78cf5d1bbf30e62e03dd49760', '{\"_s\":\"81b601559b92ac7761d36cb7cbab0543\",\"_d\":\"6f03daeb209015079b3f26e9155d6e296917d598d4c0ff7ef02d7172c0e963d21c49014ebeb5cbb29ceea463339f74b70221a459322df0af136b5489d93eb8aa3c1c9bcaa9479ed9d3502ca9622ae198fc41702e7bc48cb49c8cb95c65927611\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1123, 238, 'af658123c09f18a1d804151813119d37', '{\"_s\":\"a44886b6cf83df2b823d666b4bb2cffe\",\"_d\":\"157dd47ba12d4b4d22671686bf8a882cdc7f2cd0c5044330b5e99ea2750d9685eb32c51c8f8e425571d3cdcb12aa74e11e3549e3e3f7d1b2684539f8aa5d7f1e986d4384111fb2e05047bcbbe4a4cd80c37c108095ff8a48bebda36ae8cdc0a6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1124, 238, '59c41d01e3bea6ccb2b79870e9f3f4f0', '{\"_s\":\"7fccf74558275196582be9f3714988a6\",\"_d\":\"20deffd2501bfb64d4994bdae7870e65d8e1af7a59eb2a7579a82fcb07a018feab60675b76dd0deee23870ab9af05d86140a54f51302c4be646d42ff2f9e9f20025791f41fe1da9891299efeaff7b95633b9af8b57efaa18bfc2ea831537e008\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1125, 238, 'f9b8bbb502a675cf6ff9a49f6848ed77', '{\"_s\":\"d577177e2436395844b8b2e9b004bc6a\",\"_d\":\"c116efa59921ef18756a2d09f8811843ee35c2d3da0db16cf6ae87ffaee1079a91549b687d3a4b4f912903148e7f1ce28a3f229446edb8e723407853d391ac83c6a915a912203106c777e260f5cb6111a8fcf3751a790ee6181ab088b5df0d52\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1126, 238, 'b3d03b9f6a8ccfb08cac648df835ae0b', '{\"_s\":\"60b311184cbc5d0e533accfc4c9274c7\",\"_d\":\"f6278dd8f5f9b0d240924711ac9b764fa9ee174868c058853dd15f10835f6a3211247b26bed5d208bfec55859b8bc0749fd63ccb7f22febb4cf8a07c0a0e0a6736f1402f473915cffd9f5f5139b7823d210cd5a94be2b48d6b0ba518194ce316\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:31:02'),
+(1127, 239, '774a88dfc061f7ffdb31c7177f649667b9b09b4d299f2c054f8c3897ed65eb3b', '{\"_s\":\"7fab389b51835de30d52b0e5e0a7228a\",\"_d\":\"edee63da6107d014d8f78cf54d790c17260aa5bf259d09d4b8e495b15faa2b41a35e0b60735cb20af031bf7378f52f808af1196d9c007a56c4ed941eb39a492c00adae16837e66316f69a4cd4b0cde70e24fce7b9c47f75f151eaa3dce208aea\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:33:17'),
+(1128, 239, '5ec93a2e10070ca5b647a5d0d885e023', '{\"_s\":\"cd871e2e1c9c53a7e82f08101d22bdd4\",\"_d\":\"983920f8c4cbd387078e254b375b8b0d991c9621872c0bf9d240e77434735dec3740dc31cd7f802f030b954b3144dc4a7a34c515ac865529c2caac1a5b463729aa8b19d2f2d092c12c8f11bf39718dceb1994026def524f8f2f79ae7f4f66e80\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:33:17'),
+(1129, 239, '9f28a72e37c7e884dc7a510460ad5a0b', '{\"_s\":\"5f80316d995f9f08de97624d2595ba67\",\"_d\":\"648a69d49b446b2f48354a4d5f2c633fb9477e33116995232ac82cd0e7e511642cb3e52a06cc174d376120cdf5b3b179d635fb46f59f2fea1a4229a5305ae5e8f3897add88fd9b9cd587a4e2bb8ebde243b0306a383e0906fee7474e592efbb0\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:33:17'),
+(1130, 239, 'cf1b9a3aa10eafed24bc0106fce9f58904efe8be793da6c10c666168e66c0d1f', '{\"_s\":\"3ca18d6391083b0c864d7ccb4419331b\",\"_d\":\"f38333f2a825ce8b8cac6f700ca2862dda92dfa0332325e5e86b29a1475103f429c4b8d7e963aaf0c416b9286e393d788d19b298f2913d7b9a6e00865f63022b8fa81f79a5846f43cdda054ac908b3a956111008d1ee778343ce021cc52e11f1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:33:18'),
+(1131, 240, '2ac5cab80e951965d7d3eefe8faf8996b2420c31964c79e100758be5d2424221', '{\"_s\":\"0837708650b8a3ca8ecf1baf39cc461d\",\"_d\":\"4d70007651d9c8239d00d136a53e6675f3b6c062c4455480b44c1e093ef73d1fe34c0718697bf05832ce109d4015ae7456a73a3c2783c2124bc3ef1697b74345529376c8fac29109ac6d6b3a7f89e1eaf72a05cb93309b028cfcd5373568d6d5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:34:36'),
+(1132, 240, 'b184f3b3558eb4404fadacda4fbf9106', '{\"_s\":\"4e9b5cd75b477c189118bfc38fdd1292\",\"_d\":\"b913e0d06b96c0bf577c59e1f2ce22fcf4fedae3317e11b92ead83c3377aaecc5776325011b4b3f078432f29bbe2d0289b12149baf7274622f5b4f98f56cf40aa3ec3392a5fcc9807721da066c7d023841442dbd681477bdcb5a74632c463af5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:34:36'),
+(1133, 240, 'c997a938062edf7176d930730acbf991', '{\"_s\":\"42c1c38285dc4eaeb5e2b08c50224262\",\"_d\":\"c5c9a23dffa887cf78d9aea9ebe82ffe73d9918b4e291a3e458034e9ff859c739d4dc0abaec87bc22b7f2f16624ec0dfb9f038447316072a3ffc3c7f36049f13ae6025c6d3d3c1733c52ebd7ff08c2d488264a659dc7bd3c4e5cc53bfd668a01\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:34:36'),
+(1134, 241, 'd57c60eeca208dab31a75bf31a2a8a54', '{\"_s\":\"7cc5f6c8e110bc480e24d20c87d50ed6\",\"_d\":\"7e74f7915ec384fd65a7d8d74f7898b69da9e038d019bd2eebde9de8bc4d924129d04167ccdce76d84b740d1b48578e4bdabe6a59c3398a8da91ec1bafb70a44c1c429f3b915f1d9a1de1f5e783d5f70bfaae83232aca69a7e862d02c8d31f58\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:35:55'),
+(1135, 241, '6614449999a25dd86fd072a7ab49f16aba0b3d2018f0454a69637b4220ad2df3', '{\"_s\":\"53c5fddbdf970f31b0cb182508ba01ec\",\"_d\":\"5ca38ee7e311cb00a6485a037ff5290786f258d010df9b8622de295caa83c1870c22a8e406867a567420f8a1cf8168a7823deacb3f7efa3c8ffba652b226d469291724d9f1a3665f18ecb620086c231a3b1272c644462fd4130497df2ccbb2e3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:35:56'),
+(1136, 241, 'ceef78471d260cebc5d419bd7cacef6b', '{\"_s\":\"3685dda9ded42ee2bdb54fe886233820\",\"_d\":\"6cf764cb3096e6fe3f1988435bc026aaa518ac13515149781673a0b4012f6169c38379261fdcce946dfdfd15374150b190b86649f4eb32f87e6f01efce59e2bf79b2aad8f2e143a7de3b4b593de5430ebc23fea34cacb63c99d208f802900dca\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:35:56'),
+(1137, 242, 'b5457b049d99ab99ff1d5ac1915532ee0ad332773c1b2ec30c8aa4c000a69b2a', '{\"_s\":\"2e9406fc42546771f695110c76372901\",\"_d\":\"e9dc71bb8eb2da6cd3d3ee15dc40c4f036afc597a7af405ed4fe44b4382fabde28eaaec062a220adc3f7474302111fc9bc6c61c7a49318ecb804687b94dcc61e38011af8b704a1982ea6c0b2ace562ba3085a7c6703b496d1d7e60f6bb7cc21e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:36:59'),
+(1138, 242, 'dad0d2c3a2afc6457bf7179f5bf9b14118adbc866d1d189980aa24aede9fd57b', '{\"_s\":\"539815094e698ab6a143eecc245e19a8\",\"_d\":\"f4d78176c5ec10bddbc17d9ae5c4080fc9c6267ba8d1cb8619f573732c4eed6b3dc12a2f7a0ecee758d869db1b11419bcefeb59821d4f4f03278855dcf44bbc2cfe8dc3e34edae17f57554cd217e7481c17c5e44a761921d2d4aa0e8a6293b26\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:36:59'),
+(1139, 242, 'ed22d3217bde0d125a4196b1dc17d45f6dc84a1a942c5f4705df45b8d3c585da', '{\"_s\":\"9a334bca72ce836c52258bdb7ef68615\",\"_d\":\"2c44144fda4fe3c8578b1c1f4065198a965bf0296832c03ef5d818190d7a14bed49e89fbf358ed144fd05ee6d0e974e264fe4476dca29bdaaa789eb9268491645ed8cf4f837422d39a3e3e46d6fe55ebce90da01e8ee46955b644c419d3579c8\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:36:59'),
+(1140, 242, '46957ed9ed0f7338b90347869a0bba4c329e69a907f662149f27861275aa8b23', '{\"_s\":\"13de25378b1155a0a79f2a5cbd1f939b\",\"_d\":\"b54947e938fd8e35f11fc6fce49f6749148bcd052091137fb310892563b6096db6c14e4908c6290110ab1b658dff92f5108a6ec5af1d71cc3366a8d7b73011d3901dea5c4ee9640394b4d9defc7cae23ff8b7aa405af8e9a1fb0f5d1fa678e46\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:36:59'),
+(1141, 243, '4815695accebbbf3a75428579a161241', '{\"_s\":\"59b42535016ddc5d23dc2f310fbe8429\",\"_d\":\"2007488295302e2a76687f40682e7270ec64e7b911802149931d2e6620dfb3f384f1ff81e3b3850d904eb9a13018d5a3f88a892c17c138aea27b7068d69e471aedceb5b238062fc202a067bfabc1d63f5d9578caa9eaaf1e92fee6ac8213e90f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:38:10'),
+(1142, 243, '383536aa2d8108c249f338d4e1c6a07fbb7e0aed6188b92da7bd12ba046301fa', '{\"_s\":\"9e8e9b2a648d9ed72ff049323ade96f8\",\"_d\":\"3f699eae40f199b9906f4c8d50cadf5e7a9d3997a088326fe1ce52841ee1f15ed20e939956a87673d026e31c95d1792cb12e81b3d0518fd02617a62d24388f523d277dab63fc447ca8bf6277f05f6b138b89a608e863348a79f6c6d0195093a4\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:38:10'),
+(1143, 243, '4e87f546ad051b5e14f865740feb0319', '{\"_s\":\"c348467c481dbad961aeba5f646bdd3c\",\"_d\":\"3d328ee21d5524f19e5df713c2767dffa69507f958e11307c73f33742a0d24213714b4161fdc408ccc25026ae5705cc76968e950d2f45861b920227b71d1a0d72f91ddf74f0fc85eb77c3527b0765504762b356dd62bbaf6691f8e4b4ad2887e\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:38:10'),
+(1144, 244, 'f51a658677afeeece3724f40b2dee528', '{\"_s\":\"d46ac1d55aa8df3cea160b9346b3aa23\",\"_d\":\"4034671340a18fa2ad4a51dbfc818c61cc3c5f3ddbb897737bcb64576a22ddb1e6638b4147ddc789a1b6a5f29d5d7b9005cc5606070438880359ad552c1ef07dfeb448bbbd9bafb8c5f5fafa0acf540e250fd28f0bb8c4e8d6b211c44b8f0cc9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:39:04'),
+(1145, 244, '4cb73f52ee602b2868a27307d89f7595', '{\"_s\":\"6227da4ccb59e394ad4de403e1776886\",\"_d\":\"65cbf77290168d58e0a4a131590f61fedb7b18b7383f87b59ed7f041a894760348c2acf632856a0e8b076d39e2ce217f65dedf3aced2e1bec43393b62d5a146c441ed8adefbbf02ba3af4a3edde02a577cca4a9163bc0c4890c6dac820f31ce1\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:39:04'),
+(1146, 244, '5f938ba460f4e944b2a3383b60d9d91527b54a3eab44d4fc881a204c51e33aa8', '{\"_s\":\"72e30d12a27a4750544567fc6d5bbaa9\",\"_d\":\"67e25b2c0efa80d5677f344b7d95d24e86e6834731b12b46eb7bdde96076921518fe4f9f210dc69ea3fb172f42814919355202e35e04794fdb9814e86cbbccccfe9ded3ab6799ac7ffb5737c9a9ffdd203d9cfd2f1aefd91022f82c1988d62e3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:39:04'),
+(1147, 245, '5f938ba460f4e944b2a3383b60d9d91527b54a3eab44d4fc881a204c51e33aa8', '{\"_s\":\"e8eceaf134fef0b9af2e522da2e077fa\",\"_d\":\"aeaabdc8a2659f9493de2ea3f63a2016a3255e9e59a8b58eccc02a6e08cbe9150e32900e97df8f384bfe1628d8a178768e3565a7a4671ba51d611b00164ae340963b37fb4ff06587871a2c2771382b90e5971fee1b5ba0280e99a92d87454286\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1148, 245, '810b9a305747437141d43fe12c8d7f3c', '{\"_s\":\"c44e4dd192d5107aeee08252c7b813a5\",\"_d\":\"8d089991f9ac0c6b3e686b08ccdac7af65d72effdcad2e0c840f918e444a62c8db605ed1099b6e0784aa1d60c7cbbb4a5f2dfa37c0e9baeb43fedf04d085de56efe8aaf15218bc1ef0181532f4c026fd70753b73613f48f445d2a7b9d3030de3\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1149, 245, 'aa0179c22392fdef6f59654ccf81386f', '{\"_s\":\"e54093f26d1231edbea2aada10486703\",\"_d\":\"ddd2c3d0ac5adeb1271258d5e2a29234f34ca351d20a5e08f8fe1bdfd59a304e2313dd5001f7a144e39a67d2fff374eed7a2cd79384218146ef4349c76ff120fb711e7929e2b0d38e859dfff5a4a143ba7077b99a730584e441ac29204b09648\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1150, 245, 'ee37e8f634e9c5f243a580eed1629b6e', '{\"_s\":\"f179171477d790ce1d40713177d6fbfa\",\"_d\":\"072c3b10fce12997113cb43fe0f380a84a6011635cb87bd1527ccc01ce10abdc7929cc8333fedeaf94de9d1f031bf204829d67d5c080144d9c03c3c4772c2e6a98d82cd24631ae025da99331349b9185119b31a548459244ee878cece74d1801\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1151, 245, '940a7a055c3407345a9d18182c530a04', '{\"_s\":\"aa5897f6e2bafff2316e19d53efce0e7\",\"_d\":\"9d6e70325a7c7ee935184f88bab0b3f202bb277e44ce4e83d638992fc397e5699bdcac57f6cc5a2918688bff517b2833a63b005e1a72cf85f206c34d7bce4829c092b723941bdebe3fd6e730b12f0dd80c77ba253197b8aa597db02725dd2580\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1152, 245, '0c4a9a7c468087ba92432893a0909c1c', '{\"_s\":\"15067a316812ebde0349d811acad69d6\",\"_d\":\"fa4369aaba9ec3e30244f39a35d49aecbf6d9bc78aea1d047e6edebfeca0fae0c308240a6e212956075aac2975494734723fec2093534ae5617a40b5c25cb7d2964c392c70652eafd5d8bce49e91e259688389b1897297d9324c6427e3b1f25c\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1153, 245, '3eeb0012870e16b760dfe849ee9c647c', '{\"_s\":\"792641b2b4596c33650b4b08482dab1c\",\"_d\":\"288afa5ee5fb5ad70dc11bb0121cea944fadee6eb31d2f675d7d9c256abf98319d7ddefe9076c38e2d9df6c48a4ebc7a5ca1dba390843ecd254df58fc05e596413349bf8cbad26ab573d2f4b18bcc3e4fb5bceedfd94d4b8c00d6a42880c1290\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1154, 245, '7dd21300a8b2543af4a0f4f2991d1d26', '{\"_s\":\"1c3144f11a61f9321b275ea63c842327\",\"_d\":\"d2aef1e97f71ae175b884e266732c5ba813ab86f99f8f626cabd937d84e8243a64e063ae1b5fd53c617d5ea4152657f9fb8158cd3ade39eac24977d02f212d256cb0ed00a8a04804e427aef97c9ddcba88b9cfc8adb77f2bd44c526527e9f61f\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1155, 245, '06dfb8b0e9de3eed890f92e1c842260c', '{\"_s\":\"033f4380d24bfe24e0a591e2e2387315\",\"_d\":\"228128c922ab04cca5fced3444075d1ef5b046e7fa871e40eab957a4f2d0a3f03de42907822139f4eca9730f95db269392b728b21543215a3fbf06ff073a79b5dd3a2f13fab9b3f6cbb42e5f1840ebd696851ceb8bfc05df7468446321b7efc9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:40:24'),
+(1156, 246, '1e8863fabba164f3262ba7d21a2fd584', '{\"_s\":\"6fbfe7954e6ad5f0d398ba52a21d72b9\",\"_d\":\"2a2de98f8671ac49606e27ed103f042c0dc79bd42d7594f19eb624f980b5343ca491c5dd6f41b831711a4fb7db29ca7e5306be5cb4a4785ae7e613965375f0f3a4a40a59a0d13ef0fc7aca9e56f1b6221563755fd7468168d893a469f7380d8b\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:41:40'),
+(1157, 246, '30fc59a83540bf536cd577459e90d48ed092c2f75d732cdf192fdc770da751fa', '{\"_s\":\"6ca790d981a0263b78810f5bb1cb426d\",\"_d\":\"f49e4a7286837cc0a8a02226c6979959d98fac01783480873a23c56b08accddee669cc92109fc73c09c36a009751dc72d9767866ca6bf1f0f18bbcd02cf73f9c5f6ba2e8aa1788422ac37c94dd76d2fe7e4fa9603d110e271246bcb0af487ce5\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:41:40'),
+(1158, 246, '8c8fe86b1ddb5ca19ca04a5d4bac924f4703b8c3b62dfffaa63ebec0092df0e1', '{\"_s\":\"b5844e25cd56c6c0352999c5cecb45e2\",\"_d\":\"99510c9be9995189ebf2d01a70193894e93c79c92050222c4977286575ede6d3c961a28c8ecc357dbae90047dcfd0491c3a47c641c2cea450eab90f02275a5c0ef72d91116cf7b4688fe08e5186e10c3cc8712ff64848fdbe6f9afbeb9de6fc9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:41:40'),
+(1159, 247, '56932e52ef4e25fdc9e3b5baa43e7b8eba331c8df8824bf70f42c9177f09c58b', '{\"_s\":\"bca27fba6b44acfe3e45384c80a99b71\",\"_d\":\"cf96521a49b2312298d530689ebd1bb4950df0f894bd5b5f207179b147cff4ce8f5fd76d1165da7b883a3aab74b8b8b6b9e5ac6c099dab9807399fcb667fdef56840b1f46d7ec9169c5aa043ef30ad5c9f3055fc6feda9465208f4844e51acd9\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:45:10'),
+(1160, 247, '93904c5493d96c538b3eef214ff44cce2dfa3d204d708af27749663e1fe2eeb0', '{\"_s\":\"3373ec7ff6e1500e8a75472e0cb31fbc\",\"_d\":\"9702876b892fb0224b670af3118c2bc7b0f54ec1eac577cee77adf7ef5b2c14515141a9b99eeb10713019e34b930b6893fb50e02ab9bec3e829c96c0c008df5713e7a22d38bf1392d63af52993c4fb93c4dbb19058f4ee7287913975d9d26fd6\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:45:10'),
+(1161, 247, '5b89129860b0d5a438692737981c79d707271276c563d4763e0995e6e804b4bf', '{\"_s\":\"9070d9c8f9f1b68c6e9e3eb893aa7527\",\"_d\":\"d3825b3b0e3062f74e9ea3d680a055ed015321617de2e5b56c6f8074f23814bbfebc2f8439dae3b6f3eb6a376e9c70d7498fe6e174226618374c8e673d60946f5de3b067e6bb1c97f96cac3a55e9cf1b7ce5a5fc263dda9f30e0a15af86dc714\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:45:10'),
+(1162, 247, '8fa9bc8d306823d4c3fd15e65fc48a57', '{\"_s\":\"5ec49dbc81b3089293fff70c811dafed\",\"_d\":\"f9047da9a3658ccce42d7c2cb8bb0eee362c8eff8b973f1d55ce02a6267d399324293fc5cdc2d071a21beea4a7c2e5db0f1ad1a48f536eeb466a1c361a361a9034750f5783fdc04a214688224f7b2fff1d40614edb4d4091ef55fb9a174b5e5d\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:45:10'),
+(1163, 248, '2b69736e33176a3fbcdedde7955453dc1f380ea6612afb95533e93036da0add7', '{\"_s\":\"d39141a711977b49f00fc922bd8ceb54\",\"_d\":\"cfba2f3f63caeb5c699c421ae0dfa0d69441e447bc47dcb2e374b59e9491c0e8ad5cb06e5067510f70056c6d1e8210a3c934ba3b5de36097105d7b25eeb20dec44ac9ac2a3716311f08caddeec3be7b84167bb378cc9b4cbdf53b8847a80ff9a\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:46:19'),
+(1164, 248, 'dc08de45d2509b1bb241c357035e08dd', '{\"_s\":\"092b7ab23cd39da02547459c407b04e4\",\"_d\":\"b7bf36a865a4b31da435af622afa2a7b1c7814f678898e3cd64f753c4dc15f505accd1815c8e22331e61eb0d6bf121e5fe0c235d8c9f7febd2ac8b722b1d92aad243c3b20ec78e792d7b0df94d3aa360614253d4ac6fef56f1d1bda1c4d6ba54\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:46:19'),
+(1165, 248, '151f7c81f5d89ecf54297f0da37704de', '{\"_s\":\"b3a9aa1e458962cc876a2575d2039c7f\",\"_d\":\"7bb7d72f65b12429d2ff845879022feff254281053b37b15e0d716d774dc00d9d5b9f749d8302f73f49a8117ba67de0d8a4e68a73c1f67d6be3e2a956fa3e4ee8742cb160b35fc284349d954f69e9ee265af1d90adf9656d0c956c876d3e76ed\"}', '839f68764ae7dec35483b37fd98831a6', '2025-02-23 07:46:19');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users_table`
+--
+
+CREATE TABLE `users_table` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `nationality` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `picture` text DEFAULT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users_table`
+--
+
+INSERT INTO `users_table` (`id`, `first_name`, `last_name`, `email`, `phone`, `nationality`, `password`, `picture`, `is_verified`, `status`, `created_at`, `updated_at`) VALUES
+(2, 'Michael', 'Ajamma', 'justine@gmail.com', '2347033052336', 'ng', '$2b$10$LnxQPcWTKW7oNDT404pEwejO80zi24g.OXgz/bKcXZGBjPSdT9NC6', NULL, 1, 1, '2025-03-24 16:59:15', '2025-03-24 16:59:15'),
+(3, 'Chris', 'Mayor', 'mayor@gmail.com', '2349130448819', 'ng', '$2b$10$x66V34qB6aBRlr8MeihLTuFVSwB8Q62gvlipduqhcD6bcvr9PkZfq', NULL, 1, 1, '2025-03-30 12:06:32', '2025-03-30 12:06:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `variations_table`
+--
+
+CREATE TABLE `variations_table` (
+  `id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `sku` varchar(255) NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `stock` int(11) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `variations_table`
+--
+
+INSERT INTO `variations_table` (`id`, `product_id`, `sku`, `price`, `stock`, `status`, `created_at`, `updated_at`) VALUES
+(5, 8, '2-MENSQ-GRE-S-4054', '6.74', 100, 1, '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(6, 8, '2-MENSQ-GRE-M-6509', '5.20', 80, 1, '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(7, 9, '592-MENSA-BLA-M-3314', '8.99', 150, 1, '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(8, 9, '592-MENSA-BLU-L-3687', '9.50', 120, 1, '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(9, 9, '592-MENSA-WHI-XL-5181', '9.50', 120, 1, '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(10, 10, '620-MENSO-BLU-M-8967', '12.99', 80, 1, '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(11, 10, '620-MENSO-GRE-L-6929', '13.50', 70, 1, '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(12, 10, '620-MENSO-GRA-XL-9582', '14.00', 60, 1, '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(13, 11, '623-MENSS-SKY-M-2736', '10.99', 90, 1, '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(14, 11, '623-MENSS-GRA-L-8769', '11.50', 75, 1, '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(15, 11, '623-MENSS-GRE-XL-2908', '12.00', 65, 1, '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(16, 12, '596-MENSL-GRE-M-3675', '23.01', 50, 1, '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(17, 12, '596-MENSL-BLU-M-1594', '24.12', 20, 1, '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(18, 12, '596-MENSL-PUR-M-5916', '20.99', 50, 1, '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(19, 12, '596-MENSL-BLA-M-8915', '27.10', 37, 1, '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(20, 13, '619-MENSG-WHI-M-9829', '10.99', 50, 1, '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(21, 13, '619-MENSG-WHI-L-7117', '10.99', 40, 1, '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(22, 13, '619-MENSG-WHI-XL-5632', '10.99', 30, 1, '2025-03-22 11:26:03', '2025-03-22 11:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `variation_attributes`
+--
+
+CREATE TABLE `variation_attributes` (
+  `id` int(11) NOT NULL,
+  `variation_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `variation_attributes`
+--
+
+INSERT INTO `variation_attributes` (`id`, `variation_id`, `name`, `value`, `created_at`, `updated_at`) VALUES
+(53, 5, 'Color', 'Grey', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(54, 5, 'Size', 'S', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(55, 6, 'Color', 'Grey', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(56, 6, 'Size', 'M', '2025-03-21 12:37:19', '2025-03-21 12:37:19'),
+(57, 7, 'Color', 'Black', '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(58, 7, 'Size', 'M', '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(59, 8, 'Color', 'Blue', '2025-03-22 04:22:56', '2025-03-22 04:22:56'),
+(60, 8, 'Size', 'L', '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(61, 9, 'Color', 'White', '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(62, 9, 'Size', 'XL', '2025-03-22 04:22:57', '2025-03-22 04:22:57'),
+(63, 10, 'Color', 'Blue', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(64, 10, 'Size', 'M', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(65, 11, 'Color', 'Green', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(66, 11, 'Size', 'L', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(67, 12, 'Color', 'Gray', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(68, 12, 'Size', 'XL', '2025-03-22 04:35:14', '2025-03-22 04:35:14'),
+(69, 13, 'Color', 'Sky Blue', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(70, 13, 'Size', 'M', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(71, 14, 'Color', 'Gray', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(72, 14, 'Size', 'L', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(73, 15, 'Color', 'Green', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(74, 15, 'Size', 'XL', '2025-03-22 04:43:40', '2025-03-22 04:43:40'),
+(75, 16, 'Color', 'Green', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(76, 16, 'Size', 'M', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(77, 17, 'Color', 'Blue', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(78, 17, 'Size', 'M', '2025-03-22 11:12:07', '2025-03-22 11:12:07'),
+(79, 18, 'Color', 'Purple', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(80, 18, 'Size', 'M', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(81, 19, 'Color', 'Black', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(82, 19, 'Size', 'M', '2025-03-22 11:12:08', '2025-03-22 11:12:08'),
+(83, 20, 'Color', 'White', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(84, 20, 'Size', 'M', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(85, 21, 'Color', 'White', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(86, 21, 'Size', 'L', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(87, 22, 'Color', 'White', '2025-03-22 11:26:03', '2025-03-22 11:26:03'),
+(88, 22, 'Size', 'XL', '2025-03-22 11:26:03', '2025-03-22 11:26:03');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vendors_table`
+--
+
+CREATE TABLE `vendors_table` (
+  `id` int(11) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `phone` varchar(20) NOT NULL,
+  `nationality` varchar(100) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `picture` text DEFAULT NULL,
+  `is_verified` tinyint(1) NOT NULL DEFAULT 0,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `vendors_table`
+--
+
+INSERT INTO `vendors_table` (`id`, `first_name`, `last_name`, `email`, `phone`, `nationality`, `password`, `picture`, `is_verified`, `status`, `created_at`, `updated_at`) VALUES
+(1, 'Chris', 'Amuzie', 'khrise8@gmail.com', '{\"_s\":\"33f6bb044cd81', 'ng', '$2b$10$FBqAqxr3HlEMgks02DYMVO0D/I0US7Qs2gnrQtvovGXmmBLg9/lXS', 'https://res.cloudinary.com/dqx4lnxtn/image/upload/v1679748383/cld-sample-5.jpg', 1, 1, '2025-03-18 00:18:26', '2025-03-18 00:18:26');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `capabilities_table`
+--
+ALTER TABLE `capabilities_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `carts_table`
+--
+ALTER TABLE `carts_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cart_id` (`cart_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `category`
+--
+ALTER TABLE `category`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `_maincategory` (`_maincategory`);
+
+--
+-- Indexes for table `collections_table`
+--
+ALTER TABLE `collections_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `store_id` (`store_id`);
+
+--
+-- Indexes for table `filters_table`
+--
+ALTER TABLE `filters_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `name` (`name`);
+
+--
+-- Indexes for table `interactions`
+--
+ALTER TABLE `interactions`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `user_id` (`user_id`,`target_type`,`target_id`,`action`);
+
+--
+-- Indexes for table `live_table`
+--
+ALTER TABLE `live_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `maincategory`
+--
+ALTER TABLE `maincategory`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `media_table`
+--
+ALTER TABLE `media_table`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`),
+  ADD KEY `variation_id` (`variation_id`);
+
+--
+-- Indexes for table `products_table`
+--
+ALTER TABLE `products_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sku` (`sku`),
+  ADD KEY `store_id` (`store_id`),
+  ADD KEY `subcategory_id` (`subcategory_id`),
+  ADD KEY `collection_id` (`collection_id`);
+
+--
+-- Indexes for table `product_filters`
+--
+ALTER TABLE `product_filters`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_id` (`product_id`,`filter_id`),
+  ADD KEY `filter_id` (`filter_id`);
+
+--
+-- Indexes for table `product_moq`
+--
+ALTER TABLE `product_moq`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_id` (`product_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `product_sample`
+--
+ALTER TABLE `product_sample`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `product_specifications`
+--
+ALTER TABLE `product_specifications`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `shipping_methods`
+--
+ALTER TABLE `shipping_methods`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `shipping_providers`
+--
+ALTER TABLE `shipping_providers`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `method_id` (`method_id`);
+
+--
+-- Indexes for table `stores_table`
+--
+ALTER TABLE `stores_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `code` (`code`),
+  ADD KEY `vendor_id` (`vendor_id`);
+
+--
+-- Indexes for table `store_capabilities`
+--
+ALTER TABLE `store_capabilities`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `store_id` (`store_id`,`capability_id`),
+  ADD KEY `capability_id` (`capability_id`);
+
+--
+-- Indexes for table `store_reviews`
+--
+ALTER TABLE `store_reviews`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `store_id` (`store_id`,`user_id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
+-- Indexes for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `_category` (`_category`);
+
+--
+-- Indexes for table `users_table`
+--
+ALTER TABLE `users_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
+
+--
+-- Indexes for table `variations_table`
+--
+ALTER TABLE `variations_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `sku` (`sku`),
+  ADD KEY `product_id` (`product_id`);
+
+--
+-- Indexes for table `variation_attributes`
+--
+ALTER TABLE `variation_attributes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `variation_id` (`variation_id`);
+
+--
+-- Indexes for table `vendors_table`
+--
+ALTER TABLE `vendors_table`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `phone` (`phone`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `capabilities_table`
+--
+ALTER TABLE `capabilities_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+
+--
+-- AUTO_INCREMENT for table `carts_table`
+--
+ALTER TABLE `carts_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+
+--
+-- AUTO_INCREMENT for table `category`
+--
+ALTER TABLE `category`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=249;
+
+--
+-- AUTO_INCREMENT for table `collections_table`
+--
+ALTER TABLE `collections_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `filters_table`
+--
+ALTER TABLE `filters_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `interactions`
+--
+ALTER TABLE `interactions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `live_table`
+--
+ALTER TABLE `live_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `maincategory`
+--
+ALTER TABLE `maincategory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+
+--
+-- AUTO_INCREMENT for table `media_table`
+--
+ALTER TABLE `media_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
+
+--
+-- AUTO_INCREMENT for table `products_table`
+--
+ALTER TABLE `products_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
+-- AUTO_INCREMENT for table `product_filters`
+--
+ALTER TABLE `product_filters`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `product_moq`
+--
+ALTER TABLE `product_moq`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+
+--
+-- AUTO_INCREMENT for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `product_sample`
+--
+ALTER TABLE `product_sample`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `product_specifications`
+--
+ALTER TABLE `product_specifications`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+
+--
+-- AUTO_INCREMENT for table `shipping_methods`
+--
+ALTER TABLE `shipping_methods`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `shipping_providers`
+--
+ALTER TABLE `shipping_providers`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `stores_table`
+--
+ALTER TABLE `stores_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `store_capabilities`
+--
+ALTER TABLE `store_capabilities`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `store_reviews`
+--
+ALTER TABLE `store_reviews`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1166;
+
+--
+-- AUTO_INCREMENT for table `users_table`
+--
+ALTER TABLE `users_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `variations_table`
+--
+ALTER TABLE `variations_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+
+--
+-- AUTO_INCREMENT for table `variation_attributes`
+--
+ALTER TABLE `variation_attributes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=89;
+
+--
+-- AUTO_INCREMENT for table `vendors_table`
+--
+ALTER TABLE `vendors_table`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `carts_table`
+--
+ALTER TABLE `carts_table`
+  ADD CONSTRAINT `carts_table_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cart_items`
+--
+ALTER TABLE `cart_items`
+  ADD CONSTRAINT `cart_items_ibfk_1` FOREIGN KEY (`cart_id`) REFERENCES `carts_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cart_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `category`
+--
+ALTER TABLE `category`
+  ADD CONSTRAINT `category_ibfk_1` FOREIGN KEY (`_maincategory`) REFERENCES `maincategory` (`id`);
+
+--
+-- Constraints for table `collections_table`
+--
+ALTER TABLE `collections_table`
+  ADD CONSTRAINT `collections_table_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `interactions`
+--
+ALTER TABLE `interactions`
+  ADD CONSTRAINT `interactions_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `live_table`
+--
+ALTER TABLE `live_table`
+  ADD CONSTRAINT `live_table_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `live_table_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `media_table`
+--
+ALTER TABLE `media_table`
+  ADD CONSTRAINT `media_table_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `media_table_ibfk_2` FOREIGN KEY (`variation_id`) REFERENCES `variations_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `products_table`
+--
+ALTER TABLE `products_table`
+  ADD CONSTRAINT `products_table_ibfk_1` FOREIGN KEY (`store_id`) REFERENCES `stores_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `products_table_ibfk_2` FOREIGN KEY (`subcategory_id`) REFERENCES `subcategory` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `products_table_ibfk_3` FOREIGN KEY (`collection_id`) REFERENCES `collections_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_filters`
+--
+ALTER TABLE `product_filters`
+  ADD CONSTRAINT `product_filters_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_filters_ibfk_2` FOREIGN KEY (`filter_id`) REFERENCES `filters_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_moq`
+--
+ALTER TABLE `product_moq`
+  ADD CONSTRAINT `product_moq_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_reviews`
+--
+ALTER TABLE `product_reviews`
+  ADD CONSTRAINT `product_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `product_reviews_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_sample`
+--
+ALTER TABLE `product_sample`
+  ADD CONSTRAINT `product_sample_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `product_specifications`
+--
+ALTER TABLE `product_specifications`
+  ADD CONSTRAINT `product_specifications_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `shipping_providers`
+--
+ALTER TABLE `shipping_providers`
+  ADD CONSTRAINT `shipping_providers_ibfk_1` FOREIGN KEY (`method_id`) REFERENCES `shipping_methods` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `stores_table`
+--
+ALTER TABLE `stores_table`
+  ADD CONSTRAINT `stores_table_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `store_capabilities`
+--
+ALTER TABLE `store_capabilities`
+  ADD CONSTRAINT `store_capabilities_ibfk_1` FOREIGN KEY (`capability_id`) REFERENCES `capabilities_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `store_capabilities_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `store_reviews`
+--
+ALTER TABLE `store_reviews`
+  ADD CONSTRAINT `store_reviews_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users_table` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `store_reviews_ibfk_2` FOREIGN KEY (`store_id`) REFERENCES `stores_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `subcategory`
+--
+ALTER TABLE `subcategory`
+  ADD CONSTRAINT `subcategory_ibfk_1` FOREIGN KEY (`_category`) REFERENCES `category` (`id`);
+
+--
+-- Constraints for table `variations_table`
+--
+ALTER TABLE `variations_table`
+  ADD CONSTRAINT `variations_table_ibfk_1` FOREIGN KEY (`product_id`) REFERENCES `products_table` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `variation_attributes`
+--
+ALTER TABLE `variation_attributes`
+  ADD CONSTRAINT `variation_attributes_ibfk_1` FOREIGN KEY (`variation_id`) REFERENCES `variations_table` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
