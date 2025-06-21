@@ -413,7 +413,7 @@ module.exports.createProductVariation = async (req) => {
 };
 
 module.exports.fetchStores = async (req) => {
-    const { categ_level, categ_id, caps } = req.body;
+    const { categ_level, categ_id, caps, limit } = req.body;
 
     let filterColumn;
     if (categ_level === "main_category") {
@@ -473,7 +473,7 @@ module.exports.fetchStores = async (req) => {
                 FROM products_table p
                 WHERE p.store_id IN (?)
             ) p
-            WHERE p.row_num <= 3;
+            WHERE p.row_num <= ${limit|| 3};
         `, [storeIds]);
 
         if (products.length > 0) {
