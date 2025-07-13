@@ -32,6 +32,61 @@ const { getProductsMOQByIds } = require("../moduler/moq/getProductsMOQByIds");
 const {
   getStoresByCategories,
 } = require("../moduler/stores/getStoresByCategories");
+const {
+  getProductIdsByStore,
+} = require("../utility/product/getProductIdsByStore");
+const {
+  enrichProductsWithVariations,
+} = require("../utility/product/enrichProductsWithVariations");
+const {
+  getVideoMediaByStore,
+} = require("../utility/product/getVideoMediaByStore");
+const {
+  getRecordedLiveVideosByStore,
+} = require("../utility/product/getRecordedLiveVideosByStore");
+const { normalizeVideos } = require("../utility/media/normalizeVideos");
+const {
+  getStoreTrendingProducts,
+} = require("../utility/store/getStoreTrendingProducts");
+const {
+  getVideoInteractionMap,
+} = require("../utility/media/getVideoInteractionMap");
+const { getStoreLogo } = require("../utility/store/getStoreLogo");
+const { getUserScopes } = require("../utility/user/getUserScopes");
+
+// LOAD MANUFACTURES MODULE
+// module.exports.loadApp = async (req) => {
+//   const params = {
+//     level: "maincategory",
+//     pool,
+//   };
+
+//   // 1. Get basic sample data
+//   const samples = await getBasicProductSamples(pool, ["*"], 5);
+//   if (samples.length === 0) return [];
+
+//   // Get only names and IDs
+//   const capabilities = await fetchCapabilities(pool, ["id", "name"]);
+
+//   const categories = await getCategoryData(params);
+
+//   const sampleWithMedia = await Promise.all(
+//     samples.map(async (sample) => {
+//       const media = await getProductMedias(pool, sample.product_id);
+//       return { ...sample, images: media };
+//     })
+//   );
+
+//   const reachData = {
+//     samples: sampleWithMedia,
+//     categories,
+//     capabilities,
+//   };
+//   return {
+//     success: true,
+//     data: reachData,
+//   };
+// };
 
 module.exports.create_vendor = async (req) => {
   const { firstName, lastName, email, phone, country, password, picture } =
@@ -308,7 +363,7 @@ module.exports.createBaseProduct = async (req) => {
     !subcategory_id ||
     !name ||
     !desc ||
-    !price
+    price === undefined
   ) {
     return {
       success: false,
@@ -491,7 +546,7 @@ module.exports.createProductVariation = async (req) => {
   }
 };
 
-module.exports.fetchStores = async (req) => {
+module.exports.fetchStoresX = async (req) => {
   const { categ_level, categ_id, caps, limit } = req.body;
 
   let filterColumn;
@@ -511,6 +566,7 @@ module.exports.fetchStores = async (req) => {
         LEFT JOIN category c ON sc._category = c.id
         LEFT JOIN maincategory mc ON c._maincategory = mc.id
         WHERE s.status = 1`;
+
     let queryParams = [];
 
     // Apply Category Filter
@@ -563,7 +619,7 @@ module.exports.fetchStores = async (req) => {
     if (products.length > 0) {
       const productIds = products.map((p) => p.id);
 
-      const moq = await getProductMOQ(productIds);
+      const moq = await getProductMOQ(pool, productIds);
 
       const mediaFields = ["product_id", "url"];
       const media = await getProductMedia(productIds, pool, mediaFields);
@@ -586,6 +642,8 @@ module.exports.fetchStores = async (req) => {
           })),
       }));
 
+      console.log("stores==>", stores);
+
       return { success: true, data: storeData };
     }
 
@@ -599,29 +657,135 @@ module.exports.fetchStores = async (req) => {
   }
 };
 
-module.exports.fetchStoresTest = async (req) => {
-  const testData = req.body;
+module.exports.fetchStores = async (req) => {
+  const { categ_level, categ_id, caps, limit } = req.body;
 
-  const products = ["clothe", "laptops", "phones"];
+  const user_scope = "manufacturer";
+
+  let filterColumn;
+  if (categ_level === "main_category") {
+    filterColumn = "mc.id";
+  } else if (categ_level === "category") {
+    filterColumn = "c.id";
+  } else if (categ_level === "sub_category") {
+    filterColumn = "sc.id";
+  }
 
   try {
-    let matches = [];
-    Object.entries(testData).forEach(([key, value]) => {
-      if (products.includes(key)) {
-        console.log({ [key]: value });
-        matches.push({ [key]: value });
+    // 🔹 1. Get user_ids for given scope (e.g. manufacturer)
+    let vendorIds = [];
+    if (user_scope) {
+      const scopedUsers = await getUserScopes({
+        pool,
+        conditions: { scope: user_scope },
+        fields: ["user_id", "scope"],
+      });
+
+      vendorIds = scopedUsers.map((u) => u.user_id);
+
+      if (!vendorIds.length) {
+        return {
+          success: false,
+          error: `No users found with scope '${user_scope}'`,
+        };
       }
+    }
 
-      return {
-        success: true,
-        data: matches,
-      };
-    });
+    // 🔹 2. Base Store Query
+    let query = `
+      SELECT DISTINCT s.id, s.code, s.name, s.logo, s.net_worth, s.floor_space,
+      s.staff_count, s.is_verified, s.created_at, s.status
+      FROM stores_table s
+      LEFT JOIN products_table p ON s.id = p.store_id
+      LEFT JOIN subcategory sc ON p.subcategory_id = sc.id
+      LEFT JOIN category c ON sc._category = c.id
+      LEFT JOIN maincategory mc ON c._maincategory = mc.id
+      WHERE s.status = 1
+    `;
 
-    return {
-      success: false,
-      error: matches,
-    };
+    let queryParams = [];
+
+    // 🔹 3. Add scope filter (vendorId filter)
+    if (vendorIds.length > 0) {
+      query += ` AND s.vendor_id IN (${vendorIds.map(() => "?").join(", ")})`;
+      queryParams.push(...vendorIds);
+    }
+
+    // 🔹 4. Category Filter
+    if (categ_level && categ_id && filterColumn) {
+      query += ` AND ${filterColumn} = ?`;
+      queryParams.push(categ_id);
+    }
+
+    // 🔹 5. Capability Filter
+    if (caps && caps.length > 0) {
+      query += ` AND s.id IN (
+        SELECT store_id FROM store_capabilities 
+        WHERE capability_id IN (${caps.map(() => "?").join(",")})
+        GROUP BY store_id
+        HAVING COUNT(DISTINCT capability_id) = ?
+      )`;
+      queryParams.push(...caps, caps.length);
+    }
+
+    // 🔹 6. Fetch Stores
+    const [stores] = await pool.query(query, queryParams);
+    if (!stores.length) {
+      return { success: false, error: "No stores found for this filter." };
+    }
+
+    const storeIds = stores.map((s) => s.id);
+
+    // 🔹 7. Fetch Capabilities
+    const capabilities = await getStoreCapabilities(storeIds, pool, [
+      "id",
+      "name",
+    ]);
+
+    // 🔹 8. Fetch Top Products per Store (LIMITED by `limit`)
+    const [products] = await pool.query(
+      `
+      SELECT p.id, p.store_id, p.name, p.price, p.discount
+      FROM (
+          SELECT p.*, ROW_NUMBER() OVER (PARTITION BY p.store_id ORDER BY p.id) AS row_num
+          FROM products_table p
+          WHERE p.store_id IN (?)
+      ) p
+      WHERE p.row_num <= ${limit || 3}
+      `,
+      [storeIds]
+    );
+
+    // 🔹 9. Enrich Products with Media & MOQ
+    if (products.length > 0) {
+      const productIds = products.map((p) => p.id);
+
+      const [moq, media] = await Promise.all([
+        getProductMOQ(pool, productIds),
+        getProductMedia(productIds, pool, ["product_id", "url"]),
+      ]);
+
+      const storeData = stores.map((store) => ({
+        store: store,
+        capabilities: capabilities
+          .filter((c) => c.store_id === store.id)
+          .map((c) => ({ id: c.capability_id, name: c.name })),
+        products: products
+          .filter((p) => p.store_id === store.id)
+          .map((p) => ({
+            id: p.id,
+            name: p.name,
+            price: p.price,
+            discount: p.discount,
+            moq: moq.filter((m) => m.product_id === p.id),
+            media: media[p.id] || [],
+          })),
+      }));
+
+      return { success: true, data: storeData };
+    }
+
+    return { success: false, error: "No products found for stores." };
   } catch (error) {
     console.error("Error fetching stores:", error);
     return {
@@ -953,44 +1117,444 @@ module.exports.fetchStoreGallery = async (req) => {
   return galleryRes;
 };
 
-module.exports.loadApp = async (req) => {
-  const params = {
-    level: "maincategory",
-    pool,
-  };
+// For adding store tips
+module.exports.add_tips = async (req) => {
+  const { store_id, products, description, media_type, media_url } = req.body;
 
-  // 1. Get basic sample data
-  const samples = await getBasicProductSamples(pool, ["*"], 5);
-  if (samples.length === 0) return [];
+  // Input validation
+  if (
+    isNaN(store_id) ||
+    !Array.isArray(products) ||
+    products.length === 0 ||
+    !description ||
+    !media_type ||
+    !media_url
+  ) {
+    return {
+      success: false,
+      error:
+        "Invalid input. Please provide valid store_id, products, media_type, media_url, and description.",
+    };
+  }
 
-  // Get only names and IDs
-  const capabilities = await fetchCapabilities(pool, ["id", "name"]);
+  try {
+    // 1. Validate store exists
+    const [storeRows] = await pool.query(
+      `SELECT id FROM stores_table WHERE id = ?`,
+      [store_id]
+    );
+    if (storeRows.length === 0) {
+      return {
+        success: false,
+        error: "Store not found.",
+      };
+    }
 
-  // 2. Get related product data
-  //const productIds = samples.map(s => s.product_id);
+    // 2. Validate all product IDs exist and belong to the store
+    const [productRows] = await pool.query(
+      `SELECT id FROM products_table WHERE id IN (?) AND store_id = ?`,
+      [products, store_id]
+    );
 
-  //const productsMap = await getProductsByIds(pool, productIds);
+    const foundProductIds = productRows.map((row) => row.id);
+    const missingProductIds = products.filter(
+      (id) => !foundProductIds.includes(id)
+    );
 
-  // 3. Get related store data
-  //const storeIds = Object.values(productsMap).map(p => p.store_id);
-  //const storesMap = await getStoresByIds(pool, storeIds);
+    if (missingProductIds.length > 0) {
+      return {
+        success: false,
+        error: `Some products are invalid or do not belong to the store: ${missingProductIds.join(
+          ", "
+        )}`,
+      };
+    }
 
-  const categories = await getCategoryData(params);
+    // 3. Insert the tip
+    const [result] = await pool.query(
+      `INSERT INTO store_tips (store_id, media_type, media_url, description, products, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, NOW(), NOW())`,
+      [store_id, media_type, media_url, description, JSON.stringify(products)]
+    );
 
-  const sampleWithMedia = await Promise.all(
-    samples.map(async (sample) => {
-      const media = await getProductMedias(pool, sample.product_id);
-      return { ...sample, images: media };
-    })
-  );
+    return {
+      success: true,
+      data: {
+        id: result.insertId,
+        store_id,
+        media_type,
+        media_url,
+        description,
+        products,
+      },
+    };
+  } catch (error) {
+    console.error("Error adding store tip:", error);
+    return {
+      success: false,
+      error: "An error occurred while saving the store tip.",
+    };
+  }
+};
 
-  const reachData = {
-    samples: sampleWithMedia,
-    categories,
-    capabilities,
-  };
-  return {
-    success: true,
-    data: reachData,
-  };
+module.exports.update_tip_products = async (req) => {
+  const { tip_id, product_id, action } = req.body; // action: 'add' or 'remove'
+
+  if (
+    isNaN(tip_id) ||
+    isNaN(product_id) ||
+    !["add", "remove"].includes(action)
+  ) {
+    return {
+      success: false,
+      error: "Invalid tip_id, product_id, or action",
+    };
+  }
+
+  try {
+    // 1. Fetch the tip to get store_id and current products
+    const [tipRows] = await pool.query(
+      `SELECT store_id, products FROM store_tips WHERE id = ?`,
+      [tip_id]
+    );
+
+    if (tipRows.length === 0) {
+      return {
+        success: false,
+        error: "Tip not found",
+      };
+    }
+
+    const { store_id, products } = tipRows[0];
+
+    // 2. Validate product exists and belongs to the same store
+    const [productRows] = await pool.query(
+      `SELECT id FROM products_table WHERE id = ? AND store_id = ?`,
+      [product_id, store_id]
+    );
+
+    if (productRows.length === 0) {
+      return {
+        success: false,
+        error: "Product does not exist or does not belong to this store",
+      };
+    }
+
+    // 3. Parse existing products
+    let currentProducts = [];
+    try {
+      currentProducts = JSON.parse(products) || [];
+    } catch {
+      currentProducts = [];
+    }
+
+    // 4. Modify product list
+    if (action === "add") {
+      if (!currentProducts.includes(product_id)) {
+        currentProducts.push(product_id);
+      }
+    } else if (action === "remove") {
+      currentProducts = currentProducts.filter((id) => id !== product_id);
+    }
+
+    // 5. Update the row
+    await pool.query(
+      `UPDATE store_tips SET products = ?, updated_at = NOW() WHERE id = ?`,
+      [JSON.stringify(currentProducts), tip_id]
+    );
+
+    return {
+      success: true,
+      data: {
+        tip_id: Number(tip_id),
+        updated_products: currentProducts,
+      },
+    };
+  } catch (error) {
+    console.error("Error updating tip products:", error);
+    return {
+      success: false,
+      error: "An error occurred while updating the tip's products",
+    };
+  }
+};
+
+module.exports.fetch_store_tips = async (req) => {
+  const { store_id } = req.params;
+
+  if (!store_id || isNaN(store_id)) {
+    return {
+      success: false,
+      error: "Invalid store_id",
+    };
+  }
+
+  try {
+    // 1. Get all store_tips
+    const [tips] = await pool.query(
+      `SELECT id, media_url, description, products FROM store_tips WHERE store_id = ? ORDER BY created_at DESC`,
+      [store_id]
+    );
+
+    if (!tips.length) {
+      return {
+        success: true,
+        data: [],
+      };
+    }
+
+    // 2. Extract and flatten all product IDs
+    const allProductIds = [
+      ...new Set(
+        tips.flatMap((tip) => {
+          try {
+            return JSON.parse(tip.products);
+          } catch {
+            return [];
+          }
+        })
+      ),
+    ];
+
+    // 3. Fetch enrichments (moq, media, variations)
+    const [moqList, mediaMap] = await Promise.all([
+      getProductMOQ(pool, allProductIds),
+      getProductMedia(allProductIds, pool, ["url"]),
+      //enrichProductsWithVariations(pool, allProductIds),
+    ]);
+
+    // 4. Map product_id => moq[]
+    const moqMap = {};
+    for (const moq of moqList) {
+      if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+      moqMap[moq.product_id].push({
+        min_qty: moq.min_qty,
+        ppu: moq.ppu,
+      });
+    }
+
+    // 5. Helper to enrich a product
+    const buildEnrichedProduct = (productId) => ({
+      id: productId,
+      moq: moqMap[productId] || [],
+      medias: mediaMap[productId] || [],
+      //variations: variationMap[productId] || [],
+    });
+
+    // 6. Construct final tip structure
+    const enrichedTips = tips.map((tip) => {
+      let productIds;
+      try {
+        productIds = JSON.parse(tip.products);
+      } catch {
+        productIds = [];
+      }
+
+      return {
+        id: tip.id,
+        mediaUrl: tip.media_url,
+        description: tip.description,
+        products: productIds.map(buildEnrichedProduct),
+      };
+    });
+
+    return {
+      success: true,
+      data: enrichedTips,
+    };
+  } catch (error) {
+    console.error("Error fetching store tips:", error);
+    return {
+      success: false,
+      error: "An error occurred while fetching store tips.",
+    };
+  }
+};
+
+module.exports.fetch_store_trends = async (req) => {
+  const { store_id } = req.params;
+
+  // 1. Validate store_id
+  if (!store_id || isNaN(store_id)) {
+    return {
+      success: false,
+      error: "Invalid store_id",
+    };
+  }
+
+  try {
+    // 2. Get trending products for the store
+    const trending = await getStoreTrendingProducts(pool, store_id);
+
+    if (!trending.success) {
+      return {
+        success: false,
+        error: trending.error || "Failed to retrieve trending products",
+      };
+    }
+
+    const productIds = trending.data.map((p) => p.product_id);
+
+    if (productIds.length === 0) {
+      return {
+        success: true,
+        data: [],
+      };
+    }
+
+    // 3. Fetch enrichment data
+    const [moqList, mediaMap] = await Promise.all([
+      getProductMOQ(pool, productIds),
+      getProductMedia(productIds, pool, ["url"]),
+    ]);
+
+    // 4. Map moq by product_id
+    const moqMap = {};
+    for (const moq of moqList) {
+      if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+      moqMap[moq.product_id].push({
+        min_qty: moq.min_qty,
+        ppu: moq.ppu,
+      });
+    }
+
+    // 5. Final response
+    const enrichedTrending = trending.data.map((product) => ({
+      ...product,
+      id: product.product_id,
+      moq: moqMap[product.product_id] || [],
+      media: mediaMap[product.product_id] || [],
+    }));
+
+    return {
+      success: true,
+      data: enrichedTrending,
+    };
+  } catch (error) {
+    console.error("Error fetching store trends:", error);
+    return {
+      success: false,
+      error: "An error occurred while fetching store trends.",
+    };
+  }
+};
+
+module.exports.fetch_store_video_interactions = async (req) => {
+  const { store_id } = req.params;
+
+  if (!store_id || isNaN(store_id)) {
+    return {
+      success: false,
+      error: "Invalid store_id",
+    };
+  }
+
+  try {
+    // Get all products for the store
+    const [productRows] = await pool.query(
+      `SELECT id FROM products_table WHERE store_id = ?`,
+      [store_id]
+    );
+    const productIds = productRows.map((p) => p.id);
+    if (!productIds.length) return { success: true, data: [] };
+
+    // Fetch videos
+    const [mediaVideos, liveVideos] = await Promise.all([
+      getVideoMediaByStore(pool, productIds),
+      getRecordedLiveVideosByStore(pool, store_id),
+    ]);
+
+    // Normalize them
+    const allVideos = normalizeVideos(mediaVideos, liveVideos);
+    const logo = await getStoreLogo(pool, store_id);
+
+    if (!allVideos.length) return { success: true, data: [] };
+
+    // Get interactions
+    const videoIds = allVideos.map((v) => v.id);
+    const interactionMap = await getVideoInteractionMap(pool, videoIds);
+
+    // Attach interactions
+    const enriched = allVideos.map((video) => ({
+      ...video,
+      interactions: interactionMap[video.id] || 0,
+      logo,
+    }));
+
+    return {
+      success: true,
+      data: enriched,
+    };
+  } catch (error) {
+    console.error("Error fetching store video interactions:", error);
+    return {
+      success: false,
+      error: "An error occurred while fetching store video interactions.",
+    };
+  }
+};
+
+module.exports.follow_and_like_store = async (req) => {
+  const { user_id, store_id, action } = req.body;
+
+  if (!user_id || !store_id || !["like", "follow"].includes(action)) {
+    return { success: false, error: "Invalid input" };
+  }
+
+  const conn = await pool.getConnection();
+  try {
+    await conn.beginTransaction();
+
+    // Check if the user exists and is active
+    const [userRows] = await conn.query(
+      "SELECT id FROM users_table WHERE id = ? AND status = 1",
+      [user_id]
+    );
+    if (userRows.length === 0) {
+      await conn.rollback();
+      return { success: false, error: "User not found or inactive" };
+    }
+
+    // Check if the store exists and is active
+    const [storeRows] = await conn.query(
+      "SELECT id FROM stores_table WHERE id = ? AND status = 1",
+      [store_id]
+    );
+    if (storeRows.length === 0) {
+      await conn.rollback();
+      return { success: false, error: "Store not found or inactive" };
+    }
+
+    const target_type = "store";
+
+    // Check if interaction already exists
+    const [existing] = await conn.query(
+      "SELECT id FROM interactions WHERE user_id = ? AND target_type = ? AND target_id = ? AND action = ?",
+      [user_id, target_type, store_id, action]
+    );
+
+    if (existing.length > 0) {
+      // If exists, remove interaction (unlike/unfollow)
+      await conn.query(
+        "DELETE FROM interactions WHERE user_id = ? AND target_type = ? AND target_id = ? AND action = ?",
+        [user_id, target_type, store_id, action]
+      );
+      await conn.commit();
+      return { success: true, data: 0 }; // 0 means removed
+    } else {
+      // If not exists, add interaction (like/follow)
+      await conn.query(
+        "INSERT INTO interactions (user_id, target_type, target_id, action) VALUES (?, ?, ?, ?)",
+        [user_id, target_type, store_id, action]
+      );
+      await conn.commit();
+      return { success: true, data: 1 }; // 1 means added
+    }
+  } catch (error) {
+    await conn.rollback();
+    console.error("Error in store interaction:", error);
+    return { success: false, error: "Internal server error" };
+  } finally {
+    if (conn) conn.release();
+  }
 };

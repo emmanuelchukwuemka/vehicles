@@ -4,6 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 require("dotenv").config();
 const axios = require("axios");
+const marketRouter = require("./controllers/markets.controller");
 const userRouter = require("./controllers/users.controller");
 const cartRouter = require("./controllers/cart.controller");
 const sellerRouter = require("./controllers/seller.controller");
@@ -35,6 +36,8 @@ app.use(bodyParser.json({ limit: "500kb" }));
 
 app.use(checkPayload);
 //app.use(requestTimer)
+
+app.use("/market", marketRouter);
 
 app.use("/user", userRouter);
 

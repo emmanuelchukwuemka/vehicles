@@ -1,7 +1,6 @@
-const { pool } = require("../../connection/db");
-
-module.exports.getVariationAttributes = async (variationId) => {
-  const [attributes] = await pool.query(`
+module.exports.getVariationAttributes = async (pool, variationId) => {
+  const [attributes] = await pool.query(
+    `
     SELECT 
       va.attribute_id,
       va.label AS attribute_name,
@@ -18,9 +17,11 @@ module.exports.getVariationAttributes = async (variationId) => {
     LEFT JOIN media_table m 
       ON m.variation_id = va.variation_id AND m.attribute_id = va.id AND m.type = 'image'
     WHERE va.variation_id = ?
-  `, [variationId]);
+  `,
+    [variationId]
+  );
 
-  return attributes.map(attr => ({
+  return attributes.map((attr) => ({
     attribute_id: attr.attribute_id,
     name: attr.attribute_name,
     stock: attr.stock,
@@ -30,7 +31,7 @@ module.exports.getVariationAttributes = async (variationId) => {
     price: attr.price,
     layout: {
       name: attr.layout_name,
-      priority: attr.priority
-    }
+      priority: attr.priority,
+    },
   }));
 };

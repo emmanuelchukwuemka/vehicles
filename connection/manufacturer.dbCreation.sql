@@ -12,10 +12,11 @@ CREATE TABLE users_table (
     status TINYINT(1) NOT NULL DEFAULT 1,  -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the vendors table
-CREATE TABLE vendors_table (
+CREATE TABLE IF NOT EXISTS vendors_table (
     id INT PRIMARY KEY AUTO_INCREMENT,
     first_name VARCHAR(100) NOT NULL,
     last_name VARCHAR(100) NOT NULL,
@@ -28,31 +29,33 @@ CREATE TABLE vendors_table (
     status TINYINT(1) NOT NULL DEFAULT 1,  -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
 
--- create sellers account
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+-- create store account
 CREATE TABLE stores_table (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    vendor_id INT NOT NULL,
-    name VARCHAR(255) NOT NULL,
-    slogan VARCHAR(255),
-    country VARCHAR(100) NOT NULL,
-    banner TEXT,
-    picture TEXT,
-    net_worth LONGTEXT NOT NULL,
-    logo TEXT,
-    wallet LONGTEXT NOT NULL,
-    staff_count INT DEFAULT 0,
-    address VARCHAR(255) NOT NULL,
-    floor_space VARCHAR(50) NOT NULL,
-    code VARCHAR(50) NOT NULL UNIQUE,  -- Unique store code
-    is_verified TINYINT(1) DEFAULT 0,  -- 0 = Not verified, 1 = Verified
-    verified_date TIMESTAMP NULL DEFAULT NULL,
-    status TINYINT(1) DEFAULT 1,  -- 1 = Active, 0 = Inactive
+    vendor_id INT NOT NULL,                       -- References the vendor who owns the store
+    name VARCHAR(255) NOT NULL,                   -- Store name
+    slogan VARCHAR(255),                          -- Optional slogan
+    country VARCHAR(100) NOT NULL,                -- Country the store is based in
+    banner TEXT,                                  -- Store banner image URL
+    picture TEXT,                                 -- Store picture image URL
+    net_worth DECIMAL(10,2) NOT NULL,                  -- Financial worth of the store
+    logo TEXT,                                    -- Logo URL
+    wallet DECIMAL(10,2) NOT NULL,                     -- Wallet details (likely stringified JSON)
+    staff_count INT DEFAULT 0,                    -- Number of employees
+    address VARCHAR(255) NOT NULL,                -- Store address
+    floor_space VARCHAR(50) NOT NULL,             -- Physical space measurement (e.g., "500 sqft")
+    code VARCHAR(50) NOT NULL UNIQUE,             -- Unique store identifier/code
+    is_verified TINYINT(1) DEFAULT 0,             -- 0 = Not verified, 1 = Verified
+    verified_date TIMESTAMP NULL DEFAULT NULL,    -- Timestamp of verification (nullable)
+    status TINYINT(1) DEFAULT 1,                  -- 1 = Active, 0 = Inactive
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    FOREIGN KEY (vendor_id) REFERENCES vendors_table(id) ON DELETE CASCADE
-);
+    
+    FOREIGN KEY (vendor_id) REFERENCES users_table(id) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- creating the product collections table
 CREATE TABLE collections_table (
@@ -65,7 +68,8 @@ CREATE TABLE collections_table (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the products table
 CREATE TABLE products_table (
@@ -87,25 +91,23 @@ CREATE TABLE products_table (
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (subcategory_id) REFERENCES subcategory(id) ON DELETE CASCADE,
     FOREIGN KEY (collection_id) REFERENCES collections_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Product Sample table
 CREATE TABLE product_sample (
     id INT AUTO_INCREMENT PRIMARY KEY,
     store_id INT NOT NULL,
     product_id INT NOT NULL,
-    ppu DECIMAL(10,2) NOT NULL,
+    ppu DECIMAL(10,2) UNIQUE NOT NULL,
     min_qty INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     
-    -- Foreign keys with cascading delete
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
 
-    -- One sample per product
-    UNIQUE (product_id)
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the product_moq table
 CREATE TABLE product_moq (
@@ -114,7 +116,8 @@ CREATE TABLE product_moq (
     min_qty INT NOT NULL,  -- MOQ (e.g., 4 pieces, 11 pieces, etc.)
     ppu DECIMAL(10,2) NOT NULL, -- Price per unit at this MOQ
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating product variation table
 CREATE TABLE variations_table (
@@ -128,7 +131,8 @@ CREATE TABLE variations_table (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the variation_attributes table
 CREATE TABLE variation_attributes (
@@ -144,28 +148,10 @@ CREATE TABLE variation_attributes (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE,
     FOREIGN KEY (attribute_id) REFERENCES attributes_table(id) ON DELETE CASCADE
-);
 
--- creating the layout_table table
-CREATE TABLE layouts_table (
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    name VARCHAR(255) NOT NULL,
-    description VARCHAR(255) NOT NULL,
-    priority VARCHAR(10) NOT NULL,
-    status TINYINT(1) NOT NULL DEFAULT 1,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
--- creating the attributes_table table
-CREATE TABLE attributes_table (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  layout_id INT NOT NULL, -- how this attribute is displayed (inline, vertical, etc.)
-  name VARCHAR(100) NOT NULL,
-  label VARCHAR(100) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (layout_id) REFERENCES layouts_table(id) ON DELETE SET NULL
-);
+
 
 -- creating the product_specifications table
 CREATE TABLE product_specifications (
@@ -175,11 +161,13 @@ CREATE TABLE product_specifications (
     value VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the media_table table
 CREATE TABLE media_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
+    store_id INT NOT NULL, -- Links to the main product
     product_id INT NOT NULL, -- Links to the main product
     variation_id INT DEFAULT NULL, 
     attribute_id INT DEFAULT NULL,
@@ -187,10 +175,12 @@ CREATE TABLE media_table (
     type ENUM('image', 'video') NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE,
     FOREIGN KEY (attribute_id) REFERENCES variation_attributes(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the store_gallery table
 CREATE TABLE store_gallery (
@@ -204,18 +194,41 @@ CREATE TABLE store_gallery (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE store_interactions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
+    target_type ENUM('like', 'follow') NOT NULL, -- Specifies the interaction type
     store_id INT NOT NULL,
     action ENUM('like', 'follow') NOT NULL, -- Specifies the interaction type
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     UNIQUE(user_id, store_id, action), -- Prevent duplicate likes/follows by the same user
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
+
+CREATE TABLE IF NOT EXISTS interactions (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  target_type ENUM('store', 'product', 'video') NOT NULL,
+  target_id INT NOT NULL,
+  action ENUM('like', 'follow') NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+  PRIMARY KEY (id),
+  UNIQUE KEY unique_interaction (user_id, target_type, target_id, action),
+  INDEX idx_user_id (user_id),
+  INDEX idx_target_type (target_type),
+  INDEX idx_target_id (target_id),
+  INDEX idx_action (action),
+
+  FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
+
+) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_general_ci;
+
 
 -- creating the capabilities_table table
 CREATE TABLE capabilities_table (
@@ -224,7 +237,8 @@ CREATE TABLE capabilities_table (
     description TEXT DEFAULT NULL,  -- Allows null if no description is needed
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the default_filters table
 CREATE TABLE filters_table (
@@ -234,7 +248,8 @@ CREATE TABLE filters_table (
     status TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the product_filters table
 CREATE TABLE product_filters (
@@ -245,7 +260,8 @@ CREATE TABLE product_filters (
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (filter_id) REFERENCES filters_table(id) ON DELETE CASCADE,
     UNIQUE(product_id, filter_id) -- Ensures no duplicate assignments
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the store_capabilities table
 CREATE TABLE store_capabilities (
@@ -257,7 +273,7 @@ CREATE TABLE store_capabilities (
     FOREIGN KEY (capability_id) REFERENCES capabilities_table(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     UNIQUE (store_id, capability_id)  -- Prevent duplicate abilities for the same store
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the product review/feedback table
 CREATE TABLE product_reviews (
@@ -274,7 +290,8 @@ CREATE TABLE product_reviews (
     UNIQUE(product_id, user_id),
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the store review/feedback table
 CREATE TABLE store_reviews (
@@ -293,7 +310,8 @@ CREATE TABLE store_reviews (
     UNIQUE(store_id, user_id),
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE wishlist (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -302,7 +320,8 @@ CREATE TABLE wishlist (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 --/////////////////////////////////////////////////////////////////
 
@@ -310,12 +329,14 @@ CREATE TABLE wishlist (
 -- creating the maincategory table
 CREATE TABLE maincategory  (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    name LONGTEXT NOT NULL,
-    image LONGTEXT NOT NULL,
-    status LONGTEXT NOT NULL,
+    name VARCHAR(250) NOT NULL,
+    image VARCHAR(250) NOT NULL,
+    label VARCHAR(250) NOT NULL,
+    status TINYINT(1) NOT NULL DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the category table
 CREATE TABLE category  (
@@ -327,7 +348,8 @@ CREATE TABLE category  (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (_maincategory) REFERENCES maincategory(id)
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the subcategory table
 CREATE TABLE subcategory  (
@@ -339,7 +361,8 @@ CREATE TABLE subcategory  (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (_category) REFERENCES category(id)
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 -- ///////////////////////////////////////////////////////////////////////
 
 -- creating the payment_gateways table
@@ -353,7 +376,8 @@ CREATE TABLE payment_gateways (
     config JSON DEFAULT NULL,                 -- Optional config like public keys, secrets, etc.
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the user_addresses table
 CREATE TABLE user_addresses (
@@ -372,7 +396,8 @@ CREATE TABLE user_addresses (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- creating the user_payment_methods table
 CREATE TABLE user_payment_methods (
@@ -390,43 +415,52 @@ CREATE TABLE user_payment_methods (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (gateway_id) REFERENCES payment_gateways(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the cart table
-CREATE TABLE carts_table (
+CREATE TABLE IF NOT EXISTS carts_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the cart_items table
-CREATE TABLE cart_items (
+CREATE TABLE IF NOT EXISTS cart_items (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cart_id INT NOT NULL,
-    product_id INT NOT NULL,
     store_id INT NOT NULL,
+    product_id INT NOT NULL,
+    variation_id INT NOT NULL,
     sku VARCHAR(255),
-    color VARCHAR(100),
-    size VARCHAR(50),
+    attribute_key VARCHAR(250) NOT NULL,
     quantity INT NOT NULL DEFAULT 1,
     price DECIMAL(10,2),
     weight DECIMAL(10,2), -- Added weight column
+
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    
     FOREIGN KEY (cart_id) REFERENCES carts_table(id) ON DELETE CASCADE,
-    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
-);
+    FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
+    FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE,
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the shipping_methods table
-CREATE TABLE shipping_methods (
+CREATE TABLE IF NOT EXISTS shipping_methods (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     icon VARCHAR(50) NOT NULL,
     status BOOLEAN DEFAULT 1,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the shipping_providers table
 CREATE TABLE shipping_providers (
@@ -444,7 +478,8 @@ CREATE TABLE shipping_providers (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (method_id) REFERENCES shipping_methods(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE live_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -464,7 +499,8 @@ CREATE TABLE live_table (
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the Orders_table
 CREATE TABLE IF NOT EXISTS orders_table (
@@ -486,7 +522,8 @@ CREATE TABLE IF NOT EXISTS orders_table (
     --FOREIGN KEY (payment_method_id) REFERENCES user_payment_methods(id) ON DELETE SET NULL,
     FOREIGN KEY (logistic_id) REFERENCES shipping_providers(id) ON DELETE CASCADE,
     FOREIGN KEY (delivery_address) REFERENCES user_addresses(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating order_items table
 CREATE TABLE IF NOT EXISTS order_items (
@@ -505,7 +542,8 @@ CREATE TABLE IF NOT EXISTS order_items (
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating order_item_attributes table
 CREATE TABLE IF NOT EXISTS order_item_attributes (
@@ -517,7 +555,8 @@ CREATE TABLE IF NOT EXISTS order_item_attributes (
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
   FOREIGN KEY (order_item_id) REFERENCES order_items(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the oder_items table
 CREATE TABLE cart_items (
@@ -526,7 +565,7 @@ CREATE TABLE cart_items (
     store_id INT NOT NULL,
     product_id INT NOT NULL,
     variation_id INT NOT NULL,
-    sku VARCHAR(100),
+    sku VARCHAR(255) NOT NULL,
     attribute_key TEXT NOT NULL,
     quantity INT NOT NULL,
     price DECIMAL(10,2) NOT NULL,
@@ -537,7 +576,7 @@ CREATE TABLE cart_items (
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (product_id) REFERENCES products_table(id) ON DELETE CASCADE,
     FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE cart_item_attributes (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -546,13 +585,14 @@ CREATE TABLE cart_item_attributes (
     value VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (cart_item_id) REFERENCES cart_items(id) ON DELETE CASCADE
-);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE attachment_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
     attachment VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 CREATE TABLE inquiry_table (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -564,7 +604,8 @@ CREATE TABLE inquiry_table (
     FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
     FOREIGN KEY (attachment_id) REFERENCES attachment_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- chat_table table
 CREATE TABLE chat_table (
@@ -584,7 +625,8 @@ CREATE TABLE chat_table (
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
   FOREIGN KEY (attachment_id) REFERENCES attachment_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Creating the sheared_cart table
 CREATE TABLE shared_carts (
@@ -598,7 +640,8 @@ CREATE TABLE shared_carts (
     FOREIGN KEY (cart_id) REFERENCES cart_table(id) ON DELETE CASCADE,
     FOREIGN KEY (shared_by) REFERENCES users_table(id) ON DELETE CASCADE,
     FOREIGN KEY (shared_with) REFERENCES users_table(id) ON DELETE CASCADE
-);
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci
 
 -- Customization table
 CREATE TABLE IF NOT EXISTS customizations_table (
@@ -623,4 +666,19 @@ CREATE TABLE IF NOT EXISTS customizations_table (
   FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE,
   FOREIGN KEY (user_id) REFERENCES users_table(id) ON DELETE CASCADE,
   FOREIGN KEY (variation_id) REFERENCES variations_table(id) ON DELETE CASCADE
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- store_tips table
+CREATE TABLE IF NOT EXISTS store_tips (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  store_id INT NOT NULL,
+  media_type ENUM('live_clip', 'media_clip') NOT NULL,
+  media_url TEXT NOT NULL,           -- stores the video/clip URL
+  description TEXT DEFAULT NULL,     -- ✅ new column for tip description
+  products JSON NOT NULL,            -- array of product IDs, e.g. [1, 2, 3]
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+  FOREIGN KEY (store_id) REFERENCES stores_table(id) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

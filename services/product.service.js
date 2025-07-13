@@ -3,9 +3,6 @@ require("dotenv").config();
 const { v4: uuid } = require("uuid");
 const axios = require("axios");
 const FormData = require("form-data");
-const {
-  fetchEnrichedProducts,
-} = require("../utility/product/fetchEnrichedProducts");
 const { getBestSellingProductIds } = require("../utility/productRanking");
 const {
   getRankedProductsByStore,
@@ -29,381 +26,17 @@ const { getProductMOQ } = require("../utility/product/getProductMOQ");
 const { getStoresByIds } = require("../utility/product/getProductStoresByIds");
 const { getProductMedia } = require("../utility/product/getProductMedia");
 const { searchStore } = require("../utility/store/searchStore");
-
-module.exports.add_section = async (req) => {
-  const { name, image } = req.body;
-
-  if (!name || !image) {
-    return {
-      success: false,
-      error: "Section name is required",
-    };
-  }
-
-  try {
-    // Check if the section already exists
-    const [[sectionData]] = await pool.query(
-      `SELECT * FROM section_table WHERE _name = ?`,
-      [name]
-    );
-
-    if (sectionData && sectionData.id) {
-      return {
-        success: false,
-        error: "Section already exists",
-      };
-    }
-
-    // Insert the new section
-    const [{ affectedRows }] = await pool.query(
-      `INSERT INTO section_table (_name, _image) VALUES (?, ?)`,
-      [name, image]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "New section added successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "Failed to add the new section",
-      };
-    }
-  } catch (error) {
-    console.error("Error adding section:", error);
-    return {
-      success: false,
-      error: "Database operation failed",
-    };
-  }
-};
-// TODO: fix some errors and deploy to github
-module.exports.fetch_sections = async (req) => {
-  try {
-    // Fetch all records from the section_table
-    const [rows] = await pool.query(`
-            SELECT * FROM section_table
-        `);
-
-    if (rows.length > 0) {
-      return {
-        success: true,
-        data: rows, // Returning all fetched records
-      };
-    } else {
-      return {
-        success: false,
-        error: "No sections found in the database",
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching sections:", error);
-    return {
-      success: false,
-      error: "Failed to fetch sections from the database",
-    };
-  }
-};
-module.exports.update_section = async (req) => {
-  const { id, name } = req.body;
-
-  if (!id || !name) {
-    return {
-      success: false,
-      error: "Section ID and name are required",
-    };
-  }
-
-  try {
-    // Update the section by ID
-    const [{ affectedRows }] = await pool.query(
-      `UPDATE section_table SET _name = ? WHERE id = ?`,
-      [name, id]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "Section updated successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "No section found with the given ID",
-      };
-    }
-  } catch (error) {
-    console.error("Error updating section:", error);
-    return {
-      success: false,
-      error: "Failed to update section",
-    };
-  }
-};
-
-module.exports.add_category = async (req) => {
-  const { name, sectionId, image } = req.body;
-
-  if (!name || !sectionId || !image) {
-    return {
-      success: false,
-      error: "Parameters are not complete",
-    };
-  }
-
-  try {
-    // Check if the section exists
-    const [section] = await pool.query(
-      `SELECT id FROM section_table WHERE id = ?`,
-      [sectionId]
-    );
-
-    if (section.length === 0) {
-      return {
-        success: false,
-        error: "Section with the provided ID does not exist",
-      };
-    }
-
-    // Check if the category already exists in the section
-    const [existingCategory] = await pool.query(
-      `SELECT id FROM category_table WHERE _name = ? AND _sectionId = ?`,
-      [name, sectionId]
-    );
-
-    if (existingCategory.length > 0) {
-      return {
-        success: false,
-        error: "Category already exists under the specified section",
-      };
-    }
-
-    // Insert the new category
-    const [{ affectedRows }] = await pool.query(
-      `INSERT INTO category_table (_name, _sectionId, _image) VALUES (?, ?, ?)`,
-      [name, sectionId, image]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "New category added successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "Failed to insert category into the database",
-      };
-    }
-  } catch (error) {
-    console.error("Error adding category:", error);
-    return {
-      success: false,
-      error: "Database operation failed",
-    };
-  }
-};
-module.exports.fetch_category = async (req) => {
-  const { sectionId } = req.query;
-
-  try {
-    // Fetch all records from the section_table
-    const [rows] = await pool.query(
-      `
-            SELECT * FROM category_table WHERE _sectionId = ?
-        `,
-      [sectionId]
-    );
-
-    if (rows.length > 0) {
-      return {
-        success: true,
-        data: rows, // Returning all fetched records
-      };
-    } else {
-      return {
-        success: false,
-        error: "No sections found in the database",
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching sections:", error);
-    return {
-      success: false,
-      error: "Failed to fetch sections from the database",
-    };
-  }
-};
-module.exports.update_category = async (req) => {
-  const { id, name } = req.body;
-
-  if (!id || !name) {
-    return {
-      success: false,
-      error: "Section ID and name are required",
-    };
-  }
-
-  try {
-    // Update the section by ID
-    const [{ affectedRows }] = await pool.query(
-      `UPDATE category_table SET _name = ? WHERE id = ?`,
-      [name, id]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "Section updated successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "No section found with the given ID",
-      };
-    }
-  } catch (error) {
-    console.error("Error updating section:", error);
-    return {
-      success: false,
-      error: "Failed to update section",
-    };
-  }
-};
-
-module.exports.add_subCategory = async (req) => {
-  const { name, categoryId, image } = req.body;
-
-  if (!name || !categoryId || !image) {
-    return {
-      success: false,
-      error: "Parameters are not complete",
-    };
-  }
-
-  try {
-    // Check if the category exists
-    const [categoryRows] = await pool.query(
-      `SELECT id FROM category_table WHERE id = ?`,
-      [categoryId]
-    );
-
-    if (categoryRows.length === 0) {
-      return {
-        success: false,
-        error: "Category with the provided ID does not exist",
-      };
-    }
-
-    // Check if the sub-category already exists under the category
-    const [existingSubCategory] = await pool.query(
-      `SELECT id FROM subcategory_table WHERE _name = ? AND _categoryId = ?`,
-      [name, categoryId]
-    );
-
-    if (existingSubCategory.length > 0) {
-      return {
-        success: false,
-        error: "Sub-category already exists under the specified category",
-      };
-    }
-
-    // Insert the new sub-category
-    const [{ affectedRows }] = await pool.query(
-      `INSERT INTO subcategory_table (_name, _categoryId, _image) VALUES (?, ?, ?)`,
-      [name, categoryId, image]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "New sub-category added successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "Failed to insert sub-category into the database",
-      };
-    }
-  } catch (error) {
-    console.error("Error adding sub-category:", error);
-    return {
-      success: false,
-      error: "Database operation failed",
-    };
-  }
-};
-module.exports.fetch_subCategory = async (req) => {
-  const { categoryId } = req.query;
-
-  try {
-    // Fetch all records from the section_table
-    const [rows] = await pool.query(
-      `
-            SELECT * FROM subcategory_table WHERE _categoryId = ?
-        `,
-      [categoryId]
-    );
-
-    if (rows.length > 0) {
-      return {
-        success: true,
-        data: rows, // Returning all fetched records
-      };
-    } else {
-      return {
-        success: false,
-        error: "No sub-category items found in the database",
-      };
-    }
-  } catch (error) {
-    console.error("Error fetching sub-category:", error);
-    return {
-      success: false,
-      error: "Failed to fetch sub-category from the database",
-    };
-  }
-};
-module.exports.update_subCategory = async (req) => {
-  const { id, name } = req.body;
-
-  if (!id || !name) {
-    return {
-      success: false,
-      error: "Section ID and name are required",
-    };
-  }
-
-  try {
-    // Update the section by ID
-    const [{ affectedRows }] = await pool.query(
-      `UPDATE subcategory_table SET _name = ? WHERE id = ?`,
-      [name, id]
-    );
-
-    if (affectedRows > 0) {
-      return {
-        success: true,
-        data: "sub-category updated successfully",
-      };
-    } else {
-      return {
-        success: false,
-        error: "No sub-category found with the given ID",
-      };
-    }
-  } catch (error) {
-    console.error("Error updating sub-category:", error);
-    return {
-      success: false,
-      error: "Failed to update sub-category",
-    };
-  }
-};
-
-// ////////////////////////////////////////////////////////////////////////////////////
+const { getSimilarProducts } = require("../utility/store/getSimilarProducts");
+const {
+  getBestSellingProducts,
+} = require("../utility/store/getBestSellingProducts");
+const getRecommendedProducts = require("../utility/store/getRecommendedProducts");
+const {
+  getProductVariations,
+} = require("../utility/product/getProductVariations");
+const {
+  fetchEnrichedStoreProducts,
+} = require("../utility/store/fetchEnrichedStoreProducts");
 
 module.exports.fetch_single_product = async (req) => {
   const { product_id } = req.params;
@@ -432,7 +65,7 @@ module.exports.fetch_single_product = async (req) => {
 
     // Fetch sample
     const sample = await getProductSample(product.id);
-    const { data: total_order } = await getProductTotalOrder(product_id);
+    const { data: total_order } = await getProductTotalOrder(pool, product_id);
 
     // Fetch product media
     const [media] = await pool.query(
@@ -489,7 +122,7 @@ module.exports.fetch_single_product = async (req) => {
 
     // Attach attributes & media to each variation
     for (const variation of variations) {
-      const v_attributes = await getVariationAttributes(variation.id);
+      const v_attributes = await getVariationAttributes(pool, variation.id);
 
       const [variationMedia] = await pool.query(
         `
@@ -670,6 +303,7 @@ module.exports.image_search = async (req) => {
   }
 };
 
+// TODO: Review and check if this is still in use
 module.exports.voice_search = async (req) => {
   try {
     if (!req.file) {
@@ -712,6 +346,7 @@ module.exports.voice_search = async (req) => {
   }
 };
 
+// TODO: Review and check if this is still in use
 module.exports.barcode_search = async (req) => {
   try {
     const { barcode } = req.body;
@@ -875,7 +510,7 @@ module.exports.search = async (req) => {
     const storeIds = products.data.map((p) => p.store_id);
 
     const [moqList, storeMap, medias] = await Promise.all([
-      getProductMOQ(productIds),
+      getProductMOQ(pool, productIds),
       getStoresByIds(storeIds, pool, storeFields),
       //getProductTotalOrder(productIds),
       getProductMedia(productIds, pool, mediaFields),
@@ -951,7 +586,7 @@ module.exports.search_products_in_stores = async (req) => {
     const storeIds = [...new Set(products.map((p) => p.store_id))];
 
     const [moqList, storeMap, mediaMap] = await Promise.all([
-      getProductMOQ(productIds),
+      getProductMOQ(pool, productIds),
       getStoresByIds(storeIds, pool, storeFields),
       getProductMedia(productIds, pool, mediaFields),
     ]);
@@ -1030,7 +665,7 @@ module.exports.search_store_products = async (req) => {
 
     // Fetch MOQ and media in parallel
     const [moqList, mediaMap] = await Promise.all([
-      getProductMOQ(productIds, pool),
+      getProductMOQ(pool, productIds),
       getProductMedia(productIds, pool, ["url"]),
     ]);
 
@@ -1265,7 +900,7 @@ module.exports.fetch_store_products = async (req) => {
   } = req.query;
 
   try {
-    const allProducts = await fetchEnrichedProducts(store_id);
+    const allProducts = await fetchEnrichedStoreProducts(pool, store_id);
 
     // Apply filters if necessary
     let filtered = [...allProducts];
@@ -1506,6 +1141,123 @@ module.exports.get_all_product_samples = async () => {
     return {
       success: false,
       error: "Failed to fetch product samples",
+    };
+  }
+};
+
+module.exports.fetch_product_suggestions = async (req) => {
+  const { product_id, collection_id, store_id } = req.body;
+
+  // Validate input IDs
+  if (isNaN(collection_id) || isNaN(product_id) || isNaN(store_id)) {
+    return {
+      success: false,
+      error: "One or more supplied IDs are invalid",
+    };
+  }
+
+  try {
+    // Fetch 3 types of suggestions in parallel
+    const [similar, bestSelling, recommended] = await Promise.all([
+      getSimilarProducts(pool, store_id, collection_id, product_id),
+      getBestSellingProducts(pool, store_id),
+      getRecommendedProducts(pool, store_id),
+    ]);
+
+    //console.log("body=>", { similar, bestSelling, recommended });
+
+    // return {
+    //   success: true,
+    //   data: {
+    //     similar: [],
+    //     bestSelling: [],
+    //     recommended: [],
+    //   },
+    // };
+
+    // Combine all product suggestions and extract unique product IDs
+    const allProducts = [...similar, ...bestSelling, ...recommended];
+    const productIds = [
+      ...new Set(allProducts.map((p) => p.id || p.product_id)),
+    ];
+
+    // Fetch MOQ and Media for all involved products
+    const [moqList, mediaMap] = await Promise.all([
+      getProductMOQ(pool, productIds),
+      getProductMedia(productIds, pool, ["url"]),
+    ]);
+
+    // Build product_id => MOQ[] map
+    const moqMap = {};
+    for (const moq of moqList) {
+      if (!moqMap[moq.product_id]) moqMap[moq.product_id] = [];
+      moqMap[moq.product_id].push({
+        min_qty: moq.min_qty,
+        ppu: moq.ppu,
+      });
+    }
+
+    console.log("rec=>", recommended);
+
+    // Fetch all product variations
+    const variations = await getProductVariations(pool, productIds);
+
+    // Extract variation IDs
+    const variationIds = variations.map((v) => v.id);
+
+    // Fetch all variation attributes in parallel
+    const attributeGroups = await Promise.all(
+      variationIds.map(async (variationId) => {
+        const attrs = await getVariationAttributes(pool, variationId);
+        return { variationId, attributes: attrs };
+      })
+    );
+
+    // Map: variation_id => attributes[]
+    const variationAttrMap = {};
+    for (const { variationId, attributes } of attributeGroups) {
+      variationAttrMap[variationId] = attributes;
+    }
+
+    // Map: product_id => enriched variation[]
+    const variationMap = {};
+    for (const variation of variations) {
+      const productId = variation.product_id;
+      const enrichedVariation = {
+        ...variation,
+        attributes: variationAttrMap[variation.id] || [],
+      };
+
+      if (!variationMap[productId]) variationMap[productId] = [];
+      variationMap[productId].push(enrichedVariation);
+    }
+
+    // Helper function to enrich any product list with moq, media, and variations
+    const enrich = (products) =>
+      products.map((product) => {
+        const id = product.id || product.product_id;
+        return {
+          ...product,
+          moq: moqMap[id] || [],
+          medias: mediaMap[id] || [],
+          variations: variationMap[id] || [],
+        };
+      });
+
+    // Return structured response with enriched suggestions
+    return {
+      success: true,
+      data: {
+        similar: enrich(similar),
+        bestSelling: enrich(bestSelling),
+        recommended: enrich(recommended),
+      },
+    };
+  } catch (error) {
+    console.error("Error fetching product suggestions:", error);
+    return {
+      success: false,
+      error: "An error occurred while fetching product suggestions",
     };
   }
 };
