@@ -31,15 +31,6 @@ const io = new Server(server, {
 
 const port = process.env.APP_PORT_NUMBER;
 
-setInterval(async () => {
-  try {
-    await pool.query("SELECT 1");
-    console.log("DB keep-alive ping success");
-  } catch (err) {
-    console.error("DB keep-alive ping failed:", err);
-  }
-}, 60 * 1000); // every 60 seconds
-
 // Middleware to parse JSON
 app.use(bodyParser.json({ limit: "500kb" }));
 
