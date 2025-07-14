@@ -38,7 +38,7 @@ setInterval(async () => {
   } catch (err) {
     console.error("DB keep-alive ping failed:", err);
   }
-}, 60 * 1000); // every 60 seconds
+}, 60 * 4000); // every 60 seconds
 
 // Middleware to parse JSON
 app.use(bodyParser.json({ limit: "500kb" }));
