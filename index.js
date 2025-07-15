@@ -50,7 +50,7 @@ app.use("/market", marketRouter);
 
 app.use("/user", userRouter);
 
-app.use("/cart", cartRouter);
+app.use("/cart", jwtValidator, cartRouter);
 
 app.use("/seller", sellerRouter);
 

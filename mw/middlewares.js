@@ -1,56 +1,55 @@
 const { pool } = require("../connection/db");
-const crypto = require('crypto');
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
-
+const crypto = require("crypto");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 
 module.exports.checkPayload = (err, req, res, next) => {
-    console.error('Payload Error:', err);
-    if (err.type === 'entity.too.large') {
-        return res.status(413).json({ success: false, error: 'Request payload size is too large' });
-    }
-    next(err);
-}
+  console.error("Payload Error:", err);
+  if (err.type === "entity.too.large") {
+    return res
+      .status(413)
+      .json({ success: false, error: "Request payload size is too large" });
+  }
+  next(err);
+};
 
 module.exports.requestTimer = (req, res, next) => {
-    req.setTimeout(10000, () => {
-        console.warn(`⏳ Request timed out: ${req.method} ${req.originalUrl}`);
+  req.setTimeout(10000, () => {
+    console.warn(`⏳ Request timed out: ${req.method} ${req.originalUrl}`);
 
-        if (!res.headersSent) {
-            res.status(408).json({
-                success: false,
-                error: "Request timed out. Please try again.",
-            });
-        }
-    });
+    if (!res.headersSent) {
+      res.status(408).json({
+        success: false,
+        error: "Request timed out. Please try again.",
+      });
+    }
+  });
 
-    next();
+  next();
 };
 
 module.exports.jwtValidator = (req, res, next) => {
-    // Typically, the token is sent in the Authorization header
-    const accessToken = req.headers["x-auth-token"];
+  const accessToken = req.headers["x-auth-token"];
+  console.log("x-auth-token header:", "kkk");
 
-    if (!accessToken) {
-        return res.status(401).json({
-            success: false,
-            error: "Unknown request sources origin"
-        });
-    }
+  if (!accessToken) {
+    return res.status(401).json({
+      success: false,
+      error: "Unknown request sources origin",
+    });
+  }
 
-    try {
-        const decodedUser = jwt.verify(accessToken, process.env.JWT_SECRET);
-        req.user = decodedUser;
-        // console.log("gooder==>", decodedUser)
-        next();
-
-    } catch (error) {
-
-        console.log("Error==>", error.message)
-        // Token verification failed
-        return res.status(403).json({
-            success: false,
-            error: "Invalid or expired authorization token"
-        });
-    }
+  try {
+    const decodedUser = jwt.verify(accessToken, process.env.JWT_SECRET);
+    req.user = decodedUser;
+    // console.log("gooder==>", decodedUser)
+    next();
+  } catch (error) {
+    console.log("Error==>", error.message);
+    // Token verification failed
+    return res.status(403).json({
+      success: false,
+      error: "Invalid or expired authorization token",
+    });
+  }
 };
