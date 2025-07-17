@@ -10,6 +10,7 @@ const {
   confirmCardPayment,
   saveCustomization,
 } = require("../helpers/executors");
+const { getUserScopes } = require("../utility/user/getUserScopes");
 
 module.exports.create_account = async (req) => {
   const { firstName, lastName, email, phone, country, password, picture } =
@@ -110,9 +111,19 @@ module.exports.login_User = async (req) => {
       const passwordMatch = await comparePasswords(password, userData.password);
 
       if (passwordMatch) {
+        const scopes = await getUserScopes({
+          pool,
+          conditions: { user_id: userData.id },
+        });
+
+        console.log("UserScope=>", scopes[0].scope);
+
         return {
           success: true,
-          data: userData,
+          data: {
+            ...userData,
+            scope: scopes[0]?.scope || null,
+          },
         };
       }
 

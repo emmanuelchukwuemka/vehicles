@@ -11,3 +11,7 @@ yarn-error.*
 # local env files
 .env*.local
 
+connection/
+database/
+
+

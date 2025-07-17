@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "outDir": "./dist", // compiled JS will go here
+    "rootDir": "./", // tells TypeScript "start compiling everything from api/"
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["./**/*.ts", "controllers/markets.controller.js"],
+  "exclude": ["node_modules", "dist"]
+}

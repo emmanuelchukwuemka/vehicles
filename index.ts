@@ -1,9 +1,10 @@
+import { Socket, Server } from "socket.io";
+import { SendMessagePayload } from "./types/chat";
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
-const { Server } = require("socket.io");
 require("dotenv").config();
-const axios = require("axios");
 const marketRouter = require("./controllers/markets.controller");
 const userRouter = require("./controllers/users.controller");
 const cartRouter = require("./controllers/cart.controller");
@@ -65,19 +66,21 @@ app.use("/chat", chatRouter);
 // WebSocket logic
 const connectedUsers = new Map();
 
-io.on("connection", (socket) => {
+io.on("connection", (socket: Socket) => {
   console.log("🔌 New socket connected:", socket.id);
 
-  socket.on("join", (userId) => {
+  socket.on("join", (userId: number) => {
     if (!connectedUsers.has(userId)) {
-      connectedUsers.set(userId, new Set());
+      connectedUsers.set(userId, new Set<string>());
     }
     connectedUsers.get(userId).add(socket.id);
     console.log(`👤 User ${userId} joined with socket ID: ${socket.id}`);
   });
 
-  socket.on("send_message", async (data) => {
+  socket.on("send_message", async (data: SendMessagePayload) => {
     const { sender_id, receiver_id, is_product, message } = data;
+
+    console.log({ sender_id, receiver_id });
 
     try {
       // Save message to DB
@@ -116,13 +119,13 @@ io.on("connection", (socket) => {
       console.log("Receiver Sockets:", receiverSockets);
 
       if (receiverSockets) {
-        receiverSockets.forEach((sockId) =>
+        receiverSockets.forEach((sockId: string) =>
           io.to(sockId).emit("receive_message", messageData)
         );
       }
 
       if (senderSockets) {
-        senderSockets.forEach((sockId) =>
+        senderSockets.forEach((sockId: string) =>
           io.to(sockId).emit("receive_message", messageData)
         );
       }
@@ -133,8 +136,8 @@ io.on("connection", (socket) => {
   });
 
   socket.on("message_seen", async ({ receiver_id, sender_id }) => {
-    console.log("receiver_id=>", receiver_id);
-    console.log("sender_id=>", sender_id);
+    console.log("receiver_idx=>", receiver_id);
+    console.log("sender_idx=>", sender_id);
 
     try {
       await pool.query(
@@ -146,7 +149,7 @@ io.on("connection", (socket) => {
       const senderSockets = connectedUsers.get(sender_id);
 
       if (senderSockets) {
-        senderSockets.forEach((sockId) =>
+        senderSockets.forEach((sockId: string) =>
           io.to(sockId).emit("message_seen_ack", {
             sender_id,
             status: 2,

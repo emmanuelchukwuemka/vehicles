@@ -1,18 +1,21 @@
-module.exports.getChats = async (connection, user_id, receiver_id) => {
+module.exports.getChats = async (pool, sender_id, receiver_id) => {
   //const { user_id, store_id } = req.query;
 
-  if (!user_id || !receiver_id) {
+  if (!sender_id || !receiver_id) {
     return {
       success: false,
-      error: "Missing user_id or store_id.",
+      error: "Missing sender_id or receiver_id.",
     };
   }
 
+  //console.log("sender=>", sender_id);
+  //console.log("receiver=>", receiver_id);
+
   try {
     // Get store owner's user ID
-    const [storeRows] = await connection.query(
+    const [storeRows] = await pool.query(
       `SELECT id FROM stores_table WHERE id IN (?, ?) AND status = 1`,
-      [user_id, receiver_id]
+      [sender_id, receiver_id]
     );
 
     if (storeRows.length === 0) {
@@ -24,8 +27,10 @@ module.exports.getChats = async (connection, user_id, receiver_id) => {
 
     const storeOwnerId = storeRows[0].id;
 
+    console.log("store=>", storeRows);
+
     // Fetch chat messages between user and store owner
-    const [chatRows] = await connection.query(
+    const [chatRows] = await pool.query(
       `
       SELECT id, sender_id, receiver_id, message, is_product, status, created_at
       FROM chat_table
@@ -35,8 +40,10 @@ module.exports.getChats = async (connection, user_id, receiver_id) => {
         (sender_id = ? AND receiver_id = ?)
       ORDER BY created_at ASC
       `,
-      [user_id, storeOwnerId, storeOwnerId, user_id]
+      [sender_id, storeOwnerId, storeOwnerId, sender_id]
     );
+
+    //console.log("chats=>", chatRows);
 
     // Parse product messages
     const formattedChats = chatRows.map((chat) => ({
