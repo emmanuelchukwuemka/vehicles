@@ -5,7 +5,7 @@ module.exports.getProductMOQ = async (pool, productIds) => {
     // Convert single ID to array
     const ids = Array.isArray(productIds) ? productIds : [productIds];
 
-    console.log("IDs=>", ids);
+    //console.log("IDs=>", ids);
 
     const [rows] = await pool.query(
       `SELECT product_id, min_qty, ppu FROM product_moq WHERE product_id IN (?)`,

@@ -111,19 +111,14 @@ module.exports.login_User = async (req) => {
       const passwordMatch = await comparePasswords(password, userData.password);
 
       if (passwordMatch) {
-        const scopes = await getUserScopes({
-          pool,
-          conditions: { user_id: userData.id },
-        });
-
-        console.log("UserScope=>", scopes[0].scope);
+        // const scopes = await getUserScopes({
+        //   pool,
+        //   conditions: { user_id: userData.id },
+        // });
 
         return {
           success: true,
-          data: {
-            ...userData,
-            scope: scopes[0]?.scope || null,
-          },
+          data: userData,
         };
       }
 
