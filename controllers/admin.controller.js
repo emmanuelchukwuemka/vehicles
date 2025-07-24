@@ -61,7 +61,7 @@ router.get("/sellers", async (req, res) => {
   }
 });
 
-router.post("/seller-scope", async (req, res) => {
+router.post("/scope-store", async (req, res) => {
   try {
     const result = await service.change_user_scope(req);
     if (result && result.success) {
@@ -74,7 +74,7 @@ router.post("/seller-scope", async (req, res) => {
       res.status(400).json({ success: false, error: errorMessage });
     }
   } catch (error) {
-    console.error("Error fetching sellers data:", error);
+    console.error("Error adding store scope:", error);
     res.status(500).json({ success: false, error: "Internal Server Error" });
   }
 });

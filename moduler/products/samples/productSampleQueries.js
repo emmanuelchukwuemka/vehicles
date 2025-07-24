@@ -64,8 +64,15 @@ module.exports.getBasicProductSamples = async ({
 
   for (const [key, val] of Object.entries(conditions)) {
     if (!validFields.includes(key)) continue;
-    whereParts.push(`\`${key}\` = ?`);
-    params.push(val);
+
+    if (Array.isArray(val)) {
+      const placeholders = val.map(() => "?").join(", ");
+      whereParts.push(`\`${key}\` IN (${placeholders})`);
+      params.push(...val);
+    } else {
+      whereParts.push(`\`${key}\` = ?`);
+      params.push(val);
+    }
   }
 
   params.push(limit); // for LIMIT ?

@@ -5,7 +5,7 @@ const axios = require("axios");
 
 const { staticDecrypt, dynamicDecrypt } = require("../helpers/hasher");
 const { staticKey, dynamicKey } = require("../helpers/keyVolt");
-const { getUserScopes } = require("../utility/user/getUserScopes");
+const { getStoreScope } = require("../utility/user/getStoreScope");
 
 module.exports.fetch_sellers = async (req) => {
   try {
@@ -34,25 +34,32 @@ module.exports.fetch_sellers = async (req) => {
 };
 
 module.exports.change_user_scope = async (req) => {
-  const { user_id, scope } = req.body;
+  const { store_id, scope } = req.body;
 
   try {
     const [rows] = await pool.query(
-      "SELECT id, email FROM users_table WHERE id = ? LIMIT 1",
-      [user_id]
+      "SELECT id, status FROM stores_table WHERE id = ? LIMIT 1",
+      [store_id]
     );
 
     if (rows.length > 0) {
-      const userId = rows[0].id;
+      const storeData = rows[0];
+
+      if (storeData.status < 1) {
+        return {
+          success: false,
+          error: "This store is not eligble for vending services",
+        };
+      }
 
       const [result] = await pool.query(
-        "INSERT IGNORE INTO users_scope (user_id, scope) VALUES (?, ?)",
-        [userId, scope] // e.g. 3, 'seller'
+        "INSERT IGNORE INTO stores_scope (store_id, scope) VALUES (?, ?)",
+        [storeData.id, scope] // e.g. 3, 'seller'
       );
 
-      const scopes = await getUserScopes({
+      const scopes = await getStoreScope({
         pool,
-        conditions: { user_id: userId },
+        conditions: { store_id: store_id },
       });
 
       return {
@@ -63,7 +70,7 @@ module.exports.change_user_scope = async (req) => {
 
     return {
       success: false,
-      error: "User id does not exist",
+      error: "store id does not exist",
     };
   } catch (error) {
     console.log("Error =>", error);

@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../services/users.service.js");
+const service = require("../services/users.service.ts");
 require("dotenv").config();
-const { reloadController } = require("../helpers/dataReload.controller.js");
+const jwt = require("jsonwebtoken");
 
 router.post("/create-account", async (req, res) => {
   try {
@@ -27,15 +27,85 @@ router.post("/login", async (req, res) => {
   try {
     const response = await service.login_User(req);
 
-    if (response && response.success) {
-      reloadController(res, response);
-    } else {
-      const errorMessage =
-        response.error || "Error establishing connection to the server";
-      res.status(401).json({ success: false, error: errorMessage });
+    if (!response?.success) {
+      return res.status(401).json({
+        success: false,
+        error: response?.error || "Invalid credentials or login failed.",
+      });
     }
+
+    const {
+      id: user_id,
+      first_name: firstName,
+      last_name: lastName,
+      phone,
+      email,
+      is_verified,
+      vendor_id,
+    } = response.data;
+
+    const payload = {
+      user_id,
+      firstName,
+      lastName,
+      phone,
+      email,
+      is_verified: parseInt(is_verified),
+      vendor_id: vendor_id ? parseInt(vendor_id) : null,
+    };
+
+    const accessToken = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "7d",
+    });
+
+    return res.status(200).json({
+      success: true,
+      ...payload,
+      token: accessToken,
+      refreshToken: "rhiser76ssbds",
+    });
   } catch (error) {
     console.error("Error during login:", error);
+    return res
+      .status(500)
+      .json({ success: false, error: "Internal Server Error" });
+  }
+});
+
+router.post("/create-vendor-account", async (req, res) => {
+  try {
+    const result = await service.create_vendor_account(req);
+
+    if (result && result.success) {
+      res.json({
+        success: true,
+        data: result.data,
+      });
+    } else {
+      const errorMessage = result.error || "Error connecting to the server";
+      res.status(400).json({ success: false, error: errorMessage });
+    }
+  } catch (error) {
+    console.error("Error creating vendors account:", error);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.post("/vendor-account", async (req, res) => {
+  try {
+    const result = await service.create_vendor_account(req);
+
+    if (result && result.success) {
+      res.json({
+        success: true,
+        data: result.data,
+      });
+    } else {
+      const errorMessage = result.error || "Error connecting to the server";
+      res.status(400).json({ success: false, error: errorMessage });
+    }
+  } catch (error) {
+    console.error("Error creating vendors account:", error);
     res.status(500).send("Internal Server Error");
   }
 });

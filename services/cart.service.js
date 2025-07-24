@@ -195,6 +195,7 @@ exports.updateCartItem = async (req) => {
 exports.removeCartItem = async (req) => {
   const jwtData = req.user;
   const { product_id, variation_id, sku, attribute_key } = req.body;
+  console.log("user:", jwtData);
 
   if (!product_id) {
     return {
@@ -210,7 +211,7 @@ exports.removeCartItem = async (req) => {
     // 1. Find cart ID for the user
     const [cartRows] = await connection.query(
       "SELECT id FROM carts_table WHERE user_id = ?",
-      [jwtData.id]
+      [jwtData.user_id]
     );
 
     if (cartRows.length === 0) {
@@ -328,15 +329,15 @@ exports.getCart = async (req) => {
 
     // STEP 2: Get user scopes for each store_id
     const [scopeRows] = await conn.query(
-      `SELECT user_id, scope FROM users_scope WHERE user_id IN (?)`,
+      `SELECT store_id, scope FROM stores_scope WHERE store_id IN (?)`,
       [storeIds]
     );
 
     // STEP 3: Group scopes by store_id
     const scopeMap = {};
-    scopeRows.forEach(({ user_id, scope }) => {
-      if (!scopeMap[user_id]) scopeMap[user_id] = [];
-      scopeMap[user_id].push(scope);
+    scopeRows.forEach(({ store_id, scope }) => {
+      if (!scopeMap[store_id]) scopeMap[store_id] = [];
+      scopeMap[store_id].push(scope);
     });
 
     // Get all product IDs from the cart items

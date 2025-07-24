@@ -52,7 +52,7 @@ const {
   getVideoInteractionMap,
 } = require("../utility/media/getVideoInteractionMap");
 const { getStoreLogo } = require("../utility/store/getStoreLogo");
-const { getUserScopes } = require("../utility/user/getUserScopes");
+const { getStoreScope } = require("../utility/user/getStoreScope");
 
 // LOAD MANUFACTURES MODULE
 // module.exports.loadApp = async (req) => {
@@ -213,6 +213,7 @@ module.exports.create_store = async (req) => {
       banner: banner || null,
       picture: picture || null,
       net_worth: netWorth,
+      wallet: 0,
       logo,
       staff_count: staff,
       address,
@@ -660,7 +661,7 @@ module.exports.fetchStoresX = async (req) => {
 module.exports.fetchStores = async (req) => {
   const { categ_level, categ_id, caps, limit } = req.body;
 
-  const user_scope = "manufacturer";
+  const market_scope = "manufacturer";
 
   let filterColumn;
   if (categ_level === "main_category") {
@@ -673,20 +674,20 @@ module.exports.fetchStores = async (req) => {
 
   try {
     // 🔹 1. Get user_ids for given scope (e.g. manufacturer)
-    let vendorIds = [];
-    if (user_scope) {
-      const scopedUsers = await getUserScopes({
+    let storeIDs = [];
+    if (market_scope) {
+      const storesScope = await getStoreScope({
         pool,
-        conditions: { scope: user_scope },
-        fields: ["user_id", "scope"],
+        conditions: { scope: market_scope },
+        fields: ["store_id", "scope"],
       });
 
-      vendorIds = scopedUsers.map((u) => u.user_id);
+      storeIDs = storesScope.map((s) => s.store_id);
 
-      if (!vendorIds.length) {
+      if (storeIDs.length === 0) {
         return {
           success: false,
-          error: `No users found with scope '${user_scope}'`,
+          error: `No users found with scope '${market_scope}'`,
         };
       }
     }
@@ -706,9 +707,9 @@ module.exports.fetchStores = async (req) => {
     let queryParams = [];
 
     // 🔹 3. Add scope filter (vendorId filter)
-    if (vendorIds.length > 0) {
-      query += ` AND s.vendor_id IN (${vendorIds.map(() => "?").join(", ")})`;
-      queryParams.push(...vendorIds);
+    if (storeIDs.length > 0) {
+      query += ` AND s.id IN (${storeIDs.map(() => "?").join(", ")})`;
+      queryParams.push(...storeIDs);
     }
 
     // 🔹 4. Category Filter
@@ -720,7 +721,7 @@ module.exports.fetchStores = async (req) => {
     // 🔹 5. Capability Filter
     if (caps && caps.length > 0) {
       query += ` AND s.id IN (
-        SELECT store_id FROM store_capabilities 
+        SELECT store_id FROM store_capabilities
         WHERE capability_id IN (${caps.map(() => "?").join(",")})
         GROUP BY store_id
         HAVING COUNT(DISTINCT capability_id) = ?
@@ -728,13 +729,17 @@ module.exports.fetchStores = async (req) => {
       queryParams.push(...caps, caps.length);
     }
 
+    //console.log("storeIDs=>", storeIDs);
+
     // 🔹 6. Fetch Stores
     const [stores] = await pool.query(query, queryParams);
+
     if (!stores.length) {
       return { success: false, error: "No stores found for this filter." };
     }
 
     const storeIds = stores.map((s) => s.id);
+    //console.log("stores=>", query);
 
     // 🔹 7. Fetch Capabilities
     const capabilities = await getStoreCapabilities(storeIds, pool, [
@@ -743,17 +748,18 @@ module.exports.fetchStores = async (req) => {
     ]);
 
     // 🔹 8. Fetch Top Products per Store (LIMITED by `limit`)
+    const placeholders = storeIds.map(() => "?").join(", ");
     const [products] = await pool.query(
       `
       SELECT p.id, p.store_id, p.name, p.price, p.discount
       FROM (
           SELECT p.*, ROW_NUMBER() OVER (PARTITION BY p.store_id ORDER BY p.id) AS row_num
           FROM products_table p
-          WHERE p.store_id IN (?)
+          WHERE p.store_id IN (${placeholders})
       ) p
       WHERE p.row_num <= ${limit || 3}
       `,
-      [storeIds]
+      storeIds
     );
 
     // 🔹 9. Enrich Products with Media & MOQ

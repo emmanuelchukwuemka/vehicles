@@ -10,9 +10,12 @@ const {
   confirmCardPayment,
   saveCustomization,
 } = require("../helpers/executors");
-const { getUserScopes } = require("../utility/user/getUserScopes");
+import { Request, Response } from "express";
+import { ClassMap, Providers } from "../types/shipping";
+import { Gateway } from "../types/payment";
+import { checkVendorByUserId } from "../utility/user/getVendorByUserId";
 
-module.exports.create_account = async (req) => {
+module.exports.create_account = async (req: Request) => {
   const { firstName, lastName, email, phone, country, password, picture } =
     req.body;
 
@@ -85,7 +88,7 @@ module.exports.create_account = async (req) => {
   }
 };
 
-module.exports.login_User = async (req) => {
+module.exports.login_User = async (req: Request) => {
   console.log(req.body);
 
   // pool.end((err) => {
@@ -111,10 +114,16 @@ module.exports.login_User = async (req) => {
       const passwordMatch = await comparePasswords(password, userData.password);
 
       if (passwordMatch) {
-        // const scopes = await getUserScopes({
-        //   pool,
-        //   conditions: { user_id: userData.id },
-        // });
+        const vendor = await checkVendorByUserId({
+          pool,
+          user_id: userData.id,
+        });
+
+        if (vendor) {
+          userData.vendor_id = vendor.id;
+        } else {
+          console.log("❌ No vendor found for this user.");
+        }
 
         return {
           success: true,
@@ -142,7 +151,69 @@ module.exports.login_User = async (req) => {
   }
 };
 
-module.exports.add_address = async (req) => {
+module.exports.create_vendor_account = async (req: Request) => {
+  console.log("testing");
+  const { user_id, access_token } = req.body;
+
+  if (!user_id || !access_token) {
+    return { success: false, error: "Invalid input" };
+  }
+
+  let connection;
+
+  try {
+    connection = await pool.getConnection();
+    await connection.beginTransaction();
+
+    const [existingUser] = await connection.query(
+      `SELECT id FROM users_table WHERE id = ? LIMIT 1`,
+      [user_id]
+    );
+
+    if (existingUser.length === 0) {
+      await connection.rollback();
+      return { success: false, error: "User not found" };
+    }
+
+    // Prepare vendor data for insertion
+    const vendorData = {
+      user_id,
+      access_token,
+      status: 1,
+    };
+
+    const columns = Object.keys(vendorData).join(", ");
+    const placeholders = Object.keys(vendorData)
+      .map(() => "?")
+      .join(", ");
+    const values = Object.values(vendorData);
+
+    // Insert new vendor
+    const [{ insertId }] = await connection.query(
+      `INSERT INTO vendors_table (${columns})
+        VALUES (${placeholders})`,
+      values
+    );
+
+    if (!insertId) {
+      await connection.rollback();
+      return { success: false, error: "Failed to create vendor account" };
+    }
+    await connection.commit();
+    return { success: true, data: "Vending created created successfully" };
+  } catch (error) {
+    await connection.rollback();
+    console.error("Error creating account:", error);
+    return {
+      success: false,
+      error: "Could not create account, please try again",
+    };
+  } finally {
+    if (connection) connection.release();
+  }
+};
+
+module.exports.add_address = async (req: Request) => {
   const {
     user_id,
     country,
@@ -235,7 +306,7 @@ module.exports.add_address = async (req) => {
   }
 };
 
-module.exports.get_user_addresses = async (req) => {
+module.exports.get_user_addresses = async (req: Request) => {
   const { user_id } = req.body;
   if (!user_id) {
     return {
@@ -265,7 +336,7 @@ module.exports.get_user_addresses = async (req) => {
   }
 };
 
-module.exports.fetch_capabilities = async (req) => {
+module.exports.fetch_capabilities = async (req: Request) => {
   try {
     // Fetch capabilities
     const [capabilities] = await pool.query(
@@ -390,7 +461,7 @@ module.exports.fetch_capabilities = async (req) => {
 // };
 
 // ///////////////////////To be reviewed////////////////////////////////
-module.exports.filter_stores_by_category = async (req) => {
+module.exports.filter_stores_by_category = async (req: Request) => {
   const { filter_type, filter_id } = req.params; // Accepts 'main_category', 'category', or 'sub_category'
 
   if (!filter_type || !filter_id) {
@@ -474,10 +545,10 @@ module.exports.filter_stores_by_category = async (req) => {
 
     if (stores.length > 0) {
       // Convert JSON strings to actual JSON arrays
-      stores.forEach((store) => {
+      stores.forEach((store: any) => {
         store.capabilities = JSON.parse(store.capabilities);
         store.products = JSON.parse(store.products);
-        store.products.forEach((product) => {
+        store.products.forEach((product: any) => {
           product.moq = product.moq ? JSON.parse(product.moq) : [];
           product.media = product.media ? JSON.parse(product.media) : [];
         });
@@ -501,7 +572,7 @@ module.exports.filter_stores_by_category = async (req) => {
     };
   }
 };
-module.exports.filter_stores_by_capabilities = async (req) => {
+module.exports.filter_stores_by_capabilities = async (req: Request) => {
   const { capability_ids } = req.body; // Array of capability IDs
 
   if (
@@ -580,10 +651,10 @@ module.exports.filter_stores_by_capabilities = async (req) => {
     );
 
     if (stores.length > 0) {
-      stores.forEach((store) => {
+      stores.forEach((store: any) => {
         store.capabilities = JSON.parse(store.capabilities);
         store.products = JSON.parse(store.products);
-        store.products.forEach((product) => {
+        store.products.forEach((product: any) => {
           product.moq = product.moq ? JSON.parse(product.moq) : [];
           product.media = product.media ? JSON.parse(product.media) : [];
         });
@@ -609,7 +680,7 @@ module.exports.filter_stores_by_capabilities = async (req) => {
 };
 // ////////////////////////////////////////////////////////
 
-module.exports.fetch_default_filters = async (req) => {
+module.exports.fetch_default_filters = async (req: Request) => {
   try {
     // Fetch system filters
     const [filters] = await pool.query(
@@ -633,7 +704,7 @@ module.exports.fetch_default_filters = async (req) => {
   }
 };
 
-// module.exports.follow_and_like_store = async (req) => {
+// module.exports.follow_and_like_store = async (req: Request) => {
 //     const { user_id, store_id, action } = req.body;
 
 //     if (!user_id || !store_id || !["like", "follow"].includes(action)) {
@@ -800,10 +871,10 @@ module.exports.fetch_default_filters = async (req) => {
 //     }
 // };
 
-module.exports.fetch_product_variation = async (req) => {
+module.exports.fetch_product_variation = async (req: Request) => {
   const { product_id } = req.params;
 
-  if (isNaN(product_id)) {
+  if (isNaN(parseInt(product_id))) {
     return { success: false, error: "Invalid Product ID" };
   }
 
@@ -925,10 +996,10 @@ module.exports.fetch_product_variation = async (req) => {
   }
 };
 
-module.exports.get_product_reviews = async (req) => {
+module.exports.get_product_reviews = async (req: Request) => {
   const { product_id } = req.params;
 
-  if (isNaN(product_id)) {
+  if (isNaN(parseInt(product_id))) {
     return {
       success: false,
       error: "Invalid Product ID",
@@ -1014,7 +1085,7 @@ module.exports.get_product_reviews = async (req) => {
   }
 };
 
-module.exports.give_product_review = async (req) => {
+module.exports.give_product_review = async (req: Request) => {
   const { product_id, user_id, rating, review_text } = req.body;
   const user_ip =
     req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -1101,7 +1172,7 @@ module.exports.give_product_review = async (req) => {
   }
 };
 
-module.exports.give_store_review = async (req) => {
+module.exports.give_store_review = async (req: Request) => {
   const { store_id, user_id, rating, review_text } = req.body;
   const user_ip =
     req.ip || req.headers["x-forwarded-for"] || req.connection.remoteAddress;
@@ -1190,7 +1261,7 @@ module.exports.get_shipping_methods = async () => {
 
     const shippingMethodsMap = new Map();
 
-    results.forEach((row) => {
+    results.forEach((row: any) => {
       if (!shippingMethodsMap.has(row.method_id)) {
         shippingMethodsMap.set(row.method_id, {
           method_id: row.method_id,
@@ -1204,7 +1275,7 @@ module.exports.get_shipping_methods = async () => {
       }
 
       if (row.provider_id) {
-        const classMap = {
+        const classMap: ClassMap = {
           0: "economy",
           1: "standard",
           2: "premium",
@@ -1216,7 +1287,7 @@ module.exports.get_shipping_methods = async () => {
           duration_from: row.duration_from,
           duration_to: row.duration_to,
           price: parseFloat(row.price),
-          class: classMap[parseInt(row.class)],
+          class: classMap[row.class],
           offered_by: row.offered_by,
           notice: row.notice,
           is_guaranteed: row.is_guaranteed,
@@ -1245,13 +1316,13 @@ module.exports.get_shipping_providers = async () => {
       "SELECT * FROM shipping_providers WHERE status = 1"
     );
 
-    const classMap = {
-      0: "economy",
-      1: "standard",
-      2: "premium",
+    const classMap: ClassMap = {
+      0: "Basic",
+      1: "Premium",
+      2: "Elite",
     };
 
-    const providers = rows.map((provider) => ({
+    const providers = rows.map((provider: Providers) => ({
       ...provider,
       class: classMap[provider.class] || "unknown",
     }));
@@ -1269,14 +1340,14 @@ module.exports.get_shipping_providers = async () => {
   }
 };
 
-exports.getPaymentGateways = async (req, res) => {
+exports.getPaymentGateways = async () => {
   try {
     const [gateways] = await pool.query(
       `SELECT id, name, logo, provider, is_active FROM payment_gateways ORDER BY name ASC`
     );
 
     // Parse config JSON (if stored as JSON string)
-    const formattedGateways = gateways.map((gw) => ({
+    const formattedGateways = gateways.map((gw: Gateway) => ({
       ...gw,
       //config: gw.config ? JSON.parse(gw.config) : null
     }));
@@ -1294,7 +1365,7 @@ exports.getPaymentGateways = async (req, res) => {
   }
 };
 
-exports.placeNewOrder = async (req, res) => {
+exports.placeNewOrder = async (req: Request) => {
   const { paymentInfo, orderInfo, logisticInfo, isSample } = req.body;
   const { user_id, reference, auth_value, auth_type, total_amount } =
     paymentInfo;
@@ -1428,7 +1499,7 @@ exports.placeNewOrder = async (req, res) => {
       success: true,
       data: "Order placed successfully",
     };
-  } catch (error) {
+  } catch (error: any) {
     await connection.rollback();
     if (error.code === "ER_DUP_ENTRY") {
       return {
@@ -1450,7 +1521,7 @@ exports.placeNewOrder = async (req, res) => {
   }
 };
 
-exports.getUserCards = async (req, res) => {
+exports.getUserCards = async (req: Request) => {
   const { user_id } = req.body;
 
   if (!user_id) {
@@ -1492,7 +1563,7 @@ exports.getUserCards = async (req, res) => {
   }
 };
 
-exports.removeUserCard = async (req, res) => {
+exports.removeUserCard = async (req: Request) => {
   const { user_id, card_id } = req.body;
 
   if (!user_id || !card_id) {

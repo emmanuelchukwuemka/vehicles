@@ -7,10 +7,10 @@ const { getProductMedia } = require("../utility/product/getProductMedia");
 const { getProductMOQ } = require("../utility/product/getProductMOQ");
 const { fetchCapabilities } = require("../moduler/capability/capabilityQuery");
 const { getProductMedias } = require("../moduler/medias/mediaQueries");
-const { getUserScopes } = require("../utility/user/getUserScopes");
 const {
   getBasicProductSamples,
 } = require("../moduler/products/samples/productSampleQueries");
+const { getStoreScope } = require("../utility/user/getStoreScope");
 
 // LOAD RETAILER/MANUFACTURERS MODULE
 module.exports.sellerMarket = async (req) => {
@@ -21,27 +21,27 @@ module.exports.sellerMarket = async (req) => {
     const categories = await getCategoryData({ level: "maincategory", pool });
 
     /* -----------------------------------------------------------
-       1.  Get every user_id that has the 'retailer' scope
-           (using getUserScopes instead of direct SQL)
+       1.  Get every store_id that has the 'seller' scope
+           (using getStoreScope instead of direct SQL)
     ----------------------------------------------------------- */
-    const scopeMap = await getUserScopes({
+    const scopeMap = await getStoreScope({
       pool,
-      conditions: { scope: "seller" }, // WHERE scope = 'retailer'
-      fields: ["user_id", "scope"], // we only need scope column
+      conditions: { scope: "seller" }, // WHERE scope = 'seller'
+      fields: ["store_id", "scope"], // we only need scope column
     });
-    //const retailerIds = Object.keys(scopeMap).map(Number);
-    const retailerIds = scopeMap.map((r) => r.user_id);
 
-    console.log(retailerIds);
+    const sellerIDs = scopeMap.map((r) => r.store_id);
 
-    if (retailerIds.length === 0) {
+    console.log(sellerIDs);
+
+    if (sellerIDs.length === 0) {
       return { success: true, data: { categories, products: [] } };
     }
 
     /* -----------------------------------------------------------
        2.  Pull the latest active products for those retailer stores
     ----------------------------------------------------------- */
-    const placeholders = retailerIds.map(() => "?").join(",");
+    const placeholders = sellerIDs.map(() => "?").join(",");
     const [products] = await pool.query(
       `SELECT id, name, price, discount, status
          FROM products_table
@@ -49,7 +49,7 @@ module.exports.sellerMarket = async (req) => {
           AND store_id IN (${placeholders})
         ORDER BY created_at DESC
         LIMIT 30`,
-      [retailerIds]
+      [sellerIDs]
     );
 
     if (products.length === 0) {
@@ -102,26 +102,22 @@ module.exports.loadManufacturer = async (req) => {
 
     /* -------------------------------------------------------------
        1.  Get all user_ids that have the 'manufacture' scope
-           (using the dynamic getUserScopes utility)
+           (using the dynamic getStoreScope utility)
     ------------------------------------------------------------- */
-    const scopeRows = await getUserScopes({
+    const scopeRows = await getStoreScope({
       pool,
       conditions: { scope: "manufacturer" },
-      fields: ["user_id", "scope"], // we only need scope values
+      fields: ["store_id", "scope"],
     });
 
-    const userIds = scopeRows.map((r) => r.user_id);
+    const storeIDs = scopeRows.map((r) => r.store_id);
 
-    console.log("userIds=>", userIds);
-
-    if (userIds.length === 0) {
+    if (storeIDs.length === 0) {
       return {
         success: true,
         data: { samples: [], categories: [], capabilities: [] },
       };
     }
-
-    //console.log("scope=>", scopeMap);
 
     /* -------------------------------------------------------------
        2.  Fetch up to 5 latest products from those manufacturers
@@ -132,7 +128,7 @@ module.exports.loadManufacturer = async (req) => {
       fields: ["*"],
       limit: 20,
       conditions: {
-        store_id: userIds,
+        store_id: storeIDs,
       },
     });
 

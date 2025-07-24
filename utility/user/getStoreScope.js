@@ -1,5 +1,4 @@
 /**
- * Fetch user scopes from users_scope with optional fields and dynamic conditions
  *
  * @param {Object} options
  * @param {Pool} options.pool - MySQL connection pool
@@ -9,12 +8,12 @@
  * @returns {Promise<Object>} Map: { user_id: [scopes or enriched objects] }
  */
 
-module.exports.getUserScopes = async ({
+module.exports.getStoreScope = async ({
   pool,
   conditions = {},
-  fields = ["user_id", "scope"],
+  fields = ["store_id", "scope"],
 }) => {
-  const allowedFields = ["user_id", "scope"];
+  const allowedFields = ["store_id", "scope"];
 
   // Validate selected fields
   const selectedFields = [...new Set(fields)];
@@ -48,7 +47,7 @@ module.exports.getUserScopes = async ({
 
   const query = `
     SELECT ${selectClause}
-    FROM users_scope
+    FROM stores_scope
     ${whereClause}
   `;
 
@@ -57,7 +56,7 @@ module.exports.getUserScopes = async ({
 
     return rows; // ✅ now returns array of objects
   } catch (error) {
-    console.error("Error in getUserScopes:", error);
+    console.error("Error in getStoreScopes:", error);
     throw error;
   }
 };

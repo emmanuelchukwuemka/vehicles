@@ -20,7 +20,7 @@ module.exports.requestTimer = (req, res, next) => {
     if (!res.headersSent) {
       res.status(408).json({
         success: false,
-        error: "Request timed out. Please try again.",
+        error: "Request has timed out. Please try again.",
       });
     }
   });
@@ -30,7 +30,6 @@ module.exports.requestTimer = (req, res, next) => {
 
 module.exports.jwtValidator = (req, res, next) => {
   const accessToken = req.headers["x-auth-token"];
-  console.log("x-auth-token header:", "kkk");
 
   if (!accessToken) {
     return res.status(401).json({
@@ -41,6 +40,7 @@ module.exports.jwtValidator = (req, res, next) => {
 
   try {
     const decodedUser = jwt.verify(accessToken, process.env.JWT_SECRET);
+    //console.log("x-auth-token header:", decodedUser);
     req.user = decodedUser;
     // console.log("gooder==>", decodedUser)
     next();
