@@ -2,18 +2,18 @@ const express = require("express");
 const router = express.Router();
 
 const bloomzonProduct = require("../../controllers/productController/bloomzonProduct");
-const deleteProduct = require("../../Controllers/productController/deleteProduct");
-const disableProduct = require("../../Controllers/productController/disableProduct");
-const searchProduct = require("../../Controllers/productController/searchProduct");
-const uploadProduct = require("../../Controllers/productController/uploadProduct");
-const allProduct = require("../../Controllers/productController/allProduct");
-const duplicateProduct = require("../../Controllers/productController/duplicateProduct");
-const editProduct = require("../../Controllers/productController/editProduct");
-const flashDeal = require("../../Controllers/productController/flashDeal");
-const categoryProduct = require("../../Controllers/productController/categoryProduct");
-const likeProduct = require("../../Controllers/productController/likeProduct");
-const productReview = require("../../Controllers/productController/productReview");
-const productDetails = require("../../Controllers/productController/productDetails");
+const deleteProduct = require("../../controllers/productController/deleteProduct");
+const disableProduct = require("../../controllers/productController/disableProduct");
+const searchProduct = require("../../controllers/productController/searchProduct");
+const uploadProduct = require("../../controllers/productController/uploadProduct");
+const allProduct = require("../../controllers/productController/allProduct");
+const duplicateProduct = require("../../controllers/productController/duplicateProduct");
+const editProduct = require("../../controllers/productController/editProduct");
+const flashDeal = require("../../controllers/productController/flashDeal");
+const categoryProduct = require("../../controllers/productController/categoryProduct");
+const likeProduct = require("../../controllers/productController/likeProduct");
+const productReview = require("../../controllers/productController/productReview");
+const productDetails = require("../../controllers/productController/productDetails");
 //RealEstate Routes
 
 router.post("/productReview", productReview);
