@@ -59,4 +59,4 @@ router.get("/server", async (req: Request, res: Response) => {
   }
 });
 
-export default router;
+module.exports = router;

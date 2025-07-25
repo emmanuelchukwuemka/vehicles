@@ -30,7 +30,7 @@ const {
   upDateDealEndDate,
 } = require("./controllers/categoryController/allCategory");
 
-import marketRouter from "./controllers/markets.controller";
+const marketRouter = require("./controllers/markets.controller");
 const userRouter = require("./controllers/users.controller");
 const cartRouter = require("./controllers/cart.controller");
 const sellerRouter = require("./controllers/seller.controller");
