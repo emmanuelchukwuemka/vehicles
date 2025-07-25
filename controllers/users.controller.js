@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const service = require("../services/users.service.ts");
+const service = require("../services/users.service");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 

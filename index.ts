@@ -9,7 +9,7 @@ import helmet from "helmet";
 
 const currentDate = require("./utility/Date/currentDate");
 const getTimeLeft = require("./utility/Date/getTimeLeft");
-const SubCategory = require("./Routes/SubCategorydata.json");
+//const SubCategory = require("./Routes/SubCategorydata.json");
 const ProductRoute = require("./Routes/products/ProductRoutes");
 const userRoute = require("./Routes/usersRoutes/usersRoutes"); //create user Router
 const categoryRoute = require("./Routes/categoryRoutes/categoryRoutes");
@@ -118,10 +118,10 @@ const timeLeft = getTimeLeft("Sun Sep 18 2024 06:47:31 GMT-0700");
 
 console.log(timeLeft);
 
-app.get("/SubCategory", (req, res) => {
-  res.send(SubCategory);
-  // res.send("Texting....")
-});
+// app.get("/SubCategory", (req, res) => {
+//   res.send(SubCategory);
+//   // res.send("Texting....")
+// });
 //////////////////////////////////////////////////////////
 
 initSocket(io, pool);
