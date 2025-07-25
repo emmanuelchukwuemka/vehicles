@@ -11,6 +11,7 @@ import { getUserById } from "../utility/user/getUserById";
 import { getStoreById } from "../utility/store/getStoreById";
 import { v2 as cloudinary } from "cloudinary";
 import { Server } from "socket.io";
+import { connectedUsers } from "../socket";
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -134,8 +135,6 @@ module.exports.fetchMessages = async (req: Request) => {
 
 module.exports.sendMessage = async (req: Request, res: Response) => {
   const io = req.app.get("io") as Server;
-  const connectedUsers = req.app.get("connectedUsers") as Map<string, string[]>;
-  const pool = req.app.get("pool");
 
   try {
     const payload = JSON.parse(req.body.payload);

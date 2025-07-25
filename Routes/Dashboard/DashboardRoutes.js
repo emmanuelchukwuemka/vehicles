@@ -1,0 +1,24 @@
+
+const express = require("express");
+const router = express.Router()
+
+
+const {AdminSellers,AdminUsers,customers,followers,purchaseHistory,dashboard,shopprofile,editshopprofile,sales,VerifySellers} = require("../../Controllers/Dashboard/Sellers/sellersDashBoard")
+const { getAdmins,createAdmins,deleteAdmin,suspendAdmin } = require("../../Controllers/Dashboard/Admin/AdminController")
+
+router.post("/dashboard",dashboard)
+router.post("/shopprofile",shopprofile)
+router.post("/editshopprofile",editshopprofile)
+router.post("/sales",sales)
+router.post("/purchaseHistory",purchaseHistory)
+router.post("/followers",followers);
+router.post("/customers",customers);
+router.post("/adminusers",AdminUsers);
+router.post("/adminsellers",AdminSellers);
+router.post("/getadmin",getAdmins);
+router.post("/createadmin",createAdmins);
+router.post("/deleteadmin",deleteAdmin);
+router.post("/suspendadmin",suspendAdmin);
+router.post("/verifyseller",VerifySellers);
+
+module.exports = router;
