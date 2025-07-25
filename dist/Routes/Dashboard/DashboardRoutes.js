@@ -1,8 +1,8 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const { AdminSellers, AdminUsers, customers, followers, purchaseHistory, dashboard, shopprofile, editshopprofile, sales, VerifySellers } = require("../../Controllers/Dashboard/Sellers/sellersDashBoard");
-const { getAdmins, createAdmins, deleteAdmin, suspendAdmin } = require("../../Controllers/Dashboard/Admin/AdminController");
+const { AdminSellers, AdminUsers, customers, followers, purchaseHistory, dashboard, shopprofile, editshopprofile, sales, VerifySellers, } = require("../../controllers/Dashboard/Sellers/sellersDashBoard");
+const { getAdmins, createAdmins, deleteAdmin, suspendAdmin, } = require("../../controllers/Dashboard/Admin/AdminController");
 router.post("/dashboard", dashboard);
 router.post("/shopprofile", shopprofile);
 router.post("/editshopprofile", editshopprofile);

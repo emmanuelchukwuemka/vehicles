@@ -1,7 +1,7 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const { SetNotificationSettings, getUsersRealEstate, getAllProperties, getAds, getMyAds, deleteAdsPost, markAdsPost, addToFavorite, getSellerDetails, createmessage, messengerRealEstate, getmessagesRealEstate, getMyFavorites } = require('../../Controllers/RealEstateController/Controller');
+const { SetNotificationSettings, getUsersRealEstate, getAllProperties, getAds, getMyAds, deleteAdsPost, markAdsPost, addToFavorite, getSellerDetails, createmessage, messengerRealEstate, getmessagesRealEstate, getMyFavorites, } = require("../../controllers/RealEstateController/Controller");
 router.post("/getAds", getAds);
 router.post("/getMyAds", getMyAds);
 router.post("/deleteAdsPost", deleteAdsPost);

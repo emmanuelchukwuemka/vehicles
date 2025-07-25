@@ -1,24 +1,34 @@
-
 const express = require("express");
-const router = express.Router()
+const router = express.Router();
 
-const {SetNotificationSettings,getUsersRealEstate,getAllProperties,getAds,getMyAds,deleteAdsPost,markAdsPost,addToFavorite,getSellerDetails,createmessage,messengerRealEstate,getmessagesRealEstate,getMyFavorites} = require('../../Controllers/RealEstateController/Controller')
+const {
+  SetNotificationSettings,
+  getUsersRealEstate,
+  getAllProperties,
+  getAds,
+  getMyAds,
+  deleteAdsPost,
+  markAdsPost,
+  addToFavorite,
+  getSellerDetails,
+  createmessage,
+  messengerRealEstate,
+  getmessagesRealEstate,
+  getMyFavorites,
+} = require("../../controllers/RealEstateController/Controller");
 
+router.post("/getAds", getAds);
+router.post("/getMyAds", getMyAds);
+router.post("/deleteAdsPost", deleteAdsPost);
+router.post("/markAdsPost", markAdsPost);
+router.post("/addToFavorite", addToFavorite);
+router.post("/getSellerDetails", getSellerDetails);
+router.post("/createmessageRealEstate", createmessage);
+router.post("/messengerRealEstate", messengerRealEstate);
+router.post("/getmessagesRealEstate", getmessagesRealEstate);
+router.post("/getMyFavorites", getMyFavorites);
+router.post("/getAllProperties", getAllProperties);
+router.post("/getUsersRealEstate", getUsersRealEstate);
+router.post("/SetNotificationSettings", SetNotificationSettings);
 
-  router.post("/getAds",getAds)
-  router.post("/getMyAds",getMyAds)
-  router.post("/deleteAdsPost",deleteAdsPost)
-  router.post("/markAdsPost",markAdsPost)
-  router.post("/addToFavorite",addToFavorite)
-  router.post("/getSellerDetails",getSellerDetails)
-  router.post("/createmessageRealEstate",createmessage)
-  router.post("/messengerRealEstate",messengerRealEstate)
-  router.post("/getmessagesRealEstate",getmessagesRealEstate)
-  router.post("/getMyFavorites",getMyFavorites)
-  router.post("/getAllProperties",getAllProperties)
-  router.post("/getUsersRealEstate",getUsersRealEstate)
-  router.post("/SetNotificationSettings",SetNotificationSettings)
- 
-
-
-  module.exports = router;
+module.exports = router;

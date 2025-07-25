@@ -1,13 +1,10 @@
 const express = require("express");
-const router = express.Router()
+const router = express.Router();
 
+const {
+  getProduct,
+} = require("../../controllers/BloomzonFreshController/freshController");
 
-const {getProduct} = require("../../Controllers/BloomzonFreshController/freshController")
+router.post("/freshproduct", getProduct);
 
-
-  router.post("/freshproduct",getProduct)
-
-
- 
-
-  module.exports = router;
+module.exports = router;

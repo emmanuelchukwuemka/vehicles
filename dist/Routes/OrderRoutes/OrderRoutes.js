@@ -1,7 +1,7 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const { orderDetails, searchOrders, orders, placeOrder, buyAgain, placeOrderCart } = require("../../Controllers/orders/orders");
+const { orderDetails, searchOrders, orders, placeOrder, buyAgain, placeOrderCart, } = require("../../controllers/orders/orders");
 router.post("/orders", orders);
 router.post("/placeorders", placeOrder);
 router.post("/buyagain", buyAgain);

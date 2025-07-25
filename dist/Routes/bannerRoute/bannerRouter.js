@@ -1,10 +1,10 @@
 "use strict";
 const express = require("express");
 const router = express.Router();
-const { upload } = require('../../Middleware/Multer');
-const { getBannerProducts, addBannerProducts, getBannertProductsByID, createBanner, deleteBanner, deactivateBanner, getBanner, getAppBanner, updateBanner } = require("../../Controllers/Banner/bannerController");
-router.post("/createBanner", upload.array('image', 10), createBanner);
-router.post("/updateBanner", upload.array('image', 10), updateBanner);
+const { upload } = require("../../Middleware/Multer");
+const { getBannerProducts, addBannerProducts, getBannertProductsByID, createBanner, deleteBanner, deactivateBanner, getBanner, getAppBanner, updateBanner, } = require("../../controllers/Banner/bannerController");
+router.post("/createBanner", upload.array("image", 10), createBanner);
+router.post("/updateBanner", upload.array("image", 10), updateBanner);
 router.post("/deleteBanner", deleteBanner);
 router.post("/deactivateBanner", deactivateBanner);
 router.post("/getBanner", getBanner);

@@ -1,20 +1,27 @@
-
 const express = require("express");
-const router = express.Router()
-const {upload} = require('../../Middleware/Multer')
+const router = express.Router();
+const { upload } = require("../../Middleware/Multer");
 
-const {getBannerProducts,addBannerProducts,getBannertProductsByID,createBanner,deleteBanner,deactivateBanner,getBanner,getAppBanner,updateBanner } = require("../../Controllers/Banner/bannerController")
+const {
+  getBannerProducts,
+  addBannerProducts,
+  getBannertProductsByID,
+  createBanner,
+  deleteBanner,
+  deactivateBanner,
+  getBanner,
+  getAppBanner,
+  updateBanner,
+} = require("../../controllers/Banner/bannerController");
 
+router.post("/createBanner", upload.array("image", 10), createBanner);
+router.post("/updateBanner", upload.array("image", 10), updateBanner);
+router.post("/deleteBanner", deleteBanner);
+router.post("/deactivateBanner", deactivateBanner);
+router.post("/getBanner", getBanner);
+router.post("/getAppBanner", getAppBanner);
+router.post("/getBannerProductsByID", getBannertProductsByID);
+router.post("/addBannerProducts", addBannerProducts);
+router.post("/getBannerProducts", getBannerProducts);
 
-  router.post("/createBanner",upload.array('image',10),createBanner)
-  router.post("/updateBanner",upload.array('image',10),updateBanner)
-  router.post("/deleteBanner",deleteBanner)
-  router.post("/deactivateBanner",deactivateBanner)
-  router.post("/getBanner",getBanner)
-  router.post("/getAppBanner",getAppBanner)
-  router.post("/getBannerProductsByID",getBannertProductsByID)
-  router.post("/addBannerProducts",addBannerProducts)
-  router.post("/getBannerProducts",getBannerProducts)
-
-
-  module.exports = router;
+module.exports = router;
