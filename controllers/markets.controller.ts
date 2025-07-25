@@ -46,4 +46,17 @@ router.post("/manufacturers", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/server", async (req: Request, res: Response) => {
+  try {
+    const rand = Math.floor(Math.random() * 100); // random number from 0–99
+    res.status(200).json({
+      success: true,
+      data: rand,
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ success: false, error: "Internal Server Error" });
+  }
+});
+
 export default router;
