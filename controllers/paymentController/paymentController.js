@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const db = require("../../Models/dbConfig/db.Config");
-const currentDate = require("../../util/Date/currentDate");
+const currentDate = require("../../utility/Date/currentDate");
 
 const stripe = require("stripe")(
   "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"

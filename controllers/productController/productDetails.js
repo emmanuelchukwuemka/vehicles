@@ -1,6 +1,6 @@
 const db = require("../../Models/dbConfig/db.Config");
 const asyncHandler = require("express-async-handler");
-const currentDate = require("../../util/Date/currentDate");
+const currentDate = require("../../utility/Date/currentDate");
 
 const productDetails = asyncHandler(async (req, res) => {
   const { productID, sellerID, userID, categoryID, productPrice } = req.body;
@@ -133,12 +133,10 @@ const productDetails = asyncHandler(async (req, res) => {
                 db.query(SQL, (error, data) => {
                   if (error) {
                     console.log(error);
-                    return res
-                      .status(404)
-                      .json({
-                        message: "Error Querying database",
-                        status: 404,
-                      });
+                    return res.status(404).json({
+                      message: "Error Querying database",
+                      status: 404,
+                    });
                   }
                   if (data.length != 0) {
                     orders = data.length;
@@ -149,12 +147,10 @@ const productDetails = asyncHandler(async (req, res) => {
                   db.query(SQL, (error, data) => {
                     if (error) {
                       console.log(error);
-                      return res
-                        .status(404)
-                        .json({
-                          message: "Error Querying database",
-                          status: 404,
-                        });
+                      return res.status(404).json({
+                        message: "Error Querying database",
+                        status: 404,
+                      });
                     }
                     if (data.length != 0) {
                       productsViewed = data;
@@ -163,12 +159,10 @@ const productDetails = asyncHandler(async (req, res) => {
                     db.query(SQL, (error, data) => {
                       if (error) {
                         console.log(error);
-                        return res
-                          .status(404)
-                          .json({
-                            message: "Error Querying database",
-                            status: 404,
-                          });
+                        return res.status(404).json({
+                          message: "Error Querying database",
+                          status: 404,
+                        });
                       }
                       if (data.length != 0) {
                         FrequentlyBoughtTogether = data;
@@ -177,12 +171,10 @@ const productDetails = asyncHandler(async (req, res) => {
                       db.query(SQL, (error, data) => {
                         if (error) {
                           console.log(error);
-                          return res
-                            .status(404)
-                            .json({
-                              message: "Error Querying database",
-                              status: 404,
-                            });
+                          return res.status(404).json({
+                            message: "Error Querying database",
+                            status: 404,
+                          });
                         }
                         if (data.length != 0) {
                           RelatedProducts = data;
@@ -191,34 +183,28 @@ const productDetails = asyncHandler(async (req, res) => {
                         db.query(SQL, (error, data) => {
                           if (error) {
                             console.log(error);
-                            return res
-                              .status(404)
-                              .json({
-                                message: "Error Querying database",
-                                status: 404,
-                              });
+                            return res.status(404).json({
+                              message: "Error Querying database",
+                              status: 404,
+                            });
                           }
                           if (data.length != 0) {
                             SimilarPriceProduct = data;
                           }
-                          res
-                            .status(201)
-                            .json({
-                              shopData: shopData,
-                              sellerData: sellerData,
-                              productInformation: productInformation,
-                              productFeatureAndDetails:
-                                productFeatureAndDetails,
-                              sponsoredProduct: sponsoredProduct,
-                              shopFollowers: shopFollowers,
-                              onlineRevenue,
-                              orders: orders,
-                              productsViewed: productsViewed,
-                              FrequentlyBoughtTogether:
-                                FrequentlyBoughtTogether,
-                              RelatedProducts: RelatedProducts,
-                              SimilarPriceProduct: SimilarPriceProduct,
-                            });
+                          res.status(201).json({
+                            shopData: shopData,
+                            sellerData: sellerData,
+                            productInformation: productInformation,
+                            productFeatureAndDetails: productFeatureAndDetails,
+                            sponsoredProduct: sponsoredProduct,
+                            shopFollowers: shopFollowers,
+                            onlineRevenue,
+                            orders: orders,
+                            productsViewed: productsViewed,
+                            FrequentlyBoughtTogether: FrequentlyBoughtTogether,
+                            RelatedProducts: RelatedProducts,
+                            SimilarPriceProduct: SimilarPriceProduct,
+                          });
                         });
                       });
                     });

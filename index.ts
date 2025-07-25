@@ -7,8 +7,8 @@ require("dotenv").config();
 import cors from "cors";
 import helmet from "helmet";
 
-const currentDate = require("./util/Date/currentDate");
-const getTimeLeft = require("./util/Date/getTimeLeft");
+const currentDate = require("./utility/Date/currentDate");
+const getTimeLeft = require("./utility/Date/getTimeLeft");
 const SubCategory = require("./Routes/SubCategorydata.json");
 const ProductRoute = require("./Routes/products/ProductRoutes");
 const userRoute = require("./Routes/usersRoutes/usersRoutes"); //create user Router

@@ -1,6 +1,6 @@
 const db = require("../../Models/dbConfig/db.Config");
 const asyncHandler = require("express-async-handler");
-const currentDate = require("../../util/Date/currentDate");
+const currentDate = require("../../utility/Date/currentDate");
 const date = currentDate();
 require("dotenv").config();
 

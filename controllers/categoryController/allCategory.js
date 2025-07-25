@@ -2,8 +2,8 @@ const db = require("../../Models/dbConfig/db.Config");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 require("dotenv").config();
-const currentDate = require("../../util/Date/currentDate");
-const getTimeLeft = require("../../util/Date/getTimeLeft");
+const currentDate = require("../../utility/Date/currentDate");
+const getTimeLeft = require("../../utility/Date/getTimeLeft");
 
 let categoryTitleData = [];
 let subcategoryData = [];

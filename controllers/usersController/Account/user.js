@@ -2,7 +2,7 @@ const db = require("../../../Models/dbConfig/db.Config");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const { sendEmail } = require("../../email/email");
-const currentDate = require("../../../util/Date/currentDate");
+const currentDate = require("../../../utility/Date/currentDate");
 var validator = require("validator");
 
 //create new user or signup
