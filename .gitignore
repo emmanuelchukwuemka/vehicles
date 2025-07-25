@@ -9,7 +9,7 @@ yarn-debug.*
 yarn-error.*
 
 # local env files
-.env*.local
+.local
 
 connection/
 database/
