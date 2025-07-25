@@ -1,0 +1,32 @@
+"use strict";
+const express = require("express");
+const router = express.Router();
+const bloomzonProduct = require("../../controllers/productController/bloomzonProduct");
+const deleteProduct = require("../../Controllers/productController/deleteProduct");
+const disableProduct = require("../../Controllers/productController/disableProduct");
+const searchProduct = require("../../Controllers/productController/searchProduct");
+const uploadProduct = require("../../Controllers/productController/uploadProduct");
+const allProduct = require("../../Controllers/productController/allProduct");
+const duplicateProduct = require("../../Controllers/productController/duplicateProduct");
+const editProduct = require("../../Controllers/productController/editProduct");
+const flashDeal = require("../../Controllers/productController/flashDeal");
+const categoryProduct = require("../../Controllers/productController/categoryProduct");
+const likeProduct = require("../../Controllers/productController/likeProduct");
+const productReview = require("../../Controllers/productController/productReview");
+const productDetails = require("../../Controllers/productController/productDetails");
+//RealEstate Routes
+router.post("/productReview", productReview);
+router.post("/productDetails", productDetails);
+router.post("/likeProduct", likeProduct);
+router.post("/flashdeals", flashDeal);
+router.post("/DuplicateProduct", duplicateProduct);
+router.post("/UploadProduct", uploadProduct);
+router.post("/products", allProduct);
+router.post("/searchproduct", searchProduct);
+router.delete("/deleteproduct", deleteProduct);
+router.put("/disableproduct", disableProduct);
+router.post("/bloomzonproduct", bloomzonProduct);
+router.put("/editProduct", editProduct);
+router.post("/allproducts", categoryProduct);
+//router.post("/upload", upload.array('photo',12),uploadFile)
+module.exports = router;

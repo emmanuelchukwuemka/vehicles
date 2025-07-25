@@ -10,5 +10,5 @@
     "allowJs": true
   },
   "include": ["./**/*.ts", "./**/*.js"],
-  "exclude": ["node_modules", "dist", "connection"]
+  "exclude": ["node_modules", "dist"]
 }
