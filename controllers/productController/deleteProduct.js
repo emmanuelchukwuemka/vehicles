@@ -1,7 +1,7 @@
 const db = require("../../Models/dbConfig/db.Config");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
-const { sendEmail } = require("../../controllers/email/email");
+const { sendEmail } = require("../email/email");
 const currentDate = require("../../utility/Date/currentDate");
 
 const deleteProduct = asyncHandler(async (req, res) => {

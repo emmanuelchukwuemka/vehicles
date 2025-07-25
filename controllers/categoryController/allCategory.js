@@ -9,7 +9,7 @@ let categoryTitleData = [];
 let subcategoryData = [];
 
 const cloudinary = require("cloudinary");
-const { sendEmail } = require("../../controllers/email/email");
+const { sendEmail } = require("../email/email");
 
 cloudinary.config({
   cloud_name: process.env.cloudinaryName,
