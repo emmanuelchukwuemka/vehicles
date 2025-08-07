@@ -30,6 +30,7 @@ const {
   upDateDealEndDate,
 } = require("./controllers/categoryController/allCategory");
 
+const authRouter = require("./controllers/auth.controller");
 const marketRouter = require("./controllers/markets.controller");
 const userRouter = require("./controllers/users.controller");
 const cartRouter = require("./controllers/cart.controller");
@@ -61,6 +62,8 @@ app.use(checkPayload);
 //app.use(requestTimer)
 
 ///////////////////////////////////////////////////////
+
+app.use("/auth", authRouter);
 
 app.use("/market", marketRouter);
 

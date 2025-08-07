@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import { fileTypeFromBuffer } from "file-type";
+//import { fileTypeFromBuffer } from "file-type";
 import { v2 as cloudinary } from "cloudinary";
 import { v4 as uuid } from "uuid";
 
@@ -15,6 +15,7 @@ export const uploadToCloudinary = async (
 ): Promise<{ url: string; type: string; name: string }> => {
   if (!file?.buffer) throw new Error("File buffer is empty");
 
+  const { fileTypeFromBuffer } = await import("file-type");
   const detected = await fileTypeFromBuffer(file.buffer);
 
   const realMime = detected?.mime || file.mimetype;

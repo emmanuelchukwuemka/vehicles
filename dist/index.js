@@ -31,6 +31,7 @@ const freshRoute = require("./Routes/BloomzonFresh/freshRoute");
 const RealEstate = require("./Routes/RealEstate/RealEstate");
 const bannerRoute = require("./Routes/bannerRoute/bannerRouter");
 const { upDateDealEndDate, } = require("./controllers/categoryController/allCategory");
+const authRouter = require("./controllers/auth.controller");
 const marketRouter = require("./controllers/markets.controller");
 const userRouter = require("./controllers/users.controller");
 const cartRouter = require("./controllers/cart.controller");
@@ -57,6 +58,7 @@ app.use(body_parser_1.default.json({ limit: "500kb" }));
 app.use(checkPayload);
 //app.use(requestTimer)
 ///////////////////////////////////////////////////////
+app.use("/auth", authRouter);
 app.use("/market", marketRouter);
 app.use("/user", userRouter);
 app.use("/cart", jwtValidator, cartRouter);
