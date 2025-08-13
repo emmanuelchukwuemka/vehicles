@@ -11,6 +11,7 @@ yarn-error.*
 # local env files
 .local
 
-database/
+# Retails 
+controllers/exclude
 
 
