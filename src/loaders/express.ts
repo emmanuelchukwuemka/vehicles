@@ -4,8 +4,8 @@ import cors from "cors";
 //import errorHandler from "../middlewares/errorHandler";
 
 // Import module routes directly
-import authRoutes from "../modules/auth/auth.routes";
-import marketplaceProductsRoutes from "../modules/marketplace/products";
+import authModule from "../modules/auth";
+import storesModule from "../modules/marketplace/stores";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -13,8 +13,8 @@ export default (app: Application): void => {
   app.use(express.json());
 
   // Module routes
-  app.use("/api/auth", authRoutes);
-  app.use("/api/marketplace/products", marketplaceProductsRoutes);
+  app.use("/api/auth", authModule);
+  app.use("/api/stores", storesModule);
 
   // Global error handler
   //app.use(errorHandler);

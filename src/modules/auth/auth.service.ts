@@ -24,12 +24,12 @@ export const loginService = async (payload: LoginRequest) => {
 
   const userAuth = rows.length ? rows[0] : null;
   if (!userAuth) {
-    return errorResponse("Invalid email or password", 401);
+    return errorResponse("User does not exist", 401);
   }
 
   const isMatch = await bcrypt.compare(password, userAuth.password);
   if (!isMatch) {
-    return errorResponse("Invalid email or password", 401);
+    return errorResponse("Incorrect email or password", 401);
   }
 
   // Fetch user info from users_table
