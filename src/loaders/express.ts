@@ -5,8 +5,7 @@ import cors from "cors";
 
 // Import module routes directly
 import authModule from "../modules/auth";
-import storesModule from "../modules/marketplace/stores";
-import logisticsModule from "../modules/logistics";
+import storesModule from "../modules/stores";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -16,7 +15,6 @@ export default (app: Application): void => {
   // Module routes
   app.use("/api/auth", authModule);
   app.use("/api/stores", storesModule);
-  app.use("/api/logistics", logisticsModule);
 
   // Global error handler
   //app.use(errorHandler);

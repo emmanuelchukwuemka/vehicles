@@ -19,7 +19,7 @@ export const loginService = async (payload: LoginRequest) => {
 
   const [rows]: any = await pool.query(
     "SELECT * FROM auth_table WHERE email = ? LIMIT 1",
-    [email]
+    [email],
   );
 
   const userAuth = rows.length ? rows[0] : null;
@@ -41,7 +41,7 @@ export const loginService = async (payload: LoginRequest) => {
   const token = jwt.sign(
     { id: userAuth.user_id },
     process.env.JWT_SECRET as string,
-    { expiresIn: "7d" }
+    { expiresIn: "7d" },
   );
 
   return successResponse("Login successful", { token, user: userInfo });

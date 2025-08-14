@@ -1,9 +1,9 @@
-import { Request, Response } from "express"; import * as
-{{moduleName}}Service from "./{{moduleName}}.service"; export const getAll =
-async (req: Request, res: Response) => { const result = await
-{{moduleName}}Service.getAll(); return res.status(result.statusCode ||
-(result.success ? 200 : 400)).json(result); }; export const getOne = async (req:
-Request, res: Response) => { const id = Number(req.params.id); const result =
-await
-{{moduleName}}Service.getOne(id); return res.status(result.statusCode ||
-(result.success ? 200 : 400)).json(result); };
+import { Request, Response } from "express"; 
+import * as {{camelCase name}}Service from "./{{dashCase name}}.service"; 
+
+export const testController = async (req: Request, res: Response) => { 
+
+    const result = await {{camelCase name}}Service.testMethod(); 
+    
+    return res.status(result.statusCode ||(result.success ? 200 : 400)).json(result); 
+};

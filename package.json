@@ -8,7 +8,7 @@
     "dev": "nodemon",
     "build": "tsc && npx copyfiles .env dist",
     "start": "node dist/index.js",
-    "plop": "plop --require ts-node/register"
+    "module-init": "plop --plopfile scripts/plopfile.js"
   },
   "author": "",
   "license": "ISC",
@@ -45,7 +45,10 @@
     "@types/node": "^24.0.14",
     "@types/sequelize": "^4.28.20",
     "copyfiles": "^2.4.1",
+    "node-plop": "^0.32.0",
     "nodemon": "^3.1.10",
+    "plop": "^4.0.1",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }

@@ -4,7 +4,7 @@ import * as usersService from "../users/users.service";
 export const getProfile = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const newProduct = await usersService.getProfile(req.body);

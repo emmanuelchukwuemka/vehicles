@@ -1,10 +1,11 @@
-import pool from "../../../config/database/db"; import { successResponse,
-errorResponse } from "../../../globals/utility/apiResponse"; export const getAll
-= async () => { const [rows]: any = await pool.query("SELECT * FROM
-{{moduleName}}_table"); return successResponse("Retrieved successfully", rows);
-}; export const getOne = async (id: number) => { if (!id) return
-errorResponse("ID is required", 400); const [rows]: any = await
-pool.query("SELECT * FROM
-{{moduleName}}_table WHERE id = ? LIMIT 1", [id]); return rows.length ?
-successResponse("Retrieved successfully", rows[0]) : errorResponse("Not found",
-404); };
+import { successResponse, errorResponse } from "{{importApiResponse}}";
+
+export const testMethod = async () => {
+
+  try {
+    return successResponse("Retrieved successfully", { data: null });
+  } catch (error) {
+    console.error(error);
+    return errorResponse("Error occurred", 404);
+  }
+};

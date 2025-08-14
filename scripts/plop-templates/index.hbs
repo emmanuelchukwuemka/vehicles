@@ -1,4 +1,6 @@
-import { Router } from "express"; import
-{{moduleName}}Routes from "./{{moduleName}}.routes"; const router = Router();
-router.use("/",
-{{moduleName}}Routes); export default router;
+import { Router } from "express"; 
+import {{camelCase name}}Routes from "./{{dashCase name}}.routes"; 
+
+const router = Router(); router.use("/", {{camelCase name}}Routes); 
+
+export default router;
