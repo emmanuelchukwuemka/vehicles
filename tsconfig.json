@@ -8,7 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "allowJs": true,
-    "typeRoots": ["types/express", "./node_modules/@types"]
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
   "include": ["./**/*.ts", "./**/*.js"],
   "exclude": ["node_modules", "dist"]

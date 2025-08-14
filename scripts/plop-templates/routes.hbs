@@ -1,0 +1,5 @@
+import { Router } from "express"; import * as
+{{moduleName}}Controller from "./{{moduleName}}.controller"; const router =
+Router(); router.get("/",
+{{moduleName}}Controller.getAll); router.get("/:id",
+{{moduleName}}Controller.getOne); export default router;
