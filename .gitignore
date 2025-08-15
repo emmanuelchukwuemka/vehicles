@@ -14,4 +14,7 @@ yarn-error.*
 # Retails 
 controllers/exclude
 
+# plobs 
+scripts/plopfile.js
+
 
