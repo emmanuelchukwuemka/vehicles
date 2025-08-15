@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getUserByAuthId = void 0;
-// src/helpers/user.helper.ts
 const db_1 = __importDefault(require("../../config/database/db"));
 const getUserByAuthId = async (authUserId) => {
     const [rows] = await db_1.default.query("SELECT id, first_name, last_name, email, phone FROM users_table WHERE id = ? LIMIT 1", [authUserId]);

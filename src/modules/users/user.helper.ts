@@ -1,4 +1,3 @@
-// src/helpers/user.helper.ts
 import pool from "../../config/database/db";
 
 export const getUserByAuthId = async (authUserId: number) => {

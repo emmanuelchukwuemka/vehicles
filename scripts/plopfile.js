@@ -2,14 +2,37 @@ const path = require("path");
 const fs = require("fs");
 const prettierAction = require("./plop-action-prettier");
 
-function getImportPath(fromDir, targetFile) {
-  const relativePath = path.relative(fromDir, targetFile).replace(/\\/g, "/");
-  const cleaned = relativePath.replace(/\.ts$/, "");
-  return cleaned.startsWith(".") ? cleaned : "./" + cleaned;
+// Path for main modules (loader)
+function getModuleImportPath(loaderFile, moduleFolder) {
+  let relativePath = path.relative(path.dirname(loaderFile), moduleFolder);
+  relativePath = relativePath.replace(/\\/g, "/");
+  if (!relativePath.startsWith(".")) relativePath = "./" + relativePath;
+  return relativePath;
+}
+
+// Path for submodules (parent index)
+function getSubmoduleImportPath(parentIndexFile, subFolder) {
+  let relativePath = path.relative(path.dirname(parentIndexFile), subFolder);
+  relativePath = relativePath.replace(/\\/g, "/");
+  if (!relativePath.startsWith(".")) relativePath = "./" + relativePath;
+  return relativePath;
+}
+
+// Compute import path from current module folder to apiResponse
+function getApiResponseImportPath(moduleFolder) {
+  const absPath = path.resolve(
+    __dirname,
+    "../src/globals/utility/apiResponse.ts"
+  );
+  let relativePath = path.relative(moduleFolder, absPath).replace(/\\/g, "/");
+  if (!relativePath.startsWith(".")) relativePath = "./" + relativePath;
+  // Remove .ts extension for TypeScript import
+  relativePath = relativePath.replace(/\.ts$/, "");
+  return relativePath;
 }
 
 module.exports = function (plop) {
-  console.log("✅ plopfile loaded");
+  console.log("==> plopfile loaded");
 
   plop.setActionType("prettier", prettierAction);
 
@@ -74,29 +97,27 @@ module.exports = function (plop) {
     ],
     actions: function (data) {
       const dashName = plop.getHelper("dashCase")(data.name);
-
       const basePath =
         data.type === "main"
           ? path.join(__dirname, `../src/modules/${dashName}`)
           : path.join(__dirname, `../src/modules/${data.subPath}/${dashName}`);
 
+      // am checking if parent folder for submodule exists
       if (data.type === "sub") {
         const parentPath = path.join(__dirname, "../src/modules", data.subPath);
         if (!fs.existsSync(parentPath) && data.createMissingPath) {
           fs.mkdirSync(parentPath, { recursive: true });
           console.log(`Created missing parent folder: ${parentPath}`);
         } else if (!fs.existsSync(parentPath) && !data.createMissingPath) {
-          console.log("Proccess aborted: Parent module path does not exist.");
+          console.log("Process aborted: Parent module path does not exist.");
           return [];
         }
       }
 
+      // am checking for base folder exists
       if (!fs.existsSync(basePath)) fs.mkdirSync(basePath, { recursive: true });
 
-      const importPath = getImportPath(
-        basePath,
-        path.resolve(__dirname, "../src/globals/utility/apiResponse.ts")
-      );
+      const importPath = getApiResponseImportPath(basePath);
 
       const files = [
         { name: `${dashName}.controller.ts`, template: "controller.hbs" },
@@ -105,6 +126,8 @@ module.exports = function (plop) {
         { name: `index.ts`, template: "index.hbs" },
         { name: `${dashName}.routes.ts`, template: "routes.hbs" },
         { name: `${dashName}.helper.ts`, template: "helper.hbs" },
+        { name: `${dashName}.model.ts`, template: "model.hbs" },
+        { name: `${dashName}.middleware.ts`, template: "middleware.hbs" },
       ];
 
       let actions = [
@@ -120,6 +143,7 @@ module.exports = function (plop) {
         { type: "prettier", path: path.join(basePath, "**/*.ts") },
       ];
 
+      // Submodule patching in parent index
       if (data.type === "sub") {
         const parentFolder = path.join(
           __dirname,
@@ -130,8 +154,8 @@ module.exports = function (plop) {
 
         if (fs.existsSync(parentIndexFile)) {
           const subImportName = `${dashName}Module`;
-          const subRoutePath = getImportPath(
-            parentFolder,
+          const subRoutePath = getSubmoduleImportPath(
+            parentIndexFile,
             path.join(parentFolder, dashName)
           );
 
@@ -160,6 +184,70 @@ module.exports = function (plop) {
           console.warn(
             `⚠ No index.ts found in ${parentFolder}, skipping patch.`
           );
+        }
+      }
+
+      // Main module loader patch
+      if (data.type === "main") {
+        const loaderFile = path.join(__dirname, "../src/loaders/express.ts");
+        if (fs.existsSync(loaderFile)) {
+          const importName = `${dashName}Module`;
+          const importPath = getModuleImportPath(loaderFile, basePath);
+
+          actions.push({
+            type: "modify",
+            path: loaderFile,
+            transform(fileContents) {
+              // Add import if missing
+              const importLine = `import ${importName} from "${importPath}";`;
+              if (!fileContents.includes(importLine)) {
+                const lastImportIndex = fileContents.lastIndexOf("import");
+                const nextLine = fileContents.indexOf("\n", lastImportIndex);
+                fileContents =
+                  fileContents.slice(0, nextLine + 1) +
+                  importLine +
+                  "\n" +
+                  fileContents.slice(nextLine + 1);
+              }
+
+              const useLine = `  app.use("/api/${dashName}", ${importName});`;
+
+              // Find all app.use(...) inside the exported function
+              const functionStart = fileContents.indexOf(
+                "export default (app: Application)"
+              );
+              const bodyStart = fileContents.indexOf("{", functionStart) + 1;
+              const bodyEnd = fileContents.indexOf("}", bodyStart);
+              const functionBody = fileContents.slice(bodyStart, bodyEnd);
+
+              const appUseMatches = [
+                ...functionBody.matchAll(/app\.use\(.*\);/g),
+              ];
+
+              if (appUseMatches.length) {
+                // Insert after last app.use(...)
+                const lastMatch = appUseMatches[appUseMatches.length - 1];
+                const insertPos =
+                  bodyStart + lastMatch.index + lastMatch[0].length;
+                fileContents =
+                  fileContents.slice(0, insertPos) +
+                  "\n" +
+                  useLine +
+                  fileContents.slice(insertPos);
+              } else {
+                // fallback: insert right after {
+                fileContents =
+                  fileContents.slice(0, bodyStart) +
+                  "\n" +
+                  useLine +
+                  fileContents.slice(bodyStart);
+              }
+
+              return fileContents;
+            },
+          });
+
+          actions.push({ type: "prettier", path: loaderFile });
         }
       }
 

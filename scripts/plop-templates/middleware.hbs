@@ -1,0 +1,13 @@
+import { Request, Response, NextFunction } from "express";
+import { successResponse, errorResponse } from "{{importApiResponse}}";
+
+export const defaultMiddleware = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    // Example logic
+    console.log("Middleware executed for {{dashCase name}} module");
+    next();
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json(errorResponse("Middleware error"));
+  }
+};
