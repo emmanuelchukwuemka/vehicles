@@ -1,7 +1,6 @@
 import { Router } from "express"; 
 import * as {{camelCase name}}Controllers from "./{{dashCase name}}.controllers"; 
-import { {{camelCase name}}Secure } from "./{{dashCase name}}.middlewares";
 
-const router = Router(); router.post("/",{{camelCase name}}Secure, {{camelCase name}}Controllers.sample); 
+const router = Router(); router.post("/", {{camelCase name}}Controllers.sample); 
 
 export default router;

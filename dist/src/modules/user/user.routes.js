@@ -35,9 +35,8 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const userControllers = __importStar(require("./user.controllers"));
-const user_middlewares_1 = require("./user.middlewares");
 const cookie_middleware_1 = require("../../middlewares/cookie.middleware");
 const router = (0, express_1.Router)();
-router.post("/signup", user_middlewares_1.userSecure, userControllers.signupController);
-router.get("/profile", user_middlewares_1.userSecure, cookie_middleware_1.verifyCookie, userControllers.profile);
+router.post("/signup", userControllers.signupController);
+router.get("/profile", cookie_middleware_1.verifyCookie, userControllers.profile);
 exports.default = router;
