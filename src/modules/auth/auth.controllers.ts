@@ -9,7 +9,7 @@ import {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    // For dis place, am validating request body using Zod
+    // For dis place, am validating request payload using Zod
     const validatedData = loginSchema.parse(req.body);
 
     // And here i dey call the service layer
@@ -23,7 +23,7 @@ export const login = async (req: Request, res: Response) => {
    }
     const { accessToken, refreshToken } = result.data;
 
-    // Set cookies here
+    // Seting cookies here
     res.cookie("accessToken", accessToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",

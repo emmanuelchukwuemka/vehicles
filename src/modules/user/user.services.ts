@@ -3,7 +3,7 @@ import User, { UserCreationAttributes } from "./user.models";
 
 export const signupService = async (data: signupInput) => {
   try {
-    // Prepare the user data for creation
+    
     const userData: UserCreationAttributes = {
       first_name: data.first_name,
       last_name: data.last_name,
