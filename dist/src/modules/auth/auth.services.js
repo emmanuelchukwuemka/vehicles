@@ -10,7 +10,8 @@ const auth_helpers_1 = require("./auth.helpers");
 const auth_models_1 = __importDefault(require("./auth.models"));
 const login = async ({ email, password }) => {
     try {
-        const authUser = await auth_models_1.default.findOne({ where: { email } });
+        const normalizedEmail = email.trim().toLowerCase();
+        const authUser = await auth_models_1.default.findOne({ where: { email: normalizedEmail } });
         if (!authUser)
             throw new Error("Invalid credentials");
         const isPasswordValid = await bcrypt_1.default.compare(password, authUser.password);

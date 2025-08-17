@@ -6,7 +6,10 @@ import { LoginInput } from "./auth.types";
 
 export const login = async ({ email, password }: LoginInput) => {
   try {
-    const authUser = await Auth.findOne({ where: { email } });
+
+    const normalizedEmail = email.trim().toLowerCase();
+
+    const authUser = await Auth.findOne({ where: { email: normalizedEmail } });
     if (!authUser) throw new Error("Invalid credentials");
 
     const isPasswordValid = await bcrypt.compare(password, authUser.password);

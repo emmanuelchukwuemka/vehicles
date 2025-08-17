@@ -4,7 +4,6 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Auth = void 0;
-// src/modules/auth/auth.models.ts
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../config/database/sequelize"));
 class Auth extends sequelize_1.Model {
