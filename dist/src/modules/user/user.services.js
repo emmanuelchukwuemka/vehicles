@@ -45,20 +45,7 @@ const signupService = async (data) => {
 exports.signupService = signupService;
 const profile = async (userId) => {
     try {
-        const user = await user_models_1.default.findByPk(userId, {
-            attributes: [
-                "id",
-                "first_name",
-                "last_name",
-                "email",
-                "phone",
-                "city_id",
-                "picture",
-                "is_verified",
-                "created_at",
-                "updated_at",
-            ],
-        });
+        const user = await user_models_1.default.findByPk(userId);
         if (!user) {
             return {
                 success: false,

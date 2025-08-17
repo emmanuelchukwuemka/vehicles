@@ -45,20 +45,7 @@ export const signupService = async (data: signupInput) => {
 
 export const profile = async (userId: number) => {
   try {
-    const user = await User.findByPk(userId, {
-      attributes: [
-        "id",
-        "first_name",
-        "last_name",
-        "email",
-        "phone",
-        "city_id",
-        "picture",
-        "is_verified",
-        "created_at",
-        "updated_at",
-      ],
-    });
+    const user = await User.findByPk(userId);
 
     if (!user) {
       return {
