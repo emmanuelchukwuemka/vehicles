@@ -20,5 +20,5 @@ exports.signupSchema = zod_1.z.object({
         .min(6, "Phone number is too short")
         .max(15, "Phone number is too long"),
     city_id: zod_1.z.number(),
-    password: zod_1.z.string().min(2, "Password must be at least 6 characters"),
+    password: zod_1.z.string().min(2, "Password must be at least 2 characters"),
 });
