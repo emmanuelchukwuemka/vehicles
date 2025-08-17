@@ -8,7 +8,7 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const verifyCookie = (req, res, next) => {
     const token = req.cookies.accessToken;
     if (!token)
-        return res.status(401).json({ message: "Unauthorized" });
+        return res.status(401).json({ success: false, message: "Unauthorized", statusCode: 401 });
     try {
         const payload = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         req.user = payload;

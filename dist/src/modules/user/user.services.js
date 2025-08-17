@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signupService = void 0;
+exports.profile = exports.signupService = void 0;
 const user_models_1 = __importDefault(require("./user.models"));
 const auth_models_1 = __importDefault(require("../auth/auth.models"));
 const bcrypt_1 = __importDefault(require("bcrypt"));
@@ -43,3 +43,40 @@ const signupService = async (data) => {
     }
 };
 exports.signupService = signupService;
+const profile = async (userId) => {
+    try {
+        const user = await user_models_1.default.findByPk(userId, {
+            attributes: [
+                "id",
+                "first_name",
+                "last_name",
+                "email",
+                "phone",
+                "city_id",
+                "picture",
+                "is_verified",
+                "created_at",
+                "updated_at",
+            ],
+        });
+        if (!user) {
+            return {
+                success: false,
+                message: "User not found",
+            };
+        }
+        return {
+            success: true,
+            message: "User profile accessed successfully",
+            data: user.get({ plain: true }),
+        };
+    }
+    catch (error) {
+        console.error("Profile error:", error);
+        return {
+            success: false,
+            message: "Unable to service this request",
+        };
+    }
+};
+exports.profile = profile;

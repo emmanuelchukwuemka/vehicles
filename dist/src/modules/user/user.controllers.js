@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.signupController = void 0;
+exports.profile = exports.signupController = void 0;
 const userServices = __importStar(require("./user.services"));
 const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
@@ -65,3 +65,33 @@ const signupController = async (req, res) => {
     }
 };
 exports.signupController = signupController;
+const profile = async (req, res) => {
+    try {
+        if (!req.user || !req.user.id) {
+            return (0, apiResponse_1.errorResponse)(res, {
+                statusCode: 401,
+                message: "Unauthorized",
+            });
+        }
+        const result = await userServices.profile(req.user.id);
+        return (0, apiResponse_1.successResponse)(res, {
+            message: result.message,
+            data: result.data,
+        });
+    }
+    catch (err) {
+        if (err instanceof zod_1.ZodError) {
+            return (0, apiResponse_1.errorResponse)(res, {
+                statusCode: 400,
+                message: "Profile validation error",
+                details: err.issues,
+            });
+        }
+        return (0, apiResponse_1.errorResponse)(res, {
+            statusCode: 500,
+            message: "Unexpected error",
+            details: process.env.NODE_ENV === "development" ? err.stack : undefined,
+        });
+    }
+};
+exports.profile = profile;

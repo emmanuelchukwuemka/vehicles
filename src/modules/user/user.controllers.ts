@@ -35,3 +35,35 @@ export const signupController = async (req: Request, res: Response) => {
     });
   }
 };
+
+export const profile = async (req: Request, res: Response) => {
+  try {
+   if (!req.user || !req.user.id) {
+     return errorResponse(res, {
+       statusCode: 401,
+       message: "Unauthorized",
+     });
+   }
+
+   const result = await userServices.profile(req.user.id);
+
+    return successResponse(res, {
+      message: result.message,
+      data: result.data,
+    });
+  } catch (err: any) {
+    if (err instanceof ZodError) {
+      return errorResponse(res, {
+        statusCode: 400,
+        message: "Profile validation error",
+        details: err.issues,
+      });
+    }
+
+    return errorResponse(res, {
+      statusCode: 500,
+      message: "Unexpected error",
+      details: process.env.NODE_ENV === "development" ? err.stack : undefined,
+    });
+  }
+}
