@@ -1,16 +1,10 @@
 import { Request, Response, NextFunction } from "express";
 
-export const {{camelCase name}}Secure = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const authSecure = (req: Request, res: Response, next: NextFunction) => {
   try {
-
-    console.log("Middleware executed for {{dashCase name}} module");
+    console.log("Middleware executed for auth module");
 
     next();
-
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }

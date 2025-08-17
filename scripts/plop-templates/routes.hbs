@@ -1,6 +1,7 @@
 import { Router } from "express"; 
-import * as {{camelCase name}}Controller from "./{{dashCase name}}.controller"; 
+import * as {{camelCase name}}Controllers from "./{{dashCase name}}.controllers"; 
+import { {{camelCase name}}Secure } from "./{{dashCase name}}.middlewares";
 
-const router = Router(); router.get("/",{{camelCase name}}Controller.testController); 
+const router = Router(); router.get("/",{{camelCase name}}Secure, {{camelCase name}}Controllers.sample); 
 
 export default router;

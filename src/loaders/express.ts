@@ -1,15 +1,17 @@
 import express, { Application } from "express";
 import cors from "cors";
-
-// Import module routes directly
+import { errorHandler } from "../middlewares/system/errorHandler";
 import authModule from "../modules/auth";
-import storesModule from "../modules/stores";
+import userModule from "../modules/user";
 
 export default (app: Application): void => {
   app.use(cors());
   app.use(express.json());
 
-  // Module routes
+  // Imported modules will be listed here
   app.use("/api/auth", authModule);
-  app.use("/api/stores", storesModule);
+
+  app.use("/api/user", userModule);
+
+  app.use(errorHandler);
 };

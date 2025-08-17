@@ -33,9 +33,35 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = require("express");
-const authControllers = __importStar(require("./auth.controllers"));
-const auth_middlewares_1 = require("./auth.middlewares");
-const router = (0, express_1.Router)();
-router.post("/login", auth_middlewares_1.authSecure, authControllers.login);
-exports.default = router;
+exports.signupController = void 0;
+const userServices = __importStar(require("./user.services"));
+const zod_1 = require("zod");
+const apiResponse_1 = require("../../globals/utility/apiResponse");
+const user_validations_1 = require("./user.validations");
+const signupController = async (req, res) => {
+    try {
+        // For here, am validating request body using Zod
+        const validatedData = user_validations_1.signupSchema.parse(req.body);
+        // And here i dey call the service layer
+        const result = await userServices.signupService(validatedData);
+        return (0, apiResponse_1.successResponse)(res, {
+            message: result.message,
+            data: result.data,
+        });
+    }
+    catch (err) {
+        if (err instanceof zod_1.ZodError) {
+            return (0, apiResponse_1.errorResponse)(res, {
+                statusCode: 400,
+                message: "Validation error",
+                details: err.issues,
+            });
+        }
+        return (0, apiResponse_1.errorResponse)(res, {
+            statusCode: 500,
+            message: "Unexpected error",
+            details: process.env.NODE_ENV === "development" ? err.stack : undefined,
+        });
+    }
+};
+exports.signupController = signupController;

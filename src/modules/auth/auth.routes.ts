@@ -1,9 +1,8 @@
 import { Router } from "express";
-import * as authController from "../auth/auth.controller";
+import * as authControllers from "./auth.controllers";
+import { authSecure } from "./auth.middlewares";
 
 const router = Router();
-
-// POST /api/marketplace/products
-router.post("/login", authController.loginController);
+router.post("/login", authSecure, authControllers.login);
 
 export default router;

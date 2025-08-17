@@ -1,23 +1,31 @@
-import { ApiResponse } from "../../types/apiResponse";
+import { Response } from "express";
 
-export const successResponse = <T>(
-  message: string,
-  data?: T,
-  statusCode = 200
-): ApiResponse<T> => ({
-  success: true,
-  message,
-  data,
-  statusCode,
-});
+interface ApiResponse<T = any> {
+  statusCode?: number;
+  message: string;
+  data?: T;
+  details?: any;
+}
 
-export const errorResponse = (
-  message: string,
-  statusCode = 400,
-  error?: string
-): ApiResponse => ({
-  success: false,
-  message,
-  error,
-  statusCode,
-});
+export function successResponse<T>(
+  res: Response,
+  { statusCode = 200, message, data }: ApiResponse<T>
+) {
+  return res.status(statusCode).json({
+    success: true,
+    message,
+    data,
+  });
+}
+
+export function errorResponse(
+  res: Response,
+  { statusCode = 500, message, details }: ApiResponse
+) {
+  return res.status(statusCode).json({
+    success: false,
+    statusCode,
+    message,
+    details,
+  });
+}

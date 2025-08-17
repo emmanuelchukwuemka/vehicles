@@ -1,16 +1,19 @@
 import { Request, Response } from "express";
-import * as {{camelCase name}}Services from "./{{kebabCase name}}.services";
-import { {{camelCase name}}Schema } from "./{{kebabCase name}}.validations";
+import * as userServices from "./user.services";
 import { ZodError } from "zod";
-import { successResponse, errorResponse } from "{{importApiResponse}}";
+import {
+  successResponse,
+  errorResponse,
+} from "../../globals/utility/apiResponse";
+import { signupSchema } from "./user.validations";
 
-export const sample = async (req: Request, res: Response) => {
+export const signupController = async (req: Request, res: Response) => {
   try {
-    // For dis place, am validating request body using Zod
-    const validatedData = {{camelCase name}}Schema.parse(req.body);
+    // For here, am validating request body using Zod
+    const validatedData = signupSchema.parse(req.body);
 
     // And here i dey call the service layer
-    const result = await {{camelCase name}}Services.{{camelCase name}}Method(validatedData);
+    const result = await userServices.signupService(validatedData);
 
     return successResponse(res, {
       message: result.message,
