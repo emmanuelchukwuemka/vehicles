@@ -40,7 +40,7 @@ const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 const login = async (req, res) => {
     try {
-        // For dis place, am validating request body using Zod
+        // For dis place, am validating request payload using Zod
         const validatedData = auth_validations_1.loginSchema.parse(req.body);
         // And here i dey call the service layer
         const result = await authServices.login(validatedData);
@@ -51,7 +51,7 @@ const login = async (req, res) => {
             });
         }
         const { accessToken, refreshToken } = result.data;
-        // Set cookies here
+        // Seting cookies here
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",

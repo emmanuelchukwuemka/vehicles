@@ -7,7 +7,6 @@ exports.signupService = void 0;
 const user_models_1 = __importDefault(require("./user.models"));
 const signupService = async (data) => {
     try {
-        // Prepare the user data for creation
         const userData = {
             first_name: data.first_name,
             last_name: data.last_name,
