@@ -9,11 +9,9 @@ import {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    // For dis place, am validating request payload using Zod
-    const validatedData = loginSchema.parse(req.body);
 
     // And here i dey call the service layer
-    const result = await authServices.login(validatedData);
+    const result = await authServices.login(req.body);
 
    if (!result.success || !result.data) {
      return errorResponse(res, {

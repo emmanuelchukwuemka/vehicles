@@ -35,15 +35,12 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 const authServices = __importStar(require("./auth.services"));
-const auth_validations_1 = require("./auth.validations");
 const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 const login = async (req, res) => {
     try {
-        // For dis place, am validating request payload using Zod
-        const validatedData = auth_validations_1.loginSchema.parse(req.body);
         // And here i dey call the service layer
-        const result = await authServices.login(validatedData);
+        const result = await authServices.login(req.body);
         if (!result.success || !result.data) {
             return (0, apiResponse_1.errorResponse)(res, {
                 statusCode: 401,
