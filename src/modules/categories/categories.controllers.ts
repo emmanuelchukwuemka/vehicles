@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import * as maincategoryServices from "./maincategory.services";
-import { maincategorySchema } from "./maincategory.validations";
+import * as categoriesServices from "./categories.services";
+import { categoriesSchema } from "./categories.validations";
 import { ZodError } from "zod";
 import {
   successResponse,
@@ -10,10 +10,10 @@ import {
 export const sample = async (req: Request, res: Response) => {
   try {
     // For dis place, am validating request body using Zod
-    const validatedData = maincategorySchema.parse(req.body);
+    const validatedData = categoriesSchema.parse(req.body);
 
     // And here i dey call the service layer
-    const result = await maincategoryServices.maincategoryMethod(validatedData);
+    const result = await categoriesServices.categoriesMethod(validatedData);
 
     return successResponse(res, {
       message: result.message,

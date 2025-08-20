@@ -10,6 +10,7 @@ const authSecure = (req, res, next) => {
         next();
     }
     catch (err) {
+        console.log("Error in authSecure:", err);
         return res.status(400).json({
             success: false,
             message: "Validation error",
