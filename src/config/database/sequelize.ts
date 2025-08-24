@@ -1,4 +1,4 @@
-import { Sequelize } from "sequelize";
+import { Sequelize, Op } from "sequelize";
 
 const sequelize = new Sequelize(
   process.env.DB_NAME as string,
