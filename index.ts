@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import { initSocket } from "./src/loaders/socket";
 import pool from "./src/config/database/db";
 import app from "./src/App";
+import { Request, Response } from "express";
 
 const port = process.env.APP_PORT_NUMBER || 3000;
 
@@ -17,6 +18,11 @@ const io = new Server(server, {
     origin: "*", // Abeg this is for development only
     methods: ["GET", "POST"],
   },
+});
+
+// Heartbeat
+app.get("/server/heartbeat", (req: Request, res: Response) => {
+  res.status(200).send("Server is active and running..");
 });
 
 // Here am attach io instance to app so it can be accessed in routes/controllers

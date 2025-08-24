@@ -20,6 +20,10 @@ const io = new socket_io_1.Server(server, {
         methods: ["GET", "POST"],
     },
 });
+// Heartbeat
+App_1.default.get("/server/heartbeat", (req, res) => {
+    res.status(200).send("Server is active and running..");
+});
 // Here am attach io instance to app so it can be accessed in routes/controllers
 App_1.default.set("io", io);
 // So here am initializing sockets with DB pool in raw config
