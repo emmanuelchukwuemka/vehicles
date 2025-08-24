@@ -41,4 +41,5 @@ router.post("/", continent_middlewares_1.validateCreatePayload, continentControl
 router.get("/", continentControllers.getContinents);
 router.get("/:id", continent_middlewares_1.validateIdParam, continentControllers.getContinentById);
 router.put("/:id", continent_middlewares_1.validateIdParam, continent_middlewares_1.validateContinentUpdate, continentControllers.updateContinent);
+router.delete("/:id", continent_middlewares_1.validateIdParam, continentControllers.deleteContinent);
 exports.default = router;

@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateContinent = exports.getContinentById = exports.getContinents = exports.addContinent = void 0;
+exports.deleteContinent = exports.updateContinent = exports.getContinentById = exports.getContinents = exports.addContinent = void 0;
 const continentServices = __importStar(require("./continent.services"));
 const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
@@ -117,3 +117,26 @@ const updateContinent = async (req, res) => {
     });
 };
 exports.updateContinent = updateContinent;
+const deleteContinent = async (req, res) => {
+    try {
+        const id = parseInt(req.params.id, 10);
+        const result = await continentServices.deleteContinent(id);
+        if (!result.success) {
+            return (0, apiResponse_1.errorResponse)(res, {
+                statusCode: 404,
+                message: result.message,
+            });
+        }
+        return (0, apiResponse_1.successResponse)(res, {
+            message: result.message,
+        });
+    }
+    catch (error) {
+        console.error("Controller delete continent error:", error);
+        return (0, apiResponse_1.errorResponse)(res, {
+            statusCode: 500,
+            message: "Server error while deleting country",
+        });
+    }
+};
+exports.deleteContinent = deleteContinent;

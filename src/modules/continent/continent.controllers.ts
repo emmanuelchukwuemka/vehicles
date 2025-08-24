@@ -75,10 +75,7 @@ export const getContinentById = async (req: Request, res: Response) => {
   });
 };
 
-export const updateContinent = async (
-  req: Request,
-  res: Response
-) => {
+export const updateContinent = async (req: Request, res: Response) => {
   const id = Number(req.params.id);
 
   const result = await continentServices.updateContinent(id, req.body);
@@ -95,4 +92,29 @@ export const updateContinent = async (
     message: result.message,
     data: result.data,
   });
+};
+
+export const deleteContinent = async (req: Request, res: Response) => {
+  try {
+    const id = parseInt(req.params.id, 10);
+
+    const result = await continentServices.deleteContinent(id);
+
+    if (!result.success) {
+      return errorResponse(res, {
+        statusCode: 404,
+        message: result.message,
+      });
+    }
+
+    return successResponse(res, {
+      message: result.message,
+    });
+  } catch (error) {
+    console.error("Controller delete continent error:", error);
+    return errorResponse(res, {
+      statusCode: 500,
+      message: "Server error while deleting country",
+    });
+  }
 };
