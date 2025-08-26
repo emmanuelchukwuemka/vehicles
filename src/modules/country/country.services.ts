@@ -1,6 +1,9 @@
 import { CountryInput } from "./country.validations";
 
-import Country, { CountryAttributes, CountryCreationAttributes } from "./country.models";
+import Country, {
+  CountryAttributes,
+  CountryCreationAttributes,
+} from "./country.models";
 import { findCountryByIso } from "./country.helpers";
 import Region from "../region/region.models";
 
@@ -11,19 +14,26 @@ export const createCountry = async (
     const payload = Array.isArray(data) ? data : [data];
 
     const createdCountries: Country[] = [];
+    const skippedCountries: CountryCreationAttributes[] = [];
 
     for (const country of payload) {
-      // check if exists
       const exists = await findCountryByIso(country.iso2, country.iso3);
       if (exists) {
-        return {
-          success: false,
-          message: `Country already exists with iso2=${country.iso2}, iso3=${country.iso3}`,
-        };
+        console.warn(`Skipping duplicate: ${country.iso2}/${country.iso3}`);
+        skippedCountries.push(country);
+        continue; // skip duplicates
       }
 
       const newCountry = await Country.create(country);
       createdCountries.push(newCountry);
+    }
+
+    if (createdCountries.length === 0) {
+      return {
+        success: false,
+        message: "No new countries created (all duplicates skipped)",
+        data: [],
+      };
     }
 
     return {
@@ -32,7 +42,9 @@ export const createCountry = async (
         createdCountries.length > 1
           ? `${createdCountries.length} countries created successfully`
           : "Country created successfully",
-      data: createdCountries.length > 1 ? createdCountries : createdCountries[0],
+      data:
+        createdCountries.length > 1 ? createdCountries : createdCountries[0],
+      skipped: skippedCountries.length > 0 ? skippedCountries : undefined,
     };
   } catch (error) {
     console.error("Create country error:", error);

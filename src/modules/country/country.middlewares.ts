@@ -1,5 +1,10 @@
 import { Request, Response, NextFunction } from "express";
-import { countryFlexibleSchema, countrySchema, countryUpdateFlexibleSchema, idSchema } from "./country.validations";
+import {
+  countryFlexibleSchema,
+  countrySchema,
+  countryUpdateFlexibleSchema,
+  idSchema,
+} from "./country.validations";
 import { ZodError } from "zod";
 import { errorResponse } from "../../globals/utility/apiResponse";
 
@@ -25,9 +30,10 @@ export const validateCreatePayload = (
   try {
     const validated = countryFlexibleSchema.parse(req.body);
 
-    const normalized = Array.isArray(validated) ? validated : [validated];
+    //const normalized = Array.isArray(validated) ? validated : [validated];
 
-    req.body = normalized;
+    req.body = validated;
+
     next();
   } catch (err) {
     if (err instanceof ZodError) {

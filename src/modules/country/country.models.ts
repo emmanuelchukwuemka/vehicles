@@ -9,7 +9,7 @@ export interface CountryAttributes {
   iso3: string;
   region_id: number;
   currency_id: number;
-  flag_url?: string | null;
+  flag?: string | null;
   status: number;
   created_at?: Date;
   updated_at?: Date;
@@ -19,7 +19,7 @@ export interface CountryAttributes {
 export interface CountryCreationAttributes
   extends Optional<
     CountryAttributes,
-    "id" | "flag_url" | "status" | "created_at" | "updated_at"
+    "id" | "flag" | "status" | "created_at" | "updated_at"
   > {}
 
 class Country
@@ -32,7 +32,7 @@ class Country
   public iso3!: string;
   public region_id!: number;
   public currency_id!: number;
-  public flag_url?: string | null;
+  public flag?: string | null;
   public status!: number;
   public readonly created_at!: Date;
   public readonly updated_at!: Date;
@@ -63,15 +63,16 @@ Country.init(
     region_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
-      references:{
-        model:Region, key:"id"
-      }
+      references: {
+        model: Region,
+        key: "id",
+      },
     },
     currency_id: {
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
     },
-    flag_url: {
+    flag: {
       type: DataTypes.STRING(255),
       allowNull: true,
     },

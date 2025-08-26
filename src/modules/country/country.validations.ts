@@ -7,7 +7,7 @@ export const countrySchema = z.object({
   iso3: z.string().length(3, "ISO3 must be 3 letters"),
   region_id: z.number().min(1, "Region ID is required"),
   currency_id: z.number().min(1, "Currency ID is required"),
-  flag_url: z.url("Please enter a valid flag url").optional(),
+  flag: z.url("Please enter a valid flag url").optional(),
   status: z.number().min(0).max(1).int().optional().default(1),
 });
 
@@ -15,10 +15,15 @@ export const countrySchema = z.object({
 export const countryUpdateSchema = countrySchema.partial();
 
 // Flexible (array or single)
-export const countryFlexibleSchema = z.union([
-  countrySchema,
-  z.array(countrySchema),
-]);
+// export const countryFlexibleSchema = z.union([
+//   countrySchema,
+//   z.array(countrySchema),
+// ]);
+// Flexible (array or single)
+export const countryFlexibleSchema = z.preprocess((val) => {
+  if (Array.isArray(val)) return val;
+  return [val];
+}, z.array(countrySchema));
 
 export const countryUpdateFlexibleSchema = z.union([
   countryUpdateSchema,

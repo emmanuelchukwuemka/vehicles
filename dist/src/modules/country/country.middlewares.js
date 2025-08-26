@@ -17,8 +17,8 @@ exports.countrySecure = countrySecure;
 const validateCreatePayload = (req, res, next) => {
     try {
         const validated = country_validations_1.countryFlexibleSchema.parse(req.body);
-        const normalized = Array.isArray(validated) ? validated : [validated];
-        req.body = normalized;
+        //const normalized = Array.isArray(validated) ? validated : [validated];
+        req.body = validated;
         next();
     }
     catch (err) {

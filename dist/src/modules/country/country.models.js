@@ -33,14 +33,15 @@ Country.init({
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: region_models_1.default, key: "id"
-        }
+            model: region_models_1.default,
+            key: "id",
+        },
     },
     currency_id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
     },
-    flag_url: {
+    flag: {
         type: sequelize_1.DataTypes.STRING(255),
         allowNull: true,
     },

@@ -3,34 +3,86 @@ import { getStateById } from "./city.helpers";
 import City, { CityAttributes, CityCreationAttributes } from "./city.models";
 import { CityInput } from "./city.validations";
 
+// export const createCity = async (
+//   data: CityCreationAttributes | CityCreationAttributes[]
+// ) => {
+//   try {
+//     const payload = Array.isArray(data) ? data : [data];
+
+//     for (const city of payload) {
+//       const state = await getStateById(city.state_id);
+//       if (!state) throw new Error(`State not found with id=${city.state_id}`);
+
+//       const exists = await City.findOne({
+//         where: { name: city.name, state_id: city.state_id },
+//       });
+//       if (exists) throw new Error(`City already exists with name=${city.name}`);
+//     }
+
+//     const cities =
+//       payload.length > 1
+//         ? await City.bulkCreate(payload)
+//         : [await City.create(payload[0])];
+
+//     return {
+//       success: true,
+//       message:
+//         payload.length > 1
+//           ? `${cities.length} cities created successfully`
+//           : "City created successfully",
+//       data: payload.length > 1 ? cities : cities[0],
+//     };
+//   } catch (error: any) {
+//     return {
+//       success: false,
+//       message: error.message || "Failed to create city",
+//       error,
+//     };
+//   }
+// };
+
 export const createCity = async (
   data: CityCreationAttributes | CityCreationAttributes[]
 ) => {
   try {
     const payload = Array.isArray(data) ? data : [data];
+    const citiesToInsert: CityCreationAttributes[] = [];
 
     for (const city of payload) {
       const state = await getStateById(city.state_id);
-      if (!state) throw new Error(`State not found with id=${city.state_id}`);
+      if (!state) {
+        throw new Error(`State not found with id=${city.state_id}`);
+      }
 
       const exists = await City.findOne({
         where: { name: city.name, state_id: city.state_id },
       });
-      if (exists) throw new Error(`City already exists with name=${city.name}`);
+
+      if (!exists) {
+        citiesToInsert.push(city);
+      }
+    }
+
+    if (citiesToInsert.length === 0) {
+      return {
+        success: true,
+        message: "No new cities to create (all duplicates skipped)",
+        data: [],
+      };
     }
 
     const cities =
-      payload.length > 1
-        ? await City.bulkCreate(payload)
-        : [await City.create(payload[0])];
+      citiesToInsert.length > 1
+        ? await City.bulkCreate(citiesToInsert)
+        : [await City.create(citiesToInsert[0])];
 
     return {
       success: true,
       message:
-        payload.length > 1
+        citiesToInsert.length > 1
           ? `${cities.length} cities created successfully`
           : "City created successfully",
-      data: payload.length > 1 ? cities : cities[0],
+      data: citiesToInsert.length > 1 ? cities : cities[0],
     };
   } catch (error: any) {
     return {

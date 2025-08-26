@@ -11,17 +11,23 @@ const createCountry = async (data) => {
     try {
         const payload = Array.isArray(data) ? data : [data];
         const createdCountries = [];
+        const skippedCountries = [];
         for (const country of payload) {
-            // check if exists
             const exists = await (0, country_helpers_1.findCountryByIso)(country.iso2, country.iso3);
             if (exists) {
-                return {
-                    success: false,
-                    message: `Country already exists with iso2=${country.iso2}, iso3=${country.iso3}`,
-                };
+                console.warn(`Skipping duplicate: ${country.iso2}/${country.iso3}`);
+                skippedCountries.push(country);
+                continue; // skip duplicates
             }
             const newCountry = await country_models_1.default.create(country);
             createdCountries.push(newCountry);
+        }
+        if (createdCountries.length === 0) {
+            return {
+                success: false,
+                message: "No new countries created (all duplicates skipped)",
+                data: [],
+            };
         }
         return {
             success: true,
@@ -29,6 +35,7 @@ const createCountry = async (data) => {
                 ? `${createdCountries.length} countries created successfully`
                 : "Country created successfully",
             data: createdCountries.length > 1 ? createdCountries : createdCountries[0],
+            skipped: skippedCountries.length > 0 ? skippedCountries : undefined,
         };
     }
     catch (error) {
