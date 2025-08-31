@@ -1,4 +1,4 @@
-import { MainCategory } from "../../categories/maincategory/maincategory.models";
+import { MainCategory } from "../maincategory/maincategory.models";
 import Category from "./category.models";
 
 export const getCategory = async () => {

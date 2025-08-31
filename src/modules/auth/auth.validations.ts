@@ -7,7 +7,7 @@ export const loginSchema = z.object({
     .min(1, "Email is required")
     .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
 
-  password: z.string().min(2, "Name is required"),
+  password: z.string().min(2, "password is required"),
 });
 
 // Inferred TypeScript type from schema

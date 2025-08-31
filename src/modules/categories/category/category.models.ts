@@ -1,6 +1,6 @@
 import { DataTypes, Model, Optional } from "sequelize";
 import sequelize from "../../../config/database/sequelize";
-import { MainCategory } from "../../categories/maincategory/maincategory.models";
+import { MainCategory } from "../maincategory/maincategory.models";
 
 export interface CategoryModel {
   id: number;

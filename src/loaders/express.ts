@@ -12,6 +12,7 @@ import countryModule from "../modules/country";
 import stateModule from "../modules/state";
 import cityModule from "../modules/city";
 import currencyModule from "../modules/currency";
+import bannerModule from "../modules/banner";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -38,6 +39,8 @@ export default (app: Application): void => {
   app.use("/api/city", cityModule);
 
   app.use("/api/currency", currencyModule);
+
+  app.use("/api/banner", bannerModule);
 
   app.use(errorHandler);
 };
