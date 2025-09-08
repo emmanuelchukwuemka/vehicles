@@ -13,6 +13,11 @@ import stateModule from "../modules/state";
 import cityModule from "../modules/city";
 import currencyModule from "../modules/currency";
 import bannerModule from "../modules/banner";
+import productModule from "../modules/product";
+import storeModule from "../modules/store";
+import capabilityModule from "../modules/capability";
+import vendorModule from "../modules/vendor";
+import moduleModule from "../modules/module";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -41,6 +46,16 @@ export default (app: Application): void => {
   app.use("/api/currency", currencyModule);
 
   app.use("/api/banner", bannerModule);
+
+  app.use("/api/product", productModule);
+
+  app.use("/api/store", storeModule);
+
+  app.use("/api/capability", capabilityModule);
+
+  app.use("/api/vendor", vendorModule);
+
+  app.use("/api/module", moduleModule);
 
   app.use(errorHandler);
 };
