@@ -4,7 +4,7 @@ export interface MediaAttributes {
   variation_id?: number | null;
   url: string;
   type: string;
-  metadata?: object | null;
+  metadata?: any | null;
   status: number;
   created_at?: Date;
   updated_at?: Date;

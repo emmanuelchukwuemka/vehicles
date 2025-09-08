@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Category = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../../config/database/sequelize"));
-const maincategory_models_1 = require("../../categories/maincategory/maincategory.models");
+const maincategory_models_1 = require("../maincategory/maincategory.models");
 class Category extends sequelize_1.Model {
 }
 exports.Category = Category;

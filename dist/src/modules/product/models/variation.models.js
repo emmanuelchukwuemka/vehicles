@@ -1,0 +1,71 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Variation = void 0;
+const sequelize_1 = require("sequelize");
+const sequelize_2 = __importDefault(require("../../../config/database/sequelize"));
+class Variation extends sequelize_1.Model {
+}
+exports.Variation = Variation;
+Variation.init({
+    id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        autoIncrement: true,
+        primaryKey: true,
+    },
+    product_id: {
+        type: sequelize_1.DataTypes.BIGINT,
+        allowNull: false,
+    },
+    sku: {
+        type: sequelize_1.DataTypes.STRING(100),
+        allowNull: false,
+        unique: true,
+    },
+    price: {
+        type: sequelize_1.DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        defaultValue: 0.0,
+    },
+    stock: {
+        type: sequelize_1.DataTypes.DECIMAL(12, 2),
+        allowNull: false,
+        defaultValue: 0.0,
+    },
+    status: {
+        type: sequelize_1.DataTypes.TINYINT,
+        allowNull: false,
+        defaultValue: 1,
+    },
+    metadata: {
+        type: sequelize_1.DataTypes.JSON,
+        allowNull: true,
+        get() {
+            const raw = this.getDataValue("metadata");
+            if (typeof raw === "string") {
+                try {
+                    return JSON.parse(raw);
+                }
+                catch {
+                    return raw;
+                }
+            }
+            return raw;
+        },
+    },
+    created_at: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+    },
+    updated_at: {
+        type: sequelize_1.DataTypes.DATE,
+        defaultValue: sequelize_1.DataTypes.NOW,
+    },
+}, {
+    sequelize: sequelize_2.default,
+    tableName: "variations_table",
+    timestamps: false,
+});
+exports.default = Variation;

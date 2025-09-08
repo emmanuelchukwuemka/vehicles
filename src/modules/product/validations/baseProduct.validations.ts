@@ -54,4 +54,30 @@ export const baseProductSchema = z.object({
   variations: z.array(variationSchema).optional(), // ✅ Add this
 });
 
+// -------------------------------
+// Zod schema for product fetch by ID
+// -------------------------------
+export const fetchProductByIdSchema = z.object({
+  product_id: z.number().int().positive(),
+});
+
+export const fetchProductsByDomainSchema = z.object({
+  params: z.object({
+    domain: z.string().min(1, "Domain name is required"), // <- from path
+  }),
+  query: z.object({
+    includeVariations: z
+      .string()
+      .optional()
+      .transform((val) => val !== "false"), // convert to boolean
+    includeMedia: z
+      .string()
+      .optional()
+      .transform((val) => val !== "false"), // convert to boolean
+  }),
+});
+
+// Type inferred from the schema
+export type FetchProductByIdInput = z.infer<typeof fetchProductByIdSchema>;
+
 export type BaseProductInput = z.infer<typeof baseProductSchema>;

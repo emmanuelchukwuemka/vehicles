@@ -48,7 +48,21 @@ Product.init(
     description: { type: DataTypes.TEXT, allowNull: true },
     base_price: { type: DataTypes.DECIMAL(12, 2), allowNull: false },
     currency_id: { type: DataTypes.INTEGER, allowNull: false },
-    metadata: { type: DataTypes.JSON, allowNull: true },
+    metadata: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      get() {
+        const raw = this.getDataValue("metadata");
+        if (typeof raw === "string") {
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return raw;
+          }
+        }
+        return raw;
+      },
+    },
     status: { type: DataTypes.TINYINT, defaultValue: 0 },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,

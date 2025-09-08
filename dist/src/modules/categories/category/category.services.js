@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getCategoriesByMain = exports.getCategoryById = exports.getCategory = void 0;
-const maincategory_models_1 = require("../../categories/maincategory/maincategory.models");
+const maincategory_models_1 = require("../maincategory/maincategory.models");
 const category_models_1 = __importDefault(require("./category.models"));
 const getCategory = async () => {
     try {

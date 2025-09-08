@@ -5,7 +5,7 @@ export interface VariationAttributes {
   price: number;
   stock: number;
   status: number;
-  metadata?: object;
+  metadata?: any | null;
   created_at?: Date;
   updated_at?: Date;
 }

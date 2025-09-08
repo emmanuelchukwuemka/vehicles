@@ -8,5 +8,5 @@ exports.loginSchema = zod_1.z.object({
         .string()
         .min(1, "Email is required")
         .regex(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, "Invalid email format"),
-    password: zod_1.z.string().min(2, "Name is required"),
+    password: zod_1.z.string().min(2, "password is required"),
 });

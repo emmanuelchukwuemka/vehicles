@@ -17,6 +17,12 @@ const country_1 = __importDefault(require("../modules/country"));
 const state_1 = __importDefault(require("../modules/state"));
 const city_1 = __importDefault(require("../modules/city"));
 const currency_1 = __importDefault(require("../modules/currency"));
+const banner_1 = __importDefault(require("../modules/banner"));
+const product_1 = __importDefault(require("../modules/product"));
+const store_1 = __importDefault(require("../modules/store"));
+const capability_1 = __importDefault(require("../modules/capability"));
+const vendor_1 = __importDefault(require("../modules/vendor"));
+const module_1 = __importDefault(require("../modules/module"));
 exports.default = (app) => {
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
@@ -32,5 +38,11 @@ exports.default = (app) => {
     app.use("/api/state", state_1.default);
     app.use("/api/city", city_1.default);
     app.use("/api/currency", currency_1.default);
+    app.use("/api/banner", banner_1.default);
+    app.use("/api/product", product_1.default);
+    app.use("/api/store", store_1.default);
+    app.use("/api/capability", capability_1.default);
+    app.use("/api/vendor", vendor_1.default);
+    app.use("/api/module", module_1.default);
     app.use(errorHandler_1.errorHandler);
 };

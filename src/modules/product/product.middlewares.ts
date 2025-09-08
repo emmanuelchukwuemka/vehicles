@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from "express";
 import {
-  productSchema,
-  variationSchema,
-} from "./validations/product.validations";
-
-import { updateProductVariationSchema } from "./validations/updateProductVariation.validation";
-import { baseProductSchema } from "./validations/baseProduct.validations";
+  baseProductSchema,
+  fetchProductByIdSchema,
+  fetchProductsByDomainSchema,
+} from "./validations/baseProduct.validations";
 
 export const validateProduct = (
   req: Request,
@@ -21,13 +19,15 @@ export const validateProduct = (
   }
 };
 
-export const validateProductVariation = (
+export const validateProductId = (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
   try {
-    req.body = variationSchema.parse(req.body);
+    req.body = fetchProductByIdSchema.parse({
+      product_id: Number(req.params.id),
+    });
 
     next();
   } catch (err) {
@@ -35,16 +35,29 @@ export const validateProductVariation = (
   }
 };
 
-export const validateProductUpdate = (
+export function validateFetchProductsByDomain(
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+) {
+  console.log(req.params);
+  console.log(req.query);
   try {
-    req.body = updateProductVariationSchema.parse(req.body);
+    const parsed = fetchProductsByDomainSchema.parse({
+      params: req.params,
+      query: req.query,
+    });
+
+    // Attach validated values
+    (req as any).validatedParams = parsed.params;
+    (req as any).validatedQuery = parsed.query;
 
     next();
-  } catch (err) {
-    next(err);
+  } catch (error: any) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid request",
+      details: error.errors,
+    });
   }
-};
+}

@@ -42,6 +42,17 @@ Media.init(
     metadata: {
       type: DataTypes.JSON,
       allowNull: true,
+      get() {
+        const raw = this.getDataValue("metadata");
+        if (typeof raw === "string") {
+          try {
+            return JSON.parse(raw);
+          } catch {
+            return raw;
+          }
+        }
+        return raw;
+      },
     },
     url: {
       type: DataTypes.TEXT,
