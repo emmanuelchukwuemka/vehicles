@@ -17,7 +17,7 @@ import productModule from "../modules/product";
 import storeModule from "../modules/store";
 import capabilityModule from "../modules/capability";
 import vendorModule from "../modules/vendor";
-import moduleModule from "../modules/module";
+import domainModule from "../modules/domains";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -55,7 +55,7 @@ export default (app: Application): void => {
 
   app.use("/api/vendor", vendorModule);
 
-  app.use("/api/module", moduleModule);
+  app.use("/api/domain", domainModule);
 
   app.use(errorHandler);
 };

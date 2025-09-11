@@ -22,7 +22,7 @@ const product_1 = __importDefault(require("../modules/product"));
 const store_1 = __importDefault(require("../modules/store"));
 const capability_1 = __importDefault(require("../modules/capability"));
 const vendor_1 = __importDefault(require("../modules/vendor"));
-const module_1 = __importDefault(require("../modules/module"));
+const domains_1 = __importDefault(require("../modules/domains"));
 exports.default = (app) => {
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
@@ -43,6 +43,6 @@ exports.default = (app) => {
     app.use("/api/store", store_1.default);
     app.use("/api/capability", capability_1.default);
     app.use("/api/vendor", vendor_1.default);
-    app.use("/api/module", module_1.default);
+    app.use("/api/domain", domains_1.default);
     app.use(errorHandler_1.errorHandler);
 };

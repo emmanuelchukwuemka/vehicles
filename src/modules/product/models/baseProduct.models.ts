@@ -63,7 +63,7 @@ Product.init(
         return raw;
       },
     },
-    status: { type: DataTypes.TINYINT, defaultValue: 0 },
+    status: { type: DataTypes.TINYINT, defaultValue: 1 },
     created_at: DataTypes.DATE,
     updated_at: DataTypes.DATE,
   },

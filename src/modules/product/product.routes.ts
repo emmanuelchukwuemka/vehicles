@@ -1,17 +1,15 @@
 import { Router } from "express";
-import * as variationControllers from "./controllers/variation.controllers";
-import { validateProduct } from "./product.middlewares";
-import {
-  validateFetchProductsByDomain,
-  validateProductVariation,
-} from "./middleware/variation.middleware";
-import { productController } from "./controllers/baseProduct.controller";
+import retailerRoutes from "./routes/retailer";
+import realEstateRoutes from "./routes/realestate";
 
 const router = Router();
-router.post("/", validateProduct, productController.createBaseProduct);
 
-router.get("/:domain", productController.getProductByDomainName);
+////////// Base /////////
 
-router.get("/:id", productController.geteBaseProduct);
+///////// Retailer //////////
+router.use("/retailer", retailerRoutes);
+
+///////// Real Estate //////////
+router.use("/realestate", realEstateRoutes);
 
 export default router;
