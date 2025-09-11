@@ -35,7 +35,7 @@ const metadataSchema = zod_1.z.object({
 // Media schema (shared for product + units + items)
 // -----------------------------------------
 const mediaSchema = zod_1.z.object({
-    url: zod_1.z.string().url(),
+    url: zod_1.z.url(),
     type: zod_1.z.string(),
     description: zod_1.z.string().optional(),
     metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),

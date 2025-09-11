@@ -1,5 +1,17 @@
 import { z } from "zod";
 
+// -----------------------------------------
+// Metadata schema (with enforced location)
+// -----------------------------------------
+const metadataSchema = z.object({
+  specifications: z.array(
+    z.object({
+      name: z.string().min(1),
+      value: z.union([z.string(), z.number(), z.boolean()]),
+    })
+  ),
+});
+
 // Media schema
 const mediaSchema = z.object({
   url: z.string().url(),
@@ -12,7 +24,7 @@ const mediaSchema = z.object({
 const unitItemSchema = z.object({
   price: z.number().nonnegative(), // item price
   stock: z.number().int().nonnegative(), // item stock
-  metadata: z.record(z.string(), z.any()), // REQUIRED → used to generate SKU
+  attributes: z.record(z.string(), z.any()), // REQUIRED → used to generate SKU
   medias: z.array(mediaSchema).optional(),
 });
 
@@ -21,6 +33,25 @@ const unitSchema = z.object({
   name: z.string().min(1), // e.g. "variation1"
   items: z.array(unitItemSchema).min(1), // must have at least one item
 });
+
+// -----------------------------------------
+// Pricing schema (with conditional discount_type)
+// -----------------------------------------
+const pricingSchema = z
+  .object({
+    base_price: z.number().positive(),
+    discount: z.number().min(0).optional().default(0),
+    discount_type: z.string().optional(),
+  })
+  .superRefine((data, ctx) => {
+    if (data.discount > 0 && !data.discount_type) {
+      ctx.addIssue({
+        code: "custom",
+        path: ["discount_type"],
+        message: "discount_type is required because discount is provided",
+      });
+    }
+  });
 
 // Retailer Product Schema
 export const retailerProductSchema = z.object({
@@ -34,15 +65,12 @@ export const retailerProductSchema = z.object({
   basic_info: z.object({
     name: z.string().min(2, "Product name is too short"),
     description: z.string(),
-    weight: z.number().nonnegative().nullable().optional(),
+    weight: z.number().nonnegative().default(0.1),
   }),
 
-  pricing: z.object({
-    base_price: z.number().positive(),
-    discount: z.number().min(0).default(0),
-  }),
+  pricing: pricingSchema,
 
-  metadata: z.record(z.string(), z.any()).optional(),
+  metadata: metadataSchema,
   medias: z.array(mediaSchema).optional(),
   units: z.array(unitSchema),
 });

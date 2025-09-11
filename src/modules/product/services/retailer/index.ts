@@ -91,7 +91,7 @@ export class RetailerService {
 
           for (const item of u.items) {
             // Store unit_value in value column for quick search/filter
-            const sku = generateVariationSKU(newProduct, item.metadata);
+            const sku = generateVariationSKU(newProduct, item.attributes);
 
             const createdUnit = await ProductUnit.create(
               {
@@ -101,7 +101,7 @@ export class RetailerService {
                 price: item.price ?? 0,
                 stock: item.stock ?? 1,
                 metadata: {
-                  ...(item.metadata ?? {}),
+                  ...(item.attributes ?? {}),
                   unit_value: sku,
                 },
                 status: 1,
@@ -131,7 +131,7 @@ export class RetailerService {
       return {
         success: true,
         message: "Retail product created successfully",
-        data: newProduct,
+        data: newProduct.product_code,
       };
     } catch (error) {
       if (transaction) await transaction.rollback();

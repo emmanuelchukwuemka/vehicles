@@ -81,7 +81,7 @@ class RetailerService {
                         continue;
                     for (const item of u.items) {
                         // Store unit_value in value column for quick search/filter
-                        const sku = (0, sku_1.generateVariationSKU)(newProduct, item.metadata);
+                        const sku = (0, sku_1.generateVariationSKU)(newProduct, item.attributes);
                         const createdUnit = await associations_1.ProductUnit.create({
                             product_id: newProduct.id,
                             name: u.name,
@@ -89,7 +89,7 @@ class RetailerService {
                             price: item.price ?? 0,
                             stock: item.stock ?? 1,
                             metadata: {
-                                ...(item.metadata ?? {}),
+                                ...(item.attributes ?? {}),
                                 unit_value: sku,
                             },
                             status: 1,
@@ -115,7 +115,7 @@ class RetailerService {
             return {
                 success: true,
                 message: "Retail product created successfully",
-                data: newProduct,
+                data: newProduct.product_code,
             };
         }
         catch (error) {
