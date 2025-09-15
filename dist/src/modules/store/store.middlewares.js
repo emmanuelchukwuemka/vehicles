@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateIdParam = exports.storeValidation = void 0;
-const store_validations_1 = require("./store.validations");
+const store_validations_1 = require("./validation/store.validations");
 const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 const storeValidation = (req, res, next) => {

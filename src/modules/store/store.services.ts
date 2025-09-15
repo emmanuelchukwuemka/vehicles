@@ -1,13 +1,13 @@
 import { Transaction } from "sequelize";
 import sequelize from "../../config/database/sequelize";
 import { StoreCapability } from "../capability/models/storecapability.models";
-import { CreateStoreInput } from "./store.types";
 import { Store } from "./models/store.models";
 import { v4 as uuid } from "uuid";
 import City from "../city/city.models";
 import { Vendor } from "../vendor/vendor.models";
-import StoreScope from "./models/scope.models";
-import { StoreInput } from "./store.validations";
+import { StoreInput } from "./validation/store.validations";
+import { Subdomain } from "../domains/model/subdomain.models";
+import { Capability } from "../capability/models/capability.models";
 
 export const createStore = async (input: StoreInput) => {
   let transaction: Transaction | null = null;
@@ -15,19 +15,35 @@ export const createStore = async (input: StoreInput) => {
   try {
     transaction = await sequelize.transaction();
 
+    // -----------------------------------------
     // Check if vendor exists
+    // -----------------------------------------
     const vendor = await Vendor.findByPk(input.vendor_id, { transaction });
     if (!vendor) {
       return { success: false, message: "Vendor not found" };
     }
 
+    // -----------------------------------------
     // Check if city exists
+    // -----------------------------------------
     const city = await City.findByPk(input.city_id, { transaction });
     if (!city) {
       return { success: false, message: "City not found" };
     }
 
-    // Check if a store with the same name exists in the same city
+    // -----------------------------------------
+    // Check if subdomain exists
+    // -----------------------------------------
+    const subdomain = await Subdomain.findByPk(input.subdomain_id, {
+      transaction,
+    });
+    if (!subdomain) {
+      return { success: false, message: "Subdomain not found" };
+    }
+
+    // -----------------------------------------
+    // Ensure store uniqueness per city
+    // -----------------------------------------
     const existingStore = await Store.findOne({
       where: {
         name: input.name.trim(),
@@ -45,7 +61,9 @@ export const createStore = async (input: StoreInput) => {
 
     const storeCode = uuid();
 
-    // Create store
+    // -----------------------------------------
+    // Create store (metadata stored as JSON)
+    // -----------------------------------------
     const store = await Store.create(
       {
         vendor_id: input.vendor_id,
@@ -53,38 +71,45 @@ export const createStore = async (input: StoreInput) => {
         name: input.name.trim(),
         slogan: input.slogan.trim(),
         city_id: input.city_id,
-        banner: input.banner,
-        picture: input.picture,
-        net_worth: input.net_worth,
-        logo: input.logo,
-        staff_count: input.staff_count,
         address: input.address.trim(),
-        floor_space: input.floor_space,
         code: storeCode,
-        is_verified: 1,
-        status: 1,
+        is_verified: input.is_verified ?? 1,
+        status: input.status ?? 1,
+        metadata: input.metadata,
       },
       { transaction }
     );
 
-    // Add store capabilities
-    if (input.capabilities?.length) {
-      const bulkData = input.capabilities.map((capId: any) => ({
+    // -----------------------------------------
+    // If you want some normalized relational data
+    // -----------------------------------------
+    if (input.metadata?.capabilities?.length) {
+      // Step 1: Fetch all valid capabilities from DB
+      const validCapabilities = await Capability.findAll({
+        where: { id: input.metadata.capabilities },
+        transaction,
+      });
+
+      // Step 2: Compare provided IDs vs existing ones
+      const validIds = validCapabilities.map((c) => c.id);
+      const invalidIds = input.metadata.capabilities.filter(
+        (id: number) => !validIds.includes(id)
+      );
+
+      if (invalidIds.length > 0) {
+        return {
+          success: false,
+          message: "One or more capability IDs are invalid",
+        };
+      }
+
+      // Step 3: Insert only if all are valid
+      const bulkData = validIds.map((capId: number) => ({
         store_id: store.id,
         capability_id: capId,
       }));
-      await StoreCapability.bulkCreate(bulkData, { transaction });
-    }
 
-    // Add store scope
-    if (input.scope) {
-      await StoreScope.create(
-        {
-          store_id: store.id,
-          scope: input.scope, // "seller" or "manufacturer"
-        },
-        { transaction }
-      );
+      await StoreCapability.bulkCreate(bulkData, { transaction });
     }
 
     await transaction.commit();
@@ -96,20 +121,13 @@ export const createStore = async (input: StoreInput) => {
     };
   } catch (error) {
     if (transaction) await transaction.rollback();
+    console.log(error);
     return { success: false, message: "Error creating store", error };
   }
 };
 
 export const getStoreWithScopes = async (storeId: number) => {
-  const store = await Store.findByPk(storeId, {
-    include: [
-      {
-        model: StoreScope,
-        as: "scopes",
-        attributes: ["scope"],
-      },
-    ],
-  });
+  const store = await Store.findByPk(storeId);
 
   if (!store) {
     return { success: false, message: "Store not found", statusCode: 404 };

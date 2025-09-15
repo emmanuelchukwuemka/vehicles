@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { idSchema, storeSchema } from "./store.validations";
+import { idSchema, storeSchema } from "./validation/store.validations";
 import { ZodError } from "zod";
 import { errorResponse } from "../../globals/utility/apiResponse";
 
