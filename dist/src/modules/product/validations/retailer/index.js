@@ -52,7 +52,7 @@ const pricingSchema = zod_1.z
 exports.retailerProductSchema = zod_1.z.object({
     identifiers: zod_1.z.object({
         store_id: zod_1.z.number().int().positive(),
-        subcategory_id: zod_1.z.number().int().positive().optional(),
+        subcategory_id: zod_1.z.number().int().positive(),
         collection_id: zod_1.z.number().int().positive().optional(),
         currency_id: zod_1.z.number().int().positive().default(238),
     }),

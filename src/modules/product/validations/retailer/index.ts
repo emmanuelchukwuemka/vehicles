@@ -57,7 +57,7 @@ const pricingSchema = z
 export const retailerProductSchema = z.object({
   identifiers: z.object({
     store_id: z.number().int().positive(),
-    subcategory_id: z.number().int().positive().optional(),
+    subcategory_id: z.number().int().positive(),
     collection_id: z.number().int().positive().optional(),
     currency_id: z.number().int().positive().default(238),
   }),
