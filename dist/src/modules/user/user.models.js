@@ -12,7 +12,11 @@ class User extends sequelize_1.Model {
 exports.User = User;
 // Defining table + columns
 User.init({
-    id: { type: sequelize_1.DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true },
+    id: {
+        type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
+        autoIncrement: true,
+        primaryKey: true,
+    },
     first_name: { type: sequelize_1.DataTypes.STRING(100), allowNull: true },
     last_name: { type: sequelize_1.DataTypes.STRING(100), allowNull: true },
     email: { type: sequelize_1.DataTypes.STRING(255), allowNull: false, unique: true },
@@ -20,6 +24,7 @@ User.init({
     city_id: { type: sequelize_1.DataTypes.INTEGER.UNSIGNED, allowNull: true },
     picture: { type: sequelize_1.DataTypes.STRING(255), allowNull: true },
     is_verified: { type: sequelize_1.DataTypes.TINYINT, allowNull: true, defaultValue: 0 },
+    status: { type: sequelize_1.DataTypes.TINYINT, allowNull: false, defaultValue: 1 },
     created_at: { type: sequelize_1.DataTypes.DATE, defaultValue: sequelize_1.DataTypes.NOW },
     updated_at: { type: sequelize_1.DataTypes.DATE, defaultValue: sequelize_1.DataTypes.NOW },
 }, {

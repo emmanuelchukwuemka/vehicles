@@ -9,17 +9,16 @@ import {
 
 export const login = async (req: Request, res: Response) => {
   try {
-
     // And here i dey call the service layer
     const result = await authServices.login(req.body);
 
-   if (!result.success || !result.data) {
-     return errorResponse(res, {
-       statusCode: 401,
-       message: result.message,
-     });
-   }
-    const { accessToken, refreshToken } = result.data;
+    if (!result.success || !result.data) {
+      return errorResponse(res, {
+        statusCode: 401,
+        message: result.message,
+      });
+    }
+    const { accessToken, refreshToken, userInfo } = result.data;
 
     // Seting cookies here
     res.cookie("accessToken", accessToken, {
@@ -38,7 +37,7 @@ export const login = async (req: Request, res: Response) => {
 
     return successResponse(res, {
       message: result.message,
-      data: result.data,
+      data: userInfo,
     });
   } catch (err: any) {
     if (err instanceof ZodError) {

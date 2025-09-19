@@ -11,6 +11,7 @@ export interface UserAttributes {
   city_id: number;
   picture?: string;
   is_verified: number;
+  status?: number;
   created_at?: Date;
   updated_at?: Date;
 }
@@ -26,6 +27,7 @@ export interface UserCreationAttributes
     | "city_id"
     | "picture"
     | "is_verified"
+    | "status"
     | "created_at"
     | "updated_at"
   > {}
@@ -43,6 +45,7 @@ export class User
   public city_id!: number;
   public picture?: string;
   public is_verified!: number;
+  public readonly status!: number;
   public readonly created_at!: Date;
   public readonly updated_at!: Date;
 }
@@ -50,16 +53,21 @@ export class User
 // Defining table + columns
 User.init(
   {
-    id: { type: DataTypes.INTEGER.UNSIGNED, autoIncrement: true, primaryKey: true},
-    first_name: { type: DataTypes.STRING(100), allowNull: true},
-    last_name: { type: DataTypes.STRING(100), allowNull: true},
-    email: { type: DataTypes.STRING(255), allowNull: false, unique: true},
-    phone: { type: DataTypes.STRING(20), allowNull: true},
-    city_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true},
+    id: {
+      type: DataTypes.INTEGER.UNSIGNED,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    first_name: { type: DataTypes.STRING(100), allowNull: true },
+    last_name: { type: DataTypes.STRING(100), allowNull: true },
+    email: { type: DataTypes.STRING(255), allowNull: false, unique: true },
+    phone: { type: DataTypes.STRING(20), allowNull: true },
+    city_id: { type: DataTypes.INTEGER.UNSIGNED, allowNull: true },
     picture: { type: DataTypes.STRING(255), allowNull: true },
-    is_verified: { type: DataTypes.TINYINT, allowNull: true, defaultValue: 0},
-    created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW},
-    updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW},
+    is_verified: { type: DataTypes.TINYINT, allowNull: true, defaultValue: 0 },
+    status: { type: DataTypes.TINYINT, allowNull: false, defaultValue: 1 },
+    created_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
+    updated_at: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
   },
   {
     sequelize,

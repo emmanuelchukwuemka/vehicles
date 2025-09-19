@@ -18,6 +18,8 @@ import storeModule from "../modules/store";
 import capabilityModule from "../modules/capability";
 import vendorModule from "../modules/vendor";
 import domainModule from "../modules/domains";
+import cartModule from "../modules/cart";
+import { verifyCookie } from "../middlewares/cookie.middleware";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -56,6 +58,8 @@ export default (app: Application): void => {
   app.use("/api/vendor", vendorModule);
 
   app.use("/api/domain", domainModule);
+
+  app.use("/api/cart", verifyCookie, cartModule);
 
   app.use(errorHandler);
 };

@@ -47,7 +47,7 @@ const login = async (req, res) => {
                 message: result.message,
             });
         }
-        const { accessToken, refreshToken } = result.data;
+        const { accessToken, refreshToken, userInfo } = result.data;
         // Seting cookies here
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
@@ -63,7 +63,7 @@ const login = async (req, res) => {
         });
         return (0, apiResponse_1.successResponse)(res, {
             message: result.message,
-            data: result.data,
+            data: userInfo,
         });
     }
     catch (err) {
