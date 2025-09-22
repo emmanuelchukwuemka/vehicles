@@ -25,6 +25,8 @@ const vendor_1 = __importDefault(require("../modules/vendor"));
 const domains_1 = __importDefault(require("../modules/domains"));
 const cart_1 = __importDefault(require("../modules/cart"));
 const cookie_middleware_1 = require("../middlewares/cookie.middleware");
+const order_1 = __importDefault(require("../modules/order"));
+const payment_1 = __importDefault(require("../modules/payment"));
 exports.default = (app) => {
     app.use((0, cors_1.default)());
     app.use(express_1.default.json());
@@ -47,5 +49,7 @@ exports.default = (app) => {
     app.use("/api/vendor", vendor_1.default);
     app.use("/api/domain", domains_1.default);
     app.use("/api/cart", cookie_middleware_1.verifyCookie, cart_1.default);
+    app.use("/api/order", order_1.default);
+    app.use("/api/payment", payment_1.default);
     app.use(errorHandler_1.errorHandler);
 };
