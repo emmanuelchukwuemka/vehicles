@@ -25,23 +25,4 @@ export class paystactController {
       return res.status(500).json({ success: false, details: error.message });
     }
   }
-
-  static async auth_charge(req: Request, res: Response) {
-    try {
-      const validatedData = req.body;
-
-      const result = await PaystackService.chargeAuthorization(validatedData);
-
-      if (!result.success) {
-        return errorResponse(res, { statusCode: 400, message: result.message });
-      }
-      return successResponse(res, {
-        message: result.message,
-        data: result.data,
-      });
-    } catch (error: any) {
-      console.log("Error charging_auth:", error);
-      return res.status(500).json({ success: false, details: error.message });
-    }
-  }
 }

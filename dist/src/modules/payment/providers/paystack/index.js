@@ -115,41 +115,5 @@ class PaystackService {
             };
         }
     }
-    static async chargeAuthorization(data) {
-        const { email, amount, auth_code, mode } = data;
-        try {
-            const secretkey = mode === "test"
-                ? process.env.PAYSTACK_TEST_SECRET_KEY
-                : process.env.PAYSTACK_SECRET_KEY;
-            const response = await axios_1.default.post("https://api.paystack.co/transaction/charge_authorization", {
-                email,
-                amount: Number(amount) * 100,
-                authorization_code: auth_code,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${secretkey}`,
-                    "Content-Type": "application/json",
-                },
-                validateStatus: (status) => status >= 200 && status < 500,
-            });
-            return {
-                success: response.data.status ?? false,
-                message: response.data.message || "No message from Paystack",
-                data: response.data.data ?? null,
-                statusCode: response.status,
-            };
-        }
-        catch (error) {
-            console.error("Paystack Charge Authorization Error:", error);
-            return {
-                success: false,
-                message: error?.response?.data?.message ||
-                    error?.message ||
-                    "Charge authorization failed",
-                data: error?.response?.data ?? null,
-                statusCode: error?.response?.status ?? 500,
-            };
-        }
-    }
 }
 exports.PaystackService = PaystackService;
