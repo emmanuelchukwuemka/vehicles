@@ -110,7 +110,7 @@ class PaystackService {
             console.error("Paystack Error:", error?.response?.data || error.message);
             return {
                 success: false,
-                message: error?.response?.data?.message || "Payment failed",
+                message: error?.response?.data?.data?.message || "Payment failed",
                 error: error.message,
             };
         }
