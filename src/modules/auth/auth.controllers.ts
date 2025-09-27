@@ -26,6 +26,7 @@ export const login = async (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 15 * 60 * 1000,
+      domain: process.env.COOKIE_DOMAIN || "localhost",
     });
 
     res.cookie("refreshToken", refreshToken, {
@@ -33,6 +34,7 @@ export const login = async (req: Request, res: Response) => {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       maxAge: 7 * 24 * 60 * 60 * 1000,
+      domain: process.env.COOKIE_DOMAIN || "localhost",
     });
 
     return successResponse(res, {
