@@ -1,3 +1,4 @@
+import Currency from "../../currency/currency.models";
 import { Subdomain } from "../../domains/model/subdomain.models";
 import { Product, ProductMedia, ProductUnit } from "../models/associations";
 
@@ -86,9 +87,24 @@ export class ProductService {
         return { success: false, message: "Product not found" };
       }
 
-      // 🔹 Step 3: Clean product based on flags
       const plain: any = product.get({ plain: true });
 
+      // 🔹 Step 3: Fetch currency for this product
+      if (plain.currency_id) {
+        const currency = await Currency.findByPk(plain.currency_id, {
+          attributes: ["id", "code", "symbol", "decimal_places"],
+        });
+        if (currency) {
+          plain.currency = {
+            id: currency.id,
+            code: currency.code,
+            symbol: currency.symbol,
+            decimal_places: currency.decimal_places,
+          };
+        }
+      }
+
+      // 🔹 Step 4: Clean product based on flags
       if (!includeMetadata) {
         delete plain.metadata;
       } else if (!includeSpecifications && plain.metadata?.specifications) {
