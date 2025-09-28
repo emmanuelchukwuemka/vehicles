@@ -1,6 +1,10 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductUnitService = exports.ProductService = void 0;
+const currency_models_1 = __importDefault(require("../../currency/currency.models"));
 const subdomain_models_1 = require("../../domains/model/subdomain.models");
 const associations_1 = require("../models/associations");
 class ProductService {
@@ -65,8 +69,22 @@ class ProductService {
             if (!product) {
                 return { success: false, message: "Product not found" };
             }
-            // 🔹 Step 3: Clean product based on flags
             const plain = product.get({ plain: true });
+            // 🔹 Step 3: Fetch currency for this product
+            if (plain.currency_id) {
+                const currency = await currency_models_1.default.findByPk(plain.currency_id, {
+                    attributes: ["id", "code", "symbol", "decimal_places"],
+                });
+                if (currency) {
+                    plain.currency = {
+                        id: currency.id,
+                        code: currency.code,
+                        symbol: currency.symbol,
+                        decimal_places: currency.decimal_places,
+                    };
+                }
+            }
+            // 🔹 Step 4: Clean product based on flags
             if (!includeMetadata) {
                 delete plain.metadata;
             }
