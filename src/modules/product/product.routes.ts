@@ -1,4 +1,5 @@
 import { Router } from "express";
+import mainRoutes from "./routes";
 import retailerRoutes from "./routes/retailer";
 import realEstateRoutes from "./routes/realestate";
 import logisticsRoutes from "./routes/logistics";
@@ -13,5 +14,8 @@ router.use("/realestate", realEstateRoutes);
 
 ///////// Logistics //////////
 router.use("/logistics", logisticsRoutes);
+
+///////// Main //////////
+router.use("/", mainRoutes);
 
 export default router;
