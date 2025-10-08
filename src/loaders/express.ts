@@ -20,6 +20,7 @@ import vendorModule from "../modules/vendor";
 import domainModule from "../modules/domains";
 import cartModule from "../modules/cart";
 import { verifyCookie } from "../middlewares/cookie.middleware";
+import morelikeModule from "../modules/morelike";
 
 export default (app: Application): void => {
   app.use(cors());
@@ -60,6 +61,9 @@ export default (app: Application): void => {
   app.use("/api/domain", domainModule);
 
   app.use("/api/cart", verifyCookie, cartModule);
+
+
+  app.use("/api/morelike", morelikeModule);
 
   app.use(errorHandler);
 };
