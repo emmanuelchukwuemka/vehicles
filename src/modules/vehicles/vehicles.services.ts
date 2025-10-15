@@ -825,26 +825,6 @@ export const getAllListings = async (query?: { type?: string; status?: string; p
       where,
       include: [
         {
-          model: Car,
-          as: 'car',
-          required: false,
-        },
-        {
-          model: Bike,
-          as: 'bike',
-          required: false,
-        },
-        {
-          model: Haulage,
-          as: 'haulage',
-          required: false,
-        },
-        {
-          model: SparePart,
-          as: 'sparePart',
-          required: false,
-        },
-        {
           model: Media,
           as: 'media',
           limit: 5,
@@ -1116,4 +1096,94 @@ export const submitListing = async (listingId: number, userId: number) => {
       message: error.message || 'Failed to submit listing',
     };
   }
+};
+
+// Search listings by location
+export const searchListingsByLocation = async (location: string, radiusKm: number = 50, page: number = 1, limit: number = 20) => {
+  try {
+    // Geocode the search location
+    const searchCoords = await geocodeLocation(location);
+
+    const pageNum = Math.max(1, page);
+    const limitNum = Math.max(1, Math.min(100, limit));
+    const offset = (pageNum - 1) * limitNum;
+
+    // Calculate bounding box for approximate distance filtering
+    const lat = searchCoords.lat;
+    const long = searchCoords.long;
+    const radiusInDegrees = radiusKm / 111.32; // Approximate degrees for km
+
+    const minLat = lat - radiusInDegrees;
+    const maxLat = lat + radiusInDegrees;
+    const minLong = long - radiusInDegrees / Math.cos(lat * Math.PI / 180);
+    const maxLong = long + radiusInDegrees / Math.cos(lat * Math.PI / 180);
+
+    const { rows: listings, count: total } = await Listing.findAndCountAll({
+      where: {
+        status: 'active',
+        latitude: { [Op.between]: [minLat, maxLat] },
+        longitude: { [Op.between]: [minLong, maxLong] },
+      },
+      include: [
+        {
+          model: Media,
+          as: 'media',
+          limit: 5,
+          order: [['sort_order', 'ASC']],
+        },
+        {
+          model: ListingFeature,
+          as: 'features',
+          include: [{ model: Feature, as: 'feature' }],
+        },
+        {
+          model: Keyword,
+          as: 'keywords',
+        },
+        {
+          model: Discount,
+          as: 'discounts',
+        },
+      ],
+      limit: limitNum,
+      offset,
+      order: [['created_at', 'DESC']],
+    });
+
+    // Filter more precisely using Haversine formula (optional, for better accuracy)
+    const filteredListings = listings.filter(listing => {
+      if (!listing.latitude || !listing.longitude) return false;
+      const distance = calculateDistance(lat, long, listing.latitude, listing.longitude);
+      return distance <= radiusKm;
+    });
+
+    return {
+      success: true,
+      data: {
+        items: filteredListings,
+        total: filteredListings.length,
+        page: pageNum,
+        limit: limitNum,
+        searchLocation: { lat, long },
+        radiusKm,
+      },
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || 'Failed to search listings by location',
+    };
+  }
+};
+
+// Helper function to calculate distance using Haversine formula
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number): number => {
+  const R = 6371; // Radius of the Earth in km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+    Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
 };

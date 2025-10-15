@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.submitListing = exports.createListingDiscount = exports.addListingMedia = exports.addListingFeatures = exports.deleteListing = exports.getListingById = exports.getUserListings = exports.updateListing = exports.createListing = exports.sendPasswordResetEmail = exports.sendVerificationEmail = exports.sendEmail = exports.resetPassword = exports.forgotPassword = exports.getStats = exports.updateVehicleStatus = exports.getAdminVehicles = exports.removeFavorite = exports.getFavorites = exports.addFavorite = exports.uploadImages = exports.deleteVehicle = exports.updateVehicle = exports.getVehicleById = exports.getVehicles = exports.createVehicle = exports.updateUserProfile = exports.getUserProfile = exports.logout = exports.refresh = exports.login = exports.register = void 0;
+exports.searchListingsByLocation = exports.submitListing = exports.createListingDiscount = exports.addListingMedia = exports.addListingFeatures = exports.deleteListing = exports.getListingById = exports.getUserListings = exports.getAllListings = exports.updateListing = exports.createListing = exports.sendPasswordResetEmail = exports.sendVerificationEmail = exports.sendEmail = exports.resetPassword = exports.forgotPassword = exports.getStats = exports.updateVehicleStatus = exports.getAdminVehicles = exports.removeFavorite = exports.getFavorites = exports.addFavorite = exports.uploadImages = exports.deleteVehicle = exports.updateVehicle = exports.getVehicleById = exports.getVehicles = exports.createVehicle = exports.updateUserProfile = exports.getUserProfile = exports.logout = exports.refresh = exports.login = exports.register = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const nodemailer_1 = __importDefault(require("nodemailer"));
@@ -759,6 +759,62 @@ const updateListing = async (userId, listingId, data) => {
     }
 };
 exports.updateListing = updateListing;
+const getAllListings = async (query) => {
+    try {
+        const { type, status, page = 1, limit = 20 } = query || {};
+        const pageNum = parseInt(page) || 1;
+        const limitNum = parseInt(limit) || 20;
+        const offset = (pageNum - 1) * limitNum;
+        const where = { status: 'active' };
+        if (type)
+            where.listing_type = type;
+        if (status)
+            where.status = status;
+        const { rows: listings, count: total } = await vehicles_models_1.Listing.findAndCountAll({
+            where,
+            include: [
+                {
+                    model: vehicles_models_1.Media,
+                    as: 'media',
+                    limit: 5,
+                    order: [['sort_order', 'ASC']],
+                },
+                {
+                    model: vehicles_models_1.ListingFeature,
+                    as: 'features',
+                    include: [{ model: vehicles_models_1.Feature, as: 'feature' }],
+                },
+                {
+                    model: vehicles_models_1.Keyword,
+                    as: 'keywords',
+                },
+                {
+                    model: vehicles_models_1.Discount,
+                    as: 'discounts',
+                },
+            ],
+            limit: limitNum,
+            offset,
+            order: [['created_at', 'DESC']],
+        });
+        return {
+            success: true,
+            data: {
+                items: listings,
+                total,
+                page: pageNum,
+                limit: limitNum,
+            },
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error.message || 'Failed to get listings',
+        };
+    }
+};
+exports.getAllListings = getAllListings;
 const getUserListings = async (userId, query) => {
     try {
         const { type, status } = query || {};
@@ -988,3 +1044,83 @@ const submitListing = async (listingId, userId) => {
     }
 };
 exports.submitListing = submitListing;
+const searchListingsByLocation = async (location, radiusKm = 50, page = 1, limit = 20) => {
+    try {
+        const searchCoords = await (0, vehicles_helpers_1.geocodeLocation)(location);
+        const pageNum = Math.max(1, page);
+        const limitNum = Math.max(1, Math.min(100, limit));
+        const offset = (pageNum - 1) * limitNum;
+        const lat = searchCoords.lat;
+        const long = searchCoords.long;
+        const radiusInDegrees = radiusKm / 111.32;
+        const minLat = lat - radiusInDegrees;
+        const maxLat = lat + radiusInDegrees;
+        const minLong = long - radiusInDegrees / Math.cos(lat * Math.PI / 180);
+        const maxLong = long + radiusInDegrees / Math.cos(lat * Math.PI / 180);
+        const { rows: listings, count: total } = await vehicles_models_1.Listing.findAndCountAll({
+            where: {
+                status: 'active',
+                latitude: { [sequelize_1.Op.between]: [minLat, maxLat] },
+                longitude: { [sequelize_1.Op.between]: [minLong, maxLong] },
+            },
+            include: [
+                {
+                    model: vehicles_models_1.Media,
+                    as: 'media',
+                    limit: 5,
+                    order: [['sort_order', 'ASC']],
+                },
+                {
+                    model: vehicles_models_1.ListingFeature,
+                    as: 'features',
+                    include: [{ model: vehicles_models_1.Feature, as: 'feature' }],
+                },
+                {
+                    model: vehicles_models_1.Keyword,
+                    as: 'keywords',
+                },
+                {
+                    model: vehicles_models_1.Discount,
+                    as: 'discounts',
+                },
+            ],
+            limit: limitNum,
+            offset,
+            order: [['created_at', 'DESC']],
+        });
+        const filteredListings = listings.filter(listing => {
+            if (!listing.latitude || !listing.longitude)
+                return false;
+            const distance = calculateDistance(lat, long, listing.latitude, listing.longitude);
+            return distance <= radiusKm;
+        });
+        return {
+            success: true,
+            data: {
+                items: filteredListings,
+                total: filteredListings.length,
+                page: pageNum,
+                limit: limitNum,
+                searchLocation: { lat, long },
+                radiusKm,
+            },
+        };
+    }
+    catch (error) {
+        return {
+            success: false,
+            message: error.message || 'Failed to search listings by location',
+        };
+    }
+};
+exports.searchListingsByLocation = searchListingsByLocation;
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371;
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c;
+};

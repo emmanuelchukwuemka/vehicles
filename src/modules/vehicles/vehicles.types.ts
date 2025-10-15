@@ -602,3 +602,11 @@ export const addFeaturesSchema = z.object({
 });
 
 export const createDiscountSchema = discountInputSchema;
+
+// Search listings by location schema
+export const searchListingsByLocationSchema = z.object({
+  location: z.string().min(1),
+  radiusKm: z.number().positive().default(50),
+  page: z.number().positive().default(1),
+  limit: z.number().positive().max(100).default(20),
+});

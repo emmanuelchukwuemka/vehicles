@@ -40,6 +40,8 @@ const express_1 = require("express");
 const controllers = __importStar(require("./vehicles.controllers"));
 const vehicles_middlewares_1 = require("./vehicles.middlewares");
 const multer_1 = __importDefault(require("multer"));
+const validation_middleware_1 = require("../../middlewares/validation.middleware");
+const vehicles_types_1 = require("./vehicles.types");
 const router = (0, express_1.Router)();
 router.use(vehicles_middlewares_1.generalLimiter);
 router.get('/health', controllers.healthCheck);
@@ -89,6 +91,7 @@ router.delete('/favorites/:id', vehicles_middlewares_1.authenticate, controllers
 router.post('/listings', vehicles_middlewares_1.authenticate, listingUpload.array('media', 20), controllers.createListingController);
 router.put('/listings/:id', vehicles_middlewares_1.authenticate, listingUpload.array('media', 10), controllers.updateListingController);
 router.get('/listings', controllers.getListingsController);
+router.get('/listings/search-by-location', (0, validation_middleware_1.validate)(vehicles_types_1.searchListingsByLocationSchema), controllers.searchListingsByLocationController);
 router.get('/listings/:id', controllers.getListingController);
 router.delete('/listings/:id', vehicles_middlewares_1.authenticate, controllers.deleteListingController);
 router.post('/listings/:id/features', vehicles_middlewares_1.authenticate, controllers.addFeaturesController);

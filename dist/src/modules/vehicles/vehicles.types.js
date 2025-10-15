@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createDiscountSchema = exports.addFeaturesSchema = exports.updateListingSchema = exports.createListingSchema = exports.baseListingInputSchema = exports.discountInputSchema = exports.listingFeatureInputSchema = exports.sparePartInputSchema = exports.haulageInputSchema = exports.bikeInputSchema = exports.carInputSchema = exports.changeStatusSchema = exports.addFavoriteSchema = exports.updateVehicleSchema = exports.createVehicleSchema = exports.resetPasswordSchema = exports.forgotPasswordSchema = exports.updateUserSchema = exports.logoutSchema = exports.refreshSchema = exports.loginSchema = exports.registerSchema = void 0;
+exports.searchListingsByLocationSchema = exports.createDiscountSchema = exports.addFeaturesSchema = exports.updateListingSchema = exports.createListingSchema = exports.baseListingInputSchema = exports.discountInputSchema = exports.listingFeatureInputSchema = exports.sparePartInputSchema = exports.haulageInputSchema = exports.bikeInputSchema = exports.carInputSchema = exports.changeStatusSchema = exports.addFavoriteSchema = exports.updateVehicleSchema = exports.createVehicleSchema = exports.resetPasswordSchema = exports.forgotPasswordSchema = exports.updateUserSchema = exports.logoutSchema = exports.refreshSchema = exports.loginSchema = exports.registerSchema = void 0;
 const zod_1 = require("zod");
 exports.registerSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
@@ -156,3 +156,9 @@ exports.addFeaturesSchema = zod_1.z.object({
     features: zod_1.z.array(exports.listingFeatureInputSchema).min(1),
 });
 exports.createDiscountSchema = exports.discountInputSchema;
+exports.searchListingsByLocationSchema = zod_1.z.object({
+    location: zod_1.z.string().min(1),
+    radiusKm: zod_1.z.number().positive().default(50),
+    page: zod_1.z.number().positive().default(1),
+    limit: zod_1.z.number().positive().max(100).default(20),
+});

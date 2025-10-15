@@ -59,3 +59,4 @@
 
 ## Bug Fixes
 - [x] Fixed GET /listings 500 error by creating getAllListings service for public listings
+- [x] Added searchListingsByLocation endpoint for location-based search

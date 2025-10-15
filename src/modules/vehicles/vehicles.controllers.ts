@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import * as services from './vehicles.services';
-import { registerSchema, loginSchema, refreshSchema, logoutSchema, updateUserSchema, forgotPasswordSchema, resetPasswordSchema, createVehicleSchema, updateVehicleSchema, addFavoriteSchema, createListingSchema, updateListingSchema, addFeaturesSchema, createDiscountSchema } from './vehicles.types';
+import { registerSchema, loginSchema, refreshSchema, logoutSchema, updateUserSchema, forgotPasswordSchema, resetPasswordSchema, createVehicleSchema, updateVehicleSchema, addFavoriteSchema, createListingSchema, updateListingSchema, addFeaturesSchema, createDiscountSchema, searchListingsByLocationSchema } from './vehicles.types';
 import { successResponse, errorResponse } from '../../globals/utility/apiResponse';
 
 export const register = async (req: Request, res: Response) => {
@@ -433,5 +433,18 @@ export const submitListingController = async (req: Request, res: Response) => {
     return successResponse(res, { message: result.message });
   } catch (error: any) {
     return errorResponse(res, { statusCode: 500, message: 'Unexpected error' });
+  }
+};
+
+export const searchListingsByLocationController = async (req: Request, res: Response) => {
+  try {
+    const validated = searchListingsByLocationSchema.parse(req.query);
+    const result = await services.searchListingsByLocation(validated.location, validated.radiusKm, validated.page, validated.limit);
+    if (!result.success) {
+      return errorResponse(res, { statusCode: 500, message: result.message });
+    }
+    return successResponse(res, { message: 'Listings searched by location', data: result.data });
+  } catch (error: any) {
+    return errorResponse(res, { statusCode: 400, message: 'Validation error', details: error.issues });
   }
 };

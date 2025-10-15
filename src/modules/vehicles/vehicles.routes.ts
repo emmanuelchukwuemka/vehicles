@@ -2,6 +2,8 @@ import { Router } from 'express';
 import * as controllers from './vehicles.controllers';
 import { authenticate, authorizeAdmin, authLimiter, generalLimiter } from './vehicles.middlewares';
 import multer from 'multer';
+import { validate } from '../../middlewares/validation.middleware';
+import { searchListingsByLocationSchema } from './vehicles.types';
 
 const router = Router();
 
@@ -70,6 +72,7 @@ router.delete('/favorites/:id', authenticate, controllers.removeFavorite);
 router.post('/listings', authenticate, listingUpload.array('media', 20), controllers.createListingController);
 router.put('/listings/:id', authenticate, listingUpload.array('media', 10), controllers.updateListingController);
 router.get('/listings', controllers.getListingsController);
+router.get('/listings/search-by-location', validate(searchListingsByLocationSchema), controllers.searchListingsByLocationController);
 router.get('/listings/:id', controllers.getListingController);
 router.delete('/listings/:id', authenticate, controllers.deleteListingController);
 router.post('/listings/:id/features', authenticate, controllers.addFeaturesController);

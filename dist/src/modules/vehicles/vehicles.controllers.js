@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.submitListingController = exports.createDiscountController = exports.uploadMediaController = exports.addFeaturesController = exports.deleteListingController = exports.getListingController = exports.getListingsController = exports.updateListingController = exports.createListingController = exports.resetPassword = exports.forgotPassword = exports.healthCheck = exports.getStats = exports.updateVehicleStatus = exports.getAdminVehicles = exports.removeFavorite = exports.getFavorites = exports.addFavorite = exports.uploadImages = exports.deleteVehicle = exports.updateVehicle = exports.getVehicle = exports.getVehicles = exports.createVehicle = exports.updateProfile = exports.getProfile = exports.logout = exports.refresh = exports.login = exports.register = void 0;
+exports.searchListingsByLocationController = exports.submitListingController = exports.createDiscountController = exports.uploadMediaController = exports.addFeaturesController = exports.deleteListingController = exports.getListingController = exports.getListingsController = exports.updateListingController = exports.createListingController = exports.resetPassword = exports.forgotPassword = exports.healthCheck = exports.getStats = exports.updateVehicleStatus = exports.getAdminVehicles = exports.removeFavorite = exports.getFavorites = exports.addFavorite = exports.uploadImages = exports.deleteVehicle = exports.updateVehicle = exports.getVehicle = exports.getVehicles = exports.createVehicle = exports.updateProfile = exports.getProfile = exports.logout = exports.refresh = exports.login = exports.register = void 0;
 const services = __importStar(require("./vehicles.services"));
 const vehicles_types_1 = require("./vehicles.types");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
@@ -390,9 +390,8 @@ const updateListingController = async (req, res) => {
 exports.updateListingController = updateListingController;
 const getListingsController = async (req, res) => {
     try {
-        const userId = req.user?.id;
         const query = req.query;
-        const result = await services.getUserListings(userId, query);
+        const result = await services.getAllListings(query);
         if (!result.success) {
             return (0, apiResponse_1.errorResponse)(res, { statusCode: 500, message: result.message });
         }
@@ -493,3 +492,17 @@ const submitListingController = async (req, res) => {
     }
 };
 exports.submitListingController = submitListingController;
+const searchListingsByLocationController = async (req, res) => {
+    try {
+        const validated = vehicles_types_1.searchListingsByLocationSchema.parse(req.query);
+        const result = await services.searchListingsByLocation(validated.location, validated.radiusKm, validated.page, validated.limit);
+        if (!result.success) {
+            return (0, apiResponse_1.errorResponse)(res, { statusCode: 500, message: result.message });
+        }
+        return (0, apiResponse_1.successResponse)(res, { message: 'Listings searched by location', data: result.data });
+    }
+    catch (error) {
+        return (0, apiResponse_1.errorResponse)(res, { statusCode: 400, message: 'Validation error', details: error.issues });
+    }
+};
+exports.searchListingsByLocationController = searchListingsByLocationController;
