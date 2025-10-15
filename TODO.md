@@ -31,9 +31,8 @@
 - [ ] In Render dashboard, create a new Web Service
 - [ ] Connect your Git repository
 - [ ] Configure the service:
-  - Runtime: Node
-  - Build Command: `npm install && npm run build && npm run migrate`
-  - Start Command: `npm run start:prod`
+  - Runtime: Docker
+  - Dockerfile Path: ./Dockerfile (should auto-detect)
 - [ ] Set environment variables as listed above
 - [ ] Deploy the service
 
@@ -41,16 +40,18 @@
 - [ ] Check the deployment logs for any errors
 - [ ] Test the `/server/heartbeat` endpoint to ensure the server is running
 - [ ] Test database connectivity
-- [ ] Verify that migrations ran successfully
+- [ ] Verify that migrations ran successfully during Docker build
 - [ ] Test key API endpoints
 
 ## Troubleshooting
-- If build fails, check the build logs for TypeScript or dependency issues
+- If build fails, check the Docker build logs for TypeScript or dependency issues
 - If database connection fails, verify environment variables and database accessibility
 - If migrations fail, check database permissions and schema compatibility
 - Ensure your remote database allows connections from Render's IP ranges
+- If Docker build is slow, consider using a .dockerignore file to exclude unnecessary files
 
 ## Notes
-- Render automatically provides the PORT environment variable
+- The Dockerfile handles build, migration, and startup automatically
 - The service will use the production database configuration
 - Socket.IO is configured with CORS allowing all origins (review for production security)
+- Port 10000 is exposed in the container and configured in render.yaml
