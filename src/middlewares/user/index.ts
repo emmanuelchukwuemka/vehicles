@@ -4,23 +4,25 @@ export const checkUserStatus = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const user = req.user as { status?: number };
 
   if (!user) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
       message: "Unauthorized",
       statusCode: 401,
     });
+    return;
   }
 
   if (user.status !== 1) {
-    return res.status(403).json({
+    res.status(403).json({
       success: false,
       message: "Account inactive or blocked",
       statusCode: 403,
     });
+    return;
   }
 
   next();
@@ -30,15 +32,16 @@ export const checkUserMatch = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   const loggedInUser = req.user as { id: number };
 
   if (!loggedInUser) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
       message: "Unauthorized lara",
       statusCode: 401,
     });
+    return;
   }
 
   // Safely read ids
@@ -50,19 +53,21 @@ export const checkUserMatch = (
   const userId = paramId ?? bodyId ?? queryId;
 
   if (userId === undefined || isNaN(userId)) {
-    return res.status(400).json({
+    res.status(400).json({
       success: false,
       message: "User ID not provided in request",
       statusCode: 400,
     });
+    return;
   }
 
   if (userId !== loggedInUser.id) {
-    return res.status(403).json({
+    res.status(403).json({
       success: false,
       message: "Access denied: user mismatch",
       statusCode: 403,
     });
+    return;
   }
 
   next();

@@ -6,14 +6,15 @@ export const verifyCookie = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<void> => {
   const token = req.cookies.accessToken;
   if (!token) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
       message: "Unauthorized",
       statusCode: 401,
     });
+    return;
   }
 
   try {
@@ -26,11 +27,12 @@ export const verifyCookie = async (
     const user = await User.findByPk(payload.id);
 
     if (!user) {
-      return res.status(401).json({
+      res.status(401).json({
         success: false,
         message: "User not found",
         statusCode: 401,
       });
+      return;
     }
 
     //-> Attach full user object to request
@@ -38,10 +40,11 @@ export const verifyCookie = async (
 
     next();
   } catch (err) {
-    return res.status(401).json({
+    res.status(401).json({
       success: false,
       message: "Invalid token",
       statusCode: 401,
     });
+    return;
   }
 };
