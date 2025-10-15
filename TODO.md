@@ -1,94 +1,56 @@
-# Vehicle Module Backend Implementation TODO
+# Deployment Checklist for Render
 
-## Overview
-Breakdown of the approved plan to implement missing "Add New Listing" functionality. Steps are sequential: Start with types/validations, then helpers, services (core logic), controllers (handlers), routes (endpoints). After each major step, update this file with progress. Test incrementally.
+## Prerequisites
+- [ ] Create a Render account at https://render.com
+- [ ] Set up your remote MySQL database (e.g., PlanetScale, AWS RDS, or similar)
+- [ ] Ensure your database is accessible from external IPs
 
-## Steps
+## Environment Variables Setup
+- [ ] In Render dashboard, go to your service settings
+- [ ] Add the following environment variables (use your actual values):
+  - DB_HOST: your_database_host
+  - DB_NAME: your_database_name
+  - DB_USER: your_database_username
+  - DB_PASSWORD: your_database_password
+  - JWT_SECRET: your_jwt_secret_key_here
+  - REFRESH_SECRET: your_refresh_token_secret_here
+  - NODE_ENV: production
+  - UPLOAD_DIR: uploads
+  - MAX_FILE_SIZE: 5242880
+  - ALLOWED_FILE_TYPES: image/jpeg,image/png,image/webp,video/mp4,video/avi
+  - SHOULD_WAIT_FOR_CONNECTION: true
+  - CONNECTION_LIMIT: 10
+  - DB_MAX_IDLE: 10
+  - DB_IDLE_TIMEOUT: 60000
+  - DB_QUEUE_LIMIT: 0
+  - ENABLE_KEEP_ALIVE: true
+  - KEEP_ALIVE_INITIAL_DELAY: 0
 
-### 1. Update Types and Validations (vehicles.types.ts)
-   - [x] Add interfaces: CreateListingInput (with listingType: 'car'|'bike'|'haulage'|'spare_part', vehicleData: union type for CarInput/BikeInput/etc., features: array of {featureId: number, value?: string}, media: array of files (handled in controller), keywords: string[], discounts: array of DiscountInput).
-   - [x] Add UpdateListingInput for partials (e.g., add features/media).
-   - [x] Add Zod schemas: createListingSchema (validate required fields per type, e.g., body_type for car/haulage, fuel_type enum, features array max 50, keywords unique/max 20, discounts value >0).
-   - [x] Add schemas for sub-endpoints: addFeaturesSchema, uploadMediaSchema, createDiscountSchema.
-   - [x] Export all new types/schemas.
-   - **Dependencies**: None new.
-   - **Testing**: Validate sample payloads with Zod.parse() in console.
+## Deployment Steps
+- [ ] Push all changes to your Git repository (GitHub, GitLab, etc.)
+- [ ] In Render dashboard, create a new Web Service
+- [ ] Connect your Git repository
+- [ ] Configure the service:
+  - Runtime: Node
+  - Build Command: `npm install && npm run build && npm run migrate`
+  - Start Command: `npm run start:prod`
+- [ ] Set environment variables as listed above
+- [ ] Deploy the service
 
-### 2. Update Helpers (vehicles.helpers.ts)
-   - [x] Add processMediaFiles(files: Express.Multer.File[], listingId: number): Promise<Media[]>. Save to uploads/, create Media entries (file_type: 'image'|'video', dimensions via sharp if added, set is_primary for first, sort_order).
-   - [x] Add geocodeLocation(location: string): Promise<{lat: number, long: number}> (use placeholder or integrate google-maps-services-js if installed).
-   - [x] Add generateKeywords(title: string, description: string): string[] (simple split/extract common terms, e.g., ['family', 'car', 'hybrid'] from text).
-   - [x] Add validateVehicleType(listingType: string, data: any): void (throw if missing fields, e.g., no engine_capacity for spare_part).
-   - [x] Add authenticateListingOwner(userId: number, listingId: number): Promise<boolean> (check Listing.user_id).
-   - [x] Update existing helpers if conflicts (e.g., extend upload logic).
-   - **Dependencies**: Import Media model; consider adding "sharp" to package.json for image processing.
-   - **Testing**: Unit test helpers (e.g., mock files, run generateKeywords on sample desc).
+## Post-Deployment Checks
+- [ ] Check the deployment logs for any errors
+- [ ] Test the `/server/heartbeat` endpoint to ensure the server is running
+- [ ] Test database connectivity
+- [ ] Verify that migrations ran successfully
+- [ ] Test key API endpoints
 
-### 3. Implement Services (vehicles.services.ts)
-   - [x] Add createListing(userId: number, data: CreateListingInput & {files?: Express.Multer.File[]}): Use sequelize.transaction(): Create Listing (status: 'draft'), create subtype (switch on listingType, e.g., Car.create({...vehicleData})), bulkCreate ListingFeature for features, processMediaFiles for gallery, bulkCreate Keyword (use generateKeywords if empty), bulkCreate Discount for offers. Geocode location. If all success, optional set 'pending' and sendEmail('Listing submitted'). Return populated Listing (include subtype, media, features, etc.).
-   - [x] Add updateListing(userId: number, listingId: number, data: UpdateListingInput & {files?: Express.Multer.File[]}): Similar transaction for partials (e.g., add to existing arrays).
-   - [x] Add getUserListings(userId: number, query?: {type?: string, status?: string}): Query Listing where user_id, include polymorphic subtype (use where: {listing_type: type} for specific), media (limit 5), features/keywords/discounts.
-   - [x] Add getListingById(listingId: number, includeOwner?: boolean): Full fetch with all associations.
-   - [x] Add deleteListing(userId: number, listingId: number): Check ownership, destroy Listing (cascade deletes associations/media).
-   - [x] Add addListingFeatures(listingId: number, features: array): Bulk create ListingFeature.
-   - [x] Add addListingMedia(listingId: number, files: array): Call processMediaFiles.
-   - [x] Add createListingDiscount(listingId: number, discountData: any): Create Discount, update listing price if needed.
-   - [x] Add submitListing(listingId: number, userId: number): Set status 'pending', send approval email.
-   - [ ] Refactor legacy createVehicle: Map to new createListing or mark as deprecated.
-   - [ ] Extend getVehicles to query Listings (union across types).
-   - **Dependencies**: Import all models, helpers, sequelize.transaction.
-   - **Testing**: Mock DB, test createListing with sample car data (verify associations created).
+## Troubleshooting
+- If build fails, check the build logs for TypeScript or dependency issues
+- If database connection fails, verify environment variables and database accessibility
+- If migrations fail, check database permissions and schema compatibility
+- Ensure your remote database allows connections from Render's IP ranges
 
-### 4. Implement Controllers (vehicles.controllers.ts)
-   - [x] Add createListingController(req: Request, res: Response): Auth userId, parse req.body (validated), handle req.files for media, call createListing, return {id, ...listing}.
-   - [x] Add updateListingController(req: Request, res: Response): Ownership check, handle files, call updateListing.
-   - [x] Add getListingsController(req: Request, res: Response): If auth, filter by user; else public. Call getUserListings or public variant, paginate.
-   - [x] Add getListingController(req: Request, res: Response): Call getListingById(parseInt(req.params.id)).
-   - [x] Add deleteListingController(req: Request, res: Response): Auth, call deleteListing.
-   - [x] Add addFeaturesController(req: Request, res: Response): POST /listings/:id/features, validate, call addListingFeatures.
-   - [x] Add uploadMediaController(req: Request, res: Response): POST /listings/:id/media, multer, call addListingMedia.
-   - [x] Add createDiscountController(req: Request, res: Response): POST /listings/:id/discounts, validate, call createListingDiscount.
-   - [x] Add submitListingController(req: Request, res: Response): POST /listings/:id/submit, call submitListing.
-   - [x] Use existing errorResponse/successResponse; add middleware for ownership.
-   - **Dependencies**: Import new services/schemas, multer types.
-   - **Testing**: Mock req/res, test handlers return correct responses.
-
-### 5. Update Routes (vehicles.routes.ts)
-   - [x] Add POST `/listings` (authenticate, multer.array('media', 20) for gallery/videos, createListingController).
-   - [x] Add PUT `/listings/:id` (authenticate, multer.array('media', 10), updateListingController).
-   - [x] Add GET `/listings` (optional authenticate for user filter, getListingsController).
-   - [x] Add GET `/listings/:id` (getListingController).
-   - [x] Add DELETE `/listings/:id` (authenticate, deleteListingController).
-   - [x] Add POST `/listings/:id/features` (authenticate, addFeaturesController).
-   - [x] Add POST `/listings/:id/media` (authenticate, multer.array('media', 10), uploadMediaController).
-   - [x] Add POST `/listings/:id/discounts` (authenticate, createDiscountController).
-   - [x] Add POST `/listings/:id/submit` (authenticate, submitListingController).
-   - [x] Add middleware: authenticateListingOwner for owned routes.
-   - [x] Deprecate/update legacy /vehicles to /listings.
-   - [x] Update multer config: Allow video/mime types (e.g., video/mp4), increase limits if needed.
-   - **Dependencies**: Import new controllers, create authenticateListingOwner middleware.
-   - **Testing**: Use Postman to hit new routes, verify 200/401/etc.
-
-### 6. Module Integration and Finalization (index.ts, loaders)
-   - [x] Update src/modules/vehicles/index.ts: Export new services/controllers (e.g., export * from './vehicles.services').
-   - [x] Ensure src/loaders/database.ts loads all models (add Listing, Car, etc. if missing).
-   - [x] Add to src/loaders/express.ts: Mount new routes if not already (router.use('/api/vehicles', vehiclesRoutes)).
-   - **Dependencies**: None.
-   - **Testing**: Restart server, check no import errors.
-
-### 7. Testing and Verification
-   - [ ] Run migrations/seeders: npx sequelize-cli db:migrate; seed Features (e.g., ABS, Bluetooth) and Categories (body types, makes).
-   - [ ] Unit/Integration Tests: Add to __tests__ (if exists) or manual: Curl POST /listings with JSON + files, verify DB (e.g., select * from listings join cars).
-   - [ ] Edge Cases: Invalid type, max media (20?), duplicate keywords, discount > price, unauth access.
-   - [ ] Full Flow: Create draft, add features/media stepwise, submit → pending, admin approve.
-   - [ ] Refactor Legacy: Update existing /vehicles to use listings; remove if not needed.
-   - [ ] Performance: Index queries; limit includes.
-   - **Dependencies**: Postman collection (update Bloomzon Project.postman_collection.json).
-   - **Command**: npm run dev to start, test endpoints.
-
-## Progress Tracking
-- Initial: All [ ] unchecked.
-- Update after each step: Mark [x], note issues/resolutions.
-- Completion: When all [x], run full tests, use attempt_completion.
-
-Estimated Time: 4-6 hours (coding + testing).
+## Notes
+- Render automatically provides the PORT environment variable
+- The service will use the production database configuration
+- Socket.IO is configured with CORS allowing all origins (review for production security)

@@ -36,6 +36,14 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 
+# Database files (for local SQLite if used)
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads (if not using cloud storage)
+uploads/
+
 # Optional: lock files (if you don't want to commit them)
 # package-lock.json
 # yarn.lock

@@ -1,26 +1,43 @@
 services:
   - type: web
-    name: vehicles-api
-    env: node
-    plan: free
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    name: bloomzon-api
+    runtime: node
+    buildCommand: npm install && npm run build && npm run migrate
+    startCommand: npm run start:prod
     envVars:
       - key: NODE_ENV
         value: production
-      - key: APP_PORT_NUMBER
-        value: 3000
-      - key: JWT_SECRET
-        sync: false
-      - key: REFRESH_SECRET
-        sync: false
-      - key: DB_USER
-        sync: false
-      - key: DB_PASSWORD
-        sync: false
-      - key: DB_NAME
-        sync: false
+      - key: PORT
+        fromSecret: PORT  # Render provides this automatically
       - key: DB_HOST
-        sync: false
-      - key: DB_PORT
-        value: 3306
+        fromSecret: DB_HOST
+      - key: DB_NAME
+        fromSecret: DB_NAME
+      - key: DB_USER
+        fromSecret: DB_USER
+      - key: DB_PASSWORD
+        fromSecret: DB_PASSWORD
+      - key: JWT_SECRET
+        fromSecret: JWT_SECRET
+      - key: REFRESH_SECRET
+        fromSecret: REFRESH_SECRET
+      - key: UPLOAD_DIR
+        value: uploads
+      - key: MAX_FILE_SIZE
+        value: 5242880
+      - key: ALLOWED_FILE_TYPES
+        value: image/jpeg,image/png,image/webp,video/mp4,video/avi
+      - key: SHOULD_WAIT_FOR_CONNECTION
+        value: true
+      - key: CONNECTION_LIMIT
+        value: 10
+      - key: DB_MAX_IDLE
+        value: 10
+      - key: DB_IDLE_TIMEOUT
+        value: 60000
+      - key: DB_QUEUE_LIMIT
+        value: 0
+      - key: ENABLE_KEEP_ALIVE
+        value: true
+      - key: KEEP_ALIVE_INITIAL_DELAY
+        value: 0
