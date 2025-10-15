@@ -341,9 +341,8 @@ export const updateListingController = async (req: Request, res: Response) => {
 
 export const getListingsController = async (req: Request, res: Response) => {
   try {
-    const userId = (req as any).user?.id;
     const query = req.query;
-    const result = await services.getUserListings(userId, query);
+    const result = await services.getAllListings(query);
     if (!result.success) {
       return errorResponse(res, { statusCode: 500, message: result.message });
     }

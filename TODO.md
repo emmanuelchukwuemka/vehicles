@@ -56,3 +56,6 @@
 - Socket.IO is configured with CORS allowing all origins (review for production security)
 - Port 10000 is exposed in the container and configured in render.yaml
 - Database migrations run during application startup, not during Docker build
+
+## Bug Fixes
+- [x] Fixed GET /listings 500 error by creating getAllListings service for public listings

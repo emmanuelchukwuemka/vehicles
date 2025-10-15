@@ -810,6 +810,82 @@ export const updateListing = async (userId: number, listingId: number, data: Upd
   }
 };
 
+export const getAllListings = async (query?: { type?: string; status?: string; page?: number; limit?: number }) => {
+  try {
+    const { type, status, page = 1, limit = 20 } = query || {};
+    const pageNum = parseInt(page as any) || 1;
+    const limitNum = parseInt(limit as any) || 20;
+    const offset = (pageNum - 1) * limitNum;
+
+    const where: any = { status: 'active' };
+    if (type) where.listing_type = type;
+    if (status) where.status = status;
+
+    const { rows: listings, count: total } = await Listing.findAndCountAll({
+      where,
+      include: [
+        {
+          model: Car,
+          as: 'car',
+          required: false,
+        },
+        {
+          model: Bike,
+          as: 'bike',
+          required: false,
+        },
+        {
+          model: Haulage,
+          as: 'haulage',
+          required: false,
+        },
+        {
+          model: SparePart,
+          as: 'sparePart',
+          required: false,
+        },
+        {
+          model: Media,
+          as: 'media',
+          limit: 5,
+          order: [['sort_order', 'ASC']],
+        },
+        {
+          model: ListingFeature,
+          as: 'features',
+          include: [{ model: Feature, as: 'feature' }],
+        },
+        {
+          model: Keyword,
+          as: 'keywords',
+        },
+        {
+          model: Discount,
+          as: 'discounts',
+        },
+      ],
+      limit: limitNum,
+      offset,
+      order: [['created_at', 'DESC']],
+    });
+
+    return {
+      success: true,
+      data: {
+        items: listings,
+        total,
+        page: pageNum,
+        limit: limitNum,
+      },
+    };
+  } catch (error: any) {
+    return {
+      success: false,
+      message: error.message || 'Failed to get listings',
+    };
+  }
+};
+
 export const getUserListings = async (userId: number, query?: { type?: string; status?: string }) => {
   try {
     const { type, status } = query || {};
