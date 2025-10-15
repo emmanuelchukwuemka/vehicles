@@ -12,7 +12,7 @@
     "migrate": "npx sequelize-cli db:migrate",
     "module-init": "plop --plopfile scripts/plopfile.silo.js",
     "prebuild": "npm run clean",
-    "clean": "if exist dist rmdir /s /q dist"
+    "clean": "rm -rf dist"
   },
   "author": "",
   "license": "ISC",
