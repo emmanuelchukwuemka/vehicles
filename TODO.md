@@ -51,7 +51,8 @@
 - If Docker build is slow, consider using a .dockerignore file to exclude unnecessary files
 
 ## Notes
-- The Dockerfile handles build, migration, and startup automatically
+- The Dockerfile handles build automatically, migrations run on app startup when RUN_MIGRATIONS=true
 - The service will use the production database configuration
 - Socket.IO is configured with CORS allowing all origins (review for production security)
 - Port 10000 is exposed in the container and configured in render.yaml
+- Database migrations run during application startup, not during Docker build

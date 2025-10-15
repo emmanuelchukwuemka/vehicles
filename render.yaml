@@ -40,3 +40,5 @@ services:
         value: true
       - key: KEEP_ALIVE_INITIAL_DELAY
         value: 0
+      - key: RUN_MIGRATIONS
+        value: true

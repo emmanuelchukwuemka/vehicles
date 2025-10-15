@@ -16,11 +16,8 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Run database migrations
-RUN npm run migrate
-
 # Expose the port the app runs on
 EXPOSE 10000
 
-# Command to run the application
+# Command to run the application (migrations will run on startup)
 CMD ["npm", "run", "start:prod"]
