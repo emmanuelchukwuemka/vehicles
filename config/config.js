@@ -19,10 +19,10 @@ module.exports = {
     port: process.env.DB_PORT || 3306
   },
   production: {
-    username: process.env.DB_USER || 'production_user',
-    password: process.env.DB_PASSWORD || 'production_password',
-    database: process.env.DB_NAME || 'production_database',
-    host: process.env.DB_HOST || 'localhost',
+    username: process.env.DB_USER || 'u179857929_sys_telnet',
+    password: process.env.DB_PASSWORD || 'MiXXYtPj3',
+    database: process.env.DB_NAME || 'u179857929_bloomzon_plus',
+    host: process.env.DB_HOST || 'srv527.hstgr.io',
     dialect: 'mysql',
     port: process.env.DB_PORT || 3306,
     logging: false
