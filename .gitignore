@@ -5,6 +5,8 @@ node_modules/
 .env
 .env.local
 .env.*.local
+!.env.example
+!.env.production
 
 # Logs
 npm-debug.log*
@@ -19,6 +21,7 @@ coverage/
 .cache/
 .next/
 out/
+dist/
 
 # System files
 .DS_Store
@@ -33,7 +36,7 @@ Thumbs.db
 # TypeScript
 *.tsbuildinfo
 
-# Optional: lock files (if you don’t want to commit them)
+# Optional: lock files (if you don't want to commit them)
 # package-lock.json
 # yarn.lock
 # pnpm-lock.yaml
