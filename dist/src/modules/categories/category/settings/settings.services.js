@@ -4,14 +4,11 @@ exports.deleteCategory = exports.updateCategory = exports.createCategory = void 
 const category_models_1 = require("../category.models");
 const createCategory = async (data) => {
     try {
-        // Extract all names from input
         const names = data.map((item) => item.name);
-        // Find existing maincategories by name
         const existing = await category_models_1.Category.findAll({
             where: { name: names },
         });
         const existingNames = existing.map((item) => item.name);
-        // Filter out the ones that already exist
         const newRecords = data.filter((item) => !existingNames.includes(item.name));
         if (newRecords.length === 0) {
             return {
@@ -19,7 +16,6 @@ const createCategory = async (data) => {
                 message: "All provided Categories already exist",
             };
         }
-        // Inserting only the new ones
         const inserted = await category_models_1.Category.bulkCreate(newRecords.map((item) => ({
             maincategory_id: item.maincategory_id,
             name: item.name,
@@ -30,7 +26,7 @@ const createCategory = async (data) => {
             success: true,
             message: "Category created successfully",
             data: inserted.map((item) => ({ id: item.id, name: item.name })),
-            skipped: existingNames, // show which were skipped
+            skipped: existingNames,
         };
     }
     catch (error) {

@@ -37,7 +37,6 @@ exports.deleteContinent = exports.updateContinent = exports.getContinentById = e
 const continentServices = __importStar(require("./continent.services"));
 const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
-// This method dey add both single and multiple continents
 const addContinent = async (req, res) => {
     try {
         const result = await continentServices.createContinent(req.body);

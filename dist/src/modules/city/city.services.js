@@ -7,39 +7,6 @@ exports.deleteCity = exports.getCitiesByStateId = exports.getCities = exports.ge
 const state_models_1 = __importDefault(require("../state/state.models"));
 const city_helpers_1 = require("./city.helpers");
 const city_models_1 = __importDefault(require("./city.models"));
-// export const createCity = async (
-//   data: CityCreationAttributes | CityCreationAttributes[]
-// ) => {
-//   try {
-//     const payload = Array.isArray(data) ? data : [data];
-//     for (const city of payload) {
-//       const state = await getStateById(city.state_id);
-//       if (!state) throw new Error(`State not found with id=${city.state_id}`);
-//       const exists = await City.findOne({
-//         where: { name: city.name, state_id: city.state_id },
-//       });
-//       if (exists) throw new Error(`City already exists with name=${city.name}`);
-//     }
-//     const cities =
-//       payload.length > 1
-//         ? await City.bulkCreate(payload)
-//         : [await City.create(payload[0])];
-//     return {
-//       success: true,
-//       message:
-//         payload.length > 1
-//           ? `${cities.length} cities created successfully`
-//           : "City created successfully",
-//       data: payload.length > 1 ? cities : cities[0],
-//     };
-//   } catch (error: any) {
-//     return {
-//       success: false,
-//       message: error.message || "Failed to create city",
-//       error,
-//     };
-//   }
-// };
 const createCity = async (data) => {
     try {
         const payload = Array.isArray(data) ? data : [data];

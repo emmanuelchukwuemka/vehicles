@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginSchema = void 0;
 const zod_1 = require("zod");
-// Am creating validation schema for Auth here
 exports.loginSchema = zod_1.z.object({
     email: zod_1.z
         .string()

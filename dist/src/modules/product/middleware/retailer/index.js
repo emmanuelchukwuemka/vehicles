@@ -2,13 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.validateRetailerProduct = void 0;
 const retailer_1 = require("../../validations/retailer");
-/**
- * Middleware for validating Retailer product creation request
- */
 const validateRetailerProduct = (req, res, next) => {
     try {
         req.body = retailer_1.retailerProductSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         return res.status(400).json({

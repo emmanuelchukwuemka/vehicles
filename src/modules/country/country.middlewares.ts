@@ -16,7 +16,7 @@ export const countrySecure = (
   try {
     console.log("Middleware executed for country module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -34,7 +34,7 @@ export const validateCreatePayload = (
 
     req.body = validated;
 
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -57,7 +57,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -80,7 +80,7 @@ export const validateCountryUpdate = (
   try {
     const validated = countryUpdateFlexibleSchema.parse(req.body);
     req.body = validated;
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

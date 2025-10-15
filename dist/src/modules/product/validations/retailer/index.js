@@ -2,37 +2,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.retailerProductSchema = void 0;
 const zod_1 = require("zod");
-// -----------------------------------------
-// Metadata schema (with enforced location)
-// -----------------------------------------
 const metadataSchema = zod_1.z.object({
     specifications: zod_1.z.array(zod_1.z.object({
         name: zod_1.z.string().min(1),
         value: zod_1.z.union([zod_1.z.string(), zod_1.z.number(), zod_1.z.boolean()]),
     })),
 });
-// Media schema
 const mediaSchema = zod_1.z.object({
     url: zod_1.z.string().url(),
     type: zod_1.z.string(),
     description: zod_1.z.string().optional(),
     metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),
 });
-// Unit Item schema (no unit_value here anymore)
 const unitItemSchema = zod_1.z.object({
-    price: zod_1.z.number().nonnegative(), // item price
-    stock: zod_1.z.number().int().nonnegative(), // item stock
-    attributes: zod_1.z.record(zod_1.z.string(), zod_1.z.any()), // REQUIRED → used to generate SKU
+    price: zod_1.z.number().nonnegative(),
+    stock: zod_1.z.number().int().nonnegative(),
+    attributes: zod_1.z.record(zod_1.z.string(), zod_1.z.any()),
     medias: zod_1.z.array(mediaSchema).optional(),
 });
-// Unit schema
 const unitSchema = zod_1.z.object({
-    name: zod_1.z.string().min(1), // e.g. "variation1"
-    items: zod_1.z.array(unitItemSchema).min(1), // must have at least one item
+    name: zod_1.z.string().min(1),
+    items: zod_1.z.array(unitItemSchema).min(1),
 });
-// -----------------------------------------
-// Pricing schema (with conditional discount_type)
-// -----------------------------------------
 const pricingSchema = zod_1.z
     .object({
     base_price: zod_1.z.number().positive(),
@@ -48,7 +39,6 @@ const pricingSchema = zod_1.z
         });
     }
 });
-// Retailer Product Schema
 exports.retailerProductSchema = zod_1.z.object({
     identifiers: zod_1.z.object({
         store_id: zod_1.z.number().int().positive(),

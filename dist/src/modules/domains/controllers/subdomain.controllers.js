@@ -37,7 +37,6 @@ class SubdomainController {
             return res.status(500).json({ success: false, message: err.message });
         }
     }
-    // Get by ID
     static async getById(req, res) {
         try {
             const id = Number(req.params.id);
@@ -53,7 +52,6 @@ class SubdomainController {
             return res.status(500).json({ success: false, message: err.message });
         }
     }
-    // Get all
     static async getAll(req, res) {
         try {
             const moduleId = req.query.module_id
@@ -66,7 +64,6 @@ class SubdomainController {
             return res.status(500).json({ success: false, message: err.message });
         }
     }
-    // Delete
     static async delete(req, res) {
         try {
             const id = Number(req.params.id);

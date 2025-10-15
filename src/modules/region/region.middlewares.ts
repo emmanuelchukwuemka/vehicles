@@ -10,7 +10,7 @@ export const regionSecure = (
   try {
     console.log("Middleware executed for region module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -24,7 +24,7 @@ export const validateRegionCreate = (
   try {
     const validatedData = regionFlexibleSchema.parse(req.body);
     req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -47,7 +47,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -71,7 +71,7 @@ export const validateRegionUpdate = (
 
     const validatedData = regionSchema.partial().parse(req.body);
     req.body = validatedData;
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

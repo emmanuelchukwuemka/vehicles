@@ -15,7 +15,7 @@ export const currencySecure = (
   try {
     console.log("Middleware executed for currency module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -35,7 +35,7 @@ export const validateCurrencyPayload = (
     }
     const validatedData = currencyFlexibleSchema.parse(req.body);
     req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -58,7 +58,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -87,7 +87,7 @@ export const validateUpdateCurrency = (
     }
 
     req.body = currencyUpdateSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

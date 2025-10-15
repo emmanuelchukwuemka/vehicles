@@ -41,11 +41,9 @@ const maincategory_validations_1 = require("../maincategory.validations");
 const createMaincategory = async (req, res) => {
     try {
         const validatedData = maincategory_validations_1.maincategoryFlexibleSchema.parse(req.body);
-        // Always convert to array for service
         const inputArray = Array.isArray(validatedData)
             ? validatedData
             : [validatedData];
-        // And here i dey call the service layer
         const result = await settingsServices.createMaincategory(inputArray);
         return (0, apiResponse_1.successResponse)(res, {
             message: result.message,
@@ -71,7 +69,6 @@ exports.createMaincategory = createMaincategory;
 const updateMaincategory = async (req, res) => {
     try {
         const { id } = req.params;
-        // Validate body using schema (partial update allowed)
         const validatedData = maincategory_validations_1.maincategorySchema.partial().parse(req.body);
         const result = await settingsServices.updateMaincategory(Number(id), validatedData);
         if (!result.success) {

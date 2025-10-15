@@ -11,7 +11,7 @@ export const capabilityValidate = (
   try {
     capabilitySchema.parse(req.body);
 
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

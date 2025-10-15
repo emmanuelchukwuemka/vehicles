@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// src/modules/product/product.service.ts
 const baseProduct_models_1 = require("../product/models/baseProduct.models");
 const MoreLikeProductService = {
     async getProductsBySubcategory(subcategory_id) {

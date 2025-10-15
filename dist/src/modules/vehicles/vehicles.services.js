@@ -31,7 +31,7 @@ const register = async (data) => {
         await vehicles_models_1.RefreshToken.create({
             user_id: user.id,
             token_hash: refreshTokenHash,
-            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days
+            expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         });
         return {
             success: true,
@@ -114,12 +114,9 @@ const refresh = async (refreshToken) => {
         const isValid = await bcryptjs_1.default.compare(refreshToken, tokenRecord.token_hash);
         if (!isValid)
             throw new Error('Invalid refresh token');
-        // Rotate token
         const newAccessToken = (0, vehicles_helpers_1.generateAccessToken)({ id: user.id, email: user.email, role: user.role });
         const newRefreshToken = (0, vehicles_helpers_1.generateRefreshToken)({ id: user.id });
-        // Revoke old
         await tokenRecord.update({ revoked_at: new Date() });
-        // Create new
         const newTokenHash = await (0, vehicles_helpers_1.hashRefreshToken)(newRefreshToken);
         await vehicles_models_1.RefreshToken.create({
             user_id: user.id,
@@ -209,7 +206,6 @@ const updateUserProfile = async (userId, data) => {
     }
 };
 exports.updateUserProfile = updateUserProfile;
-// Vehicle services
 const createVehicle = async (userId, data) => {
     try {
         const vehicle = await vehicles_models_1.Vehicle.create({
@@ -369,7 +365,6 @@ const deleteVehicle = async (userId, id, isAdmin) => {
     }
 };
 exports.deleteVehicle = deleteVehicle;
-// Upload services
 const uploadImages = async (files, vehicleId) => {
     try {
         const uploaded = [];
@@ -399,7 +394,6 @@ const uploadImages = async (files, vehicleId) => {
     }
 };
 exports.uploadImages = uploadImages;
-// Favorites services
 const addFavorite = async (userId, vehicleId) => {
     try {
         const existing = await vehicles_models_1.Favorite.findOne({ where: { user_id: userId, vehicle_id: vehicleId } });
@@ -471,7 +465,6 @@ const removeFavorite = async (userId, id) => {
     }
 };
 exports.removeFavorite = removeFavorite;
-// Admin services
 const getAdminVehicles = async (query) => {
     try {
         const { status, page = 1, limit = 20 } = query;
@@ -553,13 +546,11 @@ const getStats = async () => {
     }
 };
 exports.getStats = getStats;
-// Password reset services
 const forgotPassword = async (email) => {
     try {
         const normalizedEmail = email.trim().toLowerCase();
         const user = await vehicles_models_1.User.findOne({ where: { email: normalizedEmail } });
         if (!user) {
-            // Don't reveal if user exists
             return {
                 success: true,
                 message: 'If an account with that email exists, a reset link has been sent.',
@@ -603,7 +594,6 @@ const resetPassword = async (token, newPassword) => {
     }
 };
 exports.resetPassword = resetPassword;
-// Email services
 const transporter = nodemailer_1.default.createTransport({
     host: process.env.SMTP_HOST,
     port: parseInt(process.env.SMTP_PORT || '587'),
@@ -642,13 +632,10 @@ const sendPasswordResetEmail = async (email, token) => {
     await (0, exports.sendEmail)(email, 'Reset Your Password', html);
 };
 exports.sendPasswordResetEmail = sendPasswordResetEmail;
-// Listing services
 const createListing = async (userId, data) => {
     try {
         const { listing_type, vehicleData, features, files, keywords, discounts, ...listingData } = data;
-        // Validate vehicle type
         (0, vehicles_helpers_1.validateVehicleType)(listing_type, vehicleData);
-        // Geocode location if provided
         let latitude;
         let longitude;
         if (listingData.location) {
@@ -656,10 +643,8 @@ const createListing = async (userId, data) => {
             latitude = coords.lat;
             longitude = coords.long;
         }
-        // Generate keywords if not provided
         const finalKeywords = keywords || (0, vehicles_helpers_1.generateKeywords)(listingData.title, listingData.description || '');
         const result = await vehicles_models_1.Listing.sequelize.transaction(async (transaction) => {
-            // Create listing
             const listing = await vehicles_models_1.Listing.create({
                 listing_type,
                 user_id: userId,
@@ -668,7 +653,6 @@ const createListing = async (userId, data) => {
                 currency: listingData.currency || 'USD',
                 status: 'draft',
             }, { transaction });
-            // Update with optional fields if provided
             if (listingData.description || listingData.location || latitude || longitude) {
                 const updateData = {};
                 if (listingData.description)
@@ -681,7 +665,6 @@ const createListing = async (userId, data) => {
                     updateData.longitude = longitude;
                 await listing.update(updateData, { transaction });
             }
-            // Create subtype
             let subtype;
             switch (listing_type) {
                 case 'car':
@@ -697,22 +680,18 @@ const createListing = async (userId, data) => {
                     subtype = await vehicles_models_1.SparePart.create({ listing_id: listing.id, ...vehicleData }, { transaction });
                     break;
             }
-            // Bulk create features
             if (features && features.length > 0) {
                 const featureData = features.map(f => ({ listing_id: listing.id, feature_id: f.featureId, custom_value: f.custom_value }));
                 await vehicles_models_1.ListingFeature.bulkCreate(featureData, { transaction });
             }
-            // Process media files
             let mediaEntries = [];
             if (files && files.length > 0) {
                 mediaEntries = await (0, vehicles_helpers_1.processMediaFiles)(files, listing.id);
             }
-            // Bulk create keywords
             if (finalKeywords.length > 0) {
                 const keywordData = finalKeywords.map(k => ({ listing_id: listing.id, keyword: k, relevance_score: 1 }));
                 await vehicles_models_1.Keyword.bulkCreate(keywordData, { transaction });
             }
-            // Bulk create discounts
             if (discounts && discounts.length > 0) {
                 const discountData = discounts.map(d => ({ listing_id: listing.id, ...d }));
                 await vehicles_models_1.Discount.bulkCreate(discountData, { transaction });
@@ -741,31 +720,25 @@ const updateListing = async (userId, listingId, data) => {
         if (listing.user_id !== userId)
             throw new Error('Unauthorized');
         const { features, files, keywords, discounts, ...updateData } = data;
-        // Geocode location if provided
         if (updateData.location) {
             const coords = await (0, vehicles_helpers_1.geocodeLocation)(updateData.location);
             updateData.latitude = coords.lat;
             updateData.longitude = coords.long;
         }
         const result = await vehicles_models_1.Listing.sequelize.transaction(async (transaction) => {
-            // Update listing
             await listing.update(updateData, { transaction });
-            // Add new features if provided
             if (features && features.length > 0) {
                 const featureData = features.map(f => ({ listing_id: listing.id, feature_id: f.featureId, custom_value: f.custom_value }));
                 await vehicles_models_1.ListingFeature.bulkCreate(featureData, { transaction });
             }
-            // Process new media files
             let mediaEntries = [];
             if (files && files.length > 0) {
                 mediaEntries = await (0, vehicles_helpers_1.processMediaFiles)(files, listing.id);
             }
-            // Add new keywords if provided
             if (keywords && keywords.length > 0) {
                 const keywordData = keywords.map(k => ({ listing_id: listing.id, keyword: k, relevance_score: 1 }));
                 await vehicles_models_1.Keyword.bulkCreate(keywordData, { transaction });
             }
-            // Add new discounts if provided
             if (discounts && discounts.length > 0) {
                 const discountData = discounts.map(d => ({ listing_id: listing.id, ...d }));
                 await vehicles_models_1.Discount.bulkCreate(discountData, { transaction });
@@ -999,10 +972,8 @@ const submitListing = async (listingId, userId) => {
         if (listing.user_id !== userId)
             throw new Error('Unauthorized');
         await listing.update({ status: 'active' });
-        // Get user email to send notification
         const user = await vehicles_models_1.User.findByPk(listing.user_id);
         const userEmail = user?.email || '';
-        // Send approval email (placeholder)
         await (0, exports.sendEmail)(userEmail, 'Listing Submitted', 'Your listing has been submitted for approval.');
         return {
             success: true,

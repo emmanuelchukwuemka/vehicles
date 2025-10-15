@@ -8,7 +8,6 @@ exports.citySchema = zod_1.z.object({
     state_id: zod_1.z.number().int("State ID must be a number"),
     status: zod_1.z.number().min(0).max(1).int().optional().default(1),
 });
-// Partial for updates
 exports.cityFlexibleSchema = exports.citySchema.partial();
 exports.cityBulkOrSingleSchema = (0, city_helpers_1.singleOrArray)(exports.citySchema);
 exports.idSchema = zod_1.z.object({

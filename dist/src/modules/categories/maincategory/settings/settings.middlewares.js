@@ -5,10 +5,10 @@ const apiResponse_1 = require("../../../../globals/utility/apiResponse");
 const settingsSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for settings module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.settingsSecure = settingsSecure;
@@ -21,9 +21,8 @@ const validateIdParam = (paramName = "id") => {
                 message: `Invalid or missing ${paramName}`,
             });
         }
-        // Am attaching numeric version for controllers
         req[`${paramName}Number`] = Number(id);
-        next();
+        return next();
     };
 };
 exports.validateIdParam = validateIdParam;

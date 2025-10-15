@@ -20,9 +20,7 @@ const login = async ({ email, password }) => {
         const userInfo = await (0, auth_helpers_1.getUserByAuthId)(authUser.user_id);
         if (!userInfo)
             throw new Error("User not found");
-        // Short-lived access token (15min)
         const accessToken = jsonwebtoken_1.default.sign({ id: userInfo.id, email: userInfo.email }, process.env.JWT_SECRET, { expiresIn: "15m" });
-        // Long-lived refresh token (7 days)
         const refreshToken = jsonwebtoken_1.default.sign({ id: userInfo.id }, process.env.REFRESH_SECRET, { expiresIn: "7d" });
         return {
             success: true,

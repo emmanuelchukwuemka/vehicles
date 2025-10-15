@@ -2,40 +2,28 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.logisticsProductSchema = void 0;
 const zod_1 = require("zod");
-// -----------------------------------------
-// Media schema (shared for product + units)
-// -----------------------------------------
 const mediaSchema = zod_1.z.object({
     url: zod_1.z.string().url(),
-    type: zod_1.z.string(), // e.g. "image", "video"
+    type: zod_1.z.string(),
     description: zod_1.z.string().optional(),
     metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),
 });
-// -----------------------------------------
-// Unit items (like SMALL, MEDIUM packages)
-// -----------------------------------------
 const unitItemSchema = zod_1.z.object({
-    unit_value: zod_1.z.string().min(1), // identifier like SMALL_PKG
+    unit_value: zod_1.z.string().min(1),
     price: zod_1.z.number().nonnegative(),
     weight_limit: zod_1.z.number().positive().optional(),
     medias: zod_1.z.array(mediaSchema).optional(),
     metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),
 });
-// -----------------------------------------
-// Units schema (tier, measurement type/unit)
-// -----------------------------------------
 const unitSchema = zod_1.z.object({
     name: zod_1.z.string().min(1),
     measurement_type: zod_1.z.string().optional(),
-    measurement_unit: zod_1.z.string().optional(), // e.g. kg, km, litre
+    measurement_unit: zod_1.z.string().optional(),
     items: zod_1.z.array(unitItemSchema).min(1),
 });
-// -----------------------------------------
-// Insurance schema
-// -----------------------------------------
 const insuranceSchema = zod_1.z
     .object({
-    enabled: zod_1.z.union([zod_1.z.literal(0), zod_1.z.literal(1)]), // 0 = disabled, 1 = enabled
+    enabled: zod_1.z.union([zod_1.z.literal(0), zod_1.z.literal(1)]),
     price: zod_1.z.number().positive().optional(),
     coverage_type: zod_1.z.enum(["full", "partial"]).optional(),
 })
@@ -44,9 +32,6 @@ const insuranceSchema = zod_1.z
     message: "If insurance is enabled, a price must be provided",
     path: ["price"],
 });
-// -----------------------------------------
-// Tracking schema
-// -----------------------------------------
 const trackingSchema = zod_1.z
     .object({
     enabled: zod_1.z.union([zod_1.z.literal(0), zod_1.z.literal(1)]),
@@ -58,9 +43,6 @@ const trackingSchema = zod_1.z
     message: "If tracking is enabled, a price must be provided",
     path: ["price"],
 });
-// -----------------------------------------
-// Logistics Product Schema
-// -----------------------------------------
 exports.logisticsProductSchema = zod_1.z.object({
     identifiers: zod_1.z.object({
         store_id: zod_1.z.number().int().positive(),
@@ -82,11 +64,11 @@ exports.logisticsProductSchema = zod_1.z.object({
         message: "discount_type is required if discount is provided",
         path: ["discount_type"],
     }),
-    medias: zod_1.z.array(mediaSchema).optional(), // product-level medias
-    units: zod_1.z.array(unitSchema).min(1), // logistics tiers
+    medias: zod_1.z.array(mediaSchema).optional(),
+    units: zod_1.z.array(unitSchema).min(1),
     metadata: zod_1.z
         .object({
-        coverage: zod_1.z.array(zod_1.z.union([zod_1.z.number()])).optional(), // [1, 2, 3] IDs
+        coverage: zod_1.z.array(zod_1.z.union([zod_1.z.number()])).optional(),
         insurance: insuranceSchema.optional(),
         tracking: trackingSchema.optional(),
         extras: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),

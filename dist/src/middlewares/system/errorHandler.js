@@ -5,7 +5,6 @@ const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 function errorHandler(err, req, res, next) {
     console.error("🔥 Error caught:", err);
-    // Handle validation errors from Zod
     if (err instanceof zod_1.ZodError) {
         return (0, apiResponse_1.errorResponse)(res, {
             statusCode: 400,
@@ -16,7 +15,6 @@ function errorHandler(err, req, res, next) {
             })),
         });
     }
-    // Handle custom errors that include statusCode/message
     if (err.statusCode) {
         return (0, apiResponse_1.errorResponse)(res, {
             statusCode: err.statusCode,
@@ -24,7 +22,6 @@ function errorHandler(err, req, res, next) {
             details: err.details,
         });
     }
-    // Default: unexpected server error
     return (0, apiResponse_1.errorResponse)(res, {
         statusCode: 500,
         message: "Internal Server Error",

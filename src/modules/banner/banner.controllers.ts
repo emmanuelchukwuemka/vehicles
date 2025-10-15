@@ -15,13 +15,13 @@ export class AppBannerController {
 
   static async getAll(req: Request, res: Response) {
     const banners = await AppBannerService.getAllBanners();
-    res.json(banners);
+    return res.json(banners);
   }
 
   static async getById(req: Request, res: Response) {
     const banner = await AppBannerService.getBannerById(Number(req.params.id));
     if (!banner) return res.status(404).json({ message: "Banner not found" });
-    res.json(banner);
+    return res.json(banner);
   }
 
   static async update(req: Request, res: Response) {
@@ -29,15 +29,15 @@ export class AppBannerController {
       const parsed = AppBannerSchema.partial().parse(req.body);
       const banner = await AppBannerService.updateBanner(Number(req.params.id), parsed);
       if (!banner) return res.status(404).json({ message: "Banner not found" });
-      res.json(banner);
+      return res.json(banner);
     } catch (error: any) {
-      res.status(400).json({ error: error.errors ?? error.message });
+      return res.status(400).json({ error: error.errors ?? error.message });
     }
   }
 
   static async delete(req: Request, res: Response) {
     const success = await AppBannerService.deleteBanner(Number(req.params.id));
     if (!success) return res.status(404).json({ message: "Banner not found" });
-    res.json({ message: "Banner deleted successfully" });
+    return res.json({ message: "Banner deleted successfully" });
   }
 }

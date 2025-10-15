@@ -40,7 +40,6 @@ const router = (0, express_1.Router)();
 router.post("/", currency_middlewares_1.validateCurrencyPayload, currencyControllers.createCurrency);
 router.put("/:id", currency_middlewares_1.validateIdParam, currency_middlewares_1.validateUpdateCurrency, currencyControllers.updateCurrency);
 router.delete("/:id", currency_middlewares_1.validateIdParam, currencyControllers.deleteCurrency);
-// Fetch
 router.get("/", currencyControllers.getCurrencies);
 router.get("/:id", currency_middlewares_1.validateIdParam, currencyControllers.getCurrencyById);
 router.get("/code/:code", currencyControllers.fetchCurrencyByCode);

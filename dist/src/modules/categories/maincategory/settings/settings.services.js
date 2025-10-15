@@ -7,14 +7,11 @@ exports.deleteMaincategory = exports.updateMaincategory = exports.createMaincate
 const maincategory_models_1 = __importDefault(require("../maincategory.models"));
 const createMaincategory = async (data) => {
     try {
-        // Extract all names from input
         const names = data.map((item) => item.name);
-        // Find existing maincategories by name
         const existing = await maincategory_models_1.default.findAll({
             where: { name: names },
         });
         const existingNames = existing.map((item) => item.name);
-        // Filter out the ones that already exist
         const newRecords = data.filter((item) => !existingNames.includes(item.name));
         if (newRecords.length === 0) {
             return {
@@ -22,7 +19,6 @@ const createMaincategory = async (data) => {
                 message: "All provided maincategories already exist",
             };
         }
-        // Insert only the new ones
         const inserted = await maincategory_models_1.default.bulkCreate(newRecords.map((item) => ({
             name: item.name,
             label: item.label,
@@ -33,7 +29,7 @@ const createMaincategory = async (data) => {
             success: true,
             message: "Maincategories created successfully",
             data: inserted.map((item) => ({ id: item.id, name: item.name })),
-            skipped: existingNames, // show which were skipped
+            skipped: existingNames,
         };
     }
     catch (error) {

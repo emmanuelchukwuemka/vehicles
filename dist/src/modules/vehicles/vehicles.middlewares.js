@@ -14,7 +14,7 @@ const authenticate = (req, res, next) => {
     try {
         const decoded = jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
-        next();
+        return next();
     }
     catch (error) {
         return res.status(401).json({ message: 'Invalid access token' });
@@ -25,20 +25,19 @@ const authorizeAdmin = (req, res, next) => {
     if (req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Admin access required' });
     }
-    next();
+    return next();
 };
 exports.authorizeAdmin = authorizeAdmin;
-// Rate limiting
 exports.authLimiter = (0, express_rate_limit_1.default)({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // limit each IP to 5 auth requests per windowMs
+    windowMs: 15 * 60 * 1000,
+    max: 5,
     message: 'Too many authentication attempts, please try again later.',
     standardHeaders: true,
     legacyHeaders: false,
 });
 exports.generalLimiter = (0, express_rate_limit_1.default)({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    windowMs: 15 * 60 * 1000,
+    max: 100,
     message: 'Too many requests, please try again later.',
     standardHeaders: true,
     legacyHeaders: false,

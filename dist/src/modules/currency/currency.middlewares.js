@@ -7,10 +7,10 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const currencySecure = (req, res, next) => {
     try {
         console.log("Middleware executed for currency module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.currencySecure = currencySecure;
@@ -24,7 +24,7 @@ const validateCurrencyPayload = (req, res, next) => {
         }
         const validatedData = currency_validations_1.currencyFlexibleSchema.parse(req.body);
         req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -44,7 +44,7 @@ exports.validateCurrencyPayload = validateCurrencyPayload;
 const validateIdParam = (req, res, next) => {
     try {
         currency_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -69,7 +69,7 @@ const validateUpdateCurrency = (req, res, next) => {
             });
         }
         req.body = currency_validations_1.currencyUpdateSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

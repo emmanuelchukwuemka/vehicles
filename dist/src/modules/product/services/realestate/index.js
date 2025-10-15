@@ -17,23 +17,19 @@ class RealEstateService {
         let transaction;
         try {
             transaction = await sequelize_1.default.transaction();
-            // 1️⃣ Validate store
             const store = await store_models_1.Store.findByPk(identifiers.store_id, { transaction });
             if (!store || (store.status ?? 0) < 1)
                 return { success: false, message: "Store not found or offline" };
-            // 2️⃣ Validate subdomain
             const subdomain = await subdomain_models_1.Subdomain.findByPk(store.subdomain_id, {
                 transaction,
             });
             if (!subdomain || subdomain.name !== "realestate")
                 return { success: false, message: "Real estate subdomain not found" };
-            // 3️⃣ Validate subcategory
             if (identifiers.subcategory_id) {
                 const subcategory = await subcategory_models_1.Subcategory.findByPk(identifiers.subcategory_id, { transaction });
                 if (!subcategory)
                     return { success: false, message: "Property category not found" };
             }
-            // 4️⃣ Validate collection
             if (identifiers.collection_id) {
                 const collection = await collection_models_1.Collection.findOne({
                     where: {
@@ -45,7 +41,6 @@ class RealEstateService {
                 if (!collection)
                     return { success: false, message: "Collection not found or invalid" };
             }
-            // 5️⃣ Create base product
             const product_code = (0, uuid_1.v4)();
             const newProduct = await associations_1.Product.create({
                 store_id: identifiers.store_id,
@@ -59,7 +54,6 @@ class RealEstateService {
                 currency_id: identifiers.currency_id ?? 238,
                 metadata: metadata ?? {},
             }, { transaction });
-            // 6️⃣ Product-level medias
             if (Array.isArray(medias) && medias.length > 0) {
                 const mediaPayloads = medias.map((m) => ({
                     product_id: newProduct.id,
@@ -72,24 +66,21 @@ class RealEstateService {
                 }));
                 await associations_1.ProductMedia.bulkCreate(mediaPayloads, { transaction });
             }
-            // 7️⃣ Units (each item creates its own product_unit row)
             if (Array.isArray(units) && units.length > 0) {
                 for (const u of units) {
                     if (Array.isArray(u.items) && u.items.length > 0) {
                         for (const item of u.items) {
                             const unitMetadata = { ...item };
-                            delete unitMetadata.medias; // medias handled separately
-                            // create unit directly from each item
+                            delete unitMetadata.medias;
                             const createdUnit = await associations_1.ProductUnit.create({
                                 product_id: newProduct.id,
-                                name: u.name, // e.g. "Bedroom"
-                                value: item.unit_value, // e.g. "masters"
+                                name: u.name,
+                                value: item.unit_value,
                                 price: u.price ?? 0,
                                 stock: u.stock ?? 1,
                                 metadata: unitMetadata,
                                 status: 1,
                             }, { transaction });
-                            // medias for this item/unit
                             if (Array.isArray(item.medias) && item.medias.length > 0) {
                                 const itemMediaPayloads = item.medias.map((m) => ({
                                     product_id: newProduct.id,
@@ -161,7 +152,6 @@ class RealEstateService {
                         : []),
                 ],
             });
-            // remove metadata if not requested
             products = products.map((p) => {
                 const plain = p.get({ plain: true });
                 if (!includeMetadata)

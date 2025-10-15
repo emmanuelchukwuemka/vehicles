@@ -6,11 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Domain = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../../config/database/sequelize"));
-// Model definition
 class Domain extends sequelize_1.Model {
 }
 exports.Domain = Domain;
-// Initialize model
 Domain.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,

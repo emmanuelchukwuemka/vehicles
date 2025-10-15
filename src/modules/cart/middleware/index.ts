@@ -8,7 +8,7 @@ export const validateCartInput =
     try {
       const parsed = schema.parse(req[source]); // validate input
       req[source] = parsed; // replace with validated data
-      next(); // continue
+      return next(); // continue
     } catch (error) {
       if (error instanceof ZodError) {
         return res.status(400).json({

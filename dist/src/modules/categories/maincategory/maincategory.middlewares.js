@@ -7,7 +7,7 @@ const maincategorySecure = (req, res, next) => {
         next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.maincategorySecure = maincategorySecure;

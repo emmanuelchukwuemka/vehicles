@@ -63,7 +63,6 @@ const getCategory = async (req, res) => {
 exports.getCategory = getCategory;
 const fetchCategoryById = async (req, res) => {
     const { id } = req.params;
-    // Validate id
     if (!id || isNaN(Number(id))) {
         return (0, apiResponse_1.errorResponse)(res, {
             statusCode: 400,

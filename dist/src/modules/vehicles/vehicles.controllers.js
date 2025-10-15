@@ -148,7 +148,6 @@ const updateProfile = async (req, res) => {
     }
 };
 exports.updateProfile = updateProfile;
-// Vehicle controllers
 const createVehicle = async (req, res) => {
     try {
         const validated = vehicles_types_1.createVehicleSchema.parse(req.body);
@@ -224,7 +223,6 @@ const deleteVehicle = async (req, res) => {
     }
 };
 exports.deleteVehicle = deleteVehicle;
-// Upload controllers
 const uploadImages = async (req, res) => {
     try {
         const files = req.files;
@@ -240,7 +238,6 @@ const uploadImages = async (req, res) => {
     }
 };
 exports.uploadImages = uploadImages;
-// Favorites controllers
 const addFavorite = async (req, res) => {
     try {
         const validated = vehicles_types_1.addFavoriteSchema.parse(req.body);
@@ -285,7 +282,6 @@ const removeFavorite = async (req, res) => {
     }
 };
 exports.removeFavorite = removeFavorite;
-// Admin controllers
 const getAdminVehicles = async (req, res) => {
     try {
         const result = await services.getAdminVehicles(req.query);
@@ -327,12 +323,10 @@ const getStats = async (req, res) => {
     }
 };
 exports.getStats = getStats;
-// Health check
 const healthCheck = async (req, res) => {
     return (0, apiResponse_1.successResponse)(res, { message: 'Service is healthy', data: { timestamp: new Date().toISOString() } });
 };
 exports.healthCheck = healthCheck;
-// Password reset controllers
 const forgotPassword = async (req, res) => {
     try {
         const validated = vehicles_types_1.forgotPasswordSchema.parse(req.body);
@@ -361,7 +355,6 @@ const resetPassword = async (req, res) => {
     }
 };
 exports.resetPassword = resetPassword;
-// Listing controllers
 const createListingController = async (req, res) => {
     try {
         const validated = vehicles_types_1.createListingSchema.parse(req.body);

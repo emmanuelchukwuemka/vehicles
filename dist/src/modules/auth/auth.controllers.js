@@ -39,7 +39,6 @@ const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 const login = async (req, res) => {
     try {
-        // And here i dey call the service layer
         const result = await authServices.login(req.body);
         if (!result.success || !result.data) {
             return (0, apiResponse_1.errorResponse)(res, {
@@ -48,7 +47,6 @@ const login = async (req, res) => {
             });
         }
         const { accessToken, refreshToken, userInfo } = result.data;
-        // Seting cookies here
         res.cookie("accessToken", accessToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",

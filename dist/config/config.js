@@ -2,12 +2,12 @@
 require('dotenv').config();
 module.exports = {
     development: {
-        username: 'u179857929_sys_telnet',
-        password: 'MiXXYtPj3',
-        database: 'u179857929_bloomzon_plus',
-        host: 'srv527.hstgr.io',
+        username: process.env.DB_USER || 'u179857929_sys_telnet',
+        password: process.env.DB_PASSWORD || 'MiXXYtPj3',
+        database: process.env.DB_NAME || 'u179857929_bloomzon_plus',
+        host: process.env.DB_HOST || 'srv527.hstgr.io',
         dialect: 'mysql',
-        port: 3306,
+        port: process.env.DB_PORT || 3306,
         logging: console.log
     },
     test: {
@@ -19,10 +19,10 @@ module.exports = {
         port: process.env.DB_PORT || 3306
     },
     production: {
-        username: process.env.DB_USER,
-        password: process.env.DB_PASSWORD,
-        database: process.env.DB_NAME,
-        host: process.env.DB_HOST,
+        username: process.env.DB_USER || 'u179857929_sys_telnet',
+        password: process.env.DB_PASSWORD || 'MiXXYtPj3',
+        database: process.env.DB_NAME || 'u179857929_bloomzon_plus',
+        host: process.env.DB_HOST || 'srv527.hstgr.io',
         dialect: 'mysql',
         port: process.env.DB_PORT || 3306,
         logging: false

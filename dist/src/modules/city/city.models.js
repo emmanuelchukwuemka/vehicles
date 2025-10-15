@@ -30,7 +30,6 @@ City.init({
     timestamps: false,
     underscored: true,
 });
-// Associations
 City.belongsTo(state_models_1.default, {
     foreignKey: "state_id",
     as: "state",

@@ -7,18 +7,17 @@ const zod_1 = require("zod");
 const stateSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for state module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.stateSecure = stateSecure;
-// Validate create state payload
 const validateCreatePayload = (req, res, next) => {
     try {
         state_validations_1.stateBulkOrSingleSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         return (0, apiResponse_1.errorResponse)(res, {
@@ -31,7 +30,7 @@ exports.validateCreatePayload = validateCreatePayload;
 const validateIdParam = (req, res, next) => {
     try {
         state_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -47,7 +46,6 @@ const validateIdParam = (req, res, next) => {
     }
 };
 exports.validateIdParam = validateIdParam;
-// Validate update state payload
 const validateStateUpdate = (req, res, next) => {
     try {
         if (!req.body || Object.keys(req.body).length === 0) {
@@ -56,11 +54,9 @@ const validateStateUpdate = (req, res, next) => {
                 message: "No fields provided to update",
             });
         }
-        // Parse and validate
         const validatedData = state_validations_1.stateFlexibleSchema.parse(req.body);
-        // Normalize to array for service
         req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

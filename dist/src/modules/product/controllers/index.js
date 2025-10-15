@@ -5,7 +5,6 @@ const services_1 = require("../services");
 class ProductController {
     static async getSingleProduct(req, res) {
         try {
-            // Extract product id
             const productId = Number(req.params.id);
             if (isNaN(productId)) {
                 return res.status(400).json({
@@ -13,7 +12,6 @@ class ProductController {
                     message: "Invalid product ID",
                 });
             }
-            // Extract options from query
             const options = {
                 includeUnits: req.query.includeUnits === "true",
                 includeMedia: req.query.includeMedia === "true",
@@ -22,15 +20,11 @@ class ProductController {
                 includeProductMediaMetadata: req.query.includeProductMediaMetadata === "true",
                 includeUnitMediaMetadata: req.query.includeUnitMediaMetadata === "true",
                 domain: req.query.domain,
-                //retailer: req.query.retailer === "true",
             };
-            // Call service with productId + options
             const result = await services_1.ProductService.getSingleProduct(productId, options);
-            // Handle not found
             if (!result.success) {
                 return res.status(404).json(result);
             }
-            // Success
             return res.status(200).json(result);
         }
         catch (err) {
@@ -54,7 +48,6 @@ class ProductUnitController {
                     message: "Invalid unit ID",
                 });
             }
-            // parse query options
             const options = {
                 includeMedia: req.query.includeMedia === "true",
                 includeMetadata: req.query.includeMetadata === "true",

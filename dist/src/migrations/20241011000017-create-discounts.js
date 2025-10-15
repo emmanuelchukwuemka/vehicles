@@ -53,7 +53,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('discounts', ['listing_id']);
         await queryInterface.addIndex('discounts', ['start_date']);
         await queryInterface.addIndex('discounts', ['end_date']);

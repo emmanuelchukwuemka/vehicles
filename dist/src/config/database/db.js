@@ -9,7 +9,6 @@ const env = process.env.NODE_ENV || "development";
 const dbConfig = config_js_1.default[env];
 let pool;
 if (dbConfig.dialect === 'sqlite') {
-    // Dummy pool for SQLite
     pool = {
         getConnection: async () => ({
             query: async () => { },

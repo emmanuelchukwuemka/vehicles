@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.SavedSearch = exports.Message = exports.Review = exports.Discount = exports.OrderItem = exports.Order = exports.Keyword = exports.Media = exports.ListingFeature = exports.Feature = exports.Category = exports.SparePart = exports.Haulage = exports.Bike = exports.Car = exports.Listing = exports.RefreshToken = exports.Favorite = exports.VehicleImage = exports.Vehicle = exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../config/database/sequelize"));
-// User Model
 class User extends sequelize_1.Model {
 }
 exports.User = User;
@@ -28,7 +27,6 @@ User.init({
     createdAt: 'created_at',
     updatedAt: 'updated_at',
 });
-// Vehicle Model
 class Vehicle extends sequelize_1.Model {
 }
 exports.Vehicle = Vehicle;
@@ -64,7 +62,6 @@ Vehicle.init({
         { fields: ['title', 'description'], type: 'FULLTEXT' },
     ],
 });
-// Vehicle Image Model
 class VehicleImage extends sequelize_1.Model {
 }
 exports.VehicleImage = VehicleImage;
@@ -80,7 +77,6 @@ VehicleImage.init({
     modelName: 'VehicleImage',
     timestamps: false,
 });
-// Favorite Model
 class Favorite extends sequelize_1.Model {
 }
 exports.Favorite = Favorite;
@@ -97,7 +93,6 @@ Favorite.init({
         { fields: ['user_id', 'vehicle_id'], unique: true },
     ],
 });
-// Refresh Token Model
 class RefreshToken extends sequelize_1.Model {
 }
 exports.RefreshToken = RefreshToken;
@@ -114,7 +109,6 @@ RefreshToken.init({
     modelName: 'RefreshToken',
     timestamps: false,
 });
-// Listing Model
 class Listing extends sequelize_1.Model {
 }
 exports.Listing = Listing;
@@ -150,7 +144,6 @@ Listing.init({
         { fields: ['title', 'description'], type: 'FULLTEXT' },
     ],
 });
-// Car Model
 class Car extends sequelize_1.Model {
 }
 exports.Car = Car;
@@ -183,7 +176,6 @@ Car.init({
         { fields: ['year'] },
     ],
 });
-// Bike Model
 class Bike extends sequelize_1.Model {
 }
 exports.Bike = Bike;
@@ -214,7 +206,6 @@ Bike.init({
         { fields: ['year'] },
     ],
 });
-// Haulage Model
 class Haulage extends sequelize_1.Model {
 }
 exports.Haulage = Haulage;
@@ -246,7 +237,6 @@ Haulage.init({
         { fields: ['year'] },
     ],
 });
-// SparePart Model
 class SparePart extends sequelize_1.Model {
 }
 exports.SparePart = SparePart;
@@ -276,7 +266,6 @@ SparePart.init({
         { fields: ['part_number'] },
     ],
 });
-// Category Model
 class Category extends sequelize_1.Model {
 }
 exports.Category = Category;
@@ -303,7 +292,6 @@ Category.init({
         { fields: ['is_active'] },
     ],
 });
-// Feature Model
 class Feature extends sequelize_1.Model {
 }
 exports.Feature = Feature;
@@ -330,7 +318,6 @@ Feature.init({
         { fields: ['is_active'] },
     ],
 });
-// ListingFeature Model
 class ListingFeature extends sequelize_1.Model {
 }
 exports.ListingFeature = ListingFeature;
@@ -354,7 +341,6 @@ ListingFeature.init({
         { fields: ['listing_id', 'feature_id'], unique: true },
     ],
 });
-// Media Model
 class Media extends sequelize_1.Model {
 }
 exports.Media = Media;
@@ -383,7 +369,6 @@ Media.init({
         { fields: ['is_primary'] },
     ],
 });
-// Keyword Model
 class Keyword extends sequelize_1.Model {
 }
 exports.Keyword = Keyword;
@@ -403,7 +388,6 @@ Keyword.init({
         { fields: ['keyword'] },
     ],
 });
-// Order Model
 class Order extends sequelize_1.Model {
 }
 exports.Order = Order;
@@ -433,7 +417,6 @@ Order.init({
         { fields: ['payment_status'] },
     ],
 });
-// OrderItem Model
 class OrderItem extends sequelize_1.Model {
 }
 exports.OrderItem = OrderItem;
@@ -454,7 +437,6 @@ OrderItem.init({
         { fields: ['listing_id'] },
     ],
 });
-// Discount Model
 class Discount extends sequelize_1.Model {
 }
 exports.Discount = Discount;
@@ -482,7 +464,6 @@ Discount.init({
         { fields: ['end_date'] },
     ],
 });
-// Review Model
 class Review extends sequelize_1.Model {
 }
 exports.Review = Review;
@@ -507,7 +488,6 @@ Review.init({
         { fields: ['is_approved'] },
     ],
 });
-// Message Model
 class Message extends sequelize_1.Model {
 }
 exports.Message = Message;
@@ -535,7 +515,6 @@ Message.init({
         { fields: ['is_read'] },
     ],
 });
-// SavedSearch Model
 class SavedSearch extends sequelize_1.Model {
 }
 exports.SavedSearch = SavedSearch;
@@ -560,7 +539,6 @@ SavedSearch.init({
         { fields: ['notification_enabled'] },
     ],
 });
-// Associations
 User.hasMany(Vehicle, { foreignKey: 'user_id', as: 'vehicles' });
 Vehicle.belongsTo(User, { foreignKey: 'user_id', as: 'owner' });
 Vehicle.hasMany(VehicleImage, { foreignKey: 'vehicle_id', as: 'images' });
@@ -571,7 +549,6 @@ Vehicle.hasMany(Favorite, { foreignKey: 'vehicle_id', as: 'favorites' });
 Favorite.belongsTo(Vehicle, { foreignKey: 'vehicle_id', as: 'vehicle' });
 User.hasMany(RefreshToken, { foreignKey: 'user_id', as: 'refreshTokens' });
 RefreshToken.belongsTo(User, { foreignKey: 'user_id', as: 'user' });
-// New associations for polymorphic listings
 User.hasMany(Listing, { foreignKey: 'user_id', as: 'listings' });
 Listing.belongsTo(User, { foreignKey: 'user_id', as: 'owner' });
 Listing.hasOne(Car, { foreignKey: 'listing_id', as: 'car' });

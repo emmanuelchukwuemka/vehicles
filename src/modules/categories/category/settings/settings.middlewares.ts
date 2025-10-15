@@ -11,7 +11,7 @@ export const settingsSecure = (
   try {
     console.log("Middleware executed for settings module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -24,7 +24,7 @@ export const validateCategoryCreate = (
 ) => {
   try {
     categoryFlexibleSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -51,7 +51,7 @@ export const validateCategoryUpdate = (
     // am allowing for partial updates
     const parsedData = categorySchema.partial().parse(req.body);
     req.body = parsedData; // here, this will overwrite with validated data
-    next();
+    return next();
   } catch (error: any) {
     return res.status(400).json({
       success: false,
@@ -68,7 +68,7 @@ export const validateIdParam = (
 ) => {
   try {
     idParamSchema.parse(req.params); // parses { id: "123" }
-    next();
+    return next();
   } catch (err: any) {
     return errorResponse(res, {
       statusCode: 400,

@@ -4,14 +4,11 @@ exports.deleteSubcategory = exports.updateSubcategory = exports.createSubcategor
 const subcategory_models_1 = require("../subcategory.models");
 const createSubcategory = async (data) => {
     try {
-        // Extract all names from input
         const names = data.map((item) => item.name);
-        // Find existing subcategories by name under the same category
         const existing = await subcategory_models_1.Subcategory.findAll({
             where: { name: names },
         });
         const existingNames = existing.map((item) => item.name);
-        // Filter out duplicates
         const newRecords = data.filter((item) => !existingNames.includes(item.name));
         if (newRecords.length === 0) {
             return {
@@ -19,7 +16,6 @@ const createSubcategory = async (data) => {
                 message: "All provided Subcategories already exist",
             };
         }
-        // Bulk insert
         const inserted = await subcategory_models_1.Subcategory.bulkCreate(newRecords.map((item) => ({
             category_id: item.category_id,
             name: item.name,

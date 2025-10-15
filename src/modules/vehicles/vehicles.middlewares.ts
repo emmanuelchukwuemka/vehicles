@@ -10,7 +10,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: number; email: string; role: string };
     (req as any).user = decoded;
-    next();
+    return next();
   } catch (error) {
     return res.status(401).json({ message: 'Invalid access token' });
   }
@@ -20,7 +20,7 @@ export const authorizeAdmin = (req: Request, res: Response, next: NextFunction) 
   if ((req as any).user.role !== 'admin') {
     return res.status(403).json({ message: 'Admin access required' });
   }
-  next();
+  return next();
 };
 
 // Rate limiting

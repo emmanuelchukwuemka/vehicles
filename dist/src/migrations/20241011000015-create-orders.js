@@ -54,7 +54,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add foreign keys
         await queryInterface.addConstraint('orders', {
             fields: ['user_id'],
             type: 'foreign key',
@@ -77,7 +76,6 @@ module.exports = {
             onDelete: 'CASCADE',
             onUpdate: 'CASCADE',
         });
-        // Add indexes
         await queryInterface.addIndex('orders', ['user_id']);
         await queryInterface.addIndex('orders', ['listing_id']);
         await queryInterface.addIndex('orders', ['status']);

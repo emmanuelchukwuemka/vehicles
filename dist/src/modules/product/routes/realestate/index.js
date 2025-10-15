@@ -1,6 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// routes/realEstate.routes.ts
 const express_1 = require("express");
 const realestate_1 = require("../../controllers/realestate");
 const realestate_2 = require("../../middleware/realestate");

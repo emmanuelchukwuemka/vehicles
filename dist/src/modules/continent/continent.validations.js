@@ -9,7 +9,6 @@ exports.continentSchema = zod_1.z.object({
         .max(100, "Continent name is too long"),
     status: zod_1.z.number().min(0).max(1).int().optional().default(1),
 });
-// Flexible: single object or array of objects
 exports.continentFlexibleSchema = zod_1.z.union([
     exports.continentSchema,
     zod_1.z.array(exports.continentSchema),

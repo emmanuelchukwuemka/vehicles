@@ -10,7 +10,6 @@ const createContinent = async (data) => {
         const continents = Array.isArray(data) ? data : [data];
         const inserted = [];
         for (const c of continents) {
-            // Skip if exists
             const exists = await continent_models_1.default.findOne({ where: { name: c.name } });
             if (exists)
                 continue;

@@ -15,7 +15,6 @@ exports.collectionSchema = zod_1.z.object({
 exports.idSchema = zod_1.z.object({
     id: zod_1.z.number().min(1, "ID must be a positive number"),
 });
-// For flexible validation
 exports.collectionFlexibleSchema = zod_1.z.union([
     exports.collectionSchema,
     zod_1.z.array(exports.collectionSchema),

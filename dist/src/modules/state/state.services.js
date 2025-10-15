@@ -11,7 +11,6 @@ const createState = async (data) => {
     try {
         const payload = Array.isArray(data) ? data : [data];
         for (const state of payload) {
-            // Check if country exists
             const country = await (0, state_helpers_1.getCountryById)(state.country_id);
             if (!country) {
                 return {
@@ -19,7 +18,6 @@ const createState = async (data) => {
                     message: `Country with id=${state.country_id} does not exist.`,
                 };
             }
-            // Check if state already exists (by name or code in same country)
             const existingState = await state_models_1.default.findOne({
                 where: {
                     country_id: state.country_id,
@@ -33,7 +31,6 @@ const createState = async (data) => {
                 };
             }
         }
-        //Insert states
         const states = payload.length > 1
             ? await state_models_1.default.bulkCreate(payload)
             : [await state_models_1.default.create(payload[0])];
@@ -57,7 +54,6 @@ const updateState = async (id, data) => {
         if (!state) {
             return { success: false, message: "State not found" };
         }
-        // Flatten array if data comes as [ { ... } ]
         const updateData = Array.isArray(data) ? data[0] : data;
         if (!updateData || Object.keys(updateData).length === 0) {
             return { success: false, message: "No fields provided to update" };

@@ -8,7 +8,7 @@ export const authSecure = (req: Request, res: Response, next: NextFunction) => {
     // validate request body
     req.body = loginSchema.parse(req.body);
 
-    next();
+    return next();
   } catch (err: any) {
     console.log("Error in authSecure:", err)
     return res.status(400).json({

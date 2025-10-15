@@ -20,7 +20,7 @@ Category.init({
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: maincategory_models_1.MainCategory, // Foreign key
+            model: maincategory_models_1.MainCategory,
             key: "id",
         },
     },
@@ -44,7 +44,6 @@ Category.belongsTo(maincategory_models_1.MainCategory, {
     foreignKey: "maincategory_id",
     as: "maincategory",
 });
-// Associations
 maincategory_models_1.MainCategory.hasMany(Category, {
     foreignKey: "maincategory_id",
     as: "categories",

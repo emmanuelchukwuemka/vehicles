@@ -5,9 +5,8 @@ const auth_validations_1 = require("./auth.validations");
 const authSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for auth module");
-        // validate request body
         req.body = auth_validations_1.loginSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         console.log("Error in authSecure:", err);

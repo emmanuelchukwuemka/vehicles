@@ -16,32 +16,20 @@ const createStore = async (input) => {
     let transaction = null;
     try {
         transaction = await sequelize_1.default.transaction();
-        // -----------------------------------------
-        // Check if vendor exists
-        // -----------------------------------------
         const vendor = await vendor_models_1.Vendor.findByPk(input.vendor_id, { transaction });
         if (!vendor) {
             return { success: false, message: "Vendor not found" };
         }
-        // -----------------------------------------
-        // Check if city exists
-        // -----------------------------------------
         const city = await city_models_1.default.findByPk(input.city_id, { transaction });
         if (!city) {
             return { success: false, message: "City not found" };
         }
-        // -----------------------------------------
-        // Check if subdomain exists
-        // -----------------------------------------
         const subdomain = await subdomain_models_1.Subdomain.findByPk(input.subdomain_id, {
             transaction,
         });
         if (!subdomain) {
             return { success: false, message: "Subdomain not found" };
         }
-        // -----------------------------------------
-        // Ensure store uniqueness per city
-        // -----------------------------------------
         const existingStore = await store_models_1.Store.findOne({
             where: {
                 name: input.name.trim(),
@@ -56,9 +44,6 @@ const createStore = async (input) => {
             };
         }
         const storeCode = (0, uuid_1.v4)();
-        // -----------------------------------------
-        // Create store (metadata stored as JSON)
-        // -----------------------------------------
         const store = await store_models_1.Store.create({
             vendor_id: input.vendor_id,
             subdomain_id: input.subdomain_id,
@@ -71,16 +56,11 @@ const createStore = async (input) => {
             status: input.status ?? 1,
             metadata: input.metadata,
         }, { transaction });
-        // -----------------------------------------
-        // If you want some normalized relational data
-        // -----------------------------------------
         if (input.metadata?.capabilities?.length) {
-            // Step 1: Fetch all valid capabilities from DB
             const validCapabilities = await capability_models_1.Capability.findAll({
                 where: { id: input.metadata.capabilities },
                 transaction,
             });
-            // Step 2: Compare provided IDs vs existing ones
             const validIds = validCapabilities.map((c) => c.id);
             const invalidIds = input.metadata.capabilities.filter((id) => !validIds.includes(id));
             if (invalidIds.length > 0) {
@@ -89,7 +69,6 @@ const createStore = async (input) => {
                     message: "One or more capability IDs are invalid",
                 };
             }
-            // Step 3: Insert only if all are valid
             const bulkData = validIds.map((capId) => ({
                 store_id: store.id,
                 capability_id: capId,

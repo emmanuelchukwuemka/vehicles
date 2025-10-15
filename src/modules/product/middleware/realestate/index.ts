@@ -7,7 +7,7 @@ export const validateCreate =
   () => (req: Request, res: Response, next: NextFunction) => {
     try {
       req.body = realEstateProductSchema.parse(req.body);
-      next();
+      return next();
     } catch (error: any) {
       if (error instanceof ZodError) {
         return errorResponse(res, {

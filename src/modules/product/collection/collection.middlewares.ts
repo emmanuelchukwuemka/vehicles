@@ -10,7 +10,7 @@ export const validateCollection = (
 ) => {
   try {
     req.body = collectionSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     next(err);
   }
@@ -23,7 +23,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

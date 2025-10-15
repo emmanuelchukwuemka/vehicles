@@ -6,11 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../config/database/sequelize"));
-// Sequelize model class
 class User extends sequelize_1.Model {
 }
 exports.User = User;
-// Defining table + columns
 User.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,

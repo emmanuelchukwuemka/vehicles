@@ -11,7 +11,7 @@ export const citySecure = (req: Request, res: Response, next: NextFunction) => {
   try {
     console.log("Middleware executed for city module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -32,7 +32,7 @@ export const validateCityCreate = (
 
     const validatedData = cityBulkOrSingleSchema.parse(req.body);
     req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -55,7 +55,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -86,7 +86,7 @@ export const validateCityUpdate = (
     const validatedData = cityFlexibleSchema.parse(req.body);
     req.body = validatedData;
 
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

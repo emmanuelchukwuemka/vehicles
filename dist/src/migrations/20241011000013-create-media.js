@@ -58,7 +58,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('media', ['listing_id']);
         await queryInterface.addIndex('media', ['file_type']);
         await queryInterface.addIndex('media', ['is_primary']);

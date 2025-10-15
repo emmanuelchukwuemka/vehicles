@@ -6,12 +6,10 @@ const collection_models_1 = require("./collection.models");
 const sequelize_1 = require("sequelize");
 const createCollection = async (data) => {
     try {
-        // Checking if store exists
         const store = await store_models_1.Store.findByPk(data.store_id);
         if (!store) {
             return { success: false, message: "Store not found" };
         }
-        // Checking if collection with same store, category, and name exists (case-insensitive)
         const existing = await collection_models_1.Collection.findOne({
             where: {
                 store_id: data.store_id,
@@ -24,7 +22,6 @@ const createCollection = async (data) => {
                 message: `Collection with name (${data.name}) already exists for this store`,
             };
         }
-        // Creating collection
         const collection = await collection_models_1.Collection.create({
             store_id: data.store_id,
             name: data.name.trim(),
@@ -75,7 +72,6 @@ const getCollectionById = async (id) => {
         };
     }
     catch (error) {
-        //console.error("Error fetching collections:", error);
         return {
             message: error,
         };

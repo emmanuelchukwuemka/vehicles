@@ -7,7 +7,7 @@ const apiResponse_1 = require("../../../globals/utility/apiResponse");
 const validateCollection = (req, res, next) => {
     try {
         req.body = collection_validations_1.collectionSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         next(err);
@@ -17,7 +17,7 @@ exports.validateCollection = validateCollection;
 const validateIdParam = (req, res, next) => {
     try {
         collection_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

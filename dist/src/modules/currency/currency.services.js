@@ -7,42 +7,9 @@ exports.deleteCurrency = exports.updateCurrency = exports.getCurrencyByCode = ex
 const sequelize_1 = __importDefault(require("../../config/database/sequelize"));
 const forex_services_1 = require("../forex/forex.services");
 const currency_models_1 = __importDefault(require("./currency.models"));
-// export const createCurrency = async (
-//   data: CurrencyCreationAttributes | CurrencyCreationAttributes[]
-// ) => {
-//   try {
-//     const payload = Array.isArray(data) ? data : [data];
-//     // Check duplicates before inserting
-//     for (const item of payload) {
-//       const existing = await Currency.findOne({ where: { code: item.code } });
-//       if (existing) {
-//         return {
-//           success: false,
-//           message: `Currency with code '${item.code}' already exists`,
-//         };
-//       }
-//     }
-//     const currencies =
-//       payload.length > 1
-//         ? await Currency.bulkCreate(payload)
-//         : [await Currency.create(payload[0])];
-//     return {
-//       success: true,
-//       message:
-//         payload.length > 1
-//           ? `${currencies.length} currencies created successfully`
-//           : "Currency created successfully",
-//       data: payload.length > 1 ? currencies : currencies[0],
-//     };
-//   } catch (error) {
-//     console.error("Create currency error:", error);
-//     return { success: false, message: "Failed to create currency", error };
-//   }
-// };
 const createCurrency = async (data) => {
     try {
         const payload = Array.isArray(data) ? data : [data];
-        // Check duplicates in one query
         const codes = payload.map((item) => item.code);
         const existing = await currency_models_1.default.findAll({ where: { code: codes } });
         if (existing.length > 0) {
@@ -51,11 +18,9 @@ const createCurrency = async (data) => {
                 message: `Currencies already exist: ${existing.map((c) => c.code).join(", ")}`,
             };
         }
-        // Use transaction for safety
         const currencies = await sequelize_1.default.transaction(async (t) => {
             return await currency_models_1.default.bulkCreate(payload, { transaction: t });
         });
-        // Fetch and update exchange rates after creation
         const rateResult = await (0, forex_services_1.fetchAndUpdateRates)();
         return {
             success: true,
@@ -137,7 +102,6 @@ const updateCurrency = async (id, data) => {
         const currency = await currency_models_1.default.findByPk(id);
         if (!currency)
             return { success: false, message: "Currency not found" };
-        // If updating code, check for conflicts
         if (data.code && data.code !== currency.code) {
             const existing = await currency_models_1.default.findOne({ where: { code: data.code } });
             if (existing) {

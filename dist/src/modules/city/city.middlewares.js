@@ -7,10 +7,10 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const citySecure = (req, res, next) => {
     try {
         console.log("Middleware executed for city module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.citySecure = citySecure;
@@ -24,7 +24,7 @@ const validateCityCreate = (req, res, next) => {
         }
         const validatedData = city_validations_1.cityBulkOrSingleSchema.parse(req.body);
         req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -44,7 +44,7 @@ exports.validateCityCreate = validateCityCreate;
 const validateIdParam = (req, res, next) => {
     try {
         city_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -70,7 +70,7 @@ const validateCityUpdate = (req, res, next) => {
         }
         const validatedData = city_validations_1.cityFlexibleSchema.parse(req.body);
         req.body = validatedData;
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

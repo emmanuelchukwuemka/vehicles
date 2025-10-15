@@ -16,13 +16,13 @@ class AppBannerController {
     }
     static async getAll(req, res) {
         const banners = await banner_services_1.AppBannerService.getAllBanners();
-        res.json(banners);
+        return res.json(banners);
     }
     static async getById(req, res) {
         const banner = await banner_services_1.AppBannerService.getBannerById(Number(req.params.id));
         if (!banner)
             return res.status(404).json({ message: "Banner not found" });
-        res.json(banner);
+        return res.json(banner);
     }
     static async update(req, res) {
         try {
@@ -30,17 +30,17 @@ class AppBannerController {
             const banner = await banner_services_1.AppBannerService.updateBanner(Number(req.params.id), parsed);
             if (!banner)
                 return res.status(404).json({ message: "Banner not found" });
-            res.json(banner);
+            return res.json(banner);
         }
         catch (error) {
-            res.status(400).json({ error: error.errors ?? error.message });
+            return res.status(400).json({ error: error.errors ?? error.message });
         }
     }
     static async delete(req, res) {
         const success = await banner_services_1.AppBannerService.deleteBanner(Number(req.params.id));
         if (!success)
             return res.status(404).json({ message: "Banner not found" });
-        res.json({ message: "Banner deleted successfully" });
+        return res.json({ message: "Banner deleted successfully" });
     }
 }
 exports.AppBannerController = AppBannerController;

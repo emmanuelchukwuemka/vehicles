@@ -36,7 +36,6 @@ const getUserById = async (id) => {
     return await vehicles_models_1.User.findByPk(id);
 };
 exports.getUserById = getUserById;
-// Listing-specific helpers
 const processMediaFiles = async (files, listingId) => {
     const uploadDir = process.env.UPLOAD_DIR || 'uploads';
     if (!fs_1.default.existsSync(uploadDir)) {
@@ -48,8 +47,7 @@ const processMediaFiles = async (files, listingId) => {
         const fileType = file.mimetype.startsWith('image/') ? 'image' : 'video';
         const fileUrl = `/uploads/${file.filename}`;
         const fileSize = file.size;
-        // Placeholder for dimensions (integrate sharp later if needed)
-        const dimensions = fileType === 'image' ? '1920x1080' : undefined; // Mock dimensions
+        const dimensions = fileType === 'image' ? '1920x1080' : undefined;
         const media = await vehicles_models_1.Media.create({
             listing_id: listingId,
             file_url: fileUrl,
@@ -57,8 +55,7 @@ const processMediaFiles = async (files, listingId) => {
             file_size: fileSize,
             dimensions,
         });
-        // Set additional properties after creation
-        media.is_primary = i === 0; // First file as primary
+        media.is_primary = i === 0;
         media.sort_order = i;
         media.alt_text = undefined;
         await media.save();
@@ -68,17 +65,15 @@ const processMediaFiles = async (files, listingId) => {
 };
 exports.processMediaFiles = processMediaFiles;
 const geocodeLocation = async (location) => {
-    // Placeholder: Return mock coordinates. Integrate google-maps-services-js for real geocoding.
-    // Example: const client = new Client({}); const response = await client.geocode({ address: location });
-    return { lat: 40.7128, long: -74.0060 }; // NYC mock
+    return { lat: 40.7128, long: -74.0060 };
 };
 exports.geocodeLocation = geocodeLocation;
 const generateKeywords = (title, description) => {
     const text = `${title} ${description}`.toLowerCase();
-    const words = text.match(/\b\w{3,}\b/g) || []; // Extract words >= 3 chars
+    const words = text.match(/\b\w{3,}\b/g) || [];
     const commonWords = new Set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'an', 'a', 'is', 'are', 'was', 'were', 'be', 'been', 'being', 'have', 'has', 'had', 'do', 'does', 'did', 'will', 'would', 'could', 'should', 'may', 'might', 'must', 'can', 'this', 'that', 'these', 'those', 'i', 'you', 'he', 'she', 'it', 'we', 'they', 'me', 'him', 'her', 'us', 'them']);
     const filtered = words.filter(word => !commonWords.has(word));
-    const unique = [...new Set(filtered)].slice(0, 20); // Max 20 unique keywords
+    const unique = [...new Set(filtered)].slice(0, 20);
     return unique;
 };
 exports.generateKeywords = generateKeywords;

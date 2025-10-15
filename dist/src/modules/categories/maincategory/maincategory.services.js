@@ -9,7 +9,7 @@ const getMaincategory = async () => {
     try {
         const categories = await maincategory_models_1.default.findAll({
             attributes: ["id", "name", "label", "image", "status"],
-            order: [["id", "ASC"]], // optional sorting
+            order: [["id", "ASC"]],
         });
         return {
             success: true,

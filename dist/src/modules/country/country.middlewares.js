@@ -7,19 +7,18 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const countrySecure = (req, res, next) => {
     try {
         console.log("Middleware executed for country module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.countrySecure = countrySecure;
 const validateCreatePayload = (req, res, next) => {
     try {
         const validated = country_validations_1.countryFlexibleSchema.parse(req.body);
-        //const normalized = Array.isArray(validated) ? validated : [validated];
         req.body = validated;
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -39,7 +38,7 @@ exports.validateCreatePayload = validateCreatePayload;
 const validateIdParam = (req, res, next) => {
     try {
         country_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -59,7 +58,7 @@ const validateCountryUpdate = (req, res, next) => {
     try {
         const validated = country_validations_1.countryUpdateFlexibleSchema.parse(req.body);
         req.body = validated;
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

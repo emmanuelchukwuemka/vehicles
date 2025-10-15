@@ -14,7 +14,7 @@ const validateDomainCreate = (req, res, next) => {
             });
         }
         req.body = domain_validations_1.createDomainSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -40,7 +40,7 @@ const validatesubdomainCreate = (req, res, next) => {
             });
         }
         req.body = subdomian_validations_1.createSubdomainSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -60,7 +60,7 @@ exports.validatesubdomainCreate = validatesubdomainCreate;
 const validateIdParam = (req, res, next) => {
     try {
         domain_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

@@ -7,17 +7,17 @@ const apiResponse_1 = require("../../../globals/utility/apiResponse");
 const subcategorySecure = (req, res, next) => {
     try {
         console.log("Middleware executed for subcategory module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.subcategorySecure = subcategorySecure;
 const validateIdParam = (req, res, next) => {
     try {
         subcategory_validations_1.idParamSchema.parse(req.params);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

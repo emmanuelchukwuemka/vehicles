@@ -9,7 +9,6 @@ exports.currencySchema = zod_1.z.object({
     decimal_places: zod_1.z.number().int().optional().default(2),
     status: zod_1.z.number().min(0).max(1).int().default(1),
 });
-// For updates (partial, allows missing fields)
 exports.currencyFlexibleSchema = zod_1.z.union([
     exports.currencySchema,
     zod_1.z.array(exports.currencySchema),

@@ -44,8 +44,8 @@ const createState = async (req, res) => {
 };
 exports.createState = createState;
 const updateState = async (req, res) => {
-    const id = Number(req.params.id); // validated by middleware
-    const data = req.body; // already validated and normalized
+    const id = Number(req.params.id);
+    const data = req.body;
     try {
         const result = await stateServices.updateState(id, data);
         if (!result.success) {

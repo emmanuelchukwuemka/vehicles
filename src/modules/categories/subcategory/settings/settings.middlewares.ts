@@ -11,7 +11,7 @@ export const settingsSecure = (
   try {
     console.log("Middleware executed for settings module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -24,7 +24,7 @@ export const validateSubcategoryCreate = (
 ) => {
   try {
     subcategoryFlexibleSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -48,7 +48,7 @@ export const validateIdParam = (
 ) => {
   try {
     idParamSchema.parse(req.params);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -78,7 +78,7 @@ export const validateSubcategoryUpdate = (
       .parse(req.body);
 
     req.body = parsed;
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

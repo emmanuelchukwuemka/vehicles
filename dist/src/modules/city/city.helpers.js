@@ -10,6 +10,5 @@ const getStateById = async (id) => {
     return await state_models_1.default.findByPk(id);
 };
 exports.getStateById = getStateById;
-// Helper that allows either a single object or an array of objects
 const singleOrArray = (schema) => zod_1.default.union([schema, zod_1.default.array(schema)]);
 exports.singleOrArray = singleOrArray;

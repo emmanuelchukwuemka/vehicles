@@ -4,14 +4,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.default = checkDatabaseConnections;
-const sequelize_1 = __importDefault(require("../config/database/sequelize")); // Sequelize ORM connection
-const db_1 = __importDefault(require("../config/database/db")); // MySQL2 raw connection
+const sequelize_1 = __importDefault(require("../config/database/sequelize"));
+const db_1 = __importDefault(require("../config/database/db"));
+const child_process_1 = require("child_process");
+const util_1 = require("util");
+const execAsync = (0, util_1.promisify)(child_process_1.exec);
 async function checkDatabaseConnections() {
     try {
-        // Test Sequelize ORM connection
         await sequelize_1.default.authenticate();
         console.log("ORM DB connected");
-        // Test raw connection only if not SQLite
         const env = process.env.NODE_ENV || "development";
         const config = require("../../config/config.js");
         const dbConfig = config[env];
@@ -27,9 +28,19 @@ async function checkDatabaseConnections() {
         else {
             console.log("Using SQLite, skipping raw connection test");
         }
+        if (process.env.RUN_MIGRATIONS === 'true') {
+            console.log("Running database migrations...");
+            try {
+                await execAsync('npx sequelize-cli db:migrate');
+                console.log("Database migrations completed successfully");
+            }
+            catch (migrationError) {
+                console.error("Migration failed:", migrationError);
+            }
+        }
     }
     catch (err) {
         console.error("DB connection failed:", err);
-        process.exit(1); // Here am exiting the app if DB is not reachable
+        process.exit(1);
     }
 }

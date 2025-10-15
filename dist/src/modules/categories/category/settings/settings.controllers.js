@@ -39,7 +39,6 @@ const apiResponse_1 = require("../../../../globals/utility/apiResponse");
 const category_validations_1 = require("../category.validations");
 const addCategory = async (req, res) => {
     const validatedData = category_validations_1.categoryFlexibleSchema.parse(req.body);
-    // Always convert to array for service
     const inputArray = Array.isArray(validatedData)
         ? validatedData
         : [validatedData];

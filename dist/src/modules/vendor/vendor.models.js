@@ -5,13 +5,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Vendor = void 0;
 const sequelize_1 = require("sequelize");
-const sequelize_2 = __importDefault(require("../../config/database/sequelize")); // adjust path
+const sequelize_2 = __importDefault(require("../../config/database/sequelize"));
 const user_models_1 = __importDefault(require("../user/user.models"));
-// ✅ Model definition
 class Vendor extends sequelize_1.Model {
 }
 exports.Vendor = Vendor;
-// ✅ Initialize model
 Vendor.init({
     id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
@@ -21,12 +19,12 @@ Vendor.init({
     user_id: {
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
-        unique: true, // Enforces 1:1 User ↔ Vendor
+        unique: true,
     },
     status: {
         type: sequelize_1.DataTypes.TINYINT,
         allowNull: false,
-        defaultValue: 1, // Active by default
+        defaultValue: 1,
     },
     created_at: {
         type: sequelize_1.DataTypes.DATE,
@@ -43,7 +41,6 @@ Vendor.init({
     createdAt: "created_at",
     updatedAt: "updated_at",
 });
-// ✅ Optional associations (if you have a User model)
 Vendor.belongsTo(user_models_1.default, {
     foreignKey: "user_id",
     as: "user",

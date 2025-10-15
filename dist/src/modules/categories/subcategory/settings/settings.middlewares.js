@@ -7,17 +7,17 @@ const apiResponse_1 = require("../../../../globals/utility/apiResponse");
 const settingsSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for settings module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.settingsSecure = settingsSecure;
 const validateSubcategoryCreate = (req, res, next) => {
     try {
         subcategory_validations_1.subcategoryFlexibleSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -37,7 +37,7 @@ exports.validateSubcategoryCreate = validateSubcategoryCreate;
 const validateIdParam = (req, res, next) => {
     try {
         subcategory_validations_1.idParamSchema.parse(req.params);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -63,7 +63,7 @@ const validateSubcategoryUpdate = (req, res, next) => {
         })
             .parse(req.body);
         req.body = parsed;
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

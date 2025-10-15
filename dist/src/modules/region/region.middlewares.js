@@ -7,10 +7,10 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const regionSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for region module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.regionSecure = regionSecure;
@@ -18,7 +18,7 @@ const validateRegionCreate = (req, res, next) => {
     try {
         const validatedData = region_validations_1.regionFlexibleSchema.parse(req.body);
         req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -38,7 +38,7 @@ exports.validateRegionCreate = validateRegionCreate;
 const validateIdParam = (req, res, next) => {
     try {
         region_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -58,7 +58,7 @@ const validateRegionUpdate = (req, res, next) => {
     try {
         const validatedData = region_validations_1.regionSchema.partial().parse(req.body);
         req.body = validatedData;
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

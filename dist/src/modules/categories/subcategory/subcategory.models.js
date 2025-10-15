@@ -20,7 +20,7 @@ Subcategory.init({
         type: sequelize_1.DataTypes.INTEGER.UNSIGNED,
         allowNull: false,
         references: {
-            model: category_models_1.default, // Foreign key
+            model: category_models_1.default,
             key: "id",
         },
         onDelete: "CASCADE",
@@ -59,12 +59,10 @@ Subcategory.init({
     timestamps: false,
     underscored: true,
 });
-// Association: Subcategory belongs to Category
 Subcategory.belongsTo(category_models_1.default, {
     foreignKey: "category_id",
     as: "category",
 });
-// A Category can have many Subcategories
 category_models_1.default.hasMany(Subcategory, {
     foreignKey: "category_id",
     as: "subcategories",

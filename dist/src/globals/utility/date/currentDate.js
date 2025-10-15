@@ -6,7 +6,7 @@ const currentDate = () => {
     const date = new Date(timestamp);
     const options = {
         year: "numeric",
-        month: "short", // short = Jan, Feb, etc.
+        month: "short",
         day: "numeric",
         hour: "numeric",
         minute: "numeric",

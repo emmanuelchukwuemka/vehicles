@@ -54,7 +54,6 @@ Subdomain.init({
     tableName: "_system_subdomain",
     timestamps: false,
 });
-// Associations
 Subdomain.belongsTo(domain_models_1.default, {
     foreignKey: "domain_id",
     as: "domain",

@@ -83,7 +83,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('vehicles', ['brand']);
         await queryInterface.addIndex('vehicles', ['year']);
         await queryInterface.addIndex('vehicles', ['price']);

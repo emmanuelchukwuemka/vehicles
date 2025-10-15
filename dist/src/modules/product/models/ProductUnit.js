@@ -6,15 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProductUnit = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../../config/database/sequelize"));
-// -------------------------------
-// 3️⃣ Sequelize Model definition
-// -------------------------------
 class ProductUnit extends sequelize_1.Model {
 }
 exports.ProductUnit = ProductUnit;
-// -------------------------------
-// 4️⃣ Initialize with mapping to DB
-// -------------------------------
 ProductUnit.init({
     id: {
         type: sequelize_1.DataTypes.BIGINT.UNSIGNED,

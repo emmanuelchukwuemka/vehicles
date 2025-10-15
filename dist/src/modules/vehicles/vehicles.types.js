@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createDiscountSchema = exports.addFeaturesSchema = exports.updateListingSchema = exports.createListingSchema = exports.baseListingInputSchema = exports.discountInputSchema = exports.listingFeatureInputSchema = exports.sparePartInputSchema = exports.haulageInputSchema = exports.bikeInputSchema = exports.carInputSchema = exports.changeStatusSchema = exports.addFavoriteSchema = exports.updateVehicleSchema = exports.createVehicleSchema = exports.resetPasswordSchema = exports.forgotPasswordSchema = exports.updateUserSchema = exports.logoutSchema = exports.refreshSchema = exports.loginSchema = exports.registerSchema = void 0;
 const zod_1 = require("zod");
-// Zod schemas for validation
 exports.registerSchema = zod_1.z.object({
     email: zod_1.z.string().email(),
     password: zod_1.z.string().min(8),
@@ -29,7 +28,6 @@ exports.resetPasswordSchema = zod_1.z.object({
     token: zod_1.z.string(),
     password: zod_1.z.string().min(6),
 });
-// Vehicle schemas
 exports.createVehicleSchema = zod_1.z.object({
     title: zod_1.z.string().min(1),
     brand: zod_1.z.string().min(1),
@@ -58,14 +56,12 @@ exports.updateVehicleSchema = zod_1.z.object({
     description: zod_1.z.string().optional(),
     location: zod_1.z.string().optional(),
 });
-// Favorite schemas
 exports.addFavoriteSchema = zod_1.z.object({
     vehicleId: zod_1.z.number().positive(),
 });
 exports.changeStatusSchema = zod_1.z.object({
     status: zod_1.z.enum(['approved', 'rejected', 'sold']),
 });
-// Zod Schemas for Listing
 exports.carInputSchema = zod_1.z.object({
     make: zod_1.z.string().min(1),
     model: zod_1.z.string().optional(),

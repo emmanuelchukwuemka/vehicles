@@ -32,6 +32,10 @@ export const createCollection = async (req: Request, res: Response) => {
       details: process.env.NODE_ENV === "development" ? err.stack : undefined,
     });
   }
+  return errorResponse(res, {
+    statusCode: 500,
+    message: "Unexpected error",
+  });
 };
 
 export const getCollectionsByStore = async (
@@ -42,9 +46,9 @@ export const getCollectionsByStore = async (
   try {
     const storeId = parseInt(req.params.id, 10);
     const result = await collectionServices.getCollectionsByStore(storeId);
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -56,8 +60,8 @@ export const getCollectionsById = async (
   try {
     const id = parseInt(req.params.id, 10);
     const result = await collectionServices.getCollectionById(id);
-    res.status(200).json(result);
+    return res.status(200).json(result);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };

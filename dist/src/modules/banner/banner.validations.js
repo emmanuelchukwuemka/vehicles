@@ -8,7 +8,7 @@ exports.AppBannerSchema = zod_1.z.object({
     image: zod_1.z.string().url("Image must be a valid URL"),
     enabled: zod_1.z.string().min(4).max(5).default("FALSE"),
     numberOfProducts: zod_1.z.number().int().min(0).default(0),
-    createdAt: zod_1.z.string(), // You might later replace with z.date()
+    createdAt: zod_1.z.string(),
     updated_at: zod_1.z.string().optional(),
     creatorID: zod_1.z.number().int(),
 });

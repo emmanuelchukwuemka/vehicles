@@ -6,15 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Cart = void 0;
 const sequelize_1 = require("sequelize");
 const sequelize_2 = __importDefault(require("../../../config/database/sequelize"));
-// -----------------------------------------------------
-// Model
-// -----------------------------------------------------
 class Cart extends sequelize_1.Model {
 }
 exports.Cart = Cart;
-// -----------------------------------------------------
-// Init
-// -----------------------------------------------------
 Cart.init({
     id: {
         type: sequelize_1.DataTypes.BIGINT.UNSIGNED,

@@ -17,31 +17,24 @@ const PROVIDER = "v6.exchangerate";
 const fetchAndUpdateRates = async () => {
     const baseCode = "USD";
     try {
-        //=> Fetch rates from API
         const { data } = await axios_1.default.get(`${API_URL}/${API_KEY}/latest/${baseCode}`);
         if (data.result !== "success") {
             return { success: false, message: "Failed to fetch rates" };
         }
         const rates = data.conversion_rates;
-        //=> Start transaction
         const result = await sequelize_1.default.transaction(async (transaction) => {
-            //=> Fetch all currencies once
             const currencies = await sequelize_1.default.query(`SELECT id, code FROM currencies`, { type: sequelize_3.QueryTypes.SELECT, transaction });
             const currencyMap = new Map(currencies.map((c) => [c.code, c.id]));
             const baseId = currencyMap.get(baseCode);
             if (!baseId)
                 throw new Error(`Base currency ${baseCode} not found`);
-            // => Prepare bulk data
             const exchangeValues = [];
             const historyValues = [];
             for (const [targetCode, rate] of Object.entries(rates)) {
-                //if (targetCode === baseCode) continue; am avoiding base to base
                 const targetId = currencyMap.get(targetCode);
                 if (!targetId)
-                    continue; // i dey skip unknown currencies
-                // Insert/update exchange_rates (always)
+                    continue;
                 exchangeValues.push([baseId, targetId, rate, PROVIDER]);
-                //=> Only insert into history if the rate changed
                 const [latest] = await sequelize_1.default.query(`SELECT rate 
            FROM exchange_rate_history 
            WHERE base_id = ? AND target_id = ? 
@@ -55,7 +48,6 @@ const fetchAndUpdateRates = async () => {
                     historyValues.push([baseId, targetId, rate, PROVIDER]);
                 }
             }
-            //=> Bulk insert/update into exchange_rates
             if (exchangeValues.length > 0) {
                 await sequelize_1.default.query(`
           INSERT INTO exchange_rates (base_id, target_id, rate, provider)
@@ -65,7 +57,6 @@ const fetchAndUpdateRates = async () => {
             updated_at = CURRENT_TIMESTAMP
           `, { replacements: exchangeValues.flat(), transaction });
             }
-            //=> Bulk insert into history (only for changed rates)
             if (historyValues.length > 0) {
                 await sequelize_1.default.query(`
           INSERT INTO exchange_rate_history 
@@ -116,12 +107,10 @@ const getExchangerates = async () => {
 exports.getExchangerates = getExchangerates;
 const getExchangeRatesByCode = async (code) => {
     try {
-        //Finding my currency code
         const currency = await currency_models_1.default.findOne({ where: { code } });
         if (!currency) {
             return { success: false, message: `Currency ${code} not found` };
         }
-        //Fetch exchange rates where currency is base or target
         const rates = await forex_models_1.default.findAll({
             attributes: ["id", "rate"],
             where: {
@@ -144,7 +133,6 @@ const getExchangeRatesByCode = async (code) => {
     }
 };
 exports.getExchangeRatesByCode = getExchangeRatesByCode;
-//=> Schedule (ones a day)
 node_cron_1.default.schedule("0 0 * * *", async () => {
     console.log("Running daily exchange rate update job...");
     const result = await (0, exports.fetchAndUpdateRates)();

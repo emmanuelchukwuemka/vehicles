@@ -40,9 +40,7 @@ const zod_1 = require("zod");
 const apiResponse_1 = require("../../globals/utility/apiResponse");
 const sample = async (req, res) => {
     try {
-        // For dis place, am validating request body using Zod
         const validatedData = categories_validations_1.categoriesSchema.parse(req.body);
-        // And here i dey call the service layer
         const result = await categoriesServices.categoriesMethod(validatedData);
         return (0, apiResponse_1.successResponse)(res, {
             message: result.message,

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteRegion = exports.updateRegion = exports.createRegion = exports.getRegionsByContinentId = exports.getRegionById = exports.getRegions = void 0;
 const continent_models_1 = __importDefault(require("../continent/continent.models"));
 const region_models_1 = __importDefault(require("./region.models"));
-// Fetch all regions
 const getRegions = async () => {
     try {
         const data = await region_models_1.default.findAll({ where: { status: 1 } });
@@ -18,7 +17,6 @@ const getRegions = async () => {
     }
 };
 exports.getRegions = getRegions;
-// Fetch region by ID
 const getRegionById = async (id) => {
     try {
         const region = await region_models_1.default.findByPk(id);
@@ -32,7 +30,6 @@ const getRegionById = async (id) => {
     }
 };
 exports.getRegionById = getRegionById;
-// Fetch region by continent
 const getRegionsByContinentId = async (continent_id) => {
     try {
         const data = await continent_models_1.default.findByPk(continent_id, {
@@ -56,7 +53,6 @@ const getRegionsByContinentId = async (continent_id) => {
     }
 };
 exports.getRegionsByContinentId = getRegionsByContinentId;
-// Create region(s)
 const createRegion = async (data) => {
     try {
         const inputArray = Array.isArray(data) ? data : [data];
@@ -73,7 +69,6 @@ const createRegion = async (data) => {
     }
 };
 exports.createRegion = createRegion;
-// Update region
 const updateRegion = async (id, data) => {
     try {
         const region = await region_models_1.default.findByPk(id);
@@ -92,7 +87,6 @@ const updateRegion = async (id, data) => {
     }
 };
 exports.updateRegion = updateRegion;
-// Delete region
 const deleteRegion = async (id) => {
     try {
         const region = await region_models_1.default.findByPk(id);

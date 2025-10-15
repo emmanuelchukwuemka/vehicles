@@ -32,7 +32,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('keywords', ['listing_id']);
         await queryInterface.addIndex('keywords', ['keyword']);
     },

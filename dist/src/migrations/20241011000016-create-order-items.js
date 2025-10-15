@@ -40,7 +40,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('order_items', ['order_id']);
         await queryInterface.addIndex('order_items', ['listing_id']);
     },

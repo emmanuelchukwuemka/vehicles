@@ -17,7 +17,7 @@ const createCountry = async (data) => {
             if (exists) {
                 console.warn(`Skipping duplicate: ${country.iso2}/${country.iso3}`);
                 skippedCountries.push(country);
-                continue; // skip duplicates
+                continue;
             }
             const newCountry = await country_models_1.default.create(country);
             createdCountries.push(newCountry);
@@ -133,7 +133,6 @@ const updateCountry = async (id, data) => {
         if (!country) {
             return { success: false, message: "Country not found" };
         }
-        // If iso2 or iso3 is being updated, check duplicates
         if (data.iso2 || data.iso3) {
             const iso2 = data.iso2 ?? country.iso2;
             const iso3 = data.iso3 ?? country.iso3;

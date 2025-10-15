@@ -41,11 +41,8 @@ const controllers = __importStar(require("./vehicles.controllers"));
 const vehicles_middlewares_1 = require("./vehicles.middlewares");
 const multer_1 = __importDefault(require("multer"));
 const router = (0, express_1.Router)();
-// Apply general rate limiting
 router.use(vehicles_middlewares_1.generalLimiter);
-// Health check
 router.get('/health', controllers.healthCheck);
-// Configure multer for uploads
 const upload = (0, multer_1.default)({
     dest: process.env.UPLOAD_DIR || 'uploads',
     limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE || '5242880') },
@@ -59,7 +56,6 @@ const upload = (0, multer_1.default)({
         }
     },
 });
-// Configure multer for listings (higher limits)
 const listingUpload = (0, multer_1.default)({
     dest: process.env.UPLOAD_DIR || 'uploads',
     limits: { fileSize: parseInt(process.env.MAX_FILE_SIZE || '10485760'), files: 20 },
@@ -73,29 +69,23 @@ const listingUpload = (0, multer_1.default)({
         }
     },
 });
-// Auth routes
 router.post('/auth/register', vehicles_middlewares_1.authLimiter, controllers.register);
 router.post('/auth/login', vehicles_middlewares_1.authLimiter, controllers.login);
 router.post('/auth/refresh', vehicles_middlewares_1.authLimiter, controllers.refresh);
 router.post('/auth/logout', controllers.logout);
 router.post('/auth/forgot-password', vehicles_middlewares_1.authLimiter, controllers.forgotPassword);
 router.post('/auth/reset-password', controllers.resetPassword);
-// User routes
 router.get('/users/me', vehicles_middlewares_1.authenticate, controllers.getProfile);
 router.put('/users/me', vehicles_middlewares_1.authenticate, controllers.updateProfile);
-// Vehicle routes
 router.post('/vehicles', vehicles_middlewares_1.authenticate, controllers.createVehicle);
 router.get('/vehicles', controllers.getVehicles);
 router.get('/vehicles/:id', controllers.getVehicle);
 router.put('/vehicles/:id', vehicles_middlewares_1.authenticate, controllers.updateVehicle);
 router.delete('/vehicles/:id', vehicles_middlewares_1.authenticate, controllers.deleteVehicle);
-// Upload routes
 router.post('/upload', vehicles_middlewares_1.authenticate, upload.array('images', 10), controllers.uploadImages);
-// Favorites routes
 router.post('/favorites', vehicles_middlewares_1.authenticate, controllers.addFavorite);
 router.get('/favorites', vehicles_middlewares_1.authenticate, controllers.getFavorites);
 router.delete('/favorites/:id', vehicles_middlewares_1.authenticate, controllers.removeFavorite);
-// Listing routes
 router.post('/listings', vehicles_middlewares_1.authenticate, listingUpload.array('media', 20), controllers.createListingController);
 router.put('/listings/:id', vehicles_middlewares_1.authenticate, listingUpload.array('media', 10), controllers.updateListingController);
 router.get('/listings', controllers.getListingsController);
@@ -105,7 +95,6 @@ router.post('/listings/:id/features', vehicles_middlewares_1.authenticate, contr
 router.post('/listings/:id/media', vehicles_middlewares_1.authenticate, upload.array('media', 10), controllers.uploadMediaController);
 router.post('/listings/:id/discounts', vehicles_middlewares_1.authenticate, controllers.createDiscountController);
 router.post('/listings/:id/submit', vehicles_middlewares_1.authenticate, controllers.submitListingController);
-// Admin routes
 router.get('/admin/vehicles', vehicles_middlewares_1.authenticate, vehicles_middlewares_1.authorizeAdmin, controllers.getAdminVehicles);
 router.put('/admin/vehicles/:id/status', vehicles_middlewares_1.authenticate, vehicles_middlewares_1.authorizeAdmin, controllers.updateVehicleStatus);
 router.get('/admin/stats', vehicles_middlewares_1.authenticate, vehicles_middlewares_1.authorizeAdmin, controllers.getStats);

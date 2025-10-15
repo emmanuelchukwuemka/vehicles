@@ -40,9 +40,7 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const user_validations_1 = require("./user.validations");
 const signupController = async (req, res) => {
     try {
-        // For here, am validating request body using Zod
         const validatedData = user_validations_1.signupSchema.parse(req.body);
-        // And here i dey call the service layer
         const result = await userServices.signupService(validatedData);
         return (0, apiResponse_1.successResponse)(res, {
             message: result.message,

@@ -59,7 +59,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('messages', ['sender_id']);
         await queryInterface.addIndex('messages', ['receiver_id']);
         await queryInterface.addIndex('messages', ['listing_id']);

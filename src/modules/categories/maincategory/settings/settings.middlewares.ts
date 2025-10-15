@@ -9,7 +9,7 @@ export const settingsSecure = (
   try {
     console.log("Middleware executed for settings module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -29,6 +29,6 @@ export const validateIdParam = (paramName: string = "id") => {
     // Am attaching numeric version for controllers
     (req as any)[`${paramName}Number`] = Number(id);
 
-    next();
+    return next();
   };
 };

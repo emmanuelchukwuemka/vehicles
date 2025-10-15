@@ -40,7 +40,6 @@ const router = (0, express_1.Router)();
 router.post("/", city_middlewares_1.validateCityCreate, cityControllers.createCity);
 router.put("/:id", city_middlewares_1.validateIdParam, city_middlewares_1.validateCityUpdate, cityControllers.updateCity);
 router.delete("/:id", city_middlewares_1.validateIdParam, cityControllers.deleteCity);
-// Fetching
 router.get("/", cityControllers.getCities);
 router.get("/:id", city_middlewares_1.validateIdParam, cityControllers.getCityById);
 router.get("/state/:id", city_middlewares_1.validateIdParam, cityControllers.fetchCitiesByState);

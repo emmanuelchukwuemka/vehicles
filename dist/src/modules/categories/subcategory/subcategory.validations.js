@@ -12,12 +12,10 @@ exports.subcategorySchema = zod_1.z.object({
     image: zod_1.z.url("Invalid image URL").optional().nullable(),
     status: zod_1.z.number().int().min(0).max(1).optional(),
 });
-// accept both single and array
 exports.subcategoryFlexibleSchema = zod_1.z.union([
     exports.subcategorySchema,
     zod_1.z.array(exports.subcategorySchema),
 ]);
-// For update (partial allowed but must have at least 1 valid field)
 exports.subcategoryUpdateSchema = exports.subcategorySchema
     .partial()
     .superRefine((data, ctx) => {

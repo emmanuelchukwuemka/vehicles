@@ -10,14 +10,14 @@ const storeValidation = (req, res, next) => {
         next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.storeValidation = storeValidation;
 const validateIdParam = (req, res, next) => {
     try {
         store_validations_1.idSchema.parse({ id: Number(req.params.id) });
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

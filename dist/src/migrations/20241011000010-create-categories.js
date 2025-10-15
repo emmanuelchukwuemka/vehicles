@@ -51,7 +51,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('categories', ['category_type']);
         await queryInterface.addIndex('categories', ['parent_id']);
         await queryInterface.addIndex('categories', ['is_active']);

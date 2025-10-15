@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.categoriesMethod = void 0;
 const categoriesMethod = async (data) => {
     try {
-        // Abeg ur business logic should go here
         return {
             success: true,
             message: "Categories action completed successfully",

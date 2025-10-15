@@ -41,11 +41,9 @@ const subcategory_validations_1 = require("../subcategory.validations");
 const createSubcategory = async (req, res) => {
     try {
         const validatedData = subcategory_validations_1.subcategoryFlexibleSchema.parse(req.body);
-        // Always convert to array for service
         const inputArray = Array.isArray(validatedData)
             ? validatedData
             : [validatedData];
-        // And here i dey call the service layer
         const result = await settingsServices.createSubcategory(inputArray);
         return (0, apiResponse_1.successResponse)(res, {
             message: result.message,

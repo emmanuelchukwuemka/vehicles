@@ -7,17 +7,17 @@ const apiResponse_1 = require("../../../../globals/utility/apiResponse");
 const settingsSecure = (req, res, next) => {
     try {
         console.log("Middleware executed for settings module");
-        next();
+        return next();
     }
     catch (err) {
-        next(err); // Here am just passing the error to global errorHandler
+        next(err);
     }
 };
 exports.settingsSecure = settingsSecure;
 const validateCategoryCreate = (req, res, next) => {
     try {
         category_validations_1.categoryFlexibleSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {
@@ -36,10 +36,9 @@ const validateCategoryCreate = (req, res, next) => {
 exports.validateCategoryCreate = validateCategoryCreate;
 const validateCategoryUpdate = (req, res, next) => {
     try {
-        // am allowing for partial updates
         const parsedData = category_validations_1.categorySchema.partial().parse(req.body);
-        req.body = parsedData; // here, this will overwrite with validated data
-        next();
+        req.body = parsedData;
+        return next();
     }
     catch (error) {
         return res.status(400).json({
@@ -52,8 +51,8 @@ const validateCategoryUpdate = (req, res, next) => {
 exports.validateCategoryUpdate = validateCategoryUpdate;
 const validateIdParam = (req, res, next) => {
     try {
-        category_validations_1.idParamSchema.parse(req.params); // parses { id: "123" }
-        next();
+        category_validations_1.idParamSchema.parse(req.params);
+        return next();
     }
     catch (err) {
         return (0, apiResponse_1.errorResponse)(res, {

@@ -45,7 +45,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('reviews', ['order_id']);
         await queryInterface.addIndex('reviews', ['rating']);
         await queryInterface.addIndex('reviews', ['is_approved']);

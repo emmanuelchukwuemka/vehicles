@@ -12,7 +12,7 @@ export const validateRetailerProduct = (
 ) => {
   try {
     req.body = retailerProductSchema.parse(req.body);
-    next();
+    return next();
   } catch (err: any) {
     return res.status(400).json({
       success: false,

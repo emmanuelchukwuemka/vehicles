@@ -23,7 +23,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err: any) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

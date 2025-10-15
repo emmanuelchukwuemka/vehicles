@@ -18,15 +18,12 @@ const signupService = async (data) => {
             city_id: data.city_id,
             is_verified: 0,
         };
-        // Insert into the database
         const newUser = await user_models_1.default.create(userData);
-        // Prepare auth data
         const authData = {
             user_id: newUser.id,
             email: data.email,
             password: hashedPassword,
         };
-        // Insert into auth_table
         await auth_models_1.default.create(authData);
         return {
             success: true,

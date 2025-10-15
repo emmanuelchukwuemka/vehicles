@@ -11,7 +11,7 @@ export const stateSecure = (
   try {
     console.log("Middleware executed for state module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -25,7 +25,7 @@ export const validateCreatePayload = (
 ) => {
   try {
     stateBulkOrSingleSchema.parse(req.body);
-    next();
+    return next();
   } catch (err: any) {
     return errorResponse(res, {
       statusCode:400,
@@ -41,7 +41,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -76,7 +76,7 @@ export const validateStateUpdate = (
     // Normalize to array for service
     req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
 
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

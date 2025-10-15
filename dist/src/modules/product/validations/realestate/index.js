@@ -2,9 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.realEstateProductSchema = void 0;
 const zod_1 = require("zod");
-// -----------------------------------------
-// Location schema
-// -----------------------------------------
 const locationSchema = zod_1.z.object({
     address: zod_1.z.string().min(1),
     city: zod_1.z.string().min(1),
@@ -15,9 +12,6 @@ const locationSchema = zod_1.z.object({
         longitude: zod_1.z.number().min(-180).max(180),
     }),
 });
-// -----------------------------------------
-// Metadata schema (with enforced location)
-// -----------------------------------------
 const metadataSchema = zod_1.z.object({
     property_type: zod_1.z.string().min(1),
     listing_type: zod_1.z.string().min(1),
@@ -31,37 +25,25 @@ const metadataSchema = zod_1.z.object({
     }))
         .optional(),
 });
-// -----------------------------------------
-// Media schema (shared for product + units + items)
-// -----------------------------------------
 const mediaSchema = zod_1.z.object({
     url: zod_1.z.url(),
     type: zod_1.z.string(),
     description: zod_1.z.string().optional(),
     metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),
 });
-// -----------------------------------------
-// Item schema for real estate units
-// -----------------------------------------
 const realEstateItemSchema = zod_1.z.object({
-    unit_value: zod_1.z.string().min(1), // mandatory, used to populate `value` column
+    unit_value: zod_1.z.string().min(1),
     dimensions: zod_1.z.string().optional(),
     medias: zod_1.z.array(mediaSchema).optional(),
-    metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(), // optional extra fields
+    metadata: zod_1.z.record(zod_1.z.string(), zod_1.z.any()).optional(),
 });
-// -----------------------------------------
-// Unit schema (real estate)
-// -----------------------------------------
 const realEstateUnitSchema = zod_1.z.object({
     name: zod_1.z.string().min(1),
     price: zod_1.z.number().nonnegative(),
     stock: zod_1.z.number().int().nonnegative().default(1),
     medias: zod_1.z.array(mediaSchema).optional(),
-    items: zod_1.z.array(realEstateItemSchema).nonempty(), // must have at least one item
+    items: zod_1.z.array(realEstateItemSchema).nonempty(),
 });
-// -----------------------------------------
-// Pricing schema (with conditional discount_type)
-// -----------------------------------------
 const pricingSchema = zod_1.z
     .object({
     base_price: zod_1.z.number().positive(),
@@ -77,9 +59,6 @@ const pricingSchema = zod_1.z
         });
     }
 });
-// -----------------------------------------
-// Real Estate Product schema
-// -----------------------------------------
 exports.realEstateProductSchema = zod_1.z.object({
     identifiers: zod_1.z.object({
         store_id: zod_1.z.number().int().positive(),

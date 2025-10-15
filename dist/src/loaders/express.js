@@ -33,7 +33,6 @@ exports.default = (app) => {
     app.use(requestLogger_1.requestLogger);
     app.use(express_1.default.json());
     app.use((0, cookie_parser_1.default)());
-    // Imported modules will be listed here
     app.use("/api/auth", auth_1.default);
     app.use("/api/user", user_1.default);
     app.use("/api/categories", categories_1.default);

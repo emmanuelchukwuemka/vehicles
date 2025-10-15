@@ -41,14 +41,12 @@ State.init({
     timestamps: false,
     underscored: true,
 });
-// A State belongs to a Country
 State.belongsTo(country_models_1.default, {
     foreignKey: "country_id",
     as: "country",
     onDelete: "RESTRICT",
     onUpdate: "CASCADE",
 });
-// A Country has many States
 country_models_1.default.hasMany(State, {
     foreignKey: "country_id",
     as: "states",

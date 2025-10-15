@@ -51,4 +51,3 @@ Collection.init({
     timestamps: false,
     indexes: [{ fields: ["store_id"] }, { fields: ["subcategory_id"] }],
 });
-// Associations will be defined in another file

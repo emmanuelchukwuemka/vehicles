@@ -54,5 +54,5 @@ AppBanner.init({
 }, {
     sequelize: sequelize_2.default,
     tableName: "appBanner",
-    timestamps: false, // since you’re storing createdAt and updated_at manually
+    timestamps: false,
 });

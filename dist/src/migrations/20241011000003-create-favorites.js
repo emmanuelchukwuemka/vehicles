@@ -27,7 +27,6 @@ module.exports = {
                 onDelete: 'CASCADE',
             },
         });
-        // Add unique index
         await queryInterface.addIndex('favorites', ['user_id', 'vehicle_id'], {
             unique: true,
         });

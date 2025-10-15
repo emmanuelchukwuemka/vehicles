@@ -21,7 +21,7 @@ export const validateDomainCreate = (
     }
 
     req.body = createDomainSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -51,7 +51,7 @@ export const validatesubdomainCreate = (
     }
 
     req.body = createSubdomainSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -74,7 +74,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

@@ -45,7 +45,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('features', ['category']);
         await queryInterface.addIndex('features', ['feature_type']);
         await queryInterface.addIndex('features', ['is_active']);

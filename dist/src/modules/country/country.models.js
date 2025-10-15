@@ -66,7 +66,6 @@ Country.init({
     createdAt: "created_at",
     updatedAt: "updated_at",
 });
-// Country belongs to Region
 Country.belongsTo(region_models_1.default, {
     foreignKey: "region_id",
     as: "region",

@@ -11,7 +11,7 @@ export const subcategorySecure = (
   try {
     console.log("Middleware executed for subcategory module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -24,7 +24,7 @@ export const validateIdParam = (
 ) => {
   try {
     idParamSchema.parse(req.params);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {

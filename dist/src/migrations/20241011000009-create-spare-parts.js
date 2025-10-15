@@ -58,7 +58,6 @@ module.exports = {
                 defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
             },
         });
-        // Add indexes
         await queryInterface.addIndex('spare_parts', ['listing_id'], { unique: true });
         await queryInterface.addIndex('spare_parts', ['category']);
         await queryInterface.addIndex('spare_parts', ['brand']);

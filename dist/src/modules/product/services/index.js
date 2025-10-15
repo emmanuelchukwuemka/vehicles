@@ -11,7 +11,6 @@ class ProductService {
     static async getSingleProduct(id, options) {
         const { domain, includeUnits = true, includeMedia = true, includeMetadata = true, includeSpecifications = true, includeProductMediaMetadata = true, includeUnitMediaMetadata = true, } = options || {};
         try {
-            // 🔹 Step 1: Resolve subdomain if provided
             let subdomainId;
             if (domain) {
                 const subdomain = await subdomain_models_1.Subdomain.findOne({ where: { name: domain } });
@@ -20,7 +19,6 @@ class ProductService {
                 }
                 subdomainId = subdomain.id;
             }
-            // 🔹 Step 2: Fetch product
             let product = await associations_1.Product.findOne({
                 where: { id, ...(subdomainId ? { subdomain_id: subdomainId } : {}) },
                 attributes: {
@@ -70,7 +68,6 @@ class ProductService {
                 return { success: false, message: "Product not found" };
             }
             const plain = product.get({ plain: true });
-            // 🔹 Step 3: Fetch currency for this product
             if (plain.currency_id) {
                 const currency = await currency_models_1.default.findByPk(plain.currency_id, {
                     attributes: ["id", "code", "symbol", "decimal_places"],
@@ -84,7 +81,6 @@ class ProductService {
                     };
                 }
             }
-            // 🔹 Step 4: Clean product based on flags
             if (!includeMetadata) {
                 delete plain.metadata;
             }

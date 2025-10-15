@@ -10,7 +10,7 @@ export const validateLogisticsProduct = (
 ) => {
   try {
     logisticsProductSchema.parse(req.body);
-    next();
+    return next();
   } catch (error: any) {
     if (error instanceof ZodError) {
       return errorResponse(res, {

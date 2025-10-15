@@ -7,7 +7,7 @@ const apiResponse_1 = require("../../../../globals/utility/apiResponse");
 const validateCreate = () => (req, res, next) => {
     try {
         req.body = realestate_1.realEstateProductSchema.parse(req.body);
-        next();
+        return next();
     }
     catch (error) {
         if (error instanceof zod_1.ZodError) {

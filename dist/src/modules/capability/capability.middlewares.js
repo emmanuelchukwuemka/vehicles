@@ -7,7 +7,7 @@ const apiResponse_1 = require("../../globals/utility/apiResponse");
 const capabilityValidate = (req, res, next) => {
     try {
         capability_validations_1.capabilitySchema.parse(req.body);
-        next();
+        return next();
     }
     catch (err) {
         if (err instanceof zod_1.ZodError) {

@@ -11,7 +11,7 @@ export const continentSecure = (
   try {
     console.log("Middleware executed for continent module");
 
-    next();
+    return next();
   } catch (err) {
     next(err); // Here am just passing the error to global errorHandler
   }
@@ -24,7 +24,7 @@ export const validateCreatePayload = (
 ) => {
   try {
     continentFlexibleSchema.parse(req.body);
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -48,7 +48,7 @@ export const validateIdParam = (
 ) => {
   try {
     idSchema.parse({ id: Number(req.params.id) });
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
@@ -71,7 +71,7 @@ export const validateContinentUpdate = (
   try {
     const validatedData = continentFlexibleSchema.parse(req.body);
     req.body = Array.isArray(validatedData) ? validatedData : [validatedData];
-    next();
+    return next();
   } catch (err) {
     if (err instanceof ZodError) {
       return errorResponse(res, {
