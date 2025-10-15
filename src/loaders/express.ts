@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "../middlewares/system/errorHandler";
+import { requestLogger } from "../middlewares/requestLogger";
 import authModule from "../modules/auth";
 import userModule from "../modules/user";
 import categoriesModule from "../modules/categories";
@@ -21,9 +22,11 @@ import domainModule from "../modules/domains";
 import cartModule from "../modules/cart";
 import { verifyCookie } from "../middlewares/cookie.middleware";
 import morelikeModule from "../modules/morelike";
+import vehiclesModule from "../modules/vehicles";
 
 export default (app: Application): void => {
   app.use(cors());
+  app.use(requestLogger);
   app.use(express.json());
   app.use(cookieParser());
 
@@ -64,6 +67,8 @@ export default (app: Application): void => {
 
 
   app.use("/api/morelike", morelikeModule);
+
+  app.use("/api/v1", vehiclesModule);
 
   app.use(errorHandler);
 };

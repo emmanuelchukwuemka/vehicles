@@ -1,7 +1,7 @@
 import { signupInput } from "./user.validations";
 import User, { UserCreationAttributes } from "./user.models";
 import Auth, { AuthCreationAttributes } from "../auth/auth.models";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const signupService = async (data: signupInput) => {
   try {

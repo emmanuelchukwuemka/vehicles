@@ -7,12 +7,20 @@ export default async function checkDatabaseConnections() {
     await sequelize.authenticate();
     console.log("ORM DB connected");
 
-    // Test raw MySQL2 connection
-    const connection = await pool.getConnection();
-    try {
-      console.log("Raw SQL DB connected");
-    } finally {
-      connection.release();
+    // Test raw connection only if not SQLite
+    const env = process.env.NODE_ENV || "development";
+    const config = require("../../config/config.js");
+    const dbConfig = (config as any)[env];
+
+    if (dbConfig.dialect !== 'sqlite') {
+      const connection = await pool.getConnection();
+      try {
+        console.log("Raw SQL DB connected");
+      } finally {
+        connection.release();
+      }
+    } else {
+      console.log("Using SQLite, skipping raw connection test");
     }
   } catch (err) {
     console.error("DB connection failed:", err);

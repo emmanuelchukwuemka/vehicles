@@ -6,10 +6,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.profile = exports.signupService = void 0;
 const user_models_1 = __importDefault(require("./user.models"));
 const auth_models_1 = __importDefault(require("../auth/auth.models"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const signupService = async (data) => {
     try {
-        const hashedPassword = await bcrypt_1.default.hash(data.password, 10);
+        const hashedPassword = await bcryptjs_1.default.hash(data.password, 10);
         const userData = {
             first_name: data.first_name,
             last_name: data.last_name,

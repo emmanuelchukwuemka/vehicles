@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.login = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-const bcrypt_1 = __importDefault(require("bcrypt"));
+const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const auth_helpers_1 = require("./auth.helpers");
 const auth_models_1 = __importDefault(require("./auth.models"));
 const login = async ({ email, password }) => {
@@ -14,7 +14,7 @@ const login = async ({ email, password }) => {
         const authUser = await auth_models_1.default.findOne({ where: { email: normalizedEmail } });
         if (!authUser)
             throw new Error("Invalid credentials");
-        const isPasswordValid = await bcrypt_1.default.compare(password, authUser.password);
+        const isPasswordValid = await bcryptjs_1.default.compare(password, authUser.password);
         if (!isPasswordValid)
             throw new Error("Invalid credentials");
         const userInfo = await (0, auth_helpers_1.getUserByAuthId)(authUser.user_id);

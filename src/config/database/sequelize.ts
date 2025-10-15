@@ -1,19 +1,24 @@
 import { Sequelize, Op } from "sequelize";
+const config = require("../../../config/config.js");
+
+const env = process.env.NODE_ENV || "development";
+const dbConfig = (config as any)[env];
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME as string,
-  process.env.DB_USER as string,
-  process.env.DB_PASSWORD as string,
+  dbConfig.database || dbConfig.storage, // for SQLite, storage is used
+  dbConfig.username,
+  dbConfig.password,
   {
-    host: process.env.DB_HOST,
-    dialect: "mysql",
-    port: Number(process.env.DB_PORT) || 3306,
-    logging: process.env.NODE_ENV === "development" ? console.log : false,
-    pool: {
-      max: Number(process.env.DB_POOL_MAX) || 5,
-      min: Number(process.env.DB_POOL_MIN) || 0,
-      acquire: Number(process.env.DB_POOL_ACQUIRE) || 30000,
-      idle: Number(process.env.DB_POOL_IDLE) || 10000,
+    host: dbConfig.host,
+    dialect: dbConfig.dialect,
+    port: dbConfig.port,
+    logging: dbConfig.logging,
+    storage: dbConfig.storage, // for SQLite
+    pool: dbConfig.pool || {
+      max: 5,
+      min: 0,
+      acquire: 30000,
+      idle: 10000,
     },
   }
 );

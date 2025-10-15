@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const errorHandler_1 = require("../middlewares/system/errorHandler");
+const requestLogger_1 = require("../middlewares/requestLogger");
 const auth_1 = __importDefault(require("../modules/auth"));
 const user_1 = __importDefault(require("../modules/user"));
 const categories_1 = __importDefault(require("../modules/categories"));
@@ -25,8 +26,11 @@ const vendor_1 = __importDefault(require("../modules/vendor"));
 const domains_1 = __importDefault(require("../modules/domains"));
 const cart_1 = __importDefault(require("../modules/cart"));
 const cookie_middleware_1 = require("../middlewares/cookie.middleware");
+const morelike_1 = __importDefault(require("../modules/morelike"));
+const vehicles_1 = __importDefault(require("../modules/vehicles"));
 exports.default = (app) => {
     app.use((0, cors_1.default)());
+    app.use(requestLogger_1.requestLogger);
     app.use(express_1.default.json());
     app.use((0, cookie_parser_1.default)());
     // Imported modules will be listed here
@@ -47,5 +51,7 @@ exports.default = (app) => {
     app.use("/api/vendor", vendor_1.default);
     app.use("/api/domain", domains_1.default);
     app.use("/api/cart", cookie_middleware_1.verifyCookie, cart_1.default);
+    app.use("/api/morelike", morelike_1.default);
+    app.use("/api/v1", vehicles_1.default);
     app.use(errorHandler_1.errorHandler);
 };
